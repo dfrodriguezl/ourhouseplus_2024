@@ -66,7 +66,7 @@ class ShapeDiverContainer extends React.Component<Props, {}> {
 
   render() {
     return (
-      <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '60vw', height: 640 }}>
+      <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '60vw', height: '60vh' }}>
         <div className='shapediver-viewport-flex'>
           <div id='sdv-container-viewport' style={{ opacity: 0 }}  >
           </div>

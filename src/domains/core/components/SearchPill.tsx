@@ -1,7 +1,7 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Theme } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   field: {
     cursor: 'pointer',
   },
@@ -14,6 +14,7 @@ const useStyles = makeStyles(() => ({
   },
   fieldInput: {
     border: '0px',
+    background: theme.palette.primary.light,
     fontSize: 12,
     '&:focus': {
       outline: 'none'

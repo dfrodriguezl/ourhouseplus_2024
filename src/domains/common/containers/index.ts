@@ -1,5 +1,3 @@
-import { ExpandMoreSharp } from '@material-ui/icons'
-
 export { default as News } from './News'
 export { default as About } from './About'
 export { default as ContactUs } from './ContactUs'

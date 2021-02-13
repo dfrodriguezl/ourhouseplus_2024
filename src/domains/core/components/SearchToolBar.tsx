@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 interface DispatchProps {
-  doSearch(payload: SearchParams, pa: number): void;
+  doSearch(payload: SearchParams): void;
 }
 
 type Props = DispatchProps;
@@ -28,18 +28,26 @@ const SearchToolBar = (props: Props) => {
   const classes = useStyles();
   const [location, setLocation] = useState<string>('');
   const [area, setArea] = useState<number>();
-  const [urbanism, setUrbanism] = useState<string>();
+  const [urbanism, setUrbanism] = useState<number>();
 
   const updateLocation = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLocation(event.target.value)
+    setLocation(event.target.value);
   }
 
   const updateArea = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setArea(parseInt(event.target.value))
+    setArea(parseInt(event.target.value));
   }
 
   const updateUrbanism = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrbanism(event.target.value)
+    setUrbanism(parseInt(event.target.value));
+  }
+
+  const search = () => {
+    props.doSearch({
+      location,
+      area: area!,
+      urbanism: urbanism!
+    })
   }
 
   return (
@@ -73,11 +81,12 @@ const SearchToolBar = (props: Props) => {
           placeholder="Choose type of urbanism"
           onChange={updateUrbanism}
           value={urbanism}
+          type="number"
         />
       </Grid>
       <Grid item>
         <div style={{ paddingLeft: 24, marginRight: -24 }}>
-          <IconButton>
+          <IconButton onClick={search}>
             <SearchOutlined color="secondary" />
           </IconButton>
         </div>

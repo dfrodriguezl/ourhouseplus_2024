@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: theme.palette.primary.dark,
       lineHeight: '16px'
     },
+    bottomLinks: {
+      paddingTop: 5,
+      '& a': {
+        paddingRight: 100
+      }
+    }
   })
 );
 
@@ -34,12 +40,16 @@ const Footer = (props: Props) => {
         <Box><Link to="/leadership">rea leadership</Link> </Box>
         <Box><Link to="/jobs">job opportunities</Link></Box>
         <Box><Link to="/investors">investors</Link></Box>
-        <Box><Link to="/contact-us">contact rea</Link></Box>
         <div style={{ paddingBottom: 5 }} />
         {/* <Copyright /> */}
         <Divider orientation="horizontal" />
-        <div style={{ paddingBottom: 5 }} />
-        Rea @ 2021
+        <div className={classes.bottomLinks}>
+          <Link to="/home">Rea @ 2021</Link>
+          <Link to="/contact-us">Contact Us</Link>
+          <Link to="/contact-us">Site</Link>
+          <Link to="/contact-us">Help</Link>
+          <Link to="/contact-us">Privacy & Legal</Link>
+        </div>
       </footer>
     </Grid>
   );

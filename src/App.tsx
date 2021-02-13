@@ -1,10 +1,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Home, Login } from 'domains/core/containers';
-import { Container, ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core';
 import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News } from 'domains/common/containers';
 import theme from 'app/theme';
-import { Footer } from 'domains/core/components';
 
 function App() {
   return (
