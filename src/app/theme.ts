@@ -8,7 +8,8 @@ const theme = createMuiTheme({
   },
   palette: {
     primary: {
-      main: '#F9f9f9',
+      main: '#FFF',
+      light: '#F9f9f9',
       dark: '#a6a6a6'
     },
     secondary: {
@@ -18,12 +19,12 @@ const theme = createMuiTheme({
       main: red.A400,
     },
     background: {
-      default: '#F9f9f9',
+      default: 'white',
     },
     text: {
       primary: '#000'
     }
-  }  
+  }
 });
 
 export default theme;
