@@ -9,6 +9,8 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       paddingTop: 20,
+      color: 'white !important',
+      background: 'transparent'
     },
     menuButton: {
       marginLeft: 'auto',
@@ -16,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
     member: {
       fontSize: 12,
       marginRight: 5,
+    },
+    icons: {
+      color: 'white'
     }
   })
 );
@@ -30,7 +35,8 @@ const Header = () => {
         </Link>
         <div className={classes.menuButton}>
           <span className={classes.member}>become a member</span>
-          <IconButton edge="end">
+          <IconButton edge="end" className={classes.icons}>
+            <MenuIcon />
             <MenuIcon />
           </IconButton>
         </div>

@@ -1,13 +1,16 @@
-import React from 'react'
-import { createStyles, makeStyles, Theme, Typography } from '@material-ui/core'
+import { Box, createStyles, makeStyles, Theme } from '@material-ui/core'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      textAlign: 'center',
+      color: 'white',
       position: 'relative',
-      top: -100,
-      textAlign: 'center'
+      bottom: -200,
     },
+    header: {
+      paddingBottom: 5
+    }
   })
 );
 
@@ -16,15 +19,8 @@ export default function Slogan() {
 
   return (
     <div className={classes.root}>
-      <Typography variant="h4">
-        building future communities together
-      </Typography>
-      <Typography variant="h6">
-        REA helps you generate a preliminary design study of multi-dweling
-      </Typography>
-      <Typography variant="h6">
-        smart housing project in three simple steps
-      </Typography>
+      <Box fontWeight="bold" fontSize={24} className={classes.header}>building future communities together</Box>
+      <Box>REA helps you generate a preliminary design study of multi-dweling smart housing project in three simple steps</Box>
     </div>
   )
 }

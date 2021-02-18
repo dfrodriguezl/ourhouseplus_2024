@@ -5,17 +5,21 @@ import { doSearch } from 'domains/core/coreSlice';
 import { SearchParams } from 'domains/core/models';
 import SearchPill from './SearchPill';
 import { SearchOutlined } from '@material-ui/icons';
+import UrbanismMenu from './UrbanismMenu';
 
 const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
     marginTop: theme.spacing(4),
-    background: theme.palette.primary.light,
+    background: theme.palette.common.white,
     padding: '10px 30px',
     borderRadius: 32,
   },
   fieldDivider: {
     backgroundColor: theme.palette.common.black,
-    height: 40
+    height: '100%'
+  },
+  searchButton: {
+    margin: 0
   }
 }));
 
@@ -28,7 +32,7 @@ const SearchToolBar = (props: Props) => {
   const classes = useStyles();
   const [location, setLocation] = useState<string>('');
   const [area, setArea] = useState<number>();
-  const [urbanism, setUrbanism] = useState<number>();
+  const [urbanism, setUrbanism] = useState<string>();
 
   const updateLocation = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLocation(event.target.value);
@@ -39,7 +43,7 @@ const SearchToolBar = (props: Props) => {
   }
 
   const updateUrbanism = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrbanism(parseInt(event.target.value));
+    setUrbanism(event.target.value);
   }
 
   const search = () => {
@@ -52,7 +56,7 @@ const SearchToolBar = (props: Props) => {
 
   return (
     <Grid container className={classes.searchBox}>
-      <Grid item>
+      <Grid item container direction="column" xs={3} justify="center">
         <SearchPill
           label="Location"
           placeholder="Where will the project be?"
@@ -63,7 +67,7 @@ const SearchToolBar = (props: Props) => {
       <Grid item>
         <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
       </Grid>
-      <Grid item>
+      <Grid item container direction="column" xs={3} justify="center">
         <SearchPill
           label="Area m2"
           placeholder="Add total terrain area"
@@ -75,21 +79,17 @@ const SearchToolBar = (props: Props) => {
       <Grid item>
         <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
       </Grid>
-      <Grid item>
-        <SearchPill
-          label="Urbanism"
-          placeholder="Choose type of urbanism"
-          onChange={updateUrbanism}
-          value={urbanism}
-          type="number"
+      <Grid item container direction="column" xs={3} justify="center">
+        <UrbanismMenu
+          updateUrbanism={updateUrbanism}
+          urbanism={urbanism}
+
         />
       </Grid>
-      <Grid item>
-        <div style={{ paddingLeft: 24, marginRight: -24 }}>
-          <IconButton onClick={search}>
-            <SearchOutlined color="secondary" />
-          </IconButton>
-        </div>
+      <Grid item container xs={1} justify="center">
+        <IconButton onClick={search} className={classes.searchButton}>
+          <SearchOutlined color="secondary" />
+        </IconButton>
       </Grid>
     </Grid>
   );

@@ -9,6 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import Auth0 from 'app/Auth0';
 
 import './index.css';
+import 'fontsource-roboto';
 
 ReactDOM.render(
   <React.StrictMode>

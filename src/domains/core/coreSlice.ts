@@ -5,14 +5,14 @@ import { SearchParams } from 'domains/core/models';
 interface CoreState {
   location: string | undefined;
   area: number;
-  urbanism: number;
+  urbanism: string | undefined;
   isSearching: boolean;
 }
 
 const initialState: CoreState = {
   location: undefined,
   area: 0,
-  urbanism: 0,
+  urbanism: undefined,
   isSearching: false,
 };
 
@@ -26,7 +26,7 @@ export const coreSlice = createSlice({
     updateArea: (state, action: PayloadAction<number>) => {
       state.area = action.payload;
     },
-    updateUrbanism: (state, action: PayloadAction<number>) => {
+    updateUrbanism: (state, action: PayloadAction<string>) => {
       state.urbanism = action.payload;
     },
     doSearch: {

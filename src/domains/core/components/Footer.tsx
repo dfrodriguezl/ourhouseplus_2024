@@ -10,19 +10,23 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column'
     },
     about: {
-      fontSize: 16,
+      fontSize: 14,
       lineHeight: '20px'
     },
     footer: {
       fontSize: 12,
       padding: theme.spacing(2, 2),
-      backgroundColor: theme.palette.primary.dark,
-      lineHeight: '16px'
+      lineHeight: '16px',
+      '& a': {
+        color: theme.palette.common.white,
+        opacity: '89%'
+      }
     },
     bottomLinks: {
       paddingTop: 5,
       '& a': {
-        paddingRight: 100
+        paddingRight: 100,
+        fontSize: 10
       }
     }
   })
@@ -34,11 +38,10 @@ const Footer = (props: Props) => {
   return (
     <Grid container item className={classes.root} xs={12} justify="flex-end">
       <footer className={classes.footer}>
-        <Box color="textPrimary" className={classes.about}><Link to="/about">about rea</Link></Box>
+        <Box className={classes.about}><Link to="/about">About REA</Link></Box>
         <Box><Link to="/how-it-works">how rea works</Link></Box>
-        <Box><Link to="/news">news</Link></Box>
         <Box><Link to="/leadership">rea leadership</Link> </Box>
-        <Box><Link to="/jobs">job opportunities</Link></Box>
+        <Box><Link to="/news">news</Link></Box>
         <Box><Link to="/investors">investors</Link></Box>
         <div style={{ paddingBottom: 5 }} />
         {/* <Copyright /> */}
