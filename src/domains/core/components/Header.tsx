@@ -2,6 +2,7 @@ import React from 'react';
 import { AppBar, createStyles, IconButton, makeStyles, Theme, Toolbar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import logo from 'assets/logo-small.png';
 
@@ -14,6 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginLeft: 'auto',
+      border: '1px white'
     },
     member: {
       fontSize: 12,
@@ -37,7 +39,7 @@ const Header = () => {
           <span className={classes.member}>become a member</span>
           <IconButton edge="end" className={classes.icons}>
             <MenuIcon />
-            <MenuIcon />
+            <AccountCircleIcon />
           </IconButton>
         </div>
       </Toolbar>
