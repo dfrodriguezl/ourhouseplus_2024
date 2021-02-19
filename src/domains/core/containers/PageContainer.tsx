@@ -4,6 +4,7 @@ import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/c
 import { Footer, Header } from 'domains/core/components'
 
 import background from 'assets/background.jpg';
+import whiteBackground from 'assets/white-background.png';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -38,28 +39,33 @@ const useStyles = makeStyles((theme: Theme) =>
       left: 0,
       zIndex: -1,
       width: '100vw',
-      height: '83%'
+      height: '85vh'
     }
   })
 );
 
 interface OwnProps {
-  removeFooter?: boolean;
-  removeHeader?: boolean;
+  noBackground?: boolean;
+  noFooter?: boolean;
+  noHeader?: boolean;
   children: any;
 }
 
 type Props = OwnProps;
 const PageContainer = (props: Props) => {
-  const { children, removeHeader, removeFooter } = props;
+  const { children, noBackground, noHeader, noFooter } = props;
   const classes = useStyles();
 
   return (
     <Container maxWidth="lg">
-      <img src={background} alt="background" className={classes.background} />
+      {
+        noBackground
+        ? <img src={whiteBackground} alt="background" className={classes.background} />
+        : <img src={background} alt="background" className={classes.background} />
+      }
       <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
         {
-          !removeHeader &&
+          !noHeader &&
           <Grid item>
             <Header />
           </Grid>
@@ -68,7 +74,7 @@ const PageContainer = (props: Props) => {
           {children}
         </Grid>
         {
-          !removeFooter &&
+          !noFooter &&
           <Grid item style={{ zIndex: 10 }}>
             <Footer />
           </Grid>

@@ -6,6 +6,8 @@ import { SearchParams } from 'domains/core/models';
 import SearchPill from './SearchPill';
 import { SearchOutlined } from '@material-ui/icons';
 import UrbanismMenu from './UrbanismMenu';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { compose } from 'recompose';
 
 const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
@@ -27,8 +29,10 @@ interface DispatchProps {
   doSearch(payload: SearchParams): void;
 }
 
-type Props = DispatchProps;
+type Props = DispatchProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
+  const { doSearch, history } = props;
+
   const classes = useStyles();
   const [location, setLocation] = useState<string>('');
   const [area, setArea] = useState<number>();
@@ -47,11 +51,12 @@ const SearchToolBar = (props: Props) => {
   }
 
   const search = () => {
-    props.doSearch({
+    doSearch({
       location,
       area: area!,
       urbanism: urbanism!
-    })
+    });
+    history.push('/tool');
   }
 
   return (
@@ -95,11 +100,14 @@ const SearchToolBar = (props: Props) => {
   );
 }
 
-const container = connect<never, DispatchProps>(
-  null,
-  {
-    doSearch
-  }
+const container = compose<Props, {}>(
+  withRouter,
+  connect<never, DispatchProps>(
+    null,
+    {
+      doSearch
+    }
+  )
 )(SearchToolBar);
 
 export default container;

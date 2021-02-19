@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
-import { SearchParams } from 'domains/core/models';
+import { SearchParams, ShapeDiverParams } from 'domains/core/models';
 
 interface CoreState {
   location: string | undefined;
   area: number;
   urbanism: string | undefined;
   isSearching: boolean;
+  shapeDiverParams: ShapeDiverParams;
 }
 
 const initialState: CoreState = {
@@ -14,6 +15,11 @@ const initialState: CoreState = {
   area: 0,
   urbanism: undefined,
   isSearching: false,
+  shapeDiverParams: {
+    density: 1,
+    terrain: '1:1',
+    unitType: 1,
+  }
 };
 
 export const coreSlice = createSlice({
@@ -48,6 +54,11 @@ export const coreSlice = createSlice({
     },
     doSearchFailed: (state) => {
       state.isSearching = false;
+    },
+    setShapeDiverParams: (state, action: PayloadAction<ShapeDiverParams>) => {
+      state.shapeDiverParams.density = action.payload.density;
+      state.shapeDiverParams.terrain = action.payload.terrain;
+      state.shapeDiverParams.unitType = action.payload.unitType;
     }
   },
 });
@@ -59,6 +70,7 @@ export const {
   doSearch,
   doSearchFailed,
   doSearchSuccess,
+  setShapeDiverParams,
 } = coreSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
