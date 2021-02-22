@@ -26,15 +26,6 @@ export const coreSlice = createSlice({
   name: 'core',
   initialState,
   reducers: {
-    updateLocation: (state, action: PayloadAction<string>) => {
-      state.location = action.payload;
-    },
-    updateArea: (state, action: PayloadAction<number>) => {
-      state.area = action.payload;
-    },
-    updateUrbanism: (state, action: PayloadAction<string>) => {
-      state.urbanism = action.payload;
-    },
     doSearch: {
       reducer(state, action: PayloadAction<SearchParams>) {
         const { area, location, urbanism } = action.payload;
@@ -64,9 +55,6 @@ export const coreSlice = createSlice({
 });
 
 export const {
-  updateLocation,
-  updateArea,
-  updateUrbanism,
   doSearch,
   doSearchFailed,
   doSearchSuccess,

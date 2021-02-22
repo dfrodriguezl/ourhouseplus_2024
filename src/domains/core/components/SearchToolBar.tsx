@@ -56,7 +56,7 @@ const SearchToolBar = (props: Props) => {
       area: area!,
       urbanism: urbanism!
     });
-    history.push('/tool');
+    history.push('/shapediver');
   }
 
   return (
