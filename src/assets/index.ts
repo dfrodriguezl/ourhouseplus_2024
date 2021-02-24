@@ -23,4 +23,4 @@ export { default as steps1 } from './Steps1.png'
 
 export { default as step2 } from './Step2.png'
 
-export { default as regen } from './Regen.png'
+export { default as regenIcon } from './Regen.png'

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { Home, ShapeDiverContainer, Login } from 'domains/core/containers';
+import { Home, Login } from 'domains/core/containers';
 import { ThemeProvider } from '@material-ui/core';
 import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News } from 'domains/common/containers';
 import theme from 'app/theme';
+import { ShapeDiverContainer } from 'domains/shapeDiver/containers';
 
 function App() {
   return (

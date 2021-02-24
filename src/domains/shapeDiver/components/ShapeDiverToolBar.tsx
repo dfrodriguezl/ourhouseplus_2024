@@ -2,10 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { Box, Card, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { setShapeDiverParams } from 'domains/core/coreSlice';
+import { setParams } from 'domains/shapeDiver/slice';
 
-import { high, low, medium, two, three, four, square, rectangle, custom, step2, regen } from 'assets'
+import { high, low, medium, two, three, four, square, rectangle, custom, step2, regenIcon } from 'assets'
 import { highSelected, lowSelected, mediumSelected, twoSelected, threeSelected, fourSelected, squareSelected, rectangleSelected, customSelected } from 'assets'
+import { ShapeDiverOptions } from '../models';
 
 const styles = makeStyles(() => ({
   root: {
@@ -36,23 +37,34 @@ const styles = makeStyles(() => ({
 
 interface StateProps {
   area: number;
+  options: ShapeDiverOptions | undefined;
 }
 
-type Props = StateProps;
+interface DispatchProps {
+  setParams: typeof setParams;
+}
+
+type Props = StateProps & DispatchProps;
 function ShapeDiverToolBar(props: Props) {
-  const { area } = props;
+  const { area, setParams, options } = props;
   const classes = styles();
-  const [terrain, setTerrain] = useState('1:1');
-  const [density, setDensity] = useState<number>(1);
+  const [terrain, setTerrain] = useState('1');
+  const [density, setDensity] = useState('0');
   const [unitType, setUnitType] = useState<number>(2);
+  const [regen, setRegen] = useState(0);
 
   useEffect(() => {
-    setShapeDiverParams({
+    setParams({
       terrain,
       density,
-      unitType
+      unitType,
+      regen
     })
-  }, [terrain, density, unitType])
+  }, [terrain, density, unitType, regen, setParams]);
+
+  const handleRegen = () => {
+    setRegen((regen + 1) % options!.regen.length);
+  }
 
   return (
     <Paper className={classes.root}>
@@ -88,26 +100,26 @@ function ShapeDiverToolBar(props: Props) {
             <Grid container justify="center">
               <Grid item xs={4}>
                 <Radio
-                  checked={terrain === '1:1'}
-                  onClick={() => setTerrain('1:1')}
+                  checked={terrain === '0'}
+                  onClick={() => setTerrain('0')}
                   checkedIcon={<img className={classes.buttons} src={squareSelected} alt="1:1" />}
                   icon={<img className={classes.buttons} src={square} alt="1:1" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={terrain === '2:1'}
-                  onClick={() => setTerrain('2:1')}
+                  checked={terrain === '1'}
+                  onClick={() => setTerrain('1')}
                   checkedIcon={<img className={classes.buttons} src={rectangleSelected} alt="2:1" />}
                   icon={<img className={classes.buttons} src={rectangle} alt="2:1" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={terrain === 'custom'}
-                  onClick={() => setTerrain('custom')}
-                  checkedIcon={<img className={classes.buttons} src={customSelected} alt="custom" />}
-                  icon={<img className={classes.buttons} src={custom} alt="custom" />}
+                  checked={terrain === 'import'}
+                  onClick={() => setTerrain('import')}
+                  checkedIcon={<img className={classes.buttons} src={customSelected} alt="import" />}
+                  icon={<img className={classes.buttons} src={custom} alt="import" />}
                 />
               </Grid>
             </Grid>
@@ -122,24 +134,24 @@ function ShapeDiverToolBar(props: Props) {
             <Grid container justify="center">
               <Grid item xs={4}>
                 <Radio
-                  checked={density === 1}
-                  onClick={() => setDensity(1)}
+                  checked={density === '0'}
+                  onClick={() => setDensity('0')}
                   checkedIcon={<img className={classes.buttons} src={lowSelected} alt="low" />}
                   icon={<img className={classes.buttons} src={low} alt="low" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={density === 2}
-                  onClick={() => setDensity(2)}
+                  checked={density === '1'}
+                  onClick={() => setDensity('1')}
                   checkedIcon={<img className={classes.buttons} src={mediumSelected} alt="medium" />}
                   icon={<img className={classes.buttons} src={medium} alt="medium" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={density === 3}
-                  onClick={() => setDensity(3)}
+                  checked={density === '2'}
+                  onClick={() => setDensity('2')}
                   checkedIcon={<img className={classes.buttons} src={highSelected} alt="high" />}
                   icon={<img className={classes.buttons} src={high} alt="high" />}
                 />
@@ -183,8 +195,8 @@ function ShapeDiverToolBar(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={6}>
-            <IconButton>
-              <img className={classes.regen} src={regen} alt="regen" />
+            <IconButton onClick={() => handleRegen()}>
+              <img className={classes.regen} src={regenIcon} alt="regen" />
             </IconButton>
           </Grid>
           <Grid item xs={6}>
@@ -197,10 +209,14 @@ function ShapeDiverToolBar(props: Props) {
     </Paper>
   )
 }
-const container = connect<StateProps, Props, {}, RootState>(
+const container = connect<StateProps, DispatchProps, {}, RootState>(
   (state: RootState) => ({
-    area: state.domains.typology.area
-  })
+    area: state.domains.typology.area,
+    options: state.domains.shapediver.options,
+  }),
+  {
+    setParams
+  }
 )(ShapeDiverToolBar);
 
 export default container;

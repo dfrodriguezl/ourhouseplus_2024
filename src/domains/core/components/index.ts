@@ -4,4 +4,3 @@ export { default as Footer } from './Footer';
 export { default as SearchPill } from './SearchPill';
 export { default as UrbanismMenu } from './UrbanismMenu';
 export { StyledMenu, StyledMenuItem } from './StyledMenu';
-export { default as ShapeDiverToolBar } from './ShapeDiverToolBar';
