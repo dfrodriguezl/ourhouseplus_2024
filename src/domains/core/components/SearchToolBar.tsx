@@ -1,13 +1,14 @@
-import { Divider, Grid, IconButton, makeStyles, Theme } from '@material-ui/core';
+import _ from 'lodash';
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { doSearch } from 'domains/core/coreSlice';
-import { SearchParams } from 'domains/core/models';
-import SearchPill from './SearchPill';
-import { SearchOutlined } from '@material-ui/icons';
-import UrbanismMenu from './UrbanismMenu';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Divider, Grid, IconButton, makeStyles, Theme } from '@material-ui/core';
+import { doSearch } from 'domains/core/coreSlice';
+import { SearchParams, Location } from 'domains/core/models';
+import { LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
+import { SearchOutlined } from '@material-ui/icons';
+import { RootState } from 'app/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
@@ -24,22 +25,25 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: 0
   }
 }));
-
+interface StateProps {
+  locations: Location[];
+}
 interface DispatchProps {
   doSearch(payload: SearchParams): void;
 }
 
-type Props = DispatchProps & RouteComponentProps;
+type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
-  const { doSearch, history } = props;
+  const { doSearch, history, locations } = props;
 
   const classes = useStyles();
-  const [location, setLocation] = useState<string>('');
+  const [location, setLocation] = useState<Location>();
   const [area, setArea] = useState<number>();
   const [urbanism, setUrbanism] = useState<string>();
 
   const updateLocation = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLocation(event.target.value);
+    const loc = _.find(locations, x => x.city === event.target.value);
+    setLocation(loc);
   }
 
   const updateArea = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,11 +66,9 @@ const SearchToolBar = (props: Props) => {
   return (
     <Grid container className={classes.searchBox}>
       <Grid item container direction="column" xs={3} justify="center">
-        <SearchPill
-          label="Location"
-          placeholder="Where will the project be?"
-          onChange={updateLocation}
-          value={location}
+        <LocationMenu
+          updateLocation={updateLocation}
+          location={location}
         />
       </Grid>
       <Grid item>
@@ -102,8 +104,10 @@ const SearchToolBar = (props: Props) => {
 
 const container = compose<Props, {}>(
   withRouter,
-  connect<never, DispatchProps>(
-    null,
+  connect<StateProps, DispatchProps, Props, RootState>(
+    (state: RootState) => ({
+      locations: state.domains.core.locations,
+    }),
     {
       doSearch
     }

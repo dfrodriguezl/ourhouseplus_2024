@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
-import { SearchParams } from './models';
+import { SearchParams, Location } from './models';
 
 interface CoreState {
-  location: string | undefined;
+  location: Location | undefined;
   area: number;
   urbanism: string | undefined;
   isSearching: boolean;
+  locations: Location[];
 }
 
 const initialState: CoreState = {
@@ -14,6 +15,38 @@ const initialState: CoreState = {
   area: 0,
   urbanism: undefined,
   isSearching: false,
+  locations: [
+    {
+      id: 1,
+      city: 'Bogota',
+      floors: 15,
+      description: 'Avg heigh 15 floors'
+    },
+    {
+      id: 2,
+      city: 'Jakarta',
+      floors: 7,
+      description: 'Avg. Height 7 floors'
+    },
+    {
+      id: 3,
+      city: 'New York',
+      floors: 50,
+      description: 'Avg. Height 50 floors'
+    },
+    {
+      id: 4,
+      city: 'Paris',
+      floors: 7,
+      description: 'Avg. Height 7 floors'
+    },
+    {
+      id: 5,
+      city: 'Cartagena',
+      floors: 30,
+      description: 'Avg. Height 30 floors'
+    }
+  ]
 };
 
 export const coreSlice = createSlice({

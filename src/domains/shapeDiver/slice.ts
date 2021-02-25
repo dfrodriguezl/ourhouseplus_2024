@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from 'app/store';
 import { ShapeDiverOptions, ShapeDiverParams } from 'domains/shapeDiver/models';
 
 export interface ShapeDiverState {
@@ -62,5 +63,7 @@ export const {
   setParams,
   setOptions
 } = shapeDiverSlice.actions;
+
+export const getArea = (state: RootState) => state.domains.core.area;
 
 export default shapeDiverSlice.reducer;

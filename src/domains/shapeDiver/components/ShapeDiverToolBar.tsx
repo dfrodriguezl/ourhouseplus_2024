@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { Box, Card, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { setParams } from 'domains/shapeDiver/slice';
+import { getArea, setParams } from 'domains/shapeDiver/slice';
 
 import { high, low, medium, two, three, four, square, rectangle, custom, step2, regenIcon } from 'assets'
 import { highSelected, lowSelected, mediumSelected, twoSelected, threeSelected, fourSelected, squareSelected, rectangleSelected, customSelected } from 'assets'
@@ -211,7 +211,7 @@ function ShapeDiverToolBar(props: Props) {
 }
 const container = connect<StateProps, DispatchProps, {}, RootState>(
   (state: RootState) => ({
-    area: state.domains.typology.area,
+    area: getArea(state),
     options: state.domains.shapediver.options,
   }),
   {
