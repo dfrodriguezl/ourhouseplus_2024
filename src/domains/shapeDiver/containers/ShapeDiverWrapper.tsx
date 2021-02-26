@@ -12,6 +12,7 @@ interface StateProps {
   terrain: string | undefined;
   density: string | undefined;
   regen: number | undefined
+  area: number | undefined;
 }
 
 interface ComponentProps {
@@ -43,7 +44,7 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_: Props) {
-    const { terrain, density, regen } = this.props;
+    const { terrain, density, regen, area } = this.props;
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
@@ -59,6 +60,10 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
           id: Parameters.Regen,
           value: regen
         },
+        {
+          id: Parameters.Area,
+          value: area?.toString()
+        }
       ]);
 
       if (response.err) {
@@ -72,7 +77,7 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidMount() {
-    const { terrain, density, setOptions } = this.props;
+    const { terrain, density, area, setOptions } = this.props;
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -113,7 +118,7 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
         // // refresh (load geometry), because the initial parameter update might not have changed any values
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
-        await this.api!.parameters.updateAsync([
+        await this.api.parameters.updateAsync([
           {
             id: Parameters.Terrain,
             value: terrain
@@ -121,6 +126,10 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
           {
             id: Parameters.Density,
             value: density
+          },
+          {
+            id: Parameters.Area,
+            value: area?.toString()
           }
         ]);
 
@@ -150,6 +159,7 @@ const container = compose<Props, {}>(
       terrain: state.domains.shapediver.terrain,
       density: state.domains.shapediver.density,
       regen: state.domains.shapediver.regen,
+      area: state.domains.core.area
     }),
     {
       setOptions

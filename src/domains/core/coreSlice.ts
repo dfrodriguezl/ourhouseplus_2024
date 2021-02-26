@@ -10,7 +10,7 @@ interface CoreState {
 
 const initialState: CoreState = {
   location: undefined,
-  area: 0,
+  area: 50,
   urbanism: undefined,
   locations: [
     {

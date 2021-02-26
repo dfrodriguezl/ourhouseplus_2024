@@ -46,11 +46,11 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 function ShapeDiverToolBar(props: Props) {
-  const { area, setParams, options } = props;
+  const { setParams, options } = props;
   const classes = styles();
   const [terrain, setTerrain] = useState('1');
   const [density, setDensity] = useState('0');
-  const [unitType, setUnitType] = useState<number>(2);
+  const [unitType, setUnitType] = useState(2);
   const [regen, setRegen] = useState(0);
 
   useEffect(() => {
