@@ -1,12 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from 'app/store';
 import { SearchParams, Location } from './models';
 
 interface CoreState {
   location: Location | undefined;
   area: number;
   urbanism: string | undefined;
-  isSearching: boolean;
   locations: Location[];
 }
 
@@ -14,7 +12,6 @@ const initialState: CoreState = {
   location: undefined,
   area: 0,
   urbanism: undefined,
-  isSearching: false,
   locations: [
     {
       id: 1,
@@ -53,33 +50,17 @@ export const coreSlice = createSlice({
   name: 'core',
   initialState,
   reducers: {
-    doSearch: {
-      reducer(state, action: PayloadAction<SearchParams>) {
-        const { area, location, urbanism } = action.payload;
-        state.area = area;
-        state.location = location;
-        state.urbanism = urbanism;
-        state.isSearching = true;
-      },
-      prepare(payload: SearchParams) {
-        return {
-          payload
-        }
-      }
-    },
-    doSearchSuccess: (state) => {
-      state.isSearching = false;
-    },
-    doSearchFailed: (state) => {
-      state.isSearching = false;
+    doSearch: (state, action: PayloadAction<SearchParams>) => {
+      const { area, location, urbanism } = action.payload;
+      state.area = area;
+      state.location = location;
+      state.urbanism = urbanism;
     }
   },
 });
 
 export const {
   doSearch,
-  doSearchFailed,
-  doSearchSuccess,
 } = coreSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
@@ -91,7 +72,5 @@ export const {
 //     dispatch(incrementByAmount(amount));
 //   }, 1000);
 // };
-
-export const isSearchingCount = (state: RootState) => state.domains.core.isSearching;
 
 export default coreSlice.reducer;

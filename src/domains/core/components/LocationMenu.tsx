@@ -69,7 +69,7 @@ function LocationMenu(props: Props) {
           >
             {
               props.locations.map(x =>
-                <StyledMenuItem>
+                <StyledMenuItem key={x.id}>
                   <FormControlLabel
                     value={x.city}
                     control={<Radio className={classes.radio} />}

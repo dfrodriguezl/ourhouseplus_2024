@@ -22,38 +22,17 @@ export const shapeDiverSlice = createSlice({
   name: 'shapediver',
   initialState,
   reducers: {
-    doUpdateTerrain: {
-      reducer(state, action: PayloadAction<string>) {
-        state.terrain = action.payload;
-      },
-      prepare(payload: string) {
-        return {
-          payload
-        }
-      }
+    doUpdateTerrain: (state, action: PayloadAction<string>) => {
+      state.terrain = action.payload;
     },
-    setParams: {
-      reducer(state, action: PayloadAction<ShapeDiverParams>) {
-        state.density = action.payload.density;
-        state.terrain = action.payload.terrain;
-        state.unitType = action.payload.unitType;
-        state.regen = action.payload.regen;
-      },
-      prepare(payload: ShapeDiverParams) {
-        return {
-          payload
-        }
-      }
+    setParams: (state, action: PayloadAction<ShapeDiverParams>) => {
+      state.density = action.payload.density;
+      state.terrain = action.payload.terrain;
+      state.unitType = action.payload.unitType;
+      state.regen = action.payload.regen;
     },
-    setOptions: {
-      reducer(state, action: PayloadAction<ShapeDiverOptions>) {
-        state.options = action.payload;
-      },
-      prepare(payload: ShapeDiverOptions) {
-        return {
-          payload
-        }
-      }
+    setOptions: (state, action: PayloadAction<ShapeDiverOptions>) => {
+      state.options = action.payload;
     }
   },
 });
