@@ -15,38 +15,7 @@ const initialState: CoreState = {
   location: undefined,
   area: 50,
   urbanism: undefined,
-  locations: [
-    {
-      id: 1,
-      city: 'Bogota',
-      floors: 15,
-      description: 'Avg heigh 15 floors'
-    },
-    {
-      id: 2,
-      city: 'Jakarta',
-      floors: 7,
-      description: 'Avg. Height 7 floors'
-    },
-    {
-      id: 3,
-      city: 'New York',
-      floors: 50,
-      description: 'Avg. Height 50 floors'
-    },
-    {
-      id: 4,
-      city: 'Paris',
-      floors: 7,
-      description: 'Avg. Height 7 floors'
-    },
-    {
-      id: 5,
-      city: 'Cartagena',
-      floors: 30,
-      description: 'Avg. Height 30 floors'
-    }
-  ]
+  locations: []
 };
 
 export const coreSlice = createSlice({
