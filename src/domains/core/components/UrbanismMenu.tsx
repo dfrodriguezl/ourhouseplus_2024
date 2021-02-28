@@ -49,8 +49,9 @@ export default function UrbanismMenu(props: Props) {
           <SearchPill
             label="Urbanism"
             placeholder="Choose type of urbanism"
-            value={urbanism}
+            value={urbanism || ''}
             onClick={handleClick}
+            onChange={updateUrbanism}
           />
           <StyledMenu
             id="customized-menu"

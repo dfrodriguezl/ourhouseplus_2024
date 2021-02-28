@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Divider, Grid, IconButton, makeStyles, Theme } from '@material-ui/core';
-import { doSearch } from 'domains/core/coreSlice';
-import { SearchParams, Location } from 'domains/core/models';
+import { doSearch, getLocations } from 'domains/core/coreSlice';
+import { Location } from 'domains/core/models';
 import { LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
 import { SearchOutlined } from '@material-ui/icons';
 import { RootState } from 'app/store';
@@ -29,17 +29,22 @@ interface StateProps {
   locations: Location[];
 }
 interface DispatchProps {
-  doSearch(payload: SearchParams): void;
+  doSearch: typeof doSearch;
+  getLocations: typeof getLocations;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
-  const { doSearch, history, locations } = props;
+  const { doSearch, history, locations, getLocations } = props;
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
   const [area, setArea] = useState<number>();
   const [urbanism, setUrbanism] = useState<string>();
+
+  useEffect(() => {
+    getLocations();
+  }, [getLocations])
 
   const updateLocation = (event: React.ChangeEvent<HTMLInputElement>) => {
     const loc = _.find(locations, x => x.city === event.target.value);
@@ -109,6 +114,7 @@ const container = compose<Props, {}>(
       locations: state.domains.core.locations,
     }),
     {
+      getLocations,
       doSearch
     }
   )

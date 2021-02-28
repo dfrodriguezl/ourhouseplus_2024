@@ -12,15 +12,13 @@ import './index.css';
 import 'fontsource-roboto';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <Router history={history}>
-        <Auth0>
-          <Route path="/" component={App} />
-        </Auth0>
-      </Router>
-    </Provider>
-  </React.StrictMode>,
+  <Provider store={store}>
+    <Router history={history}>
+      <Auth0>
+        <Route path="/" component={App} />
+      </Auth0>
+    </Router>
+  </Provider>,
   document.getElementById('root')
 );
 

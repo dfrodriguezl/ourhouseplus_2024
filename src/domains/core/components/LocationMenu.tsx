@@ -57,8 +57,9 @@ function LocationMenu(props: Props) {
           <SearchPill
             label="Location"
             placeholder="Where will the project be at"
-            value={location?.city}
+            value={location?.city || ''}
             onClick={handleClick}
+            onChange={updateLocation}
           />
           <StyledMenu
             id="location-menu"

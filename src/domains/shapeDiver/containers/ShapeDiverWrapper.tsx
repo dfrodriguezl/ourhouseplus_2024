@@ -1,8 +1,8 @@
 import _ from 'lodash';
 import React from 'react';
+import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { RootState } from 'app/store';
-import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Api } from 'shapediver-types';
 import { Parameters } from 'domains/shapeDiver/models';
