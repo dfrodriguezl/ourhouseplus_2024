@@ -2,19 +2,17 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { get } from 'app/api';
 import { AppThunk } from 'app/store';
 import { AxiosResponse } from 'axios';
-import { SearchParams, Location } from './models';
+import { SearchParams, Location, Density } from './models';
 
 interface CoreState {
   location: Location | undefined;
-  area: number;
-  urbanism: string | undefined;
+  density: Density | undefined;
   locations: Location[];
 }
 
 const initialState: CoreState = {
   location: undefined,
-  area: 50,
-  urbanism: undefined,
+  density: undefined,
   locations: []
 };
 
@@ -23,10 +21,9 @@ export const coreSlice = createSlice({
   initialState,
   reducers: {
     doSearch: (state, action: PayloadAction<SearchParams>) => {
-      const { area, location, urbanism } = action.payload;
-      state.area = area;
+      const { location, density } = action.payload;
       state.location = location;
-      state.urbanism = urbanism;
+      state.density = density;
     },
     setLocations: (state, action: PayloadAction<Location[]>) => {
       state.locations = action.payload;

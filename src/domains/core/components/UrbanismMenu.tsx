@@ -1,10 +1,12 @@
 import React from 'react';
 import { SearchPill, StyledMenu, StyledMenuItem } from '.';
 import { FormControl, FormControlLabel, makeStyles, Radio, RadioGroup, Theme } from '@material-ui/core';
+import { Densities, Density } from '../models';
+import _ from 'lodash';
 
 const styles = makeStyles((theme: Theme) => ({
   radio: {
-    padding: '0 15px',
+    padding: '10px 10px',
     fontSize: 12,
     color: theme.palette.common.black,
     '&:hover': {
@@ -23,13 +25,13 @@ const styles = makeStyles((theme: Theme) => ({
 }))
 
 export interface OwnProps {
-  updateUrbanism(event: React.ChangeEvent<HTMLInputElement>): void;
-  urbanism: any;
+  updateDensity(event: React.ChangeEvent<HTMLInputElement>): void;
+  density: Density | undefined;
 }
 
 type Props = OwnProps;
 export default function UrbanismMenu(props: Props) {
-  const { urbanism, updateUrbanism } = props;
+  const { density, updateDensity } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const classes = styles();
@@ -45,13 +47,13 @@ export default function UrbanismMenu(props: Props) {
   return (
     <div>
       <FormControl component="fieldset">
-        <RadioGroup aria-label="urbanism" name="urbanism" value={urbanism} onChange={updateUrbanism}>
+        <RadioGroup aria-label="density" name="density" value={density?.label || ''} onChange={updateDensity}>
           <SearchPill
-            label="Urbanism"
-            placeholder="Choose type of urbanism"
-            value={urbanism || ''}
+            label="Density"
+            placeholder="Choose the density"
+            value={density?.label || ''}
             onClick={handleClick}
-            onChange={updateUrbanism}
+            onChange={updateDensity}
           />
           <StyledMenu
             id="customized-menu"
@@ -60,45 +62,23 @@ export default function UrbanismMenu(props: Props) {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <StyledMenuItem>
-              <FormControlLabel
-                value="City Block"
-                control={<Radio className={classes.radio} />}
-                labelPlacement="start"
-                label={
-                  <label>
-                    <div className={classes.radioLabel}>City Block</div>
-                    <div className={classes.radioSubLabel}>High rise - High density</div>
-                  </label>
-                }
-              />
-            </StyledMenuItem>
-            <StyledMenuItem>
-              <FormControlLabel
-                value="Residential Quarter"
-                control={<Radio className={classes.radio} />}
-                labelPlacement="start"
-                label={
-                  <label>
-                    <div className={classes.radioLabel}>Residential Quarter</div>
-                    <div className={classes.radioSubLabel}>Low rise - High density</div>
-                  </label>
-                }
-              />
-            </StyledMenuItem>
-            <StyledMenuItem>
-              <FormControlLabel
-                value="Rural Quarter"
-                control={<Radio className={classes.radio} />}
-                labelPlacement="start"
-                label={
-                  <label>
-                    <div className={classes.radioLabel}>Rural Quarter</div>
-                    <div className={classes.radioSubLabel}>Low rise - Low density</div>
-                  </label>
-                }
-              />
-            </StyledMenuItem>
+            {
+              _.map(Densities, x =>
+                <StyledMenuItem key={x.value}>
+                  <FormControlLabel
+                    value={x.label}
+                    control={<Radio className={classes.radio} />}
+                    labelPlacement="start"
+                    label={
+                      <label>
+                        <div className={classes.radioLabel}>{x.label}</div>
+                        <div className={classes.radioSubLabel}>{x.subLabel}</div>
+                      </label>
+                    }
+                  />
+                </StyledMenuItem>
+              )
+            }
           </StyledMenu>
         </RadioGroup>
       </FormControl>

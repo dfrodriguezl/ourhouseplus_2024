@@ -4,17 +4,9 @@ import { createMuiTheme } from '@material-ui/core/styles';
 // A custom theme for this app
 const theme = createMuiTheme({
   typography: {
-    fontFamily: 'Helvetica',
+    fontFamily: 'Roboto',
   },
   palette: {
-    primary: {
-      main: '#FFFFFF',
-      light: '#6D6D6D',
-      dark: '#1B1B1B'
-    },
-    secondary: {
-      main: '#000000', //White
-    },
     error: {
       main: red.A400,
     },

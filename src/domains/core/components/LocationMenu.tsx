@@ -8,7 +8,7 @@ import { compose } from 'recompose';
 
 const styles = makeStyles((theme: Theme) => ({
   radio: {
-    padding: '0 15px',
+    padding: '10px 10px',
     fontSize: 12,
     color: theme.palette.common.black,
     '&:hover': {
@@ -53,7 +53,7 @@ function LocationMenu(props: Props) {
   return (
     <div>
       <FormControl component="fieldset">
-        <RadioGroup aria-label="location" name="location" value={location} onChange={updateLocation}>
+        <RadioGroup aria-label="location" name="location" value={location?.city || ''} onChange={updateLocation}>
           <SearchPill
             label="Location"
             placeholder="Where will the project be at"

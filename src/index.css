@@ -1,6 +1,7 @@
 body {
   margin: 0;
-  background: #1B1B1B;
+  opacity: 1;
+  background: transparent linear-gradient(126deg, #F0E0D8 0%, #EEDFD7 1%, #C9D2D5 21%, #ADC8D4 41%, #98C1D2 61%, #8CBDD2 81%, #88BCD2 100%) 0% 0% no-repeat padding-box;
   font-family: Roboto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

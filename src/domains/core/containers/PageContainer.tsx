@@ -1,9 +1,7 @@
-import React from 'react'
 import { compose } from 'recompose';
 import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
 import { Footer, Header } from 'domains/core/components'
 
-import background from 'assets/background.jpg';
 import whiteBackground from 'assets/white-background.png';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -60,8 +58,7 @@ const PageContainer = (props: Props) => {
     <Container maxWidth="lg">
       {
         noBackground
-        ? <img src={whiteBackground} alt="background" className={classes.background} />
-        : <img src={background} alt="background" className={classes.background} />
+        && <img src={whiteBackground} alt="background" className={classes.background} />
       }
       <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
         {

@@ -7,14 +7,12 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Api } from 'shapediver-types';
 import { Parameters } from 'domains/shapeDiver/models';
 import { getArea, setOptions } from 'domains/shapeDiver/slice';
-import { Location } from 'domains/core/models';
 
 interface StateProps {
   terrain: string | undefined;
   density: string | undefined;
   regen: number | undefined
   area: number | undefined;
-  location: Location | undefined;
 }
 
 interface ComponentProps {
@@ -26,7 +24,7 @@ interface DispatchProps {
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
-class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
+class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
   private containerSD: React.RefObject<HTMLDivElement>;
   private api: Api.ApiInterfaceV2 | null;
   private parameters: any | null;
@@ -45,32 +43,41 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
     }
   }
 
-  public async componentDidUpdate(_: Props) {
-    const { terrain, density, regen, area, location } = this.props;
+  // public async componentDidUpdate(_: Props) {
+  //   const { terrain, density, regen, area } = this.props;
 
-    if (this.state.isLoaded) {
-      const response = await this.api!.parameters.updateAsync([
-        { id: Parameters.Terrain, value: terrain },
-        { id: Parameters.Density, value: density },
-        { id: Parameters.Area, value: area?.toString() },
-        { id: Parameters.Regen, value: regen },
-        { id: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-        { id: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-        { id: Parameters.NumberStreetFloors, value: location.streetFloors },
-      ]);
+  //   if (this.state.isLoaded) {
+  //     const response = await this.api!.parameters.updateAsync([
+  //       {
+  //         id: Parameters.Terrain,
+  //         value: terrain
+  //       },
+  //       {
+  //         id: Parameters.Density,
+  //         value: density
+  //       },
+  //       {
+  //         id: Parameters.Regen,
+  //         value: regen
+  //       },
+  //       {
+  //         id: Parameters.Area,
+  //         value: area?.toString()
+  //       }
+  //     ]);
 
-      if (response.err) {
-        console.log(response.err);
-      }
+  //     if (response.err) {
+  //       console.log(response.err);
+  //     }
 
-      if (response.data) {
-        console.log(response.data)
-      }
-    }
-  }
+  //     if (response.data) {
+  //       console.log(response.data)
+  //     }
+  //   }
+  // }
 
   public async componentDidMount() {
-    const { terrain, density, area, location, setOptions } = this.props;
+    const { terrain, density, area, setOptions } = this.props;
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -89,7 +96,7 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
       if (this.api) {
         // register a ShapeDiver CommPlugin
         await this.api.plugins.registerCommPluginAsync({
-          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET!,
+          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP2!,
           // URL of the ShapeDiver backend system used
           // runtime id to use for this CommPlugin (you might register several)
           runtimeId: 'CommPlugin_1',
@@ -103,22 +110,23 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
 
         console.log('Available model parameters', this.parameters);
 
-        setOptions({
-          regen: _.find(this.parameters, x => x.id === Parameters.Regen).choices,
-          terrain: _.find(this.parameters, x => x.id === Parameters.Terrain).choices
-        });
-
         // // refresh (load geometry), because the initial parameter update might not have changed any values
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
-        await this.api.parameters.updateAsync([
-          { id: Parameters.Terrain, value: terrain },
-          { id: Parameters.Density, value: density },
-          { id: Parameters.Area, value: area?.toString() },
-          { id: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-          { id: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-          { id: Parameters.NumberStreetFloors, value: location.streetFloors },
-        ]);
+        // await this.api.parameters.updateAsync([
+        //   {
+        //     id: Parameters.Terrain,
+        //     value: terrain
+        //   },
+        //   {
+        //     id: Parameters.Density,
+        //     value: density
+        //   },
+        //   {
+        //     id: Parameters.Area,
+        //     value: area?.toString()
+        //   }
+        // ]);
 
         // // finally show the scene
         await this.api.updateSettingAsync('scene.show', true);
@@ -145,7 +153,6 @@ const container = compose<Props, {}>(
     (state: RootState) => ({
       terrain: state.domains.shapediver.terrain,
       density: state.domains.shapediver.density,
-      location: state.domains.shapediver.location,
       regen: state.domains.shapediver.regen,
       area: getArea(state),
     }),
@@ -153,6 +160,6 @@ const container = compose<Props, {}>(
       setOptions
     }
   )
-)(ShapeDiverWrapper)
+)(ShapeDiverWrapperStep2)
 
 export default container;

@@ -10,11 +10,13 @@ type Props = RouteComponentProps;
 const Home = (props: Props) => {
   return (
     <PageContainer>
-      <Grid item>
-        <SearchToolBar />
-      </Grid>
-      <Grid item xs={6}>
-        <Slogan />
+      <Grid container justify="center">
+        <Grid item xs={8}>
+          <SearchToolBar />
+        </Grid>
+        <Grid item xs={6} style={{ alignSelf: 'flex-end' }}>
+          <Slogan />
+        </Grid>
       </Grid>
     </PageContainer>
   )

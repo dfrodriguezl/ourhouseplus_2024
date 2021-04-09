@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Box, Card, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup, Slider } from '@material-ui/core'
-import { getArea, setParams, setDensity } from 'domains/shapeDiver/slice';
+import { Box, Card, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
+import { getArea, setWindow, setDensity } from 'domains/shapeDiver/slice';
 
 import { high, low, medium, two, three, four, square, rectangle, custom, step2, regenIcon } from 'assets'
 import { highSelected, lowSelected, mediumSelected, twoSelected, threeSelected, fourSelected, squareSelected, rectangleSelected, customSelected } from 'assets'
 import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
-import { Location } from 'domains/core/models';
-import { ShaveDiverAdvancedOptions } from '.';
 
 const styles = makeStyles(() => ({
   root: {
@@ -43,31 +41,20 @@ interface StateProps {
   area: number;
   density: string | undefined;
   options: ShapeDiverOptions | undefined;
-  location: Location | undefined;
 }
 
 interface DispatchProps {
-  setParams: typeof setParams;
+  setWindow: typeof setWindow;
   setDensity: typeof setDensity;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBar(props: Props) {
-  const { setParams, options, density, setDensity, history, location } = props;
+  const { setWindow, options, density, setDensity, history } = props;
   const classes = styles();
   const [terrain, setTerrain] = useState('1');
   const [unitType, setUnitType] = useState(2);
   const [regen, setRegen] = useState(0);
-
-  useEffect(() => {
-    setParams({
-      terrain,
-      density,
-      unitType,
-      regen
-    })
-  }, [terrain, density, unitType, regen, setParams]);
-
 
   const handleRegen = () => {
     setRegen((regen + 1) % options!.regen.length);
@@ -104,8 +91,8 @@ function ShapeDiverToolBar(props: Props) {
         </Card>
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Terrain shaper</Box>
-            <Box fontSize={10} textAlign="end">choose your lot shape</Box>
+            <Box fontSize={12} fontWeight='bold' textAlign="end">Window Percentage</Box>
+            <Box fontSize={10} textAlign="end">choose your window size</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -138,7 +125,7 @@ function ShapeDiverToolBar(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Density Project</Box>
+            <Box fontSize={12} fontWeight='bold' textAlign="end">Facade Direction</Box>
             <Box fontSize={10} textAlign="end">choose level of density</Box>
           </Grid>
           <RadioGroup>
@@ -204,9 +191,6 @@ function ShapeDiverToolBar(props: Props) {
             </Grid>
           </RadioGroup>
         </Grid>
-
-        <ShaveDiverAdvancedOptions />
-
         <Grid item container className={classes.subContainer}>
           <Grid item xs={6}>
             <IconButton onClick={() => handleRegen()}>
@@ -230,10 +214,9 @@ const container = compose<Props, {}>(
       area: getArea(state),
       density: state.domains.shapediver.density,
       options: state.domains.shapediver.options,
-      location: state.domains.shapediver.location,
     }),
     {
-      setParams,
+      setWindow,
       setDensity,
     }
   )

@@ -1,4 +1,3 @@
-import React from 'react';
 import { AppBar, createStyles, IconButton, makeStyles, Theme, Toolbar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -10,7 +9,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       paddingTop: 20,
-      color: 'white !important',
       background: 'transparent'
     },
     menuButton: {
@@ -18,11 +16,13 @@ const useStyles = makeStyles((theme: Theme) =>
       border: '1px white'
     },
     member: {
-      fontSize: 12,
+      fontSize: 14,
+      fontWeight: 'bold',
+      color: 'black',
       marginRight: 5,
     },
     icons: {
-      color: 'white'
+      color: 'black'
     }
   })
 );
@@ -36,7 +36,7 @@ const Header = () => {
           <img src={logo} alt="logo" width={100} />
         </Link>
         <div className={classes.menuButton}>
-          <span className={classes.member}>become a member</span>
+          <span className={classes.member}>Sign In</span>
           <IconButton edge="end" className={classes.icons}>
             <MenuIcon />
             <AccountCircleIcon />

@@ -3,11 +3,11 @@ import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Divider, Grid, IconButton, makeStyles, Theme } from '@material-ui/core';
-import { doSearch, getLocations } from 'domains/core/coreSlice';
-import { Location } from 'domains/core/models';
+import { Button, Divider, Grid, makeStyles, Theme } from '@material-ui/core';
+import { getLocations } from 'domains/core/coreSlice';
+import { Densities, Density, Location } from 'domains/core/models';
 import { LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
-import { SearchOutlined } from '@material-ui/icons';
+import { setInitialParams } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -21,26 +21,29 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.common.black,
     height: '100%'
   },
-  searchButton: {
-    margin: 0
+  nextButton: {
+    borderRadius: 20,
+    backgroundColor: '#FF6C6C',
+    color: 'white',
+    margin: '10px 0'
   }
 }));
 interface StateProps {
   locations: Location[];
 }
 interface DispatchProps {
-  doSearch: typeof doSearch;
+  setInitialParams: typeof setInitialParams;
   getLocations: typeof getLocations;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
-  const { doSearch, history, locations, getLocations } = props;
+  const { setInitialParams, history, locations, getLocations } = props;
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
   const [area, setArea] = useState<number>();
-  const [urbanism, setUrbanism] = useState<string>();
+  const [density, setDensity] = useState<Density>();
 
   useEffect(() => {
     getLocations();
@@ -55,17 +58,18 @@ const SearchToolBar = (props: Props) => {
     setArea(parseInt(event.target.value));
   }
 
-  const updateUrbanism = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrbanism(event.target.value);
+  const updateDensity = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const den = _.find(Densities, x => x.label === event.target.value);
+    setDensity(den);
   }
 
-  const search = () => {
-    doSearch({
+  const next = () => {
+    setInitialParams({
       location,
       area: area!,
-      urbanism: urbanism!
+      density: density!
     });
-    history.push('/shapediver');
+    history.push('/shapediver/step1');
   }
 
   return (
@@ -84,7 +88,7 @@ const SearchToolBar = (props: Props) => {
           label="Area m2"
           placeholder="Add total terrain area"
           onChange={updateArea}
-          value={area}
+          value={area || ''}
           type="number"
         />
       </Grid>
@@ -93,15 +97,19 @@ const SearchToolBar = (props: Props) => {
       </Grid>
       <Grid item container direction="column" xs={3} justify="center">
         <UrbanismMenu
-          updateUrbanism={updateUrbanism}
-          urbanism={urbanism}
-
+          updateDensity={updateDensity}
+          density={density}
         />
       </Grid>
       <Grid item container xs={1} justify="center">
-        <IconButton onClick={search} className={classes.searchButton}>
-          <SearchOutlined color="secondary" />
-        </IconButton>
+        <Button
+          size="small"
+          onClick={next}
+          className={classes.nextButton}
+          disabled={!area || !density}
+        >
+          Next
+        </Button>
       </Grid>
     </Grid>
   );
@@ -115,7 +123,7 @@ const container = compose<Props, {}>(
     }),
     {
       getLocations,
-      doSearch
+      setInitialParams
     }
   )
 )(SearchToolBar);
