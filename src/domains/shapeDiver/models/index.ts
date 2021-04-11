@@ -13,15 +13,12 @@ export enum Parameters {
 
 export interface ShapeDiverParams {
   terrain: string | '0' | '1' | '2';
-  density: string | '0' | '1' | '2' | undefined;
   unitType: number;
-  regen: number;
 }
 
 export interface ShapeDiverOptions {
   terrain: string[];
   regen: string[];
-
 }
 
 export interface AdvancedOptions {

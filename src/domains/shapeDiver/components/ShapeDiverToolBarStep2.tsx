@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Card, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { getArea, setWindow, setDensity } from 'domains/shapeDiver/slice';
+import { getArea, setWindow, setDensity, setFacadeDirection, setRegen } from 'domains/shapeDiver/slice';
 
-import { high, low, medium, two, three, four, square, rectangle, custom, step2, regenIcon } from 'assets'
-import { highSelected, lowSelected, mediumSelected, twoSelected, threeSelected, fourSelected, squareSelected, rectangleSelected, customSelected } from 'assets'
+import { fifty, sixty, seventy, regenIcon, horizontal, vertical } from 'assets'
+import { fiftySelected, sixtySelected, seventySelected, verticalSelected, horizontalSelected } from 'assets'
 import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
+import { Location } from 'domains/core/models';
+import { ShapeDiverAdvancedOptions, ShapeDiverSteps } from 'domains/shapeDiver/components';
 
 const styles = makeStyles(() => ({
   root: {
@@ -27,10 +28,6 @@ const styles = makeStyles(() => ({
     width: 32,
     height: 32
   },
-  step2: {
-    width: 64,
-    height: 32,
-  },
   regen: {
     width: 24,
     height: 24
@@ -39,30 +36,23 @@ const styles = makeStyles(() => ({
 
 interface StateProps {
   area: number;
-  density: string | undefined;
+  density: number;
   options: ShapeDiverOptions | undefined;
+  location: Location | undefined
+  facadeDirection: number;
 }
 
 interface DispatchProps {
   setWindow: typeof setWindow;
   setDensity: typeof setDensity;
+  setFacadeDirection: typeof setFacadeDirection;
+  setRegen: typeof setRegen;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBar(props: Props) {
-  const { setWindow, options, density, setDensity, history } = props;
+  const { setWindow, setFacadeDirection, setRegen, location, facadeDirection } = props;
   const classes = styles();
-  const [terrain, setTerrain] = useState('1');
-  const [unitType, setUnitType] = useState(2);
-  const [regen, setRegen] = useState(0);
-
-  const handleRegen = () => {
-    setRegen((regen + 1) % options!.regen.length);
-  }
-
-  const goToStep2 = () => {
-    history.push('/shapediver/step2');
-  }
 
   return (
     <Paper className={classes.root}>
@@ -98,26 +88,26 @@ function ShapeDiverToolBar(props: Props) {
             <Grid container justify="center">
               <Grid item xs={4}>
                 <Radio
-                  checked={terrain === '0'}
-                  onClick={() => setTerrain('0')}
-                  checkedIcon={<img className={classes.buttons} src={squareSelected} alt="1:1" />}
-                  icon={<img className={classes.buttons} src={square} alt="1:1" />}
+                  checked={location.windowPercentage === 0}
+                  onClick={() => setWindow(0)}
+                  checkedIcon={<img className={classes.buttons} src={fiftySelected} alt="50" />}
+                  icon={<img className={classes.buttons} src={fifty} alt="50" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={terrain === '1'}
-                  onClick={() => setTerrain('1')}
-                  checkedIcon={<img className={classes.buttons} src={rectangleSelected} alt="2:1" />}
-                  icon={<img className={classes.buttons} src={rectangle} alt="2:1" />}
+                  checked={location.windowPercentage === 1}
+                  onClick={() => setWindow(1)}
+                  checkedIcon={<img className={classes.buttons} src={sixtySelected} alt="60" />}
+                  icon={<img className={classes.buttons} src={sixty} alt="60" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={terrain === 'import'}
-                  onClick={() => setTerrain('import')}
-                  checkedIcon={<img className={classes.buttons} src={customSelected} alt="import" />}
-                  icon={<img className={classes.buttons} src={custom} alt="import" />}
+                  checked={location.windowPercentage === 2}
+                  onClick={() => setWindow(2)}
+                  checkedIcon={<img className={classes.buttons} src={seventySelected} alt="70" />}
+                  icon={<img className={classes.buttons} src={seventy} alt="70" />}
                 />
               </Grid>
             </Grid>
@@ -126,83 +116,40 @@ function ShapeDiverToolBar(props: Props) {
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
             <Box fontSize={12} fontWeight='bold' textAlign="end">Facade Direction</Box>
-            <Box fontSize={10} textAlign="end">choose level of density</Box>
+            <Box fontSize={10} textAlign="end">choose facade direction</Box>
           </Grid>
           <RadioGroup>
-            <Grid container justify="center">
-              <Grid item xs={4}>
+            <Grid container alignItems="center">
+              <Grid item xs={6}>
                 <Radio
-                  checked={density === '0'}
-                  onClick={() => setDensity('0')}
-                  checkedIcon={<img className={classes.buttons} src={lowSelected} alt="low" />}
-                  icon={<img className={classes.buttons} src={low} alt="low" />}
+                  checked={facadeDirection === 0}
+                  onClick={() => setFacadeDirection(0)}
+                  checkedIcon={<img className={classes.buttons} src={horizontalSelected} alt="horizontal" />}
+                  icon={<img className={classes.buttons} src={horizontal} alt="horizontal" />}
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6}>
                 <Radio
-                  checked={density === '1'}
-                  onClick={() => setDensity('1')}
-                  checkedIcon={<img className={classes.buttons} src={mediumSelected} alt="medium" />}
-                  icon={<img className={classes.buttons} src={medium} alt="medium" />}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Radio
-                  checked={density === '2'}
-                  onClick={() => setDensity('2')}
-                  checkedIcon={<img className={classes.buttons} src={highSelected} alt="high" />}
-                  icon={<img className={classes.buttons} src={high} alt="high" />}
+                  checked={facadeDirection === 1}
+                  onClick={() => setFacadeDirection(1)}
+                  checkedIcon={<img className={classes.buttons} src={verticalSelected} alt="vertical" />}
+                  icon={<img className={classes.buttons} src={vertical} alt="vertical" />}
                 />
               </Grid>
             </Grid>
           </RadioGroup>
         </Grid>
-        <Grid item container className={classes.subContainer}>
-          <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Units number types</Box>
-            <Box fontSize={10} textAlign="end">choose mix</Box>
-          </Grid>
-          <RadioGroup>
-            <Grid container justify="center">
-              <Grid item xs={4}>
-                <Radio
-                  checked={unitType === 2}
-                  onClick={() => setUnitType(2)}
-                  checkedIcon={<img className={classes.buttons} src={twoSelected} alt="two" />}
-                  icon={<img className={classes.buttons} src={two} alt="two" />}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Radio
-                  checked={unitType === 3}
-                  onClick={() => setUnitType(3)}
-                  checkedIcon={<img className={classes.buttons} src={threeSelected} alt="three" />}
-                  icon={<img className={classes.buttons} src={three} alt="three" />}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Radio
-                  checked={unitType === 4}
-                  onClick={() => setUnitType(4)}
-                  checkedIcon={<img className={classes.buttons} src={fourSelected} alt="four" />}
-                  icon={<img className={classes.buttons} src={four} alt="four" />}
-                />
-              </Grid>
-            </Grid>
-          </RadioGroup>
+
+        <ShapeDiverAdvancedOptions />
+
+        <Grid item xs={2}>
+          <IconButton onClick={() => setRegen()}>
+            <img className={classes.regen} src={regenIcon} alt="regen" />
+          </IconButton>
         </Grid>
-        <Grid item container className={classes.subContainer}>
-          <Grid item xs={6}>
-            <IconButton onClick={() => handleRegen()}>
-              <img className={classes.regen} src={regenIcon} alt="regen" />
-            </IconButton>
-          </Grid>
-          <Grid item xs={6}>
-            <IconButton onClick={goToStep2}>
-              <img className={classes.step2} src={step2} alt="step2" />
-            </IconButton>
-          </Grid>
-        </Grid>
+
+        <ShapeDiverSteps />
+
       </Grid>
     </Paper>
   )
@@ -214,10 +161,14 @@ const container = compose<Props, {}>(
       area: getArea(state),
       density: state.domains.shapediver.density,
       options: state.domains.shapediver.options,
+      location: state.domains.shapediver.location,
+      facadeDirection: state.domains.shapediver.facadeDirection,
     }),
     {
       setWindow,
       setDensity,
+      setFacadeDirection,
+      setRegen,
     }
   )
 )(ShapeDiverToolBar);

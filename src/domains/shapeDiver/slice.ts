@@ -8,22 +8,24 @@ export interface ShapeDiverState {
   area: number;
   location: Location | undefined;
   terrain: string | undefined;
-  density: string | undefined;
-  regen: number | undefined;
+  density: number;
+  regen: number;
   unitType: number;
   options: ShapeDiverOptions | undefined;
   windowPercent: number;
+  facadeDirection: number;
 }
 
 const initialState: ShapeDiverState = {
   area: 50,
   location: undefined,
   terrain: undefined,
-  density: undefined,
-  regen: undefined,
+  density: 0,
+  regen: 0,
   unitType: 1,
   options: undefined,
   windowPercent: 70,
+  facadeDirection: 0,
 };
 
 export const shapeDiverSlice = createSlice({
@@ -39,12 +41,10 @@ export const shapeDiverSlice = createSlice({
       state.density = action.payload.density.value;
     },
     setParams: (state, action: PayloadAction<ShapeDiverParams>) => {
-      state.density = action.payload.density;
       state.terrain = action.payload.terrain;
       state.unitType = action.payload.unitType;
-      state.regen = action.payload.regen;
     },
-    setDensity: (state, action: PayloadAction<string>) => {
+    setDensity: (state, action: PayloadAction<number>) => {
       state.density = action.payload;
     },
     setLocation: (state, action: PayloadAction<Location>) => {
@@ -56,11 +56,17 @@ export const shapeDiverSlice = createSlice({
       state.location!.streetFloors = action.payload.streetFloors;
     },
     setWindow: (state, action: PayloadAction<number>) => {
-      state.windowPercent = action.payload;
+      state.location!.windowPercentage = action.payload;
+    },
+    setFacadeDirection: (state, action: PayloadAction<number>) => {
+      state.facadeDirection = action.payload;
     },
     setOptions: (state, action: PayloadAction<ShapeDiverOptions>) => {
       state.options = action.payload;
-    }
+    },
+    setRegen: (state) => {
+      state.regen = (state.regen + 1) % state.options!.regen.length;
+    },
   },
 });
 
@@ -72,6 +78,8 @@ export const {
   setDensity,
   setWindow,
   setAdvancedOptions,
+  setFacadeDirection,
+  setRegen,
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;

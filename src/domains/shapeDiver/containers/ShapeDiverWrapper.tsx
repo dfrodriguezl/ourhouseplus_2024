@@ -12,8 +12,8 @@ import { FullPageOverlay } from 'domains/core/containers';
 
 interface StateProps {
   terrain: string | undefined;
-  density: string | undefined;
-  regen: number | undefined
+  density: number;
+  regen: number;
   area: number | undefined;
   location: Location | undefined;
 }

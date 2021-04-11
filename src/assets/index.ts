@@ -5,6 +5,8 @@ export { default as mediumSelected } from './MediumSelected.png'
 export { default as low } from './Low.png'
 export { default as lowSelected } from './LowSelected.png'
 
+export { default as one } from './Two.png'
+export { default as oneSelected } from './TwoSelected.png'
 export { default as two } from './Two.png'
 export { default as twoSelected } from './TwoSelected.png'
 export { default as three } from './Three.png'
@@ -21,6 +23,20 @@ export { default as customSelected } from './CustomSelected.png'
 
 export { default as steps1 } from './Steps1.png'
 
+export { default as step1 } from './Step2.png'
 export { default as step2 } from './Step2.png'
+export { default as step3 } from './Step2.png'
+
+export { default as vertical } from './Vertical.png'
+export { default as verticalSelected } from './VerticalSelected.png'
+export { default as horizontal } from './Horizontal.png'
+export { default as horizontalSelected } from './HorizontalSelected.png'
 
 export { default as regenIcon } from './Regen.png'
+
+export { default as fifty } from './50.png'
+export { default as fiftySelected } from './50Selected.png'
+export { default as sixty } from './60.png'
+export { default as sixtySelected } from './60Selected.png'
+export { default as seventy } from './70.png'
+export { default as seventySelected } from './70Selected.png'

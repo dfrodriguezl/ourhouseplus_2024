@@ -17,23 +17,23 @@ export interface Location {
 export interface Density {
   label: string;
   subLabel: string;
-  value: string;
+  value: number;
 }
 
 export const Densities = [
   {
-    value: '0',
+    value: 0,
     label: 'City Block',
     subLabel: 'High rise - High density',
   },
   {
-    value: '1',
+    value: 1,
     label: 'Residential Quarter',
     subLabel: 'Low rise - High density',
 
   },
   {
-    value: '2',
+    value: 2,
     label: 'Rural Quarter',
     subLabel: 'Low rise - Low density',
   }

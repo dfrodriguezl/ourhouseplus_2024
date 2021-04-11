@@ -1,9 +1,8 @@
-import { AppBar, Button, createStyles, IconButton, makeStyles, Theme, Toolbar } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import MenuIcon from '@material-ui/icons/Menu';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar } from '@material-ui/core';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 import logo from 'assets/logo-small.png';
+import whiteLogo from 'assets/logo-small-white.png';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,24 +26,31 @@ const useStyles = makeStyles((theme: Theme) =>
     buttons: {
       borderRadius: 15,
       fontWeight: 'bold',
-
+      textTransform: 'none',
+    },
+    whiteButtons: {
+      borderRadius: 15,
+      fontWeight: 'bold',
+      color: 'white',
+      textTransform: 'none',
     }
   })
 );
 
-const Header = () => {
+const Header = (props: RouteComponentProps) => {
   const classes = useStyles();
+  const isHome = props.history.location.pathname.indexOf('home') > -1;
   return (
     <AppBar position="static" elevation={0} className={classes.header}>
       <Toolbar variant="regular">
         <Link to="/home">
-          <img src={logo} alt="logo" width={100} />
+          <img src={isHome ? logo : whiteLogo} alt="logo" width={100} />
         </Link>
         <div className={classes.menuButton}>
-          <Button className={classes.buttons}>
+          <Button className={isHome ? classes.buttons : classes.whiteButtons}>
             Sign in
           </Button>
-          <Button className={classes.buttons}>
+          <Button className={isHome ? classes.buttons : classes.whiteButtons}>
             Become a member
           </Button>
         </div>
@@ -53,4 +59,4 @@ const Header = () => {
   );
 }
 
-export default Header;
+export default withRouter(Header);

@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -6,14 +5,15 @@ import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Api } from 'shapediver-types';
 import { Parameters } from 'domains/shapeDiver/models';
-import { getArea, setOptions } from 'domains/shapeDiver/slice';
+import { setOptions } from 'domains/shapeDiver/slice';
 import { FullPageOverlay } from 'domains/core/containers';
+import { Location } from 'domains/core/models';
 
 interface StateProps {
-  terrain: string | undefined;
-  density: string | undefined;
-  regen: number | undefined
-  area: number | undefined;
+  density: number;
+  regen: number;
+  location: Location | undefined;
+  facadeDirection: number;
 }
 
 interface ComponentProps {
@@ -44,41 +44,32 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
     }
   }
 
-  // public async componentDidUpdate(_: Props) {
-  //   const { terrain, density, regen, area } = this.props;
+  public async componentDidUpdate(_: Props) {
+    const { density, regen, location, facadeDirection } = this.props;
 
-  //   if (this.state.isLoaded) {
-  //     const response = await this.api!.parameters.updateAsync([
-  //       {
-  //         id: Parameters.Terrain,
-  //         value: terrain
-  //       },
-  //       {
-  //         id: Parameters.Density,
-  //         value: density
-  //       },
-  //       {
-  //         id: Parameters.Regen,
-  //         value: regen
-  //       },
-  //       {
-  //         id: Parameters.Area,
-  //         value: area?.toString()
-  //       }
-  //     ]);
+    if (this.state.isLoaded) {
+      const response = await this.api!.parameters.updateAsync([
+        { name: Parameters.Density, value: density },
+        { name: Parameters.Regen, value: regen },
+        { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+        { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+        { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+        { name: Parameters.WindowPercentage, value: location.windowPercentage },
+        { name: Parameters.FacadeDirection, value: facadeDirection },
+      ]);
 
-  //     if (response.err) {
-  //       console.log(response.err);
-  //     }
+      if (response.err) {
+        console.log(response.err);
+      }
 
-  //     if (response.data) {
-  //       console.log(response.data)
-  //     }
-  //   }
-  // }
+      if (response.data) {
+        console.log(response.data)
+      }
+    }
+  }
 
   public async componentDidMount() {
-    const { terrain, density, area, setOptions } = this.props;
+    const { density, location, facadeDirection, regen } = this.props;
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -114,25 +105,19 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
         // // refresh (load geometry), because the initial parameter update might not have changed any values
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
-        // await this.api.parameters.updateAsync([
-        //   {
-        //     id: Parameters.Terrain,
-        //     value: terrain
-        //   },
-        //   {
-        //     id: Parameters.Density,
-        //     value: density
-        //   },
-        //   {
-        //     id: Parameters.Area,
-        //     value: area?.toString()
-        //   }
-        // ]);
+        await this.api.parameters.updateAsync([
+          { name: Parameters.Density, value: density },
+          { name: Parameters.Regen, value: regen },
+          { name: Parameters.FacadeDirection, value: facadeDirection },
+          { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+          { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+          { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+          { name: Parameters.WindowPercentage, value: location.windowPercentage },
+        ]);
 
         // // finally show the scene
         await this.api.updateSettingAsync('scene.show', true);
         this.setState({ isLoaded: true });
-        console.log('Loaded')
       }
     }
   }
@@ -144,7 +129,7 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
           !this.state.isLoaded &&
           <FullPageOverlay />
         }
-        <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '100%', background: 'white' }}>
+        <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '100%', background: '#141414' }}>
           <div className='shapediver-viewport-flex'>
             <div id='sdv-container-viewport' style={{ opacity: 0 }}>
             </div>
@@ -159,10 +144,10 @@ const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-      terrain: state.domains.shapediver.terrain,
       density: state.domains.shapediver.density,
       regen: state.domains.shapediver.regen,
-      area: getArea(state),
+      location: state.domains.shapediver.location,
+      facadeDirection: state.domains.shapediver.facadeDirection,
     }),
     {
       setOptions
