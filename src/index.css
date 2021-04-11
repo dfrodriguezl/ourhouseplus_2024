@@ -1,10 +1,14 @@
 body {
   margin: 0;
-  opacity: 1;
-  background: transparent linear-gradient(126deg, #F0E0D8 0%, #EEDFD7 1%, #C9D2D5 21%, #ADC8D4 41%, #98C1D2 61%, #8CBDD2 81%, #88BCD2 100%) 0% 0% no-repeat padding-box;
   font-family: Roboto;
+  background-color: #141414;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.home {
+  opacity: 1;
+  background: transparent linear-gradient(126deg, #F0E0D8 0%, #EEDFD7 30%, #C9D2D5 40%, #ADC8D4 51%, #98C1D2 61%, #8CBDD2 81%, #88BCD2 100%) 0% 0% no-repeat padding-box;
 }
 
 code {

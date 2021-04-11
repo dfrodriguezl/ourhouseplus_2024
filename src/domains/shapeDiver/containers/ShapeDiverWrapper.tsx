@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { RootState } from 'app/store';
@@ -8,6 +8,7 @@ import { Api } from 'shapediver-types';
 import { Parameters } from 'domains/shapeDiver/models';
 import { getArea, setOptions } from 'domains/shapeDiver/slice';
 import { Location } from 'domains/core/models';
+import { FullPageOverlay } from 'domains/core/containers';
 
 interface StateProps {
   terrain: string | undefined;
@@ -50,13 +51,13 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
-        { id: Parameters.Terrain, value: terrain },
-        { id: Parameters.Density, value: density },
-        { id: Parameters.Area, value: area?.toString() },
-        { id: Parameters.Regen, value: regen },
-        { id: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-        { id: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-        { id: Parameters.NumberStreetFloors, value: location.streetFloors },
+        { name: Parameters.Terrain, value: terrain },
+        { name: Parameters.Density, value: density },
+        { name: Parameters.Area, value: area?.toString() },
+        { name: Parameters.Regen, value: regen },
+        { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+        { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+        { name: Parameters.NumberStreetFloors, value: location.streetFloors },
       ]);
 
       if (response.err) {
@@ -89,7 +90,7 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
       if (this.api) {
         // register a ShapeDiver CommPlugin
         await this.api.plugins.registerCommPluginAsync({
-          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET!,
+          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1!,
           // URL of the ShapeDiver backend system used
           // runtime id to use for this CommPlugin (you might register several)
           runtimeId: 'CommPlugin_1',
@@ -104,20 +105,20 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
         console.log('Available model parameters', this.parameters);
 
         setOptions({
-          regen: _.find(this.parameters, x => x.id === Parameters.Regen).choices,
-          terrain: _.find(this.parameters, x => x.id === Parameters.Terrain).choices
+          regen: _.find(this.parameters, x => x.name === Parameters.Regen).choices,
+          terrain: _.find(this.parameters, x => x.name === Parameters.Terrain).choices
         });
 
         // // refresh (load geometry), because the initial parameter update might not have changed any values
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
         await this.api.parameters.updateAsync([
-          { id: Parameters.Terrain, value: terrain },
-          { id: Parameters.Density, value: density },
-          { id: Parameters.Area, value: area?.toString() },
-          { id: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-          { id: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-          { id: Parameters.NumberStreetFloors, value: location.streetFloors },
+          { name: Parameters.Terrain, value: terrain },
+          { name: Parameters.Density, value: density },
+          { name: Parameters.Area, value: area?.toString() },
+          { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+          { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+          { name: Parameters.NumberStreetFloors, value: location.streetFloors },
         ]);
 
         // // finally show the scene
@@ -129,12 +130,18 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
 
   render() {
     return (
-      <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '100%', background: 'white' }}>
-        <div className='shapediver-viewport-flex'>
-          <div id='sdv-container-viewport' style={{ opacity: 0 }}>
+      <Fragment>
+        {
+          !this.state.isLoaded &&
+          <FullPageOverlay />
+        }
+        <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '100%', background: 'white' }}>
+          <div className='shapediver-viewport-flex'>
+            <div id='sdv-container-viewport' style={{ opacity: 0 }}>
+            </div>
           </div>
-        </div>
-      </div >
+        </div >
+      </Fragment>
     );
   }
 }

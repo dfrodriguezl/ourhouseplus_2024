@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       color: 'black',
       position: 'relative',
+      paddingBottom: 50,
     },
     header: {
       paddingBottom: 5

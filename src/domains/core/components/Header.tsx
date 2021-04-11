@@ -1,4 +1,4 @@
-import { AppBar, createStyles, IconButton, makeStyles, Theme, Toolbar } from '@material-ui/core';
+import { AppBar, Button, createStyles, IconButton, makeStyles, Theme, Toolbar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -8,7 +8,7 @@ import logo from 'assets/logo-small.png';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
-      paddingTop: 20,
+      padding: '20px 0',
       background: 'transparent'
     },
     menuButton: {
@@ -23,6 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icons: {
       color: 'black'
+    },
+    buttons: {
+      borderRadius: 15,
+      fontWeight: 'bold',
+
     }
   })
 );
@@ -36,11 +41,12 @@ const Header = () => {
           <img src={logo} alt="logo" width={100} />
         </Link>
         <div className={classes.menuButton}>
-          <span className={classes.member}>Sign In</span>
-          <IconButton edge="end" className={classes.icons}>
-            <MenuIcon />
-            <AccountCircleIcon />
-          </IconButton>
+          <Button className={classes.buttons}>
+            Sign in
+          </Button>
+          <Button className={classes.buttons}>
+            Become a member
+          </Button>
         </div>
       </Toolbar>
     </AppBar>

@@ -2,8 +2,6 @@ import { compose } from 'recompose';
 import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
 import { Footer, Header } from 'domains/core/components'
 
-import whiteBackground from 'assets/white-background.png';
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     pageContainer: {
@@ -13,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: 0
     },
     headerContainer: {
-      // margin: '0 200px',
       justifyContent: 'center',
     },
     bodyContainer: {
@@ -43,7 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface OwnProps {
-  noBackground?: boolean;
   noFooter?: boolean;
   noHeader?: boolean;
   children: any;
@@ -51,15 +47,11 @@ interface OwnProps {
 
 type Props = OwnProps;
 const PageContainer = (props: Props) => {
-  const { children, noBackground, noHeader, noFooter } = props;
+  const { children, noHeader, noFooter } = props;
   const classes = useStyles();
 
   return (
     <Container maxWidth="lg">
-      {
-        noBackground
-        && <img src={whiteBackground} alt="background" className={classes.background} />
-      }
       <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
         {
           !noHeader &&
@@ -70,13 +62,13 @@ const PageContainer = (props: Props) => {
         <Grid item container className={classes.bodyContainer} justify="center">
           {children}
         </Grid>
-        {
-          !noFooter &&
-          <Grid item style={{ zIndex: 10 }}>
-            <Footer />
-          </Grid>
-        }
       </Grid>
+      {
+        !noFooter &&
+        <Grid item style={{ zIndex: 10 }}>
+          <Footer />
+        </Grid>
+      }
     </Container>
   );
 }

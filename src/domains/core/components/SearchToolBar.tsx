@@ -1,9 +1,9 @@
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Button, Divider, Grid, makeStyles, Theme } from '@material-ui/core';
+import { Box, Button, Divider, Grid, makeStyles, Theme } from '@material-ui/core';
 import { getLocations } from 'domains/core/coreSlice';
 import { Densities, Density, Location } from 'domains/core/models';
 import { LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
@@ -12,10 +12,12 @@ import { RootState } from 'app/store';
 
 const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(2),
     background: theme.palette.common.white,
     padding: '10px 30px',
     borderRadius: 32,
+    boxShadow: '4px 4px 3px #00000029',
+    border: '1px solid #707070'
   },
   fieldDivider: {
     backgroundColor: theme.palette.common.black,
@@ -73,43 +75,48 @@ const SearchToolBar = (props: Props) => {
   }
 
   return (
-    <Grid container className={classes.searchBox}>
-      <Grid item container direction="column" xs={3} justify="center">
-        <LocationMenu
-          updateLocation={updateLocation}
-          location={location}
-        />
-      </Grid>
-      <Grid item>
-        <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
-      </Grid>
-      <Grid item container direction="column" xs={3} justify="center">
-        <SearchPill
-          label="Area m2"
-          placeholder="Add total terrain area"
-          onChange={updateArea}
-          value={area || ''}
-          type="number"
-        />
-      </Grid>
-      <Grid item>
-        <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
-      </Grid>
-      <Grid item container direction="column" xs={3} justify="center">
-        <UrbanismMenu
-          updateDensity={updateDensity}
-          density={density}
-        />
-      </Grid>
-      <Grid item container xs={1} justify="center">
-        <Button
-          size="small"
-          onClick={next}
-          className={classes.nextButton}
-          disabled={!area || !density}
-        >
-          Next
+    <Grid>
+      <Box fontWeight="bold" style={{ marginLeft: 30, color: '#707070' }}>
+        Start building here
+      </Box>
+      <Grid container className={classes.searchBox}>
+        <Grid item container direction="column" xs={3} justify="center">
+          <LocationMenu
+            updateLocation={updateLocation}
+            location={location}
+          />
+        </Grid>
+        <Grid item>
+          <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
+        </Grid>
+        <Grid item container direction="column" xs={3} justify="center">
+          <SearchPill
+            label="Area m2"
+            placeholder="Add total terrain area"
+            onChange={updateArea}
+            value={area || ''}
+            type="number"
+          />
+        </Grid>
+        <Grid item>
+          <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
+        </Grid>
+        <Grid item container direction="column" xs={3} justify="center">
+          <UrbanismMenu
+            updateDensity={updateDensity}
+            density={density}
+          />
+        </Grid>
+        <Grid item container xs={1} justify="center">
+          <Button
+            size="small"
+            onClick={next}
+            className={classes.nextButton}
+            disabled={!area || !density}
+          >
+            Next
         </Button>
+        </Grid>
       </Grid>
     </Grid>
   );

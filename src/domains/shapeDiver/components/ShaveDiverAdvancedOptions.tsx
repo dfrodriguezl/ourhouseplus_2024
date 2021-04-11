@@ -26,6 +26,7 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
 
 
   const updateMaxPriFloors = (_: any, value: number | number[]) => {
+    if (!location) return;
     setAdvancedOptions({
       maxPriFloors: Number(value),
       maxSecFloors: location!.maxSecFloors,
@@ -34,6 +35,7 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
   }
 
   const updateMaxSecFloors = (_: any, value: number | number[]) => {
+    if (!location) return;
     setAdvancedOptions({
       maxPriFloors: location!.maxPriFloors,
       maxSecFloors: Number(value),
@@ -42,6 +44,7 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
   }
 
   const updateStreetFloors = (_: any, value: number | number[]) => {
+    if (!location) return;
     setAdvancedOptions({
       maxPriFloors: location!.maxPriFloors,
       maxSecFloors: location!.maxSecFloors,
@@ -61,7 +64,6 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
         step={1}
         min={1}
         max={50}
-        style={{ color: 'black' }}
         onChange={updateMaxPriFloors}
       />
       <Grid item xs={12}>
@@ -74,7 +76,6 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
         step={1}
         min={1}
         max={50}
-        style={{ color: 'black' }}
         onChange={updateMaxSecFloors}
       />
       <Grid item xs={12}>
@@ -87,7 +88,6 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
         step={1}
         min={1}
         max={10}
-        style={{ color: 'black' }}
         onChange={updateStreetFloors}
       />
     </Grid>

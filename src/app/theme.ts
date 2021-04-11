@@ -7,6 +7,12 @@ const theme = createMuiTheme({
     fontFamily: 'Roboto',
   },
   palette: {
+    primary: {
+      main: '#FFFFFF',
+    },
+    secondary: {
+      main: '#000000', //White
+    },
     error: {
       main: red.A400,
     },
@@ -16,6 +22,16 @@ const theme = createMuiTheme({
     text: {
       primary: '#000',
       secondary: '#FFF'
+    }
+  },
+  overrides: {
+    MuiSlider: {
+      colorPrimary: {
+        color: 'black'
+      },
+      valueLabel: {
+        color: 'gray'
+      }
     }
   }
 });

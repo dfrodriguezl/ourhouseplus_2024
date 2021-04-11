@@ -5,7 +5,7 @@ import { ShapeDiverWrapper } from 'domains/shapeDiver/containers';
 
 const ShapeDiverContainer = () => {
   return (
-    <PageContainer noBackground>
+    <PageContainer>
       <Grid item xs={10}>
         <ShapeDiverWrapper />
       </Grid>

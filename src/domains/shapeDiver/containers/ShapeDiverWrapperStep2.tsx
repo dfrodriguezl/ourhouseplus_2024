@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { RootState } from 'app/store';
@@ -7,6 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Api } from 'shapediver-types';
 import { Parameters } from 'domains/shapeDiver/models';
 import { getArea, setOptions } from 'domains/shapeDiver/slice';
+import { FullPageOverlay } from 'domains/core/containers';
 
 interface StateProps {
   terrain: string | undefined;
@@ -96,7 +97,7 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
       if (this.api) {
         // register a ShapeDiver CommPlugin
         await this.api.plugins.registerCommPluginAsync({
-          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP2!,
+          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_2!,
           // URL of the ShapeDiver backend system used
           // runtime id to use for this CommPlugin (you might register several)
           runtimeId: 'CommPlugin_1',
@@ -131,18 +132,25 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
         // // finally show the scene
         await this.api.updateSettingAsync('scene.show', true);
         this.setState({ isLoaded: true });
+        console.log('Loaded')
       }
     }
   }
 
   render() {
     return (
-      <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '100%', background: 'white' }}>
-        <div className='shapediver-viewport-flex'>
-          <div id='sdv-container-viewport' style={{ opacity: 0 }}>
+      <Fragment>
+        {
+          !this.state.isLoaded &&
+          <FullPageOverlay />
+        }
+        <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '100%', background: 'white' }}>
+          <div className='shapediver-viewport-flex'>
+            <div id='sdv-container-viewport' style={{ opacity: 0 }}>
+            </div>
           </div>
-        </div>
-      </div >
+        </div >
+      </Fragment>
     );
   }
 }
