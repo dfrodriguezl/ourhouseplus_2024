@@ -9,6 +9,9 @@ export enum Parameters {
   WindowPercentage = 'WINDOW PERCENTAGE',
   FacadeDirection = 'FACADE DIRECTION',
   Annotation = 'ANNOTATION',
+  FlatSize = 'FLAT SIZE',
+  FloorSelection = 'FLOOR SECTION SELECTION',
+  RoomType = 'ROOM TYPE'
 }
 
 export interface ShapeDiverParams {

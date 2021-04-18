@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Box, Card, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
+import { Box, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
 import { getArea, setParams, setDensity, setRegen } from 'domains/shapeDiver/slice';
 
 import { high, low, medium, two, three, four, square, rectangle, custom, regenIcon } from 'assets'
@@ -10,15 +10,9 @@ import { highSelected, lowSelected, mediumSelected, twoSelected, threeSelected, 
 import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
 import { Location } from 'domains/core/models';
-import { ShapeDiverAdvancedOptions, ShapeDiverSteps } from '.';
+import { ShapeDiverAdvancedOptions, ShapeDiverSteps, ShapeDiverToolBarDetails } from '.';
 
 const styles = makeStyles(() => ({
-  root: {
-    // height: '100%'
-  },
-  container: {
-    padding: 20,
-  },
   firstSubContainer: {
     padding: '20px 20px 0 20px',
   },
@@ -53,7 +47,7 @@ interface DispatchProps {
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
-function ShapeDiverToolBar(props: Props) {
+function ShapeDiverToolBarStep1(props: Props) {
   const { setParams, setDensity, setRegen } = props;
   const { density } = props;
   const classes = styles();
@@ -68,30 +62,9 @@ function ShapeDiverToolBar(props: Props) {
   }, [terrain, unitType, setParams]);
 
   return (
-    <Paper className={classes.root}>
+    <Paper>
       <Grid container direction="column" >
-        <Card className={classes.container}>
-          <Grid item container direction="row">
-            <Grid item xs={9}>
-              <Box fontSize={12} fontWeight='bold'>Location</Box>
-              <Box fontSize={10} fontWeight='bold'>Total gross floor area</Box>
-              <br />
-              <Box fontSize={10} fontWeight='bold'>Land user ratio (LUR)</Box>
-              <Box fontSize={10} fontWeight='bold'>Floor area ratio (FAR)</Box>
-              <br />
-              <Box fontSize={10} fontWeight='bold'>Total units</Box>
-            </Grid>
-            <Grid item xs={3}>
-              <Box fontSize={10}>xxxx.xx</Box>
-              <Box fontSize={10}>xxxx.xx</Box>
-              <br />
-              <Box fontSize={10}>xxxx.xx</Box>
-              <Box fontSize={10}>xxxx.xx</Box>
-              <br />
-              <Box fontSize={10}>xxxx.xx</Box>
-            </Grid>
-          </Grid>
-        </Card>
+        <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
             <Box fontSize={12} fontWeight='bold' textAlign="end">Terrain shaper</Box>
@@ -224,6 +197,6 @@ const container = compose<Props, {}>(
       setRegen
     }
   )
-)(ShapeDiverToolBar);
+)(ShapeDiverToolBarStep1);
 
 export default container;

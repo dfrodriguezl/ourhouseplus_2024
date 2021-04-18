@@ -37,8 +37,9 @@ export const shapeDiverSlice = createSlice({
     },
     setInitialParams: (state, action: PayloadAction<SearchParams>) => {
       state.area = action.payload.area;
-      state.location = action.payload.location;
       state.density = action.payload.density.value;
+      state.location = action.payload.location;
+      state.regen = state.location!.regen;
     },
     setParams: (state, action: PayloadAction<ShapeDiverParams>) => {
       state.terrain = action.payload.terrain;
@@ -61,6 +62,12 @@ export const shapeDiverSlice = createSlice({
     setFacadeDirection: (state, action: PayloadAction<number>) => {
       state.facadeDirection = action.payload;
     },
+    setFlatSize: (state, action: PayloadAction<number>) => {
+      state.location!.flatSize = action.payload;
+    },
+    setFlatType: (state, action: PayloadAction<number>) => {
+      state.location!.flatType = action.payload;
+    },
     setOptions: (state, action: PayloadAction<ShapeDiverOptions>) => {
       state.options = action.payload;
     },
@@ -80,6 +87,8 @@ export const {
   setAdvancedOptions,
   setFacadeDirection,
   setRegen,
+  setFlatSize,
+  setFlatType,
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;

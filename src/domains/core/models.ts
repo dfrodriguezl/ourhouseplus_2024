@@ -12,6 +12,10 @@ export interface Location {
   streetFloors: number;
   windowPercentage: number;
   description: string;
+  density: number;
+  flatSize: number;
+  flatType: number;
+  regen: number;
 }
 
 export interface Density {

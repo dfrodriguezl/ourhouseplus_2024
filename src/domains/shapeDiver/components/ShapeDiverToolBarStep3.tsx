@@ -2,19 +2,16 @@ import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { getArea, setWindow, setDensity, setFacadeDirection, setRegen } from 'domains/shapeDiver/slice';
+import { getArea, setDensity, setFlatSize, setFlatType, setRegen } from 'domains/shapeDiver/slice';
 
-import { fifty, sixty, seventy, regenIcon, horizontal, vertical } from 'assets'
-import { fiftySelected, sixtySelected, seventySelected, verticalSelected, horizontalSelected } from 'assets'
+import { smallFlat, mediumFlat, largeFlat, regenIcon, close, open, work } from 'assets'
+import { smallFlatSelected, mediumFlatSelected, largeFlatSelected, closeSelected, openSelected, workSelected } from 'assets'
 import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
 import { Location } from 'domains/core/models';
 import { ShapeDiverAdvancedOptions, ShapeDiverSteps, ShapeDiverToolBarDetails } from 'domains/shapeDiver/components';
 
 const styles = makeStyles(() => ({
-  container: {
-    padding: 20,
-  },
   firstSubContainer: {
     padding: '20px 20px 0 20px',
   },
@@ -36,19 +33,18 @@ interface StateProps {
   density: number;
   options: ShapeDiverOptions | undefined;
   location: Location | undefined
-  facadeDirection: number;
 }
 
 interface DispatchProps {
-  setWindow: typeof setWindow;
   setDensity: typeof setDensity;
-  setFacadeDirection: typeof setFacadeDirection;
   setRegen: typeof setRegen;
+  setFlatSize: typeof setFlatSize;
+  setFlatType: typeof setFlatType;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
-function ShapeDiverToolBarStep2(props: Props) {
-  const { setWindow, setFacadeDirection, setRegen, location, facadeDirection } = props;
+function ShapeDiverToolBarStep3(props: Props) {
+  const { setRegen, location, setFlatSize, setFlatType } = props;
   const classes = styles();
 
   return (
@@ -57,33 +53,33 @@ function ShapeDiverToolBarStep2(props: Props) {
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Window Percentage</Box>
-            <Box fontSize={10} textAlign="end">choose your window size</Box>
+            <Box fontSize={12} fontWeight='bold' textAlign="end">Flat Size</Box>
+            <Box fontSize={10} textAlign="end">choose your flat size</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
               <Grid item xs={4}>
                 <Radio
-                  checked={location.windowPercentage === 0}
-                  onClick={() => setWindow(0)}
-                  checkedIcon={<img className={classes.buttons} src={fiftySelected} alt="50" />}
-                  icon={<img className={classes.buttons} src={fifty} alt="50" />}
+                  checked={location.flatSize === 0}
+                  onClick={() => setFlatSize(0)}
+                  checkedIcon={<img className={classes.buttons} src={smallFlatSelected} alt="50" />}
+                  icon={<img className={classes.buttons} src={smallFlat} alt="50" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={location.windowPercentage === 1}
-                  onClick={() => setWindow(1)}
-                  checkedIcon={<img className={classes.buttons} src={sixtySelected} alt="60" />}
-                  icon={<img className={classes.buttons} src={sixty} alt="60" />}
+                  checked={location.flatSize === 1}
+                  onClick={() => setFlatSize(1)}
+                  checkedIcon={<img className={classes.buttons} src={mediumFlatSelected} alt="60" />}
+                  icon={<img className={classes.buttons} src={mediumFlat} alt="60" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={location.windowPercentage === 2}
-                  onClick={() => setWindow(2)}
-                  checkedIcon={<img className={classes.buttons} src={seventySelected} alt="70" />}
-                  icon={<img className={classes.buttons} src={seventy} alt="70" />}
+                  checked={location.flatSize === 2}
+                  onClick={() => setFlatSize(2)}
+                  checkedIcon={<img className={classes.buttons} src={largeFlatSelected} alt="70" />}
+                  icon={<img className={classes.buttons} src={largeFlat} alt="70" />}
                 />
               </Grid>
             </Grid>
@@ -91,25 +87,33 @@ function ShapeDiverToolBarStep2(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Facade Direction</Box>
-            <Box fontSize={10} textAlign="end">choose facade direction</Box>
+            <Box fontSize={12} fontWeight='bold' textAlign="end">Flat Type</Box>
+            <Box fontSize={10} textAlign="end">choose flat type</Box>
           </Grid>
           <RadioGroup>
             <Grid container alignItems="center">
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <Radio
-                  checked={facadeDirection === 0}
-                  onClick={() => setFacadeDirection(0)}
-                  checkedIcon={<img className={classes.buttons} src={horizontalSelected} alt="horizontal" />}
-                  icon={<img className={classes.buttons} src={horizontal} alt="horizontal" />}
+                  checked={location.flatType === 0}
+                  onClick={() => setFlatType(0)}
+                  checkedIcon={<img className={classes.buttons} src={closeSelected} alt="close" />}
+                  icon={<img className={classes.buttons} src={close} alt="close" />}
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={4}>
                 <Radio
-                  checked={facadeDirection === 1}
-                  onClick={() => setFacadeDirection(1)}
-                  checkedIcon={<img className={classes.buttons} src={verticalSelected} alt="vertical" />}
-                  icon={<img className={classes.buttons} src={vertical} alt="vertical" />}
+                  checked={location.flatType === 1}
+                  onClick={() => setFlatType(1)}
+                  checkedIcon={<img className={classes.buttons} src={openSelected} alt="open" />}
+                  icon={<img className={classes.buttons} src={open} alt="open" />}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <Radio
+                  checked={location.flatType === 2}
+                  onClick={() => setFlatType(2)}
+                  checkedIcon={<img className={classes.buttons} src={workSelected} alt="work" />}
+                  icon={<img className={classes.buttons} src={work} alt="work" />}
                 />
               </Grid>
             </Grid>
@@ -138,15 +142,14 @@ const container = compose<Props, {}>(
       density: state.domains.shapediver.density,
       options: state.domains.shapediver.options,
       location: state.domains.shapediver.location,
-      facadeDirection: state.domains.shapediver.facadeDirection,
     }),
     {
-      setWindow,
       setDensity,
-      setFacadeDirection,
       setRegen,
+      setFlatSize,
+      setFlatType
     }
   )
-)(ShapeDiverToolBarStep2);
+)(ShapeDiverToolBarStep3);
 
 export default container;

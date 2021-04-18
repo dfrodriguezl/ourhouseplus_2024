@@ -4,7 +4,7 @@ import { Home, Login } from 'domains/core/containers';
 import { ThemeProvider } from '@material-ui/core';
 import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News } from 'domains/common/containers';
 import theme from 'app/theme';
-import { ShapeDiverContainer, ShapeDiverContainerStep2 } from 'domains/shapeDiver/containers';
+import { ShapeDiverContainerStep1, ShapeDiverContainerStep2, ShapeDiverContainerStep3 } from 'domains/shapeDiver/containers';
 
 function App() {
   return (
@@ -18,8 +18,9 @@ function App() {
         <Route path="/news" component={News} />
         <Route path="/how-it-works" component={HowItWorks} />
         <Route path="/login" component={Login} />
-        <Route path="/shapediver/step1" component={ShapeDiverContainer} />
+        <Route path="/shapediver/step1" component={ShapeDiverContainerStep1} />
         <Route path="/shapediver/step2" component={ShapeDiverContainerStep2} />
+        <Route path="/shapediver/step3" component={ShapeDiverContainerStep3} />
         <Route path="/" component={Home} />
       </Switch>
     </ThemeProvider>
