@@ -11,12 +11,8 @@ export enum Parameters {
   Annotation = 'ANNOTATION',
   FlatSize = 'FLAT SIZE',
   FloorSelection = 'FLOOR SECTION SELECTION',
-  RoomType = 'ROOM TYPE'
-}
-
-export interface ShapeDiverParams {
-  terrain: string | '0' | '1' | '2';
-  unitType: number;
+  RoomType = 'ROOM TYPE',
+  UnitsNumberType = 'UNITS NUMBER TYPE'
 }
 
 export interface ShapeDiverOptions {

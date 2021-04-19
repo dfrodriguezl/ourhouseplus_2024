@@ -10,7 +10,6 @@ import { FullPageOverlay } from 'domains/core/containers';
 import { Location } from 'domains/core/models';
 
 interface StateProps {
-  density: number;
   regen: number;
   location: Location | undefined;
   facadeDirection: number;
@@ -45,11 +44,11 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_: Props) {
-    const { density, regen, location, facadeDirection } = this.props;
+    const { regen, location, facadeDirection } = this.props;
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
-        { name: Parameters.Density, value: density },
+        { name: Parameters.Density, value: location.density },
         { name: Parameters.Regen, value: regen },
         { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
         { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
@@ -69,7 +68,7 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidMount() {
-    const { density, location, facadeDirection, regen } = this.props;
+    const { location, facadeDirection, regen } = this.props;
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -106,7 +105,7 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
         await this.api.parameters.updateAsync([
-          { name: Parameters.Density, value: density },
+          { name: Parameters.Density, value: location.density },
           { name: Parameters.Regen, value: regen },
           { name: Parameters.FacadeDirection, value: facadeDirection },
           { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
@@ -144,7 +143,6 @@ const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-      density: state.domains.shapediver.density,
       regen: state.domains.shapediver.regen,
       location: state.domains.shapediver.location,
       facadeDirection: state.domains.shapediver.facadeDirection,

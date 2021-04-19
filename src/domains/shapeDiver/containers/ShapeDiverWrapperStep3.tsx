@@ -10,8 +10,8 @@ import { FullPageOverlay } from 'domains/core/containers';
 import { Location } from 'domains/core/models';
 
 interface StateProps {
-  density: number;
   regen: number;
+  roomType: number;
   location: Location | undefined;
 }
 
@@ -44,17 +44,17 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_: Props) {
-    const { density, regen, location } = this.props;
+    const { regen, location, roomType } = this.props;
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
-        { name: Parameters.Density, value: density },
+        { name: Parameters.Density, value: location.density },
         { name: Parameters.Regen, value: regen },
         { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
         { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
         { name: Parameters.NumberStreetFloors, value: location.streetFloors },
         { name: Parameters.FlatSize, value: location.flatSize },
-        { name: Parameters.RoomType, value: location.flatType },
+        { name: Parameters.RoomType, value: roomType },
       ]);
 
       if (response.err) {
@@ -68,7 +68,7 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidMount() {
-    const { density, location, regen } = this.props;
+    const { location, regen, roomType } = this.props;
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -105,13 +105,13 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
         await this.api.parameters.updateAsync([
-          { name: Parameters.Density, value: density },
           { name: Parameters.Regen, value: regen },
+          { name: Parameters.Density, value: location.density },
           { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
           { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
           { name: Parameters.NumberStreetFloors, value: location.streetFloors },
           { name: Parameters.FlatSize, value: location.flatSize },
-          { name: Parameters.RoomType, value: location.flatType },
+          { name: Parameters.RoomType, value: roomType },
         ]);
 
         // // finally show the scene
@@ -143,9 +143,9 @@ const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-      density: state.domains.shapediver.density,
       regen: state.domains.shapediver.regen,
       location: state.domains.shapediver.location,
+      roomType: state.domains.shapediver.roomType,
     }),
     {
       setOptions

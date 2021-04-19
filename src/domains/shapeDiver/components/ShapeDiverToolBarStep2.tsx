@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { getArea, setWindow, setDensity, setFacadeDirection, setRegen } from 'domains/shapeDiver/slice';
+import { getArea, setWindow, setFacadeDirection, setRegen } from 'domains/shapeDiver/slice';
 
 import { fifty, sixty, seventy, regenIcon, horizontal, vertical } from 'assets'
 import { fiftySelected, sixtySelected, seventySelected, verticalSelected, horizontalSelected } from 'assets'
@@ -33,7 +33,6 @@ const styles = makeStyles(() => ({
 
 interface StateProps {
   area: number;
-  density: number;
   options: ShapeDiverOptions | undefined;
   location: Location | undefined
   facadeDirection: number;
@@ -41,7 +40,6 @@ interface StateProps {
 
 interface DispatchProps {
   setWindow: typeof setWindow;
-  setDensity: typeof setDensity;
   setFacadeDirection: typeof setFacadeDirection;
   setRegen: typeof setRegen;
 }
@@ -135,14 +133,12 @@ const container = compose<Props, {}>(
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
       area: getArea(state),
-      density: state.domains.shapediver.density,
       options: state.domains.shapediver.options,
       location: state.domains.shapediver.location,
       facadeDirection: state.domains.shapediver.facadeDirection,
     }),
     {
       setWindow,
-      setDensity,
       setFacadeDirection,
       setRegen,
     }

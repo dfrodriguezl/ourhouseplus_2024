@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { getArea, setDensity, setFlatSize, setFlatType, setRegen } from 'domains/shapeDiver/slice';
+import { getArea, setFlatSize, setRegen, setRoomType } from 'domains/shapeDiver/slice';
 
 import { smallFlat, mediumFlat, largeFlat, regenIcon, close, open, work } from 'assets'
 import { smallFlatSelected, mediumFlatSelected, largeFlatSelected, closeSelected, openSelected, workSelected } from 'assets'
@@ -30,21 +30,20 @@ const styles = makeStyles(() => ({
 
 interface StateProps {
   area: number;
-  density: number;
   options: ShapeDiverOptions | undefined;
   location: Location | undefined
+  roomType: number;
 }
 
 interface DispatchProps {
-  setDensity: typeof setDensity;
   setRegen: typeof setRegen;
   setFlatSize: typeof setFlatSize;
-  setFlatType: typeof setFlatType;
+  setRoomType: typeof setRoomType;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep3(props: Props) {
-  const { setRegen, location, setFlatSize, setFlatType } = props;
+  const { setRegen, location, setFlatSize, roomType, setRoomType } = props;
   const classes = styles();
 
   return (
@@ -87,31 +86,31 @@ function ShapeDiverToolBarStep3(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Flat Type</Box>
-            <Box fontSize={10} textAlign="end">choose flat type</Box>
+            <Box fontSize={12} fontWeight='bold' textAlign="end">Room Type</Box>
+            <Box fontSize={10} textAlign="end">choose room type</Box>
           </Grid>
           <RadioGroup>
             <Grid container alignItems="center">
               <Grid item xs={4}>
                 <Radio
-                  checked={location.flatType === 0}
-                  onClick={() => setFlatType(0)}
+                  checked={roomType === 0}
+                  onClick={() => setRoomType(0)}
                   checkedIcon={<img className={classes.buttons} src={closeSelected} alt="close" />}
                   icon={<img className={classes.buttons} src={close} alt="close" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={location.flatType === 1}
-                  onClick={() => setFlatType(1)}
+                  checked={roomType === 1}
+                  onClick={() => setRoomType(1)}
                   checkedIcon={<img className={classes.buttons} src={openSelected} alt="open" />}
                   icon={<img className={classes.buttons} src={open} alt="open" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
-                  checked={location.flatType === 2}
-                  onClick={() => setFlatType(2)}
+                  checked={roomType === 2}
+                  onClick={() => setRoomType(2)}
                   checkedIcon={<img className={classes.buttons} src={workSelected} alt="work" />}
                   icon={<img className={classes.buttons} src={work} alt="work" />}
                 />
@@ -139,15 +138,14 @@ const container = compose<Props, {}>(
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
       area: getArea(state),
-      density: state.domains.shapediver.density,
       options: state.domains.shapediver.options,
       location: state.domains.shapediver.location,
+      roomType: state.domains.shapediver.roomType,
     }),
     {
-      setDensity,
       setRegen,
       setFlatSize,
-      setFlatType
+      setRoomType
     }
   )
 )(ShapeDiverToolBarStep3);

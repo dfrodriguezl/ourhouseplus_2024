@@ -115,7 +115,7 @@ const SearchToolBar = (props: Props) => {
             disabled={!area || !density}
           >
             Next
-        </Button>
+          </Button>
         </Grid>
       </Grid>
     </Grid>

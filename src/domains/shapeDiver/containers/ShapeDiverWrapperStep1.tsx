@@ -11,8 +11,7 @@ import { Location } from 'domains/core/models';
 import { FullPageOverlay } from 'domains/core/containers';
 
 interface StateProps {
-  terrain: string | undefined;
-  density: number;
+  terrain: number;
   regen: number;
   area: number | undefined;
   location: Location | undefined;
@@ -27,7 +26,7 @@ interface DispatchProps {
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
-class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
+class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
   private containerSD: React.RefObject<HTMLDivElement>;
   private api: Api.ApiInterfaceV2 | null;
   private parameters: any | null;
@@ -47,14 +46,15 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_: Props) {
-    const { terrain, density, regen, area, location } = this.props;
+    const { terrain, regen, area, location } = this.props;
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
         { name: Parameters.Terrain, value: terrain },
-        { name: Parameters.Density, value: density },
+        { name: Parameters.Density, value: location.density },
         { name: Parameters.Area, value: area?.toString() },
         { name: Parameters.Regen, value: regen },
+        { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
         { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
         { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
         { name: Parameters.NumberStreetFloors, value: location.streetFloors },
@@ -71,7 +71,7 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidMount() {
-    const { terrain, density, area, location, setOptions } = this.props;
+    const { terrain, area, location, setOptions } = this.props;
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -114,8 +114,9 @@ class ShapeDiverWrapper extends React.Component<Props, ComponentProps> {
 
         await this.api.parameters.updateAsync([
           { name: Parameters.Terrain, value: terrain },
-          { name: Parameters.Density, value: density },
+          { name: Parameters.Density, value: location.density },
           { name: Parameters.Area, value: area?.toString() },
+          { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
           { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
           { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
           { name: Parameters.NumberStreetFloors, value: location.streetFloors },
@@ -151,7 +152,6 @@ const container = compose<Props, {}>(
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
       terrain: state.domains.shapediver.terrain,
-      density: state.domains.shapediver.density,
       location: state.domains.shapediver.location,
       regen: state.domains.shapediver.regen,
       area: getArea(state),
@@ -160,6 +160,6 @@ const container = compose<Props, {}>(
       setOptions
     }
   )
-)(ShapeDiverWrapper)
+)(ShapeDiverWrapperStep1)
 
 export default container;

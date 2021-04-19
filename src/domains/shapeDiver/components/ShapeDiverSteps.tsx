@@ -1,8 +1,5 @@
-import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
-import { Grid, IconButton, makeStyles } from '@material-ui/core';
-
-import { step1, step2, step3 } from 'assets';
+import { Button, Grid, makeStyles } from '@material-ui/core';
 
 const styles = makeStyles(() => ({
   container: {
@@ -12,6 +9,12 @@ const styles = makeStyles(() => ({
     width: 54,
     height: 32,
   },
+  nextButton: {
+    borderRadius: 20,
+    backgroundColor: '#FF6C6C',
+    color: 'white',
+    margin: '10px 0'
+  }
 }));
 
 const ShapeDiverSteps = (props: RouteComponentProps) => {
@@ -34,19 +37,31 @@ const ShapeDiverSteps = (props: RouteComponentProps) => {
 
     <Grid item container className={classes.container}>
       <Grid item xs={4}>
-        <IconButton onClick={goToStep1}>
-          <img className={classes.step} src={step1} alt="step1" />
-        </IconButton>
+        <Button
+          size="small"
+          onClick={goToStep1}
+          className={classes.nextButton}
+        >
+          Step 1
+        </Button>
       </Grid>
       <Grid item xs={4}>
-        <IconButton onClick={goToStep2}>
-          <img className={classes.step} src={step2} alt="step2" />
-        </IconButton>
+        <Button
+          size="small"
+          onClick={goToStep2}
+          className={classes.nextButton}
+        >
+          Step 2
+        </Button>
       </Grid>
       <Grid item xs={4}>
-        <IconButton onClick={goToStep3}>
-          <img className={classes.step} src={step3} alt="step3" />
-        </IconButton>
+        <Button
+          size="small"
+          onClick={goToStep3}
+          className={classes.nextButton}
+        >
+          Step 3
+        </Button>
       </Grid>
     </Grid>
   );

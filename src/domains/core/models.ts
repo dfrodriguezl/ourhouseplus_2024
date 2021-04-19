@@ -11,6 +11,7 @@ export interface Location {
   maxSecFloors: number;
   streetFloors: number;
   windowPercentage: number;
+  unitsNumberType: number;
   description: string;
   density: number;
   flatSize: number;
@@ -26,7 +27,7 @@ export interface Density {
 
 export const Densities = [
   {
-    value: 0,
+    value: 2,
     label: 'City Block',
     subLabel: 'High rise - High density',
   },
@@ -37,7 +38,7 @@ export const Densities = [
 
   },
   {
-    value: 2,
+    value: 0,
     label: 'Rural Quarter',
     subLabel: 'Low rise - Low density',
   }
