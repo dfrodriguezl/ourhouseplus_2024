@@ -27,6 +27,12 @@ const styles = makeStyles(() => ({
   regen: {
     width: 24,
     height: 24
+  },
+  floorStyle: {
+    fontSize: 12,
+  },
+  floorMenuStyle: {
+    fontSize: 12,
   }
 }));
 
@@ -132,11 +138,11 @@ function ShapeDiverToolBarStep3(props: Props) {
             <Select
               value={floorSelection}
               onChange={(event: any) => setFloorSelection(event.target.value)}
+              className={classes.floorStyle}
               fullWidth
             >
-              <MenuItem value={0}>None</MenuItem>
               {
-                _.map(floorSelectionOptions, (floor, index) => <MenuItem key={index} value={index}>{floor}</MenuItem>)
+                _.map(floorSelectionOptions, (floor, index) => <MenuItem key={index} value={index} className={classes.floorMenuStyle}>{floor}</MenuItem>)
               }
             </Select>
           </Grid>
