@@ -33,6 +33,7 @@ const styles = makeStyles(() => ({
   },
   floorMenuStyle: {
     fontSize: 12,
+    maxHeight: 200
   }
 }));
 
@@ -139,6 +140,7 @@ function ShapeDiverToolBarStep3(props: Props) {
               value={floorSelection}
               onChange={(event: any) => setFloorSelection(event.target.value)}
               className={classes.floorStyle}
+              MenuProps={{ classes: { paper: classes.floorMenuStyle } }}
               fullWidth
             >
               {
