@@ -1,6 +1,6 @@
 import { compose } from 'recompose';
 import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
-import { Footer, Header } from 'domains/core/components'
+import { Header } from 'domains/core/components'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,14 +40,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface OwnProps {
-  noFooter?: boolean;
   noHeader?: boolean;
   children: any;
 }
 
 type Props = OwnProps;
 const PageContainer = (props: Props) => {
-  const { children, noHeader, noFooter } = props;
+  const { children, noHeader } = props;
   const classes = useStyles();
 
   return (
@@ -63,12 +62,6 @@ const PageContainer = (props: Props) => {
           {children}
         </Grid>
       </Grid>
-      {
-        !noFooter &&
-        <Grid item style={{ zIndex: 10 }}>
-          <Footer />
-        </Grid>
-      }
     </Container>
   );
 }

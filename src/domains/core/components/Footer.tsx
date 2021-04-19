@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, createStyles, Divider, Grid, makeStyles, Theme } from '@material-ui/core';
+import { Box, Container, createStyles, Divider, Grid, makeStyles, Theme } from '@material-ui/core';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
 
@@ -7,7 +7,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
-      flexDirection: 'column'
+      flexDirection: 'column',
+      backgroundColor: '#707070',
+      padding: '20px'
     },
     about: {
       fontSize: 14,
@@ -37,23 +39,32 @@ const Footer = (props: Props) => {
   const classes = useStyles()
   return (
     <Grid container item className={classes.root} xs={12} justify="flex-end">
-      <footer className={classes.footer}>
-        <Box className={classes.about}><Link to="/about">About REA</Link></Box>
-        <Box><Link to="/how-it-works">how rea works</Link></Box>
-        <Box><Link to="/leadership">rea leadership</Link> </Box>
-        <Box><Link to="/news">news</Link></Box>
-        <Box><Link to="/investors">investors</Link></Box>
-        <div style={{ paddingBottom: 5 }} />
-        {/* <Copyright /> */}
-        <Divider orientation="horizontal" />
-        <div className={classes.bottomLinks}>
-          <Link to="/home">Rea @ 2021</Link>
-          <Link to="/contact-us">Contact Us</Link>
-          <Link to="/contact-us">Site</Link>
-          <Link to="/contact-us">Help</Link>
-          <Link to="/contact-us">Privacy & Legal</Link>
-        </div>
-      </footer>
+      <Container maxWidth="lg">
+        <footer className={classes.footer}>
+          <Grid container>
+            <Grid item xs={2}>
+              <Box lineHeight={1.5} className={classes.about}><Link to="/about">About</Link></Box>
+              <Box lineHeight={1.5}><Link to="/how-it-works">How rea works</Link></Box>
+              <Box lineHeight={1.5}><Link to="/leadership">Leadership</Link> </Box>
+              <Box lineHeight={1.5}><Link to="/news">News</Link></Box>
+            </Grid>
+            <Grid item xs={3}>
+              <Box lineHeight={1.5}><Link to="/">Investors</Link></Box>
+              <Box lineHeight={1.5}><Link to="/contact-us">Contact rea</Link></Box>
+              <Box lineHeight={1.5}><Link to="/">Community</Link> </Box>
+              <Box lineHeight={1.5}><Link to="/">Share rea</Link></Box>
+              <Box lineHeight={1.5}><Link to="/">Support</Link></Box>
+              <Box lineHeight={1.5}><Link to="/">Help center</Link></Box>
+            </Grid>
+          </Grid>
+          <div style={{ paddingBottom: 5 }} />
+          {/* <Copyright /> */}
+          <Divider orientation="horizontal" />
+          <div className={classes.bottomLinks}>
+            <Link to="/home">Rea @ 2021</Link>
+          </div>
+        </footer>
+      </Container>
     </Grid>
   );
 }

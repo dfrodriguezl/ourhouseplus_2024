@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core';
 import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News } from 'domains/common/containers';
 import theme from 'app/theme';
 import { ShapeDiverContainerStep1, ShapeDiverContainerStep2, ShapeDiverContainerStep3 } from 'domains/shapeDiver/containers';
+import { Footer } from 'domains/core/components';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/shapediver/step3" component={ShapeDiverContainerStep3} />
         <Route path="/" component={Home} />
       </Switch>
+      <Footer />
     </ThemeProvider>
   );
 }
