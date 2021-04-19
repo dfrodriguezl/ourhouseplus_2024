@@ -41,7 +41,7 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
     this.parameters = null;
 
     this.state = {
-      isLoaded: true
+      isLoaded: false
     }
   }
 
