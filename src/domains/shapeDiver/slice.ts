@@ -8,20 +8,22 @@ export interface ShapeDiverState {
   area: number;
   location: Location | undefined;
   terrain: number;
-  regen: number;
   options: ShapeDiverOptions | undefined;
   facadeDirection: number;
   roomType: number;
+  floorSelectionOptions: string[];
+  floorSelection: number;
 }
 
 const initialState: ShapeDiverState = {
   area: 1,
   location: undefined,
   terrain: 1, // Rect
-  regen: 0,
   options: undefined,
   facadeDirection: 0,
   roomType: 2,
+  floorSelectionOptions: [],
+  floorSelection: 0,
 };
 
 export const shapeDiverSlice = createSlice({
@@ -31,7 +33,6 @@ export const shapeDiverSlice = createSlice({
     setInitialParams: (state, action: PayloadAction<SearchParams>) => {
       state.area = action.payload.area;
       state.location = action.payload.location;
-      state.regen = state.location!.regen;
     },
     setTerrain: (state, action: PayloadAction<number>) => {
       state.terrain = action.payload;
@@ -63,10 +64,16 @@ export const shapeDiverSlice = createSlice({
       state.options = action.payload;
     },
     setRegen: (state) => {
-      state.regen = (state.regen + 1) % state.options!.regen.length;
+      state.location!.regen = (state.location!.regen + 1) % state.options!.regen.length;
     },
     setRoomType: (state, action: PayloadAction<number>) => {
       state.roomType = action.payload;
+    },
+    setFloorSelectionOptions: (state, action: PayloadAction<string[]>) => {
+      state.floorSelectionOptions = action.payload;
+    },
+    setFloorSelection: (state, action: PayloadAction<number>) => {
+      state.floorSelection = action.payload;
     },
   },
 });
@@ -83,6 +90,8 @@ export const {
   setFlatSize,
   setUnitsNumberType,
   setRoomType,
+  setFloorSelectionOptions,
+  setFloorSelection,
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;

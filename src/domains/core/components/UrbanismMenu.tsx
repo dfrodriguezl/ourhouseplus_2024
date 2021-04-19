@@ -49,8 +49,8 @@ export default function UrbanismMenu(props: Props) {
       <FormControl component="fieldset">
         <RadioGroup aria-label="density" name="density" value={density?.label || ''} onChange={updateDensity}>
           <SearchPill
-            label="Density"
-            placeholder="Choose the density"
+            label="Street Density"
+            placeholder="Choose the street density"
             value={density?.label || ''}
             onClick={handleClick}
             onChange={updateDensity}

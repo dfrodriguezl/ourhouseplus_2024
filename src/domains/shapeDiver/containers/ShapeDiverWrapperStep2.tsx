@@ -10,7 +10,6 @@ import { FullPageOverlay } from 'domains/core/containers';
 import { Location } from 'domains/core/models';
 
 interface StateProps {
-  regen: number;
   location: Location | undefined;
   facadeDirection: number;
 }
@@ -44,12 +43,12 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_: Props) {
-    const { regen, location, facadeDirection } = this.props;
+    const { location, facadeDirection } = this.props;
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
         { name: Parameters.Density, value: location.density },
-        { name: Parameters.Regen, value: regen },
+        { name: Parameters.Regen, value: location.regen },
         { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
         { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
         { name: Parameters.NumberStreetFloors, value: location.streetFloors },
@@ -68,7 +67,7 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidMount() {
-    const { location, facadeDirection, regen } = this.props;
+    const { location, facadeDirection } = this.props;
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -106,7 +105,7 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
 
         await this.api.parameters.updateAsync([
           { name: Parameters.Density, value: location.density },
-          { name: Parameters.Regen, value: regen },
+          { name: Parameters.Regen, value: location.regen },
           { name: Parameters.FacadeDirection, value: facadeDirection },
           { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
           { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
@@ -143,7 +142,6 @@ const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-      regen: state.domains.shapediver.regen,
       location: state.domains.shapediver.location,
       facadeDirection: state.domains.shapediver.facadeDirection,
     }),

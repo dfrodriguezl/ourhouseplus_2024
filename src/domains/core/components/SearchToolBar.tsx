@@ -112,7 +112,7 @@ const SearchToolBar = (props: Props) => {
             size="small"
             onClick={next}
             className={classes.nextButton}
-            disabled={!area || !density}
+            disabled={!area || !location}
           >
             Next
           </Button>

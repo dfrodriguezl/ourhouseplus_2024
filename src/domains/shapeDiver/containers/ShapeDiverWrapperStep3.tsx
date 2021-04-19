@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -5,14 +6,14 @@ import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Api } from 'shapediver-types';
 import { Parameters } from 'domains/shapeDiver/models';
-import { setOptions } from 'domains/shapeDiver/slice';
+import { setFloorSelectionOptions, setFloorSelection } from 'domains/shapeDiver/slice';
 import { FullPageOverlay } from 'domains/core/containers';
 import { Location } from 'domains/core/models';
 
 interface StateProps {
-  regen: number;
   roomType: number;
   location: Location | undefined;
+  floorSelection: number;
 }
 
 interface ComponentProps {
@@ -20,7 +21,8 @@ interface ComponentProps {
 }
 
 interface DispatchProps {
-  setOptions: typeof setOptions
+  setFloorSelectionOptions: typeof setFloorSelectionOptions;
+  setFloorSelection: typeof setFloorSelection;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
@@ -39,22 +41,23 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
     this.parameters = null;
 
     this.state = {
-      isLoaded: false
+      isLoaded: true
     }
   }
 
   public async componentDidUpdate(_: Props) {
-    const { regen, location, roomType } = this.props;
+    const { location, roomType, floorSelection } = this.props;
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
         { name: Parameters.Density, value: location.density },
-        { name: Parameters.Regen, value: regen },
+        { name: Parameters.Regen, value: location.regen },
         { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
         { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
         { name: Parameters.NumberStreetFloors, value: location.streetFloors },
         { name: Parameters.FlatSize, value: location.flatSize },
         { name: Parameters.RoomType, value: roomType },
+        { name: Parameters.FloorSelection, value: floorSelection },
       ]);
 
       if (response.err) {
@@ -68,7 +71,9 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidMount() {
-    const { location, regen, roomType } = this.props;
+    const { location, roomType } = this.props;
+    const { setFloorSelectionOptions, setFloorSelection, floorSelection } = this.props;
+
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -100,18 +105,23 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
         this.parameters = this.api.parameters.get().data;
 
         console.log('Available model parameters', this.parameters);
+        const floorSelections = _.find(this.parameters, x => x.name === Parameters.FloorSelection);
+        setFloorSelectionOptions(floorSelections.choices);
+        setFloorSelection(floorSelections.defval);
 
         // // refresh (load geometry), because the initial parameter update might not have changed any values
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
         await this.api.parameters.updateAsync([
-          { name: Parameters.Regen, value: regen },
+          { name: Parameters.Regen, value: location.regen },
           { name: Parameters.Density, value: location.density },
           { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
           { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
           { name: Parameters.NumberStreetFloors, value: location.streetFloors },
           { name: Parameters.FlatSize, value: location.flatSize },
           { name: Parameters.RoomType, value: roomType },
+          { name: Parameters.RoomType, value: roomType },
+          { name: Parameters.FloorSelection, value: floorSelection },
         ]);
 
         // // finally show the scene
@@ -143,12 +153,13 @@ const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-      regen: state.domains.shapediver.regen,
       location: state.domains.shapediver.location,
       roomType: state.domains.shapediver.roomType,
+      floorSelection: state.domains.shapediver.floorSelection,
     }),
     {
-      setOptions
+      setFloorSelectionOptions,
+      setFloorSelection
     }
   )
 )(ShapeDiverWrapperStep3)

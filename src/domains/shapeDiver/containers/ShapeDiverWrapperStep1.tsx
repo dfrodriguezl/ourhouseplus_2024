@@ -12,7 +12,6 @@ import { FullPageOverlay } from 'domains/core/containers';
 
 interface StateProps {
   terrain: number;
-  regen: number;
   area: number | undefined;
   location: Location | undefined;
 }
@@ -46,14 +45,14 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_: Props) {
-    const { terrain, regen, area, location } = this.props;
+    const { terrain, area, location } = this.props;
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
         { name: Parameters.Terrain, value: terrain },
         { name: Parameters.Density, value: location.density },
         { name: Parameters.Area, value: area?.toString() },
-        { name: Parameters.Regen, value: regen },
+        { name: Parameters.Regen, value: location.regen },
         { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
         { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
         { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
@@ -116,6 +115,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
           { name: Parameters.Terrain, value: terrain },
           { name: Parameters.Density, value: location.density },
           { name: Parameters.Area, value: area?.toString() },
+          { name: Parameters.Regen, value: location.regen },
           { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
           { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
           { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
@@ -153,7 +153,6 @@ const container = compose<Props, {}>(
     (state: RootState) => ({
       terrain: state.domains.shapediver.terrain,
       location: state.domains.shapediver.location,
-      regen: state.domains.shapediver.regen,
       area: getArea(state),
     }),
     {
