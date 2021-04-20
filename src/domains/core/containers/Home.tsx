@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { compose } from 'recompose';
 import { Grid } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -7,12 +7,13 @@ import { PageContainer } from 'domains/core/containers';
 import { Slogan } from 'domains/common/components';
 
 import hero from 'assets/Hero.png';
+import HomeSub1 from './HomeSub1';
 
 type Props = RouteComponentProps;
 const Home = (props: Props) => {
   return (
-    <div className="home">
-      <PageContainer>
+    <Fragment>
+      <PageContainer background="home">
         <Grid container justify="center">
           <Grid item xs={8}>
             <SearchToolBar />
@@ -25,7 +26,8 @@ const Home = (props: Props) => {
           </Grid>
         </Grid>
       </PageContainer>
-    </div>
+      <HomeSub1 />
+    </Fragment>
   )
 }
 

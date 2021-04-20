@@ -8,7 +8,7 @@ import { ShapeDiverWrapperStep3 } from 'domains/shapeDiver/containers';
 type Props = RouteComponentProps;
 const ShapeDiverContainerStep3 = (props: Props) => {
   return (
-    <PageContainer>
+    <PageContainer background="black-model">
       <Grid item xs={10}>
         <ShapeDiverWrapperStep3 />
       </Grid>

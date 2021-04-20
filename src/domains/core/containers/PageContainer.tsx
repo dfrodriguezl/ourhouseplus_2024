@@ -40,29 +40,32 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface OwnProps {
+  background?: string;
   noHeader?: boolean;
   children: any;
 }
 
 type Props = OwnProps;
 const PageContainer = (props: Props) => {
-  const { children, noHeader } = props;
+  const { children, noHeader, background } = props;
   const classes = useStyles();
 
   return (
-    <Container maxWidth="lg">
-      <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
-        {
-          !noHeader &&
-          <Grid item>
-            <Header />
+    <div className={background}>
+      <Container maxWidth="lg">
+        <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
+          {
+            !noHeader &&
+            <Grid item>
+              <Header />
+            </Grid>
+          }
+          <Grid item container className={classes.bodyContainer} justify="center">
+            {children}
           </Grid>
-        }
-        <Grid item container className={classes.bodyContainer} justify="center">
-          {children}
         </Grid>
-      </Grid>
-    </Container>
+      </Container>
+    </div>
   );
 }
 

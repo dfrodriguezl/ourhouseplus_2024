@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { Home, Login } from 'domains/core/containers';
 import { ThemeProvider } from '@material-ui/core';
 import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News } from 'domains/common/containers';
@@ -22,7 +22,8 @@ function App() {
         <Route path="/shapediver/step1" component={ShapeDiverContainerStep1} />
         <Route path="/shapediver/step2" component={ShapeDiverContainerStep2} />
         <Route path="/shapediver/step3" component={ShapeDiverContainerStep3} />
-        <Route path="/" component={Home} />
+        <Route path="/home" component={Home} />
+        <Redirect from="/" to="/home" />
       </Switch>
       <Footer />
     </ThemeProvider>
