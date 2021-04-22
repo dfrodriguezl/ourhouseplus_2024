@@ -82,7 +82,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidMount() {
-    const { terrain, area, location, setOptions } = this.props;
+    const { terrain, area, location, setOptions, setModelData } = this.props;
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -119,6 +119,10 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
           regen: _.find(this.parameters, x => x.name === Parameters.Regen).choices,
           terrain: _.find(this.parameters, x => x.name === Parameters.Terrain).choices
         });
+
+        setModelData({
+          floorAreaRatio: 0, landUserRatio: 0, totalGrossFloorArea: 0, totalHousingUnits: 0,
+        })
 
         // // refresh (load geometry), because the initial parameter update might not have changed any values
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
