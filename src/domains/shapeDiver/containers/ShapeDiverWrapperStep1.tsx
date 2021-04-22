@@ -5,8 +5,8 @@ import { compose } from 'recompose';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Api } from 'shapediver-types';
-import { Parameters } from 'domains/shapeDiver/models';
-import { getArea, setOptions } from 'domains/shapeDiver/slice';
+import { DataParameters, Parameters } from 'domains/shapeDiver/models';
+import { getArea, setModelData, setOptions } from 'domains/shapeDiver/slice';
 import { Location } from 'domains/core/models';
 import { FullPageOverlay } from 'domains/core/containers';
 
@@ -21,7 +21,8 @@ interface ComponentProps {
 }
 
 interface DispatchProps {
-  setOptions: typeof setOptions
+  setOptions: typeof setOptions;
+  setModelData: typeof setModelData;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
@@ -44,8 +45,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
     }
   }
 
-  public async componentDidUpdate(_: Props) {
-    const { terrain, area, location } = this.props;
+  public async componentDidUpdate(_props: Props) {
+    const { terrain, area, location, setModelData } = this.props;
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
@@ -59,13 +60,24 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         { name: Parameters.NumberStreetFloors, value: location.streetFloors },
       ]);
 
+
       if (response.err) {
         console.log(response.err);
+        return;
       }
 
       if (response.data) {
         console.log(response.data)
       }
+
+      const modelData = this.api!.scene.getData().data;
+
+      setModelData({
+        floorAreaRatio: _.find(modelData, x => x.name === DataParameters.FloorAreaRatio)?.data ?? 0,
+        landUserRatio: _.find(modelData, x => x.name === DataParameters.LandUserRatio)?.data ?? 0,
+        totalGrossFloorArea: _.find(modelData, x => x.name === DataParameters.TotalGrossFloorArea)?.data ?? 0,
+        totalHousingUnits: _.find(modelData, x => x.name === DataParameters.TotalHousingUnits)?.data ?? 0,
+      });
     }
   }
 
@@ -156,7 +168,8 @@ const container = compose<Props, {}>(
       area: getArea(state),
     }),
     {
-      setOptions
+      setOptions,
+      setModelData,
     }
   )
 )(ShapeDiverWrapperStep1)

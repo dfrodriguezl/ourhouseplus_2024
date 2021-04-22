@@ -15,6 +15,13 @@ export enum Parameters {
   UnitsNumberType = 'UNITS NUMBER TYPE'
 }
 
+export enum DataParameters {
+  TotalGrossFloorArea = 'DATA-TOTAL (m2) - Gross Floor Area',
+  LandUserRatio = 'DATA-(FAR)-Land User Ratio',
+  FloorAreaRatio = 'DATA-(FAR)-Floor Area Ratio',
+  TotalHousingUnits = 'DATA-TOTAL (nbr) - Housing Units',
+}
+
 export interface ShapeDiverOptions {
   terrain: string[];
   regen: string[];
@@ -24,4 +31,11 @@ export interface AdvancedOptions {
   maxPriFloors: number;
   maxSecFloors: number;
   streetFloors: number;
+}
+
+export interface ModelData {
+  totalGrossFloorArea: number;
+  landUserRatio: number;
+  floorAreaRatio: number;
+  totalHousingUnits: number;
 }

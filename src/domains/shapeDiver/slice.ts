@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from 'app/store';
 import { SearchParams } from 'domains/core/models';
-import { AdvancedOptions, ShapeDiverOptions } from 'domains/shapeDiver/models';
+import { AdvancedOptions, ModelData, ShapeDiverOptions } from 'domains/shapeDiver/models';
 import { Location } from 'domains/core/models';
 
 export interface ShapeDiverState {
@@ -13,6 +13,7 @@ export interface ShapeDiverState {
   roomType: number;
   floorSelectionOptions: string[];
   floorSelection: number;
+  modelData: ModelData;
 }
 
 const initialState: ShapeDiverState = {
@@ -24,6 +25,12 @@ const initialState: ShapeDiverState = {
   roomType: 2,
   floorSelectionOptions: [],
   floorSelection: 0,
+  modelData: {
+    floorAreaRatio: 0,
+    landUserRatio: 0,
+    totalGrossFloorArea: 0,
+    totalHousingUnits: 0,
+  }
 };
 
 export const shapeDiverSlice = createSlice({
@@ -75,6 +82,9 @@ export const shapeDiverSlice = createSlice({
     setFloorSelection: (state, action: PayloadAction<number>) => {
       state.floorSelection = action.payload;
     },
+    setModelData: (state, action: PayloadAction<ModelData>) => {
+      state.modelData = action.payload;
+    },
   },
 });
 
@@ -92,6 +102,7 @@ export const {
   setRoomType,
   setFloorSelectionOptions,
   setFloorSelection,
+  setModelData,
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
