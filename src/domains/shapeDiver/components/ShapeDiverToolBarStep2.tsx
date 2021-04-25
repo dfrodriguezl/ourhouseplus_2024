@@ -1,33 +1,29 @@
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Box, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { getArea, setWindow, setFacadeDirection, setRegen } from 'domains/shapeDiver/slice';
+import { Box, Grid, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
+import { getArea, setWindow, setFacadeDirection } from 'domains/shapeDiver/slice';
 
-import { fifty, sixty, seventy, regenIcon, horizontal, vertical } from 'assets'
+import { fifty, sixty, seventy, horizontal, vertical } from 'assets'
 import { fiftySelected, sixtySelected, seventySelected, verticalSelected, horizontalSelected } from 'assets'
 import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
 import { Location } from 'domains/core/models';
-import { ShapeDiverAdvancedOptions, ShapeDiverSteps, ShapeDiverToolBarDetails } from 'domains/shapeDiver/components';
+import { ShapeDiverAdvancedOptions, ShapeDiverToolBarDetails } from 'domains/shapeDiver/components';
 
 const styles = makeStyles(() => ({
   container: {
-    padding: 20,
+    borderRadius: '45px'
   },
   firstSubContainer: {
-    padding: '20px 20px 0 20px',
+    padding: '30px 30px 0 30px',
   },
   subContainer: {
-    padding: '10px 20px 0 20px',
+    padding: '30px 30px 0px 30px',
   },
   buttons: {
-    width: 32,
-    height: 32
-  },
-  regen: {
-    width: 24,
-    height: 24
+    width: 46,
+    height: 46
   }
 }));
 
@@ -41,22 +37,20 @@ interface StateProps {
 interface DispatchProps {
   setWindow: typeof setWindow;
   setFacadeDirection: typeof setFacadeDirection;
-  setRegen: typeof setRegen;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep2(props: Props) {
-  const { setWindow, setFacadeDirection, setRegen, location, facadeDirection } = props;
+  const { setWindow, setFacadeDirection, location, facadeDirection } = props;
   const classes = styles();
 
   return (
-    <Paper>
+    <Paper className={`${classes.container} home`}>
       <Grid container direction="column" >
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Window Percentage</Box>
-            <Box fontSize={10} textAlign="end">choose your window size</Box>
+            <Box fontSize={15} fontWeight='bold'>Choose your window size</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -89,8 +83,7 @@ function ShapeDiverToolBarStep2(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Facade Direction</Box>
-            <Box fontSize={10} textAlign="end">choose facade direction</Box>
+            <Box fontSize={15} fontWeight='bold'>Choose facade direction</Box>
           </Grid>
           <RadioGroup>
             <Grid container alignItems="center">
@@ -116,14 +109,6 @@ function ShapeDiverToolBarStep2(props: Props) {
 
         <ShapeDiverAdvancedOptions />
 
-        <Grid item xs={2}>
-          <IconButton onClick={() => setRegen()}>
-            <img className={classes.regen} src={regenIcon} alt="regen" />
-          </IconButton>
-        </Grid>
-
-        <ShapeDiverSteps />
-
       </Grid>
     </Paper>
   )
@@ -140,7 +125,6 @@ const container = compose<Props, {}>(
     {
       setWindow,
       setFacadeDirection,
-      setRegen,
     }
   )
 )(ShapeDiverToolBarStep2);

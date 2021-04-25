@@ -2,37 +2,37 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Box, Grid, IconButton, makeStyles, MenuItem, Paper, Radio, RadioGroup, Select } from '@material-ui/core'
-import { getArea, setFlatSize, setRegen, setRoomType, setFloorSelection } from 'domains/shapeDiver/slice';
+import { Box, Grid, makeStyles, MenuItem, Paper, Radio, RadioGroup, Select } from '@material-ui/core'
+import { getArea, setFlatSize, setRoomType, setFloorSelection } from 'domains/shapeDiver/slice';
 
-import { smallFlat, mediumFlat, largeFlat, regenIcon, close, open, work } from 'assets'
+import { smallFlat, mediumFlat, largeFlat, close, open, work } from 'assets'
 import { smallFlatSelected, mediumFlatSelected, largeFlatSelected, closeSelected, openSelected, workSelected } from 'assets'
 import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
 import { Location } from 'domains/core/models';
-import { ShapeDiverAdvancedOptions, ShapeDiverSteps, ShapeDiverToolBarDetails } from 'domains/shapeDiver/components';
+import { ShapeDiverAdvancedOptions, ShapeDiverToolBarDetails } from 'domains/shapeDiver/components';
 import _ from 'lodash';
 
 const styles = makeStyles(() => ({
+  container: {
+    borderRadius: '45px'
+  },
   firstSubContainer: {
-    padding: '20px 20px 0 20px',
+    padding: '30px 30px 0 30px',
   },
   subContainer: {
-    padding: '10px 20px 0 20px',
+    padding: '30px 30px 0 30px',
   },
   buttons: {
-    width: 32,
-    height: 32
-  },
-  regen: {
-    width: 24,
-    height: 24
+    width: 46,
+    height: 46
   },
   floorStyle: {
-    fontSize: 12,
+    paddingTop: 5,
+    fontSize: 15,
   },
   floorMenuStyle: {
-    fontSize: 12,
+    fontSize: 15,
     maxHeight: 200
   }
 }));
@@ -47,7 +47,6 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  setRegen: typeof setRegen;
   setFlatSize: typeof setFlatSize;
   setRoomType: typeof setRoomType;
   setFloorSelection: typeof setFloorSelection;
@@ -55,17 +54,16 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep3(props: Props) {
-  const { setRegen, location, setFlatSize, roomType, setRoomType, floorSelectionOptions, setFloorSelection, floorSelection } = props;
+  const { location, setFlatSize, roomType, setRoomType, floorSelectionOptions, setFloorSelection, floorSelection } = props;
   const classes = styles();
 
   return (
-    <Paper>
+    <Paper className={`${classes.container} home`}>
       <Grid container direction="column" >
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Flat Size</Box>
-            <Box fontSize={10} textAlign="end">choose your flat size</Box>
+            <Box fontSize={15} fontWeight='bold'>Choose your flat size</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -98,8 +96,7 @@ function ShapeDiverToolBarStep3(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Room Type</Box>
-            <Box fontSize={10} textAlign="end">choose room type</Box>
+            <Box fontSize={15} fontWeight='bold'>Choose room type</Box>
           </Grid>
           <RadioGroup>
             <Grid container alignItems="center">
@@ -132,8 +129,7 @@ function ShapeDiverToolBarStep3(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Floor Selection</Box>
-            <Box fontSize={10} textAlign="end">choose floor</Box>
+            <Box fontSize={15} fontWeight='bold'>Choose floor</Box>
           </Grid>
           <Grid item xs={12}>
             <Select
@@ -152,14 +148,6 @@ function ShapeDiverToolBarStep3(props: Props) {
 
         <ShapeDiverAdvancedOptions />
 
-        <Grid item xs={2}>
-          <IconButton onClick={() => setRegen()}>
-            <img className={classes.regen} src={regenIcon} alt="regen" />
-          </IconButton>
-        </Grid>
-
-        <ShapeDiverSteps />
-
       </Grid>
     </Paper>
   )
@@ -176,7 +164,6 @@ const container = compose<Props, {}>(
       floorSelection: state.domains.shapediver.floorSelection,
     }),
     {
-      setRegen,
       setFlatSize,
       setRoomType,
       setFloorSelection

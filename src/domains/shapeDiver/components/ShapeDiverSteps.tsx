@@ -1,9 +1,14 @@
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Button, Grid, makeStyles } from '@material-ui/core';
+import { RootState } from 'app/store';
+import { setRegen } from '../slice';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import { Location } from 'domains/core/models';
 
 const styles = makeStyles(() => ({
   container: {
-
+    padding: '30px 0px 30px 30px'
   },
   step: {
     width: 54,
@@ -14,11 +19,23 @@ const styles = makeStyles(() => ({
     backgroundColor: '#FF6C6C',
     color: 'white',
     margin: '10px 0'
+  },
+  regen: {
+
   }
 }));
 
-const ShapeDiverSteps = (props: RouteComponentProps) => {
-  const { history } = props;
+interface StateProps {
+  location: Location | undefined;
+}
+
+interface DispatchProps {
+  setRegen: typeof setRegen;
+}
+
+type Props = StateProps & DispatchProps & RouteComponentProps;
+const ShapeDiverSteps = (props: Props) => {
+  const { history, setRegen } = props;
   const classes = styles();
 
   const goToStep1 = () => {
@@ -33,38 +50,71 @@ const ShapeDiverSteps = (props: RouteComponentProps) => {
     history.push('/shapediver/step3');
   }
 
+  const isStep1 = history.location.pathname.indexOf('step1') > -1;
+  const isStep2 = history.location.pathname.indexOf('step2') > -1;
+  const isStep3 = history.location.pathname.indexOf('step3') > -1;
+
   return (
 
     <Grid item container className={classes.container}>
       <Grid item xs={4}>
         <Button
           size="small"
-          onClick={goToStep1}
+          onClick={() => setRegen()}
           className={classes.nextButton}
         >
-          Step 1
+          Regen
         </Button>
       </Grid>
-      <Grid item xs={4}>
-        <Button
-          size="small"
-          onClick={goToStep2}
-          className={classes.nextButton}
-        >
-          Step 2
+      {
+        !isStep1 &&
+        <Grid item xs={4}>
+          <Button
+            size="small"
+            onClick={goToStep1}
+            className={classes.nextButton}
+          >
+            Step 1
         </Button>
-      </Grid>
-      <Grid item xs={4}>
-        <Button
-          size="small"
-          onClick={goToStep3}
-          className={classes.nextButton}
-        >
-          Step 3
+        </Grid>
+      }
+      {
+        !isStep2 &&
+        <Grid item xs={4}>
+          <Button
+            size="small"
+            onClick={goToStep2}
+            className={classes.nextButton}
+          >
+            Step 2
         </Button>
-      </Grid>
+        </Grid>
+      }
+      {
+        !isStep3 &&
+        <Grid item xs={4}>
+          <Button
+            size="small"
+            onClick={goToStep3}
+            className={classes.nextButton}
+          >
+            Step 3
+        </Button>
+        </Grid>
+      }
     </Grid>
   );
 }
+const container = compose<Props, {}>(
+  withRouter,
+  connect<StateProps, DispatchProps, {}, RootState>(
+    (state: RootState) => ({
+      location: state.domains.shapediver.location
+    }),
+    {
+      setRegen
+    }
+  )
+)(ShapeDiverSteps);
 
-export default withRouter(ShapeDiverSteps);
+export default container;

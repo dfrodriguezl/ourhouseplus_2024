@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Box, Button, Divider, Grid, makeStyles, Theme } from '@material-ui/core';
+import { Box, Divider, Grid, makeStyles, Theme } from '@material-ui/core';
 import { getLocations } from 'domains/core/coreSlice';
 import { Densities, Density, Location } from 'domains/core/models';
-import { LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
+import { ButtonWrapper, LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
 import { setInitialParams } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 
@@ -17,17 +17,11 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '10px 30px',
     borderRadius: 32,
     boxShadow: '4px 4px 3px #00000029',
-    border: '1px solid #707070'
+    border: '1px solid #707070',
   },
   fieldDivider: {
     backgroundColor: theme.palette.common.black,
     height: '100%'
-  },
-  nextButton: {
-    borderRadius: 20,
-    backgroundColor: '#FF6C6C',
-    color: 'white',
-    margin: '10px 0'
   }
 }));
 interface StateProps {
@@ -51,8 +45,8 @@ const SearchToolBar = (props: Props) => {
     getLocations();
   }, [getLocations])
 
-  const updateLocation = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const loc = _.find(locations, x => x.city === event.target.value);
+  const updateLocation = (value: string) => {
+    const loc = _.find(locations, x => x.city === value);
     setLocation(loc);
   }
 
@@ -108,14 +102,12 @@ const SearchToolBar = (props: Props) => {
           />
         </Grid>
         <Grid item container xs={1} justify="center">
-          <Button
+          <ButtonWrapper
+            label="Next"
             size="small"
             onClick={next}
-            className={classes.nextButton}
             disabled={!area || !location}
-          >
-            Next
-          </Button>
+          />
         </Grid>
       </Grid>
     </Grid>

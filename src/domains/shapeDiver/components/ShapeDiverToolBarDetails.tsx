@@ -1,12 +1,13 @@
-import { Box, Card, Grid, makeStyles } from '@material-ui/core';
+import { Box, Divider, Grid, makeStyles } from '@material-ui/core';
 import { RootState } from 'app/store';
 import { Location } from 'domains/core/models';
+import { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { ModelData } from '../models';
 
 const styles = makeStyles(() => ({
   container: {
-    padding: '20px 0 0 20px',
+    padding: '30px 0 30px 30px',
   },
 }));
 
@@ -21,28 +22,29 @@ const ShapeDiverToolBarDetails = (props: Props) => {
   const { modelData } = props;
 
   return (
-    <Card className={classes.container}>
-      <Grid item container direction="row">
+    <Fragment>
+      <Grid item container direction="row" className={classes.container}>
         <Grid item xs={8}>
-          <Box fontSize={12} fontWeight='bold'>Location</Box>
-          <Box fontSize={10} fontWeight='bold'>Total gross floor area</Box>
+          <Box fontSize={19} fontWeight='bold'>Location</Box>
+          <Box fontSize={17}>Total gross floor area</Box>
           <br />
-          <Box fontSize={10} fontWeight='bold'>Land user ratio (LUR)</Box>
-          <Box fontSize={10} fontWeight='bold'>Floor area ratio (FAR)</Box>
+          <Box fontSize={17}>Land user ratio (LUR)</Box>
+          <Box fontSize={17}>Floor area ratio (FAR)</Box>
           <br />
-          <Box fontSize={10} fontWeight='bold'>Total units</Box>
+          <Box fontSize={17}>Total units</Box>
         </Grid>
         <Grid item xs={4}>
-          <Box fontSize={10}>{props.location?.city}</Box>
-          <Box fontSize={10}>{modelData.totalGrossFloorArea}</Box>
+          <Box fontSize={17}>{props.location?.city}</Box>
+          <Box fontSize={17}>{modelData.totalGrossFloorArea}</Box>
           <br />
-          <Box fontSize={10}>{modelData.landUserRatio}</Box>
-          <Box fontSize={10}>{modelData.floorAreaRatio}</Box>
+          <Box fontSize={17}>{modelData.landUserRatio}</Box>
+          <Box fontSize={17}>{modelData.floorAreaRatio}</Box>
           <br />
-          <Box fontSize={10}>{modelData.totalHousingUnits}</Box>
+          <Box fontSize={17}>{modelData.totalHousingUnits}</Box>
         </Grid>
       </Grid>
-    </Card>
+      <Divider />
+    </Fragment>
   );
 }
 

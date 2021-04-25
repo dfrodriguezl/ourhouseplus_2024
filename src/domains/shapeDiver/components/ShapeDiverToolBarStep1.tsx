@@ -1,35 +1,34 @@
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Box, Grid, IconButton, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { getArea, setTerrain, setDensity, setRegen, setUnitsNumberType } from 'domains/shapeDiver/slice';
+import { Box, Grid, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
+import { getArea, setTerrain, setDensity, setUnitsNumberType } from 'domains/shapeDiver/slice';
 
-import { high, low, medium, two, three, four, square, rectangle, custom, regenIcon } from 'assets'
+import { high, low, medium, two, three, four, square, rectangle, custom } from 'assets'
 import { highSelected, lowSelected, mediumSelected, twoSelected, threeSelected, fourSelected, squareSelected, rectangleSelected, customSelected } from 'assets'
 import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
 import { Location } from 'domains/core/models';
-import { ShapeDiverAdvancedOptions, ShapeDiverSteps, ShapeDiverToolBarDetails } from '.';
+import { ShapeDiverAdvancedOptions, ShapeDiverToolBarDetails } from '.';
 
 const styles = makeStyles(() => ({
+  container: {
+    borderRadius: '45px'
+  },
   firstSubContainer: {
-    padding: '20px 20px 0 20px',
+    padding: '30px 30px 0 30px',
   },
   subContainer: {
-    padding: '10px 20px 0 20px',
+    padding: '30px 30px 0 30px',
   },
   buttons: {
-    width: 32,
-    height: 32
-  },
-  step2: {
-    width: 64,
-    height: 32,
+    width: 46,
+    height: 46
   },
   regen: {
     width: 24,
     height: 24
-  }
+  },
 }));
 
 interface StateProps {
@@ -42,23 +41,21 @@ interface StateProps {
 interface DispatchProps {
   setTerrain: typeof setTerrain;
   setDensity: typeof setDensity;
-  setRegen: typeof setRegen;
   setUnitsNumberType: typeof setUnitsNumberType;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep1(props: Props) {
-  const { setTerrain, setDensity, setRegen, location, setUnitsNumberType, terrain } = props;
+  const { setTerrain, setDensity, location, setUnitsNumberType, terrain } = props;
   const classes = styles();
 
   return (
-    <Paper>
+    <Paper className={`${classes.container} home`}>
       <Grid container direction="column" >
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Terrain shaper</Box>
-            <Box fontSize={10} textAlign="end">choose your lot shape</Box>
+            <Box fontSize={15} fontWeight='bold'>Choose your lot shape</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -91,8 +88,7 @@ function ShapeDiverToolBarStep1(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Density Project</Box>
-            <Box fontSize={10} textAlign="end">choose level of density</Box>
+            <Box fontSize={15} fontWeight='bold'>Choose level of density</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -125,8 +121,7 @@ function ShapeDiverToolBarStep1(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={12} fontWeight='bold' textAlign="end">Units number types</Box>
-            <Box fontSize={10} textAlign="end">choose mix</Box>
+            <Box fontSize={15} fontWeight='bold'>Choose number of unit types</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -160,13 +155,6 @@ function ShapeDiverToolBarStep1(props: Props) {
 
         <ShapeDiverAdvancedOptions />
 
-        <Grid item xs={12}>
-          <IconButton onClick={() => setRegen()}>
-            <img className={classes.regen} src={regenIcon} alt="regen" />
-          </IconButton>
-        </Grid>
-
-        <ShapeDiverSteps />
       </Grid>
     </Paper>
   )
@@ -183,7 +171,6 @@ const container = compose<Props, {}>(
     {
       setTerrain,
       setDensity,
-      setRegen,
       setUnitsNumberType
     }
   )

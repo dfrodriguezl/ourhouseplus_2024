@@ -31,7 +31,7 @@ interface StateProps {
 }
 
 interface OwnProps {
-  updateLocation(event: React.ChangeEvent<HTMLInputElement>): void;
+  updateLocation(value: string): void;
   location: Location | undefined;
 }
 
@@ -50,16 +50,20 @@ function LocationMenu(props: Props) {
     setAnchorEl(null);
   };
 
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateLocation(event.target.value);
+  }
+
   return (
     <div>
       <FormControl component="fieldset">
-        <RadioGroup aria-label="location" name="location" value={location?.city || ''} onChange={updateLocation}>
+        <RadioGroup aria-label="location" name="location" value={location?.city || ''} onChange={handleOnChange}>
           <SearchPill
             label="Location"
             placeholder="Where will the project be at"
             value={location?.city || ''}
             onClick={handleClick}
-            onChange={updateLocation}
+            onChange={handleOnChange}
           />
           <StyledMenu
             id="location-menu"
@@ -70,7 +74,7 @@ function LocationMenu(props: Props) {
           >
             {
               props.locations.map(x =>
-                <StyledMenuItem key={x.id}>
+                <StyledMenuItem key={x.id} onClick={() => updateLocation(x.city)}>
                   <FormControlLabel
                     value={x.city}
                     control={<Radio className={classes.radio} />}
