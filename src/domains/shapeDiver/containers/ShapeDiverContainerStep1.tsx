@@ -1,12 +1,13 @@
 import { Grid } from '@material-ui/core';
 import { PageContainer } from 'domains/core/containers';
-import { ShapeDiverSteps, ShapeDiverToolBarStep1 } from 'domains/shapeDiver/components';
+import { ShapeDiverAdditionalParams, ShapeDiverSteps, ShapeDiverToolBarStep1 } from 'domains/shapeDiver/components';
 import { ShapeDiverWrapperStep1 } from 'domains/shapeDiver/containers';
 
 const ShapeDiverContainer = () => {
   return (
     <PageContainer background="black-model">
       <Grid item xs={9}>
+        <ShapeDiverAdditionalParams />
         <ShapeDiverWrapperStep1 />
       </Grid>
       <Grid item xs={3}>

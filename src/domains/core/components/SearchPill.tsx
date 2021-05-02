@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   fieldInput: {
     border: '0px',
-    background: theme.palette.common.white,
+    background: 'rgba(255, 255, 255, 0)',
     fontSize: 12,
     '&:focus': {
       outline: 'none'

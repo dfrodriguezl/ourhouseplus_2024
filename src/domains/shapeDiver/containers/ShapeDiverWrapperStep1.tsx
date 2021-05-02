@@ -72,11 +72,22 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
 
       const modelData = this.api!.scene.getData().data;
 
+      console.log(modelData);
+
       setModelData({
+        totalLandArea: _.find(modelData, x => x.name === DataParameters.GrossLandArea)?.data ?? 0,
+        totalGrossFloorArea: _.find(modelData, x => x.name === DataParameters.TotalGrossFloorArea)?.data ?? 0,
+        totalGrossLeasableArea: _.find(modelData, x => x.name === DataParameters.GrossLeasableArea)?.data ?? 0,
+        plotRatio: _.find(modelData, x => x.name === DataParameters.PlotArea)?.data ?? 0,
+        totalHousingUnits: _.find(modelData, x => x.name === DataParameters.TotalHousingUnits)?.data ?? 0,
+        dwellingsDensity: _.find(modelData, x => x.name === DataParameters.DwellingsDensity)?.data ?? 0,
+        averageInhabitantPerDwelling: _.find(modelData, x => x.name === DataParameters.AverageInhabitantPerDwelling)?.data ?? 0,
+        averageBedroomPerDwelling: _.find(modelData, x => x.name === DataParameters.AverageBedroomPerDwelling)?.data ?? 0,
+        greenSpacePerInhabitant: _.find(modelData, x => x.name === DataParameters.GreenSpacePerInhabitant)?.data ?? 0,
+        greenSpaceDensity: _.find(modelData, x => x.name === DataParameters.GreenSpaceDensity)?.data ?? 0,
+        roadDensity: _.find(modelData, x => x.name === DataParameters.RoadDensity)?.data ?? 0,
         floorAreaRatio: _.find(modelData, x => x.name === DataParameters.FloorAreaRatio)?.data ?? 0,
         landUserRatio: _.find(modelData, x => x.name === DataParameters.LandUserRatio)?.data ?? 0,
-        totalGrossFloorArea: _.find(modelData, x => x.name === DataParameters.TotalGrossFloorArea)?.data ?? 0,
-        totalHousingUnits: _.find(modelData, x => x.name === DataParameters.TotalHousingUnits)?.data ?? 0,
       });
     }
   }
@@ -121,8 +132,10 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         });
 
         setModelData({
-          floorAreaRatio: 0, landUserRatio: 0, totalGrossFloorArea: 0, totalHousingUnits: 0,
-        })
+          floorAreaRatio: 0, landUserRatio: 0, totalGrossFloorArea: 0, totalHousingUnits: 0, averageBedroomPerDwelling: 0,
+          averageInhabitantPerDwelling: 0, dwellingsDensity: 0, greenSpaceDensity: 0, greenSpacePerInhabitant: 0,
+          plotRatio: 0, roadDensity: 0, totalGrossLeasableArea: 0, totalLandArea: 0
+        });
 
         // // refresh (load geometry), because the initial parameter update might not have changed any values
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');

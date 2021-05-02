@@ -16,9 +16,18 @@ export enum Parameters {
 }
 
 export enum DataParameters {
-  TotalGrossFloorArea = 'DATA-TOTAL (m2) - Gross Floor Area',
-  LandUserRatio = 'DATA-(FAR)-Land User Ratio',
-  FloorAreaRatio = 'DATA-(FAR)-Floor Area Ratio',
+  GrossLandArea = 'DATA-TOTAL (nbr) - Housing Units',
+  TotalGrossFloorArea = 'DATA-TOTAL (m2) - (GFA) Gross Floor Area',
+  GrossLeasableArea = 'DATA-(m2)- (GLA) Gross leasable area',
+  PlotArea = 'DATA- Plot Ratio',
+  DwellingsDensity = 'DATA-(du/ha)- Dwelings Density',
+  AverageInhabitantPerDwelling = 'DATA-(nbr)- Average Inhabitant per Dweling',
+  AverageBedroomPerDwelling = 'DATA-(hr/du)- Average Bedroom per Dweling',
+  GreenSpacePerInhabitant = 'DATA-(m2)- Green Space per Inhabitant',
+  GreenSpaceDensity = 'DATA-(%)- Green Space Density',
+  RoadDensity = 'DATA-(%)- Road Density',
+  LandUserRatio = 'DATA- (LUR) Land User Ratio',
+  FloorAreaRatio = 'DATA- (FAR) Floor Area Ratio',
   TotalHousingUnits = 'DATA-TOTAL (nbr) - Housing Units',
 }
 
@@ -34,8 +43,18 @@ export interface AdvancedOptions {
 }
 
 export interface ModelData {
+  totalLandArea: number;
   totalGrossFloorArea: number;
-  landUserRatio: number;
+  totalGrossLeasableArea: number;
   floorAreaRatio: number;
+  landUserRatio: number;
+  plotRatio: number;
   totalHousingUnits: number;
+  dwellingsDensity: number;
+  averageInhabitantPerDwelling: number;
+  averageBedroomPerDwelling: number;
+  greenSpacePerInhabitant: number;
+  greenSpaceDensity: number;
+  roadDensity: number;
+
 }

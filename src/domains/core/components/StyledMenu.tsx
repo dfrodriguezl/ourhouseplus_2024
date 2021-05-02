@@ -4,7 +4,7 @@ import React from 'react';
 export const StyledMenu = withStyles({
   paper: {
     border: '1px solid #d3d4d5',
-    borderRadius: 32
+    borderRadius: 32,
   },
 })((props: MenuProps) => (
   <Menu

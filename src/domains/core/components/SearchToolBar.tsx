@@ -13,7 +13,7 @@ import { RootState } from 'app/store';
 const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
     marginTop: theme.spacing(2),
-    background: theme.palette.common.white,
+    background: 'rgba(255, 255, 255, 0.55)',
     padding: '10px 30px',
     borderRadius: 32,
     boxShadow: '4px 4px 3px #00000029',
@@ -85,7 +85,7 @@ const SearchToolBar = (props: Props) => {
         </Grid>
         <Grid item container direction="column" xs={3} justify="center">
           <SearchPill
-            label="Area m2"
+            label="Area"
             placeholder="Add total terrain area"
             onChange={updateArea}
             value={area || ''}

@@ -4,3 +4,4 @@ export { default as ShapeDiverToolBarStep3 } from './ShapeDiverToolBarStep3';
 export { default as ShapeDiverAdvancedOptions } from './ShapeDiverAdvancedOptions';
 export { default as ShapeDiverSteps } from './ShapeDiverSteps';
 export { default as ShapeDiverToolBarDetails } from './ShapeDiverToolBarDetails';
+export { default as ShapeDiverAdditionalParams } from './ShapeDiverAdditionalParams';

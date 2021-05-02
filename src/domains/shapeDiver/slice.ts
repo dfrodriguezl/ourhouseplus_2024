@@ -30,6 +30,15 @@ const initialState: ShapeDiverState = {
     landUserRatio: 0,
     totalGrossFloorArea: 0,
     totalHousingUnits: 0,
+    averageBedroomPerDwelling: 0,
+    averageInhabitantPerDwelling: 0,
+    dwellingsDensity: 0,
+    greenSpaceDensity: 0,
+    greenSpacePerInhabitant: 0,
+    plotRatio: 0,
+    roadDensity: 0,
+    totalGrossLeasableArea: 0,
+    totalLandArea: 0,
   }
 };
 
