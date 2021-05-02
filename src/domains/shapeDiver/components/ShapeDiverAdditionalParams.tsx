@@ -44,6 +44,13 @@ const ShapeDiverAdditionalParams = (props: Props) => {
                 <br />
                 <Box fontSize={15}>Green space density (%)</Box>
                 <Box fontSize={15}>Road density (%)</Box>
+                <br />
+                <Box fontSize={15}>Studios</Box>
+                <Box fontSize={15}>Large studios</Box>
+                <Box fontSize={15}>One bedroom</Box>
+                <Box fontSize={15}>Two bedroom</Box>
+                <Box fontSize={15}>Three bedroom</Box>
+                <Box fontSize={15}>Four bedroom</Box>
               </Grid>
               <Grid item xs={4}>
                 <Box fontSize={15}>{modelData.averageBedroomPerDwelling}</Box>
@@ -51,6 +58,13 @@ const ShapeDiverAdditionalParams = (props: Props) => {
                 <br />
                 <Box fontSize={15}>{modelData.greenSpaceDensity}</Box>
                 <Box fontSize={15}>{modelData.roadDensity}</Box>
+                <br />
+                <Box fontSize={15}>{modelData.studios}</Box>
+                <Box fontSize={15}>{modelData.largeStudios}</Box>
+                <Box fontSize={15}>{modelData.oneBedroom}</Box>
+                <Box fontSize={15}>{modelData.twoBedroom}</Box>
+                <Box fontSize={15}>{modelData.threeBedroom}</Box>
+                <Box fontSize={15}>{modelData.fourBedroom}</Box>
               </Grid>
             </Grid>
           </AccordionDetails>

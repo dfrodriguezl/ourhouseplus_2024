@@ -88,6 +88,12 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         roadDensity: _.find(modelData, x => x.name === DataParameters.RoadDensity)?.data ?? 0,
         floorAreaRatio: _.find(modelData, x => x.name === DataParameters.FloorAreaRatio)?.data ?? 0,
         landUserRatio: _.find(modelData, x => x.name === DataParameters.LandUserRatio)?.data ?? 0,
+        studios: _.find(modelData, x => x.name === DataParameters.Studios)?.data ?? 0,
+        largeStudios: _.find(modelData, x => x.name === DataParameters.LargeStudios)?.data ?? 0,
+        oneBedroom: _.find(modelData, x => x.name === DataParameters.OneBedroom)?.data ?? 0,
+        twoBedroom: _.find(modelData, x => x.name === DataParameters.TwoBedroom)?.data ?? 0,
+        threeBedroom: _.find(modelData, x => x.name === DataParameters.ThreeBedroom)?.data ?? 0,
+        fourBedroom: _.find(modelData, x => x.name === DataParameters.FourBedroom)?.data ?? 0,
       });
     }
   }
@@ -134,7 +140,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         setModelData({
           floorAreaRatio: 0, landUserRatio: 0, totalGrossFloorArea: 0, totalHousingUnits: 0, averageBedroomPerDwelling: 0,
           averageInhabitantPerDwelling: 0, dwellingsDensity: 0, greenSpaceDensity: 0, greenSpacePerInhabitant: 0,
-          plotRatio: 0, roadDensity: 0, totalGrossLeasableArea: 0, totalLandArea: 0
+          plotRatio: 0, roadDensity: 0, totalGrossLeasableArea: 0, totalLandArea: 0,
+          studios: 0, largeStudios: 0, oneBedroom: 0, twoBedroom: 0, threeBedroom: 0, fourBedroom: 0
         });
 
         // // refresh (load geometry), because the initial parameter update might not have changed any values

@@ -16,7 +16,7 @@ export enum Parameters {
 }
 
 export enum DataParameters {
-  GrossLandArea = 'DATA-TOTAL (nbr) - Housing Units',
+  GrossLandArea = 'DATA-(m2)- Gross Land Area',
   TotalGrossFloorArea = 'DATA-TOTAL (m2) - (GFA) Gross Floor Area',
   GrossLeasableArea = 'DATA-(m2)- (GLA) Gross leasable area',
   PlotArea = 'DATA- Plot Ratio',
@@ -29,6 +29,12 @@ export enum DataParameters {
   LandUserRatio = 'DATA- (LUR) Land User Ratio',
   FloorAreaRatio = 'DATA- (FAR) Floor Area Ratio',
   TotalHousingUnits = 'DATA-TOTAL (nbr) - Housing Units',
+  Studios = 'DATA- (nbr) - Studio',
+  LargeStudios = 'DATA- (nbr) - T1',
+  OneBedroom = 'DATA- (nbr) - T2',
+  TwoBedroom = 'DATA- (nbr) - T3',
+  ThreeBedroom = 'DATA- (nbr) - T4',
+  FourBedroom = 'DATA- (nbr) - T5',
 }
 
 export interface ShapeDiverOptions {
@@ -56,5 +62,10 @@ export interface ModelData {
   greenSpacePerInhabitant: number;
   greenSpaceDensity: number;
   roadDensity: number;
-
+  studios: number;
+  largeStudios: number;
+  oneBedroom: number;
+  twoBedroom: number;
+  threeBedroom: number;
+  fourBedroom: number;
 }

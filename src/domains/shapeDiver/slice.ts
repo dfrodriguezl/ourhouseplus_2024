@@ -39,6 +39,12 @@ const initialState: ShapeDiverState = {
     roadDensity: 0,
     totalGrossLeasableArea: 0,
     totalLandArea: 0,
+    studios: 0,
+    largeStudios: 0,
+    oneBedroom: 0,
+    twoBedroom: 0,
+    threeBedroom: 0,
+    fourBedroom: 0
   }
 };
 
