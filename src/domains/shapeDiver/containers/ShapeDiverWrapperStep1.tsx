@@ -76,7 +76,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
 
       setModelData({
         totalLandArea: _.find(modelData, x => x.name === DataParameters.GrossLandArea)?.data ?? 0,
-        totalGrossFloorArea: _.find(modelData, x => x.name === DataParameters.TotalGrossFloorArea)?.data ?? 0,
+        totalGrossFloorArea: _.find(modelData, x => x.name === DataParameters.GrossFloorArea)?.data ?? 0,
         totalGrossLeasableArea: _.find(modelData, x => x.name === DataParameters.GrossLeasableArea)?.data ?? 0,
         plotRatio: _.find(modelData, x => x.name === DataParameters.PlotArea)?.data ?? 0,
         totalHousingUnits: _.find(modelData, x => x.name === DataParameters.TotalHousingUnits)?.data ?? 0,

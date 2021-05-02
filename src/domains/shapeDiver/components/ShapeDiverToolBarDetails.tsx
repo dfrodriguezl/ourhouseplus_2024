@@ -37,7 +37,7 @@ const ShapeDiverToolBarDetails = (props: Props) => {
           <br />
           <Box fontSize={15}>Total units (nbr)</Box>
           <Box fontSize={15}>Dwellings density (du/ha)</Box>
-          <Box fontSize={15}>Average inhabitant per dwelling</Box>
+          <Box fontSize={15}>Avg. inhabitant per dwelling</Box>
         </Grid>
         <Grid item xs={4}>
           <Box fontSize={19}>{props.location?.city}</Box>

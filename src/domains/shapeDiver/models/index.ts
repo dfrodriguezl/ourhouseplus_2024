@@ -17,7 +17,7 @@ export enum Parameters {
 
 export enum DataParameters {
   GrossLandArea = 'DATA-(m2)- Gross Land Area',
-  TotalGrossFloorArea = 'DATA-TOTAL (m2) - (GFA) Gross Floor Area',
+  GrossFloorArea = 'DATA-(m2)- (GFA) Gross Floor Area',
   GrossLeasableArea = 'DATA-(m2)- (GLA) Gross leasable area',
   PlotArea = 'DATA- Plot Ratio',
   DwellingsDensity = 'DATA-(du/ha)- Dwelings Density',
