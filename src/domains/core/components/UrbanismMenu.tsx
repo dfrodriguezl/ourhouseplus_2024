@@ -25,7 +25,7 @@ const styles = makeStyles((theme: Theme) => ({
 }))
 
 export interface OwnProps {
-  updateDensity(event: React.ChangeEvent<HTMLInputElement>): void;
+  updateDensity(value: string): void;
   density: Density | undefined;
 }
 
@@ -44,16 +44,20 @@ export default function UrbanismMenu(props: Props) {
     setAnchorEl(null);
   };
 
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateDensity(event.target.value);
+  }
+
   return (
     <div>
       <FormControl component="fieldset">
-        <RadioGroup aria-label="density" name="density" value={density?.label || ''} onChange={updateDensity}>
+        <RadioGroup aria-label="density" name="density" value={density?.label || ''} onChange={handleOnChange}>
           <SearchPill
             label="Street Density"
             placeholder="Choose the street density"
             value={density?.label || ''}
             onClick={handleClick}
-            onChange={updateDensity}
+            onChange={handleOnChange}
           />
           <StyledMenu
             id="customized-menu"
@@ -64,7 +68,7 @@ export default function UrbanismMenu(props: Props) {
           >
             {
               _.map(Densities, x =>
-                <StyledMenuItem key={x.value}>
+                <StyledMenuItem key={x.value} onClick={() => updateDensity(x.label)}>
                   <FormControlLabel
                     value={x.label}
                     control={<Radio className={classes.radio} />}

@@ -21,7 +21,7 @@ const Home = (props: Props) => {
           <Grid container item xs={8} alignItems="center" justify="center">
             <img src={hero} alt="hero" width={552} height={290} />
           </Grid>
-          <Grid item xs={6} style={{ alignSelf: 'flex-end' }}>
+          <Grid item xs={6}>
             <Slogan />
           </Grid>
         </Grid>

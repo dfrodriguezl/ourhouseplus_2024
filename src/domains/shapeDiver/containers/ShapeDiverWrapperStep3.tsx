@@ -138,7 +138,7 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
           !this.state.isLoaded &&
           <FullPageOverlay />
         }
-        <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '100%', background: '#141414' }}>
+        <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '95%', background: '#141414' }}>
           <div className='shapediver-viewport-flex'>
             <div id='sdv-container-viewport' style={{ opacity: 0 }}>
             </div>

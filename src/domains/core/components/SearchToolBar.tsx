@@ -54,8 +54,8 @@ const SearchToolBar = (props: Props) => {
     setArea(parseInt(event.target.value));
   }
 
-  const updateDensity = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const den = _.find(Densities, x => x.label === event.target.value);
+  const updateDensity = (value: string) => {
+    const den = _.find(Densities, x => x.label === value);
     setDensity(den);
   }
 
