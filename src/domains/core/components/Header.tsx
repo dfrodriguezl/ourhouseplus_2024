@@ -3,6 +3,8 @@ import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 
 import logo from 'assets/logo-small.png';
 import whiteLogo from 'assets/logo-small-white.png';
+import { Mailchimp } from 'domains/common/components';
+import { useState } from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -45,7 +47,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Header = (props: RouteComponentProps) => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+
   const isHome = props.history.location.pathname.indexOf('home') > -1;
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
   return (
     <AppBar position="static" elevation={0} className={classes.header}>
       <Toolbar variant="regular">
@@ -56,11 +65,12 @@ const Header = (props: RouteComponentProps) => {
           <Button className={classes.whiteButtons}>
             Sign in
           </Button>
-          <Button className={classes.becomeMember}>
+          <Button className={classes.becomeMember} onClick={() => setOpen(true)}>
             Become a member
           </Button>
         </div>
       </Toolbar>
+      <Mailchimp open={open} handleClose={handleClose}/>
     </AppBar>
   );
 }
