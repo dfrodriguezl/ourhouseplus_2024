@@ -13,7 +13,7 @@ import { RootState } from 'app/store';
 const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
     marginTop: theme.spacing(2),
-    background: 'rgba(255, 255, 255, 0.55)',
+    background: 'rgba(255, 255, 255, 0.9)',
     padding: '10px 30px',
     borderRadius: 32,
     boxShadow: '4px 4px 3px #00000029',
@@ -70,7 +70,7 @@ const SearchToolBar = (props: Props) => {
 
   return (
     <Grid>
-      <Box fontWeight="bold" style={{ marginLeft: 30, color: '#707070' }}>
+      <Box fontSize={23} style={{ marginLeft: 30, color: 'white' }}>
         Start building here
       </Box>
       <Grid container className={classes.searchBox}>

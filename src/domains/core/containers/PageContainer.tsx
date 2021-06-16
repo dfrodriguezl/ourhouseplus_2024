@@ -5,8 +5,8 @@ import { Header } from 'domains/core/components'
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     pageContainer: {
-      minHeight: '120vh',
-      height: '120vh',
+      minHeight: '100vh',
+      height: '100vh',
       width: '100%',
       margin: 0
     },

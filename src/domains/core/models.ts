@@ -28,18 +28,18 @@ export interface Density {
 export const Densities = [
   {
     value: 2,
-    label: 'City Block',
+    label: 'Center City',
     subLabel: 'High rise - High density',
   },
   {
     value: 1,
-    label: 'Residential Quarter',
+    label: 'Urban City',
     subLabel: 'Low rise - High density',
 
   },
   {
     value: 0,
-    label: 'Rural Quarter',
+    label: 'Suburban',
     subLabel: 'Low rise - Low density',
   }
 ]

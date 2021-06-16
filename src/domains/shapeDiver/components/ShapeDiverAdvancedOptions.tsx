@@ -12,7 +12,7 @@ const styles = makeStyles(() => ({
     width: '100%',
     background: 'transparent',
     padding: '0 20px',
-    marginTop: 30,
+    marginTop: 10,
   },
 }));
 
@@ -67,7 +67,7 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
       <AccordionDetails>
         <Grid item container>
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold' textAlign="end">Max Primary Floors</Box>
+            <Box fontSize={14} fontWeight='bold' textAlign="end">Max Primary Floors</Box>
           </Grid>
           <Slider
             value={location ? location.maxPriFloors : 0}
@@ -79,7 +79,7 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
             onChange={updateMaxPriFloors}
           />
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold' textAlign="end">Max Secondary Floors</Box>
+            <Box fontSize={14} fontWeight='bold' textAlign="end">Max Secondary Floors</Box>
           </Grid>
           <Slider
             value={location ? location.maxSecFloors : 0}
@@ -91,7 +91,7 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
             onChange={updateMaxSecFloors}
           />
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold' textAlign="end">Street Floors</Box>
+            <Box fontSize={14} fontWeight='bold' textAlign="end">Street Floors</Box>
           </Grid>
           <Slider
             value={location ? location.streetFloors : 0}

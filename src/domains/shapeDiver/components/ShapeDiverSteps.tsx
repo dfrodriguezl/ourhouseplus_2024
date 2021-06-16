@@ -8,7 +8,7 @@ import { Location } from 'domains/core/models';
 
 const styles = makeStyles(() => ({
   container: {
-    padding: '30px 0px 30px 30px'
+    padding: '10px 0px 30px 0px'
   },
   step: {
     width: 54,
@@ -18,7 +18,10 @@ const styles = makeStyles(() => ({
     borderRadius: 20,
     backgroundColor: '#FF6C6C',
     color: 'white',
-    margin: '10px 0'
+    margin: '10px 0',
+    '&:hover': {
+      backgroundColor: '#8ABCD2',
+    }
   },
   regen: {
 
@@ -38,26 +41,28 @@ const ShapeDiverSteps = (props: Props) => {
   const { history, setRegen } = props;
   const classes = styles();
 
-  const goToStep1 = () => {
-    history.push('/shapediver/step1');
-  }
-
-  const goToStep2 = () => {
-    history.push('/shapediver/step2');
-  }
-
-  const goToStep3 = () => {
-    history.push('/shapediver/step3');
-  }
-
   const isStep1 = history.location.pathname.indexOf('step1') > -1;
   const isStep2 = history.location.pathname.indexOf('step2') > -1;
   const isStep3 = history.location.pathname.indexOf('step3') > -1;
 
+  const goToNextStep = () => {
+    if (isStep1) {
+      history.push('/shapediver/step2');
+    }
+
+    if (isStep2) {
+      history.push('/shapediver/step3');
+    }
+
+    if (isStep3) {
+      history.push('/shapediver/step1');
+    }
+  }
+
   return (
 
-    <Grid item container className={classes.container}>
-      <Grid item xs={4}>
+    <Grid container className={classes.container} style={{ textAlign: 'center' }} >
+      <Grid item xs={6}>
         <Button
           size="small"
           onClick={() => setRegen()}
@@ -66,42 +71,15 @@ const ShapeDiverSteps = (props: Props) => {
           Regen
         </Button>
       </Grid>
-      {
-        !isStep1 &&
-        <Grid item xs={4}>
-          <Button
-            size="small"
-            onClick={goToStep1}
-            className={classes.nextButton}
-          >
-            Step 1
+      <Grid item xs={6}>
+        <Button
+          size="small"
+          onClick={goToNextStep}
+          className={classes.nextButton}
+        >
+          Next
         </Button>
-        </Grid>
-      }
-      {
-        !isStep2 &&
-        <Grid item xs={4}>
-          <Button
-            size="small"
-            onClick={goToStep2}
-            className={classes.nextButton}
-          >
-            Step 2
-        </Button>
-        </Grid>
-      }
-      {
-        !isStep3 &&
-        <Grid item xs={4}>
-          <Button
-            size="small"
-            onClick={goToStep3}
-            className={classes.nextButton}
-          >
-            Step 3
-        </Button>
-        </Grid>
-      }
+      </Grid>
     </Grid>
   );
 }

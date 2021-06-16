@@ -4,6 +4,7 @@ import { ArrowForward } from '@material-ui/icons';
 
 const styles = makeStyles(() => ({
   button: {
+    cursor: 'pointer',
     borderRadius: 20,
     backgroundColor: '#FF6C6C',
     color: 'white',

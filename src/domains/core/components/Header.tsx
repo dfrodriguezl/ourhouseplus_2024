@@ -30,9 +30,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     whiteButtons: {
       borderRadius: 15,
-      fontWeight: 'bold',
       color: 'white',
       textTransform: 'none',
+    },
+    becomeMember: {
+      borderRadius: 15,
+      color: 'white',
+      textTransform: 'none',
+      border: '2px solid white',
+      padding: '2px 10px'
     }
   })
 );
@@ -47,10 +53,10 @@ const Header = (props: RouteComponentProps) => {
           <img src={isHome ? logo : whiteLogo} alt="logo" width={100} />
         </Link>
         <div className={classes.menuButton}>
-          <Button className={isHome ? classes.buttons : classes.whiteButtons}>
+          <Button className={classes.whiteButtons}>
             Sign in
           </Button>
-          <Button className={isHome ? classes.buttons : classes.whiteButtons}>
+          <Button className={classes.becomeMember}>
             Become a member
           </Button>
         </div>

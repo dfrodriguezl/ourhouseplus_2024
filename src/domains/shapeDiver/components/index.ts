@@ -5,3 +5,4 @@ export { default as ShapeDiverAdvancedOptions } from './ShapeDiverAdvancedOption
 export { default as ShapeDiverSteps } from './ShapeDiverSteps';
 export { default as ShapeDiverToolBarDetails } from './ShapeDiverToolBarDetails';
 export { default as ShapeDiverAdditionalParams } from './ShapeDiverAdditionalParams';
+export { default as ShapeDiverBottomSteps } from './ShapeDiverBottomSteps';

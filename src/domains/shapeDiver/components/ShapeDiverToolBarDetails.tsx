@@ -4,10 +4,11 @@ import { Location } from 'domains/core/models';
 import { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { ModelData } from '../models';
+import NumberFormat from 'react-number-format';
 
 const styles = makeStyles(() => ({
   container: {
-    padding: '30px 0 30px 30px',
+    padding: '30px 0 20px 30px',
   },
 }));
 
@@ -25,34 +26,82 @@ const ShapeDiverToolBarDetails = (props: Props) => {
     <Fragment>
       <Grid item container direction="row" className={classes.container}>
         <Grid item xs={8}>
-          <Box fontSize={19} fontWeight='bold'>Location</Box>
-          <Box fontSize={15}>Gross land area</Box>
+          <Box fontSize={18} fontWeight='bold'>Location</Box>
+          <Box fontSize={14}>Gross land area</Box>
           <br />
-          <Box fontSize={15}>Gross floor area (GFA)</Box>
-          <Box fontSize={15}>Gross leasable area (GLA)</Box>
+          <Box fontSize={14}>Gross floor area (GFA)</Box>
+          <Box fontSize={14}>Gross leasable area (GLA)</Box>
           <br />
-          <Box fontSize={15}>Land user ratio (LUR)</Box>
+          <Box fontSize={14}>Land user ratio (LUR)</Box>
           <br />
-          <Box fontSize={15}>Plot ratio</Box>
+          <Box fontSize={14}>Plot ratio</Box>
           <br />
-          <Box fontSize={15}>Total units (nbr)</Box>
-          <Box fontSize={15}>Dwellings density (du/ha)</Box>
-          <Box fontSize={15}>Avg. inhabitant per dwelling</Box>
+          <Box fontSize={14}>Total units (nbr)</Box>
+          <Box fontSize={14}>Dwellings density (du/ha)</Box>
+          <Box fontSize={14}>Avg. inhabitant per dwelling</Box>
         </Grid>
         <Grid item xs={4}>
-          <Box fontSize={19}>{props.location?.city}</Box>
-          <Box fontSize={15}>{modelData.totalLandArea}</Box>
+          <Box fontSize={18}>{props.location?.city}</Box>
+          <Box fontSize={14}>
+            <NumberFormat
+              value={modelData.totalLandArea}
+              displayType="text"
+              thousandSeparator
+            />
+          </Box>
           <br />
-          <Box fontSize={15}>{modelData.totalGrossFloorArea}</Box>
-          <Box fontSize={15}>{modelData.totalGrossLeasableArea}</Box>
+          <Box fontSize={14}>
+            <NumberFormat
+              value={modelData.totalGrossFloorArea}
+              displayType="text"
+              thousandSeparator
+            />
+          </Box>
+          <Box fontSize={14}>
+            <NumberFormat
+              value={modelData.totalLandArea}
+              displayType="text"
+              thousandSeparator
+            />
+          </Box>
           <br />
-          <Box fontSize={15}>{modelData.landUserRatio}</Box>
+          <Box fontSize={14}>
+            <NumberFormat
+              value={modelData.landUserRatio}
+              displayType="text"
+              decimalScale={2}
+            />
+          </Box>
           <br />
-          <Box fontSize={15}>{modelData.plotRatio}</Box>
+          <Box fontSize={14}>
+            <NumberFormat
+              value={modelData.plotRatio}
+              displayType="text"
+              decimalScale={2}
+            />
+          </Box>
           <br />
-          <Box fontSize={15}>{modelData.totalHousingUnits}</Box>
-          <Box fontSize={15}>{modelData.dwellingsDensity}</Box>
-          <Box fontSize={15}>{modelData.averageInhabitantPerDwelling}</Box>
+          <Box fontSize={14}>
+            <NumberFormat
+              value={modelData.totalHousingUnits}
+              displayType="text"
+              thousandSeparator
+            />
+          </Box>
+          <Box fontSize={14}>
+            <NumberFormat
+              value={modelData.dwellingsDensity}
+              displayType="text"
+              decimalScale={2}
+            />
+          </Box>
+          <Box fontSize={14}>
+            <NumberFormat
+              value={modelData.averageInhabitantPerDwelling}
+              displayType="text"
+              decimalScale={2}
+            />
+          </Box>
         </Grid>
       </Grid>
       <Divider />

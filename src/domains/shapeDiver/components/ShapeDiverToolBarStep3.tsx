@@ -18,10 +18,10 @@ const styles = makeStyles(() => ({
     borderRadius: '45px'
   },
   firstSubContainer: {
-    padding: '30px 30px 0 30px',
+    padding: '10px 30px 0 30px',
   },
   subContainer: {
-    padding: '30px 30px 0 30px',
+    padding: '10px 30px 0 30px',
   },
   buttons: {
     width: 46,
@@ -58,7 +58,7 @@ function ShapeDiverToolBarStep3(props: Props) {
   const classes = styles();
 
   return (
-    <Paper className={`${classes.container} home`}>
+    <Paper className={`${classes.container} controls-background`}>
       <Grid container direction="column" >
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>

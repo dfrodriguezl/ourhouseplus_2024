@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       textAlign: 'center',
-      color: 'black',
+      color: 'white',
       position: 'relative',
       paddingBottom: 50,
     },

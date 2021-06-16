@@ -54,3 +54,13 @@ export { default as open } from './Open.png'
 export { default as openSelected } from './OpenSelected.png'
 export { default as work } from './Work.png'
 export { default as workSelected } from './WorkSelected.png'
+
+export { default as logoSmallWhite } from './logo-small-white.png'
+
+export { default as oneCircle } from './OneCircle.png';
+export { default as twoCircle } from './TwoCircle.png';
+export { default as threeCircle } from './ThreeCircle.png';
+
+export { default as oneNoCircle } from './OneNoCircle.png';
+export { default as twoNoCircle } from './TwoNoCircle.png';
+export { default as threeNoCircle } from './ThreeNoCircle.png';

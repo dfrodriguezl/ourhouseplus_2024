@@ -1,7 +1,10 @@
 import React from 'react';
-import { Box, Container, createStyles, Divider, Grid, makeStyles, Theme } from '@material-ui/core';
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
+import { Box, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
+import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
+
+import { logoSmallWhite } from 'assets'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -10,10 +13,6 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       backgroundColor: '#707070',
       padding: '20px'
-    },
-    about: {
-      fontSize: 14,
-      lineHeight: '20px'
     },
     footer: {
       fontSize: 12,
@@ -25,11 +24,11 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     bottomLinks: {
+      float: 'right',
       paddingTop: 5,
-      '& a': {
-        paddingRight: 100,
-        fontSize: 10
-      }
+      '& img': {
+        paddingLeft: 10
+      },
     }
   })
 );
@@ -37,31 +36,46 @@ const useStyles = makeStyles((theme: Theme) =>
 type Props = RouteComponentProps;
 const Footer = (props: Props) => {
   const classes = useStyles()
+
   return (
     <Grid container item className={classes.root} xs={12} justify="flex-end">
       <Container maxWidth="lg">
         <footer className={classes.footer}>
           <Grid container>
             <Grid item xs={2}>
-              <Box lineHeight={1.5} className={classes.about}><Link to="/about">About</Link></Box>
-              <Box lineHeight={1.5}><Link to="/how-it-works">How rea works</Link></Box>
-              <Box lineHeight={1.5}><Link to="/leadership">Leadership</Link> </Box>
-              <Box lineHeight={1.5}><Link to="/news">News</Link></Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/about">About</Link></Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/how-it-works">How rea works</Link></Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/leadership">Leadership</Link> </Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/news">News</Link></Box>
             </Grid>
             <Grid item xs={3}>
-              <Box lineHeight={1.5}><Link to="/">Investors</Link></Box>
-              <Box lineHeight={1.5}><Link to="/contact-us">Contact rea</Link></Box>
-              <Box lineHeight={1.5}><Link to="/">Community</Link> </Box>
-              <Box lineHeight={1.5}><Link to="/">Share rea</Link></Box>
-              <Box lineHeight={1.5}><Link to="/">Support</Link></Box>
-              <Box lineHeight={1.5}><Link to="/">Help center</Link></Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/">Investors</Link></Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/contact-us">Contact rea</Link></Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/">Community</Link> </Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/">Share rea</Link></Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/">Support</Link></Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/">Help center</Link></Box>
+            </Grid>
+            <Grid item xs={6} />
+            <Grid>
+              <a href="https://www.linkedin.com/company/rea-web/">
+                <Facebook />
+              </a>
+              <a href="https://www.linkedin.com/company/rea-web/">
+                <Instagram />
+              </a>
+              <a href="https://www.linkedin.com/company/rea-web/">
+                <LinkedIn />
+              </a>
             </Grid>
           </Grid>
-          <div style={{ paddingBottom: 5 }} />
-          {/* <Copyright /> */}
-          <Divider orientation="horizontal" />
           <div className={classes.bottomLinks}>
-            <Link to="/home">Rea @ 2021</Link>
+            <Box fontSize={10} color='white'>
+              Copyright © 2021 rea. All rights reserved
+              <Link to="/home">
+                <img src={logoSmallWhite} width={70} alt="logo" />
+              </Link>
+            </Box>
           </div>
         </footer>
       </Container>
