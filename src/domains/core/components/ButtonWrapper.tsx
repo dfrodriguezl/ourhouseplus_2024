@@ -8,6 +8,7 @@ const styles = makeStyles(() => ({
     borderRadius: 20,
     backgroundColor: '#FF6C6C',
     color: 'white',
+    textTransform: 'none',
     margin: '10px 0',
     '&:hover': {
       backgroundColor: '#FF6C6C'
