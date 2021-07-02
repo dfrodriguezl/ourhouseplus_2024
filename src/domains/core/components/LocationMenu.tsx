@@ -60,7 +60,7 @@ function LocationMenu(props: Props) {
         <RadioGroup aria-label="location" name="location" value={location?.city || ''} onChange={handleOnChange}>
           <SearchPill
             label="Location"
-            placeholder="Where will the project be at"
+            placeholder="Where will the project be?"
             value={location?.city || ''}
             onClick={handleClick}
             onChange={handleOnChange}

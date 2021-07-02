@@ -54,7 +54,7 @@ export default function UrbanismMenu(props: Props) {
         <RadioGroup aria-label="density" name="density" value={density?.label || ''} onChange={handleOnChange}>
           <SearchPill
             label="Street Density"
-            placeholder="Choose the street density"
+            placeholder="Choose type of urbanism"
             value={density?.label || ''}
             onClick={handleClick}
             onChange={handleOnChange}
