@@ -43,7 +43,7 @@ const HomeSub1 = () => {
               <Box component="span" >Step One</Box>
             </div>
             <div className={classes.stepTitle}>
-              <Box component="h3" >Basic Volume</Box>
+              <Box component="h3" >Basic volume</Box>
             </div>
             <div className={classes.stepBody}>
               <Box component="span" fontSize={16}>
