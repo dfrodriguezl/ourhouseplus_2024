@@ -35,7 +35,7 @@ const handleScroll = () => {
     });
   }
 
-export default function FabButton() {
+export default function ScrollDown() {
   const classes = useStyles();
 
   return (
