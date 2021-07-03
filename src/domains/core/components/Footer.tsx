@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme: Theme) =>
         opacity: '89%'
       }
     },
+    links:{
+      marginRight: 10
+    },
     bottomLinks: {
       float: 'right',
       paddingTop: 5,
@@ -45,8 +48,9 @@ const Footer = (props: Props) => {
             <Grid item xs={2}>
               <Box fontSize={14} lineHeight={1.7}><Link to="/about">About</Link></Box>
               <Box fontSize={14} lineHeight={1.7}><Link to="/how-it-works">How rea works</Link></Box>
-              <Box fontSize={14} lineHeight={1.7}><Link to="/leadership">Leadership</Link> </Box>
               <Box fontSize={14} lineHeight={1.7}><Link to="/news">News</Link></Box>
+              <Box fontSize={14} lineHeight={1.7}><Link to="/leadership">Leadership</Link> </Box>  
+              <Box fontSize={14} lineHeight={1.7}><Link to="/">Job opportunities</Link> </Box>
             </Grid>
             <Grid item xs={3}>
               <Box fontSize={14} lineHeight={1.7}><Link to="/">Investors</Link></Box>
@@ -57,16 +61,16 @@ const Footer = (props: Props) => {
               <Box fontSize={14} lineHeight={1.7}><Link to="/">Help center</Link></Box>
             </Grid>
             <Grid item xs={6} />
-            <Grid>
-              <a href="https://www.linkedin.com/company/rea-web/">
-                <Facebook />
-              </a>
-              <a href="https://www.linkedin.com/company/rea-web/">
-                <Instagram />
-              </a>
-              <a href="https://www.linkedin.com/company/rea-web/">
+            <Grid item xs={1}>
+            <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
                 <LinkedIn />
-              </a>
+            </a>
+            <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
+                <Facebook />
+            </a>
+            <a href="https://www.linkedin.com/company/rea-web/">
+                <Instagram />
+            </a> 
             </Grid>
           </Grid>
           <div className={classes.bottomLinks}>

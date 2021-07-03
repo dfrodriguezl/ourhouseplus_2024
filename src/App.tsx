@@ -18,6 +18,7 @@ function App() {
         <Route path="/leadership" component={Leadership} />
         <Route path="/news" component={News} />
         <Route path="/how-it-works" component={HowItWorks} />
+        <Route path="/how-it-works" component={HowItWorks} />
         <Route path="/login" component={Login} />
         <Route path="/shapediver/step1" component={ShapeDiverContainerStep1} />
         <Route path="/shapediver/step2" component={ShapeDiverContainerStep2} />
