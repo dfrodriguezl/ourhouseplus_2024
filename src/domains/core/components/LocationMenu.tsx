@@ -47,9 +47,9 @@ function LocationMenu(props: Props) {
 
   const classes = styles();
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setVisible(!visible);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => { 
     setAnchorEl(event.currentTarget);
+    setVisible(true);
   };
 
   const handleClose = () => {
@@ -84,7 +84,7 @@ function LocationMenu(props: Props) {
               props.locations.map(x =>
                 <StyledMenuItem key={x.id} onClick={() => {
                   updateLocation(x.city);
-                  setVisible(!visible);
+                  setVisible(false);
                   }}>
                   <FormControlLabel
                     value={x.city}

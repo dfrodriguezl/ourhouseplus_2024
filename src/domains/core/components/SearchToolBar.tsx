@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
     marginTop: theme.spacing(2),
     background: 'rgba(255, 255, 255, 0.9)',
-    padding: '10px 30px',
+    padding: '5px 30px',
     borderRadius: 32,
     boxShadow: '4px 4px 3px #00000029',
     border: '1px solid #707070',
@@ -40,6 +40,7 @@ const SearchToolBar = (props: Props) => {
   const [location, setLocation] = useState<Location>();
   const [area, setArea] = useState<number>();
   const [density, setDensity] = useState<Density>();
+
 
   useEffect(() => {
     getLocations();
@@ -73,8 +74,8 @@ const SearchToolBar = (props: Props) => {
       <Box fontSize={23} style={{ marginLeft: 30, color: 'white' }}>
         Start building here
       </Box>
-      <Grid container className={classes.searchBox}>
-        <Grid item container direction="column" xs={3} justify="center">
+      <Grid container className={classes.searchBox} >
+        <Grid item container direction="column" xs={3} justify="center" >
           <LocationMenu
             updateLocation={updateLocation}
             location={location}

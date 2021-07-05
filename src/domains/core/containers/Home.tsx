@@ -16,12 +16,15 @@ const Home = (props: Props) => {
           <Grid item xs={8}>
             <SearchToolBar />
           </Grid>
-          <Grid item xs={6} style={{ alignSelf: 'flex-end' }}>
-            <Slogan />
-          </Grid>
-          <Grid item xs={7} style={{ alignSelf: 'flex-end' }}>
-            <ScrollDown />
-          </Grid>
+          {/* <Grid item spacing={10} xs={12}></Grid> */}
+          <Grid item container xs={12} direction="row" style={{marginTop: '38vh'}}>
+            <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
+              <Slogan />
+            </Grid>
+            <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
+              <ScrollDown />
+            </Grid>
+          </Grid> 
         </Grid>  
       </PageContainer>
       <HomeSub1 />

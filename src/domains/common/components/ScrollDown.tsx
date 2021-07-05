@@ -1,4 +1,4 @@
-import { Box, createStyles, makeStyles, Theme, Fab, SvgIcon } from '@material-ui/core'
+import { Box, createStyles, makeStyles, Theme, Fab } from '@material-ui/core'
 import { KeyboardArrowDown } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       textAlign: 'center',
       color: 'black',
-      paddingBottom: 30,
+      paddingBottom: 15,
     },
     header: {
       paddingBottom: 5
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
         height: 43
     },
     boxText: {
-        marginBottom: 30,
+        marginBottom: 10,
         color: "white"
     },
     icon:{

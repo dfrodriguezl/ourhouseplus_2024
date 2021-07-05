@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       left: 0,
       zIndex: -1,
       width: '100vw',
-      height: '85vh'
+      height: '100vh'
     }
   })
 );
@@ -52,7 +52,7 @@ const PageContainer = (props: Props) => {
 
   return (
     <div className={background}>
-      <Container maxWidth="lg">
+      <Container>
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
           {
             !noHeader &&
