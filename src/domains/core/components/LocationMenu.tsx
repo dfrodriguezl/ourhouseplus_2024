@@ -5,6 +5,7 @@ import { Location } from 'domains/core/models';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import { useState } from 'react';
 
 const styles = makeStyles((theme: Theme) => ({
   radio: {
@@ -23,6 +24,9 @@ const styles = makeStyles((theme: Theme) => ({
   },
   radioSubLabel: {
     fontSize: 12,
+  },
+  menuList:{
+    marginTop:30
   }
 }))
 
@@ -39,10 +43,12 @@ type Props = OwnProps & StateProps;
 function LocationMenu(props: Props) {
   const { location, updateLocation } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [visible, setVisible] = useState<Boolean>(false);
 
   const classes = styles();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setVisible(!visible);
     setAnchorEl(event.currentTarget);
   };
 
@@ -65,8 +71,10 @@ function LocationMenu(props: Props) {
             onClick={handleClick}
             onChange={handleOnChange}
           />
-          <StyledMenu
+          {
+            visible?<StyledMenu
             id="location-menu"
+            className={classes.menuList}
             anchorEl={anchorEl}
             keepMounted
             open={Boolean(anchorEl)}
@@ -74,7 +82,10 @@ function LocationMenu(props: Props) {
           >
             {
               props.locations.map(x =>
-                <StyledMenuItem key={x.id} onClick={() => updateLocation(x.city)}>
+                <StyledMenuItem key={x.id} onClick={() => {
+                  updateLocation(x.city);
+                  setVisible(!visible);
+                  }}>
                   <FormControlLabel
                     value={x.city}
                     control={<Radio className={classes.radio} />}
@@ -89,7 +100,9 @@ function LocationMenu(props: Props) {
                 </StyledMenuItem>
               )
             }
-          </StyledMenu>
+          </StyledMenu>:null
+          }
+          
         </RadioGroup>
       </FormControl>
     </div>
