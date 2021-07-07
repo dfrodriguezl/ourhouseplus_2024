@@ -1,18 +1,17 @@
 import React from 'react';
-import { Container, Typography, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Link, Grid } from '@material-ui/core';
+import { Container, Typography, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid } from '@material-ui/core';
 import { PageContainer } from 'domains/core/containers';
+import { Link } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
-    flexDirection: 'column',
+    // flexDirection: 'column',
     alignItems: 'center',
-    // background: theme.palette.primary.main,
     padding: 20,
-    // background: 'transparent linear-gradient(136deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box'
   },
   avatar: {
     margin: theme.spacing(1),
@@ -27,6 +26,38 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     background: 'transparent linear-gradient(136deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box'
+  },
+  label: {
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  input: {
+    margin: '5px 0 10px 0',
+    height: 30,
+    borderRadius: 50,
+    width: '100%',
+    borderColor: '#707070',
+    borderWidth: '2px',
+    paddingLeft: 10,
+    '&:focus': {
+      outline: 'none'
+    }
+  },
+  button: {
+    margin: '20px 0 0 0',
+    borderRadius: 50,
+    backgroundColor: '#FF6C6C',
+    color: 'white',
+    padding: '5px 30px 5px 30px',
+    cursor: 'pointer',
+    borderWidth: 0
+  },
+  title: {
+    textAlign: 'left'
+  },
+  back:{
+    color: '#000000',
+    fontWeight: 600
   }
 }));
 
@@ -35,64 +66,58 @@ export default function Register() {
 
   return (
     <PageContainer background="controls-background">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
-            Sign In
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
+      <form
+        action="https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9"
+        method="post"
+        id="mc-embedded-subscribe-form"
+        name="mc-embedded-subscribe-form"
+        className="validate"
+        target="_blank"
+      >
+        <Grid container className={classes.paper}>
+        
+          <Typography>
+            <Link to="/home" className={classes.back}>
+              Back
+            </Link>
+            <h2>Hello!</h2>
+            <h4> We are currently in beta. <br /> Sign up for our waitlist.</h4>
+          </Typography>
+          
+          {/* <h2 id="simple-modal-title">Hello!</h2> */}
+          <Grid item xs={12}>
+            <div>
+              <label className={classes.label}> First Name </label>
+            </div>
+            <div>
+              <input type="text" name="FNAME" id="mce-FNAME" className={classes.input} required />
+            </div>
+            <div >
+              <div>
+                <label className={classes.label}> Last Name </label>
+              </div>
+              <input type="text" name="LNAME" id="mce-LNAME" className={classes.input} required />
+            </div>
+            <div>
+              <div>
+                <label className={classes.label}>Email</label>
+              </div>
+              <input type="email" name="EMAIL" id="mce-EMAIL" className={classes.input} required />
+            </div>
+            <div>
+              <div className="response" id="mce-error-response" style={{ display: 'none' }}></div>
+              <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
+            </div>
+            <div style={{ position: 'absolute', left: -5000 }} aria-hidden="true">
+              <input type="text" name="b_3c39cbec5fc9d998a5b584676_4064b46da9" />
+            </div>
+            <div>
+              <input type="submit" value="Sign up" name="subscribe" className={classes.button} />
+            </div>
           </Grid>
-        </form>
-      </div>
+        </Grid>
+      </form>
+      
     </PageContainer>
   );
 }
