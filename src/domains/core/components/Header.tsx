@@ -48,27 +48,37 @@ const useStyles = makeStyles((theme: Theme) =>
 const Header = (props: RouteComponentProps) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const history = props.history;
 
   const isHome = props.history.location.pathname.indexOf('home') > -1;
+  const isRegister = props.history.location.pathname.indexOf('register') > -1;
 
   const handleClose = () => {
     setOpen(false);
+  }
+
+  const openRegister = () => {
+    history.push('/register');
   }
 
   return (
     <AppBar position="static" elevation={0} className={classes.header}>
       <Toolbar variant="regular">
         <Link to="/home">
-          <img src={isHome ? logo : whiteLogo} alt="logo" width={100} />
+          <img src={isHome || isRegister ? logo : whiteLogo} alt="logo" width={100} />
         </Link>
-        <div className={classes.menuButton}>
+        {
+          !isRegister?
+          <div className={classes.menuButton}>
           <Button className={classes.whiteButtons}>
             Sign in
           </Button>
-          <Button className={classes.becomeMember} onClick={() => setOpen(true)}>
+          <Button className={classes.becomeMember} onClick={() => openRegister()}>
             Become a member
           </Button>
-        </div>
+        </div>:null
+        }
+        
       </Toolbar>
       <Mailchimp open={open} handleClose={handleClose}/>
     </AppBar>
