@@ -7,7 +7,6 @@ const useStyles = makeStyles((theme: Theme) =>
       color: 'white',
       position: 'relative',
       letterSpacing: '1px'
-      // paddingBottom: 50,
     },
     header: {
       paddingBottom: 5

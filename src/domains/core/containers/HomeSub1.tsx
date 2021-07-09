@@ -28,9 +28,7 @@ const styles = makeStyles(() => ({
     backgroundColor: '#F7F7F7',
     marginTop: 40,
     marginBottom: 40,
-    paddingLeft: 40,
-    // paddingTop: 20,
-    // paddingBottom: 20
+    paddingLeft: 40
   },
   buttonJoin: {
     color: "#FF6C6C",
