@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       color: 'white',
       position: 'relative',
-      paddingBottom: 50,
+      letterSpacing: '1px'
     },
     header: {
       paddingBottom: 5
@@ -20,7 +20,7 @@ export default function Slogan() {
   return (
     <div className={classes.root}>
       <Box fontWeight="bold" fontSize={24} className={classes.header}>Building future communities together</Box>
-      <Box lineHeight={1.5}>REA helps you generate a preliminary design study of multi-dweling smart housing project in three simple steps</Box>
+      <Box lineHeight={1.5}>Generate a preliminary design study of multi-dweling smart housing project in three simple steps</Box>
     </div>
   )
 }

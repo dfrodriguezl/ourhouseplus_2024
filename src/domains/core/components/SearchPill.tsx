@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -20,6 +20,15 @@ const useStyles = makeStyles((theme: Theme) => ({
       outline: 'none'
     }
   },
+  fieldHover: {
+    backgroundColor: '#C9C6C6',
+    borderRadius: 32,
+    opacity: 0.55,
+    cursor: 'pointer'
+  },
+  box: {
+    padding: '10px 10px'
+  }
 }));
 
 interface OwnProps {
@@ -33,11 +42,12 @@ interface OwnProps {
 
 type Props = OwnProps
 export default function SearchPill(props: Props) {
-  const { label, placeholder, value, onChange, type, onClick } = props;
+  const { label, placeholder, value, onChange, type, onClick} = props;
+  const [hover, setHover] = useState(false);
   const classes = useStyles();
 
   return (
-    <div className={classes.field}>
+    <div className={`${classes.field} ${classes.box} ${hover?classes.fieldHover:''}`} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <label className={classes.fieldWrapper}>
         <div >
           <div className={classes.fieldLabel}>{label}</div>

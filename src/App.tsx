@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Home, Login } from 'domains/core/containers';
+import { Home, Login, Register } from 'domains/core/containers';
 import { ThemeProvider } from '@material-ui/core';
 import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News } from 'domains/common/containers';
 import theme from 'app/theme';
@@ -19,6 +19,7 @@ function App() {
         <Route path="/news" component={News} />
         <Route path="/how-it-works" component={HowItWorks} />
         <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
         <Route path="/shapediver/step1" component={ShapeDiverContainerStep1} />
         <Route path="/shapediver/step2" component={ShapeDiverContainerStep2} />
         <Route path="/shapediver/step3" component={ShapeDiverContainerStep3} />

@@ -4,7 +4,7 @@ import { Grid } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { SearchToolBar } from 'domains/core/components';
 import { PageContainer } from 'domains/core/containers';
-import { Slogan } from 'domains/common/components';
+import { Slogan, ScrollDown } from 'domains/common/components';
 import { HomeSub1 } from 'domains/core/containers';
 
 type Props = RouteComponentProps;
@@ -16,10 +16,15 @@ const Home = (props: Props) => {
           <Grid item xs={8}>
             <SearchToolBar />
           </Grid>
-          <Grid item xs={6} style={{ alignSelf: 'flex-end' }}>
-            <Slogan />
-          </Grid>
-        </Grid>
+          <Grid item container xs={12} direction="row" style={{marginTop: '38vh'}}>
+            <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
+              <Slogan />
+            </Grid>
+            <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
+              <ScrollDown />
+            </Grid>
+          </Grid> 
+        </Grid>  
       </PageContainer>
       <HomeSub1 />
     </Fragment>

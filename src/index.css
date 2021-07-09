@@ -31,8 +31,10 @@ a {
 
 .home {
   background-image: url(assets/Background.png);
+  /* background-image: url(assets/Background_2.svg); */
   background-size: 1920px 1080px;
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat; */
+  background-repeat: round;
 }
 
 .controls-background {
