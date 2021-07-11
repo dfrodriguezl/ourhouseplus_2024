@@ -52,6 +52,7 @@ const Header = (props: RouteComponentProps) => {
 
   const isHome = props.history.location.pathname.indexOf('home') > -1;
   const isRegister = props.history.location.pathname.indexOf('register') > -1;
+  const isSignUp = props.history.location.pathname.indexOf('signup') > -1;
 
   const handleClose = () => {
     setOpen(false);
@@ -65,10 +66,10 @@ const Header = (props: RouteComponentProps) => {
     <AppBar position="static" elevation={0} className={classes.header}>
       <Toolbar variant="regular">
         <Link to="/home">
-          <img src={isHome || isRegister ? logo : whiteLogo} alt="logo" width={100} />
+          <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
         </Link>
         {
-          !isRegister?
+          !(isRegister || isSignUp)?
           <div className={classes.menuButton}>
           <Button className={classes.whiteButtons}>
             Sign in
