@@ -9,6 +9,18 @@ import { DataParameters, Parameters } from 'domains/shapeDiver/models';
 import { getArea, setModelData, setOptions } from 'domains/shapeDiver/slice';
 import { Location } from 'domains/core/models';
 import { FullPageOverlay } from 'domains/core/containers';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+
+const styles = {
+  container: {
+    width: '98%', 
+    height: '70%', 
+    background: 'white'
+  }
+};
+
+
+  
 
 interface StateProps {
   terrain: number;
@@ -25,11 +37,14 @@ interface DispatchProps {
   setModelData: typeof setModelData;
 }
 
+
 type Props = StateProps & DispatchProps & RouteComponentProps;
 class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
   private containerSD: React.RefObject<HTMLDivElement>;
   private api: Api.ApiInterfaceV2 | null;
   private parameters: any | null;
+  
+  
 
   constructor(props: Props) {
     super(props);
@@ -43,6 +58,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
     this.state = {
       isLoaded: false
     }
+
   }
 
   public async componentDidUpdate(_props: Props) {
@@ -100,10 +116,12 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
 
   public async componentDidMount() {
     const { terrain, area, location, setOptions, setModelData } = this.props;
+    
 
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
+    
 
     // ShapeDiver Viewer constructor settings
     // Refer to https://app.shapediver.com/api for details
@@ -167,13 +185,16 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
   }
 
   render() {
+
+    
+
     return (
       <Fragment>
         {
           !this.state.isLoaded &&
           <FullPageOverlay />
         }
-        <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '80%', background: 'white' }}>
+        <div ref={this.containerSD} className="shapediver-container-flex" style={styles.container}>
           <div className='shapediver-viewport-flex'>
             <div id='sdv-container-viewport' style={{ opacity: 0 }}>
             </div>

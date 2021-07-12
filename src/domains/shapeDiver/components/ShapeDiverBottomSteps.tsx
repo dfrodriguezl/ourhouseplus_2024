@@ -11,8 +11,9 @@ const styles = makeStyles(() => ({
     padding: '10px 0px 30px 0px'
   },
   step: {
-    width: 54,
-    height: 32,
+    // width: 54,
+    // height: 32,
+    margin: "0px 10px"
   },
   nextButton: {
     borderRadius: 20,
@@ -57,8 +58,9 @@ const ShapeDiverSteps = (props: Props) => {
 
     <Grid container className={classes.container} style={{ textAlign: 'center' }} >
       <Grid item xs={12}>
-        <IconButton
+        <IconButton 
           onClick={() => goToStep1()}
+          className={classes.step}
         >
           {
             isStep1
@@ -69,6 +71,7 @@ const ShapeDiverSteps = (props: Props) => {
         </IconButton>
         <Button
           onClick={goToStep2}
+          className={classes.step}
         >
           {
             isStep2
@@ -79,6 +82,7 @@ const ShapeDiverSteps = (props: Props) => {
         </Button>
         <Button
           onClick={goToStep3}
+          className={classes.step}
         >
           {
             isStep3
