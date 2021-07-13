@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Grid, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { getArea, setTerrain, setDensity, setUnitsNumberType } from 'domains/shapeDiver/slice';
+import { getArea, setTerrain, setDensity, setUnitsNumberType, setImportModel } from 'domains/shapeDiver/slice';
 
 import { high, low, medium, two, three, four, square, rectangle, custom } from 'assets'
 import { highSelected, lowSelected, mediumSelected, twoSelected, threeSelected, fourSelected, squareSelected, rectangleSelected, customSelected } from 'assets'
@@ -10,6 +10,7 @@ import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
 import { Location } from 'domains/core/models';
 import { ShapeDiverAdvancedOptions, ShapeDiverToolBarDetails } from '.';
+import { useRef } from 'react';
 
 const styles = makeStyles(() => ({
   container: {
@@ -42,12 +43,34 @@ interface DispatchProps {
   setTerrain: typeof setTerrain;
   setDensity: typeof setDensity;
   setUnitsNumberType: typeof setUnitsNumberType;
+  setImportModel: typeof setImportModel;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep1(props: Props) {
-  const { setTerrain, setDensity, location, setUnitsNumberType, terrain } = props;
+  const fileInput = useRef<HTMLInputElement>(null);
+  const { setTerrain, setDensity, location, setUnitsNumberType, terrain, setImportModel } = props;
   const classes = styles();
+
+  const uploadImage = (event: any) => {
+    const selectedFile = event.target.files[0];
+
+    if (selectedFile) {
+      setImportModel(selectedFile.name);
+      window.importFile = selectedFile;
+      setTerrain(2);
+    }
+  }
+
+  const setTerrainAndClearImage = (terrain: number) => {
+    setImportModel('');
+    window.importFile = undefined;
+    setTerrain(terrain);
+  }
+
+  const handleFileUpload = () => {
+    fileInput.current!.click();
+  }
 
   return (
     <Paper className={`${classes.container} controls-background`}>
@@ -62,7 +85,7 @@ function ShapeDiverToolBarStep1(props: Props) {
               <Grid item xs={4}>
                 <Radio
                   checked={terrain === 0}
-                  onClick={() => setTerrain(0)}
+                  onClick={() => setTerrainAndClearImage(0)}
                   checkedIcon={<img className={classes.buttons} src={squareSelected} alt="1:1" />}
                   icon={<img className={classes.buttons} src={square} alt="1:1" />}
                 />
@@ -70,15 +93,21 @@ function ShapeDiverToolBarStep1(props: Props) {
               <Grid item xs={4}>
                 <Radio
                   checked={terrain === 1}
-                  onClick={() => setTerrain(1)}
+                  onClick={() => setTerrainAndClearImage(1)}
                   checkedIcon={<img className={classes.buttons} src={rectangleSelected} alt="2:1" />}
                   icon={<img className={classes.buttons} src={rectangle} alt="2:1" />}
                 />
               </Grid>
               <Grid item xs={4}>
+                <input
+                  ref={fileInput}
+                  type="file"
+                  onChange={(event) => uploadImage(event)}
+                  style={{ display: 'none' }}
+                />
                 <Radio
                   checked={terrain === 2}
-                  onClick={() => setTerrain(2)}
+                  onClick={() => handleFileUpload()}
                   checkedIcon={<img className={classes.buttons} src={customSelected} alt="import" />}
                   icon={<img className={classes.buttons} src={custom} alt="import" />}
                 />
@@ -171,7 +200,8 @@ const container = compose<Props, {}>(
     {
       setTerrain,
       setDensity,
-      setUnitsNumberType
+      setUnitsNumberType,
+      setImportModel
     }
   )
 )(ShapeDiverToolBarStep1);

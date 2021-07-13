@@ -14,6 +14,7 @@ export interface ShapeDiverState {
   floorSelectionOptions: string[];
   floorSelection: number;
   modelData: ModelData;
+  importModel: string;
 }
 
 const initialState: ShapeDiverState = {
@@ -45,7 +46,8 @@ const initialState: ShapeDiverState = {
     twoBedroom: 0,
     threeBedroom: 0,
     fourBedroom: 0
-  }
+  },
+  importModel: '',
 };
 
 export const shapeDiverSlice = createSlice({
@@ -100,6 +102,9 @@ export const shapeDiverSlice = createSlice({
     setModelData: (state, action: PayloadAction<ModelData>) => {
       state.modelData = action.payload;
     },
+    setImportModel: (state, action: PayloadAction<string>) => {
+      state.importModel = action.payload;
+    },
   },
 });
 
@@ -118,6 +123,7 @@ export const {
   setFloorSelectionOptions,
   setFloorSelection,
   setModelData,
+  setImportModel,
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
