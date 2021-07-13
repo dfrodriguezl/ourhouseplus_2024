@@ -51,14 +51,16 @@ function ShapeDiverToolBarStep2(props: Props) {
   const classes = styles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const bigFont = 15;
+  const smallFont = 13;
 
   return (
-    <Paper className={`${classes.container} controls-background`}>
+    <Paper className={`${classes.container} controls-background`} style={{overflow: 'auto',height: smallScreen?'':'90%',scrollbarColor:'black'}}>
       <Grid container direction="column" >
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold'>Choose your window size</Box>
+            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose your window size</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -91,7 +93,7 @@ function ShapeDiverToolBarStep2(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold'>Choose facade direction</Box>
+            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose facade direction</Box>
           </Grid>
           <RadioGroup>
             <Grid container alignItems="center">

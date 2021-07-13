@@ -46,14 +46,12 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   button: {
-    // margin: '20px 0 0 0',
     borderRadius: 50,
     backgroundColor: '#FF6C6C',
     color: 'white',
     padding: '5px 30px 5px 30px',
     cursor: 'pointer',
     borderWidth: 0,
-    // margin: "auto"
   },
   title: {
     textAlign: 'left'
@@ -67,9 +65,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 45,
     textTransform: 'none',
     backgroundColor: "#FFFFFF",
-    opacity: 0.6,
-    // width: '100%',
-    // padding: "10px 100px"
+    opacity: 0.6
   },
   label_button: {
     color: "#000000",

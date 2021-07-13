@@ -11,8 +11,6 @@ const styles = makeStyles(() => ({
     padding: '10px 0px 30px 0px'
   },
   step: {
-    // width: 54,
-    // height: 32,
     margin: "0px 10px"
   },
   nextButton: {

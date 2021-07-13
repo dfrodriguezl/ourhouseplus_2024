@@ -29,7 +29,7 @@ const ShapeDiverContainerStep1 = (props: Props) => {
         <ShapeDiverWrapperStep1 />
         <ShapeDiverBottomSteps />
       </Grid>
-      <Grid item xs={3} style={{height:"85%"}}>
+      <Grid item xs={3} style={{height: '95%'}}>
         <ShapeDiverToolBarStep1 />
         <ShapeDiverSteps />
       </Grid>

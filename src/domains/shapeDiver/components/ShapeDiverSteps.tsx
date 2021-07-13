@@ -5,6 +5,9 @@ import { setRegen } from '../slice';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { Location } from 'domains/core/models';
+import { useState } from 'react';
+import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import { ArrowForward } from '@material-ui/icons';
 
 const styles = makeStyles(() => ({
   container: {
@@ -17,6 +20,7 @@ const styles = makeStyles(() => ({
   nextButton: {
     borderRadius: 20,
     backgroundColor: '#FF6C6C',
+    textTransform: 'none',
     color: 'white',
     margin: '10px 0',
     '&:hover': {
@@ -24,7 +28,14 @@ const styles = makeStyles(() => ({
     }
   },
   regen: {
-
+    borderRadius: 20,
+    backgroundColor: '#F4F4F4',
+    textTransform: 'none',
+    color: '#505050',
+    margin: '10px 0',
+    '&:hover': {
+      backgroundColor: '#8ABCD2',
+    }
   }
 }));
 
@@ -40,6 +51,8 @@ type Props = StateProps & DispatchProps & RouteComponentProps;
 const ShapeDiverSteps = (props: Props) => {
   const { history, setRegen } = props;
   const classes = styles();
+  const [hoverReset, setHoverReset] = useState(false);
+  const [hoverNext, setHoverNext] = useState(false);
 
   const isStep1 = history.location.pathname.indexOf('step1') > -1;
   const isStep2 = history.location.pathname.indexOf('step2') > -1;
@@ -66,9 +79,11 @@ const ShapeDiverSteps = (props: Props) => {
         <Button
           size="small"
           onClick={() => setRegen()}
-          className={classes.nextButton}
+          className={classes.regen}
+          onMouseEnter={() => setHoverReset(true)}
+          onMouseLeave={() => setHoverReset(false)}
         >
-          Regen
+          {hoverReset?<RotateLeftIcon></RotateLeftIcon>:"Reset"}
         </Button>
       </Grid>
       <Grid item xs={6}>
@@ -76,8 +91,10 @@ const ShapeDiverSteps = (props: Props) => {
           size="small"
           onClick={goToNextStep}
           className={classes.nextButton}
+          onMouseEnter={() => setHoverNext(true)}
+          onMouseLeave={() => setHoverNext(false)}
         >
-          Next
+          {hoverNext?<ArrowForward></ArrowForward>:"Next"}
         </Button>
       </Grid>
     </Grid>

@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     pageContainer: {
       minHeight: '100vh',
+      maxHeight: '120vh',
       height: '100vh',
       width: '100%',
       margin: 0

@@ -17,7 +17,9 @@ import { useTheme } from '@material-ui/core/styles';
 
 const styles = makeStyles(() => ({
   container: {
-    borderRadius: '45px'
+    borderRadius: '45px',
+    scrollbarWidth: 'thin',
+    scrollbarColor: 'red'
   },
   firstSubContainer: {
     padding: '10px 30px 0 30px',
@@ -58,14 +60,16 @@ function ShapeDiverToolBarStep1(props: Props) {
   const classes = styles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const bigFont = 15;
+  const smallFont = 13;
 
   return (
-    <Paper className={`${classes.container} controls-background`}>
-      <Grid container direction="column" >
+    <Paper className={`${classes.container} controls-background`} style={{overflow: 'auto',height: smallScreen?'':'90%',scrollbarColor:'black'}}>
+      <Grid container direction="column" style={{overflow:"y"}}>
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold'>Choose your lot shape</Box>
+            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose your lot shape</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -98,7 +102,7 @@ function ShapeDiverToolBarStep1(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold'>Choose level of density</Box>
+            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose level of density</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -131,7 +135,7 @@ function ShapeDiverToolBarStep1(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold'>Choose number of unit types</Box>
+            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose number of unit types</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -155,7 +159,7 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Radio
                   checked={location.unitsNumberType === 2}
                   onClick={() => setUnitsNumberType(2)}
-                  checkedIcon={<img className={classes.buttons} src={fourSelected} alt="four" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={fourSelected} alt="four" />}
                   icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={four} alt="four" />}
                 />
               </Grid>
