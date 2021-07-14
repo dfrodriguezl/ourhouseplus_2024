@@ -79,7 +79,10 @@ const LabelDetails:React.FC<LblProps> = ({step}) => {
           </Fragment>} 
           <br />
           {step==="step1"?
-            <Box fontSize={smallScreen?bigFont:smallFont}>Total units</Box>:
+          <Fragment>
+            <Box fontSize={smallScreen?bigFont:smallFont}>Total units</Box>
+            <Box fontSize={smallScreen?bigFont:smallFont}>Plot ratio</Box>
+          </Fragment>:
             <Box fontSize={smallScreen?bigFont:smallFont}>Plot ratio</Box>
           } 
           <br />
@@ -108,7 +111,7 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
           {step==="step1"?
           <Box fontSize={smallScreen?bigFont:smallFont}>
           <NumberFormat
-            value={modelData.totalGrossFloorArea}
+            value={modelData.totalLandArea}
             displayType="text"
             thousandSeparator
           />
@@ -163,13 +166,22 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
           </Fragment>} 
           <br />
           {step==="step1"?
-            <Box fontSize={smallScreen?bigFont:smallFont}>
+          <Fragment>
+              <Box fontSize={smallScreen?bigFont:smallFont}>
               <NumberFormat
                 value={modelData.totalHousingUnits}
                 displayType="text"
                 thousandSeparator
               />
-            </Box>:
+            </Box>
+            <Box fontSize={smallScreen?bigFont:smallFont}>
+            <NumberFormat
+              value={modelData.plotRatio}
+              displayType="text"
+              decimalScale={2}
+            />
+          </Box>
+          </Fragment>:
             <Box fontSize={smallScreen?bigFont:smallFont}>
               <NumberFormat
                 value={modelData.plotRatio}
