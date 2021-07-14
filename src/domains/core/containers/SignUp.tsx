@@ -1,8 +1,7 @@
 import React from 'react';
-import { Container, Typography, Avatar, Button, CssBaseline, TextField, FormControlLabel, Checkbox, Grid, Divider } from '@material-ui/core';
+import { Typography, Button, Grid } from '@material-ui/core';
 import { PageContainer } from 'domains/core/containers';
 import { Link } from 'react-router-dom';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import AppleIcon from '@material-ui/icons/Apple';
 import GTranslateIcon from '@material-ui/icons/GTranslate';
 import { makeStyles } from '@material-ui/core/styles';

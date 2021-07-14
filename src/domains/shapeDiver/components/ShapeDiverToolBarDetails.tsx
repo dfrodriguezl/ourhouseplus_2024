@@ -5,7 +5,7 @@ import { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { ModelData } from '../models';
 import NumberFormat from 'react-number-format';
-import { useHistory,useLocation  } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import ShapeDiverProject from './ShapeDiverProject';
@@ -26,14 +26,6 @@ interface LblProps {
   propsDetail?: any;
   modelData?: any;
 }
-
-
-const stepsList = [
-  "Basic volume",
-  "Facade",
-  "Interior"
-]
-
 
 
 type Props = StateProps;
@@ -71,10 +63,10 @@ const LabelDetails:React.FC<LblProps> = ({step}) => {
   return (
       <Fragment>
           <Box fontSize={smallScreen?18:16} fontWeight='bold'>Location</Box>
-          {step=="step1"?
+          {step==="step1"?
           <Box fontSize={smallScreen?bigFont:smallFont}>Total gross floor area</Box>:<Box fontSize={14}>Gross land area</Box>}   
           <br />
-          {step!="step1"?
+          {step!=="step1"?
           <Fragment>
             <Box fontSize={smallScreen?bigFont:smallFont}>Gross floor area (GFA)</Box>
             <Box fontSize={smallScreen?bigFont:smallFont}>Gross leasable area (GLA)</Box>
@@ -86,13 +78,13 @@ const LabelDetails:React.FC<LblProps> = ({step}) => {
             <Box fontSize={smallScreen?bigFont:smallFont}>Floor area ratio (FAR)</Box>
           </Fragment>} 
           <br />
-          {step=="step1"?
+          {step==="step1"?
             <Box fontSize={smallScreen?bigFont:smallFont}>Total units</Box>:
             <Box fontSize={smallScreen?bigFont:smallFont}>Plot ratio</Box>
           } 
           <br />
           {
-            step!="step1"?
+            step!=="step1"?
             <Fragment>
               <Box fontSize={smallScreen?bigFont:smallFont}>Total units (nbr)</Box>
               <Box fontSize={smallScreen?bigFont:smallFont}>Dwellings density (du/ha)</Box>
@@ -128,7 +120,7 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
           />
         </Box>}   
           <br />
-          {step!="step1"?
+          {step!=="step1"?
           <Fragment>
             <Box fontSize={smallScreen?bigFont:smallFont}>
               <NumberFormat
@@ -170,7 +162,7 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
             </Box>
           </Fragment>} 
           <br />
-          {step=="step1"?
+          {step==="step1"?
             <Box fontSize={smallScreen?bigFont:smallFont}>
               <NumberFormat
                 value={modelData.totalHousingUnits}
@@ -188,7 +180,7 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
           } 
           <br />
           {
-            step!="step1"?
+            step!=="step1"?
             <Fragment>
               <Box fontSize={smallScreen?bigFont:smallFont}>
                 <NumberFormat

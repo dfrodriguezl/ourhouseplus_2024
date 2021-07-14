@@ -55,7 +55,7 @@ function ShapeDiverToolBarStep2(props: Props) {
   const smallFont = 13;
 
   return (
-    <Paper className={`${classes.container} controls-background`} style={{overflow: 'auto',height: smallScreen?'':'90%',scrollbarColor:'black'}}>
+    <Paper className={`${classes.container} controls-background`} >
       <Grid container direction="column" >
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>

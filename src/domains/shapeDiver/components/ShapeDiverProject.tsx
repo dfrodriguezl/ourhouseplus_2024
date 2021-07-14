@@ -1,9 +1,8 @@
-import { Grid, Box, Slider, makeStyles, Divider, IconButton, Theme } from '@material-ui/core';
-import SaveIcon from '@material-ui/icons/Save';
-import SystemUpdateAltIcon from '@material-ui/icons/SystemUpdateAlt';
+import { Grid, makeStyles, Divider, IconButton, Theme } from '@material-ui/core';
 import { Location } from 'domains/core/models';
 import { connect } from 'react-redux';
 import { setAdvancedOptions } from 'domains/shapeDiver/slice';
+import { download, save } from 'assets'
 
 import { RootState } from 'app/store';
 import React, { Fragment } from 'react';
@@ -24,6 +23,10 @@ const styles = makeStyles((theme: Theme) => ({
           outline: 'none'
         }
       },
+      buttons: {
+        width: 20,
+        height: 20
+      }
   }));
 
 interface DispatchProps {
@@ -40,33 +43,6 @@ const ShapeDiverProject = (props: Props) => {
   const classes = styles();
 
 
-  const updateMaxPriFloors = (_: any, value: number | number[]) => {
-    if (!location) return;
-    setAdvancedOptions({
-      maxPriFloors: Number(value),
-      maxSecFloors: location!.maxSecFloors,
-      streetFloors: location!.streetFloors,
-    });
-  }
-
-  const updateMaxSecFloors = (_: any, value: number | number[]) => {
-    if (!location) return;
-    setAdvancedOptions({
-      maxPriFloors: location!.maxPriFloors,
-      maxSecFloors: Number(value),
-      streetFloors: location!.streetFloors,
-    });
-  }
-
-  const updateStreetFloors = (_: any, value: number | number[]) => {
-    if (!location) return;
-    setAdvancedOptions({
-      maxPriFloors: location!.maxPriFloors,
-      maxSecFloors: location!.maxSecFloors,
-      streetFloors: Number(value),
-    });
-  }
-
   return (
       <Fragment>
           <Grid container xs={12} direction="row" className={classes.container}>
@@ -80,17 +56,16 @@ const ShapeDiverProject = (props: Props) => {
             </Grid>
             <Grid item xs={2}>
                 <IconButton>
-                    <SaveIcon></SaveIcon>
+                    <img className={classes.buttons} src={save} alt="50" />
                 </IconButton>
             </Grid>
             <Grid item xs={2}>
             <IconButton>
-                    <SystemUpdateAltIcon></SystemUpdateAltIcon>
+                    <img className={classes.buttons} src={download} alt="50" />
                 </IconButton>
             </Grid>
           </Grid>
-          <Divider orientation="horizontal" variant="middle" ></Divider>
-          
+          <Divider orientation="horizontal" variant="middle" ></Divider>     
       </Fragment>
   );
 }

@@ -9,7 +9,6 @@ import { DataParameters, Parameters } from 'domains/shapeDiver/models';
 import { getArea, setModelData, setOptions } from 'domains/shapeDiver/slice';
 import { Location } from 'domains/core/models';
 import { FullPageOverlay } from 'domains/core/containers';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 
 const styles = {
   container: {
