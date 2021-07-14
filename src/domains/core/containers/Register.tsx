@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: 'left'
   },
-  back:{
+  back: {
     color: '#000000',
     fontWeight: 600
   }
@@ -73,7 +73,7 @@ export default function Register() {
         target="_blank"
       >
         <Grid container className={classes.paper}>
-        
+
           <Typography>
             <Link to="/home" className={classes.back}>
               Back
@@ -81,7 +81,7 @@ export default function Register() {
             <h2>Hello!</h2>
             <h4> We are currently in beta. <br /> Sign up for our waitlist.</h4>
           </Typography>
-          
+
           {/* <h2 id="simple-modal-title">Hello!</h2> */}
           <Grid item xs={12}>
             <div>
@@ -115,7 +115,7 @@ export default function Register() {
           </Grid>
         </Grid>
       </form>
-      
+
     </PageContainer>
   );
 }

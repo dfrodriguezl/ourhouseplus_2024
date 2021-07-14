@@ -25,6 +25,7 @@ interface StateProps {
   terrain: number;
   area: number | undefined;
   location: Location | undefined;
+  importModel: string;
 }
 
 interface ComponentProps {
@@ -64,7 +65,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
     const { terrain, area, location, setModelData } = this.props;
 
     if (this.state.isLoaded) {
-      const response = await this.api!.parameters.updateAsync([
+      const payload: { name: string, value: any }[] = [
         { name: Parameters.Terrain, value: terrain },
         { name: Parameters.Density, value: location.density },
         { name: Parameters.Area, value: area?.toString() },
@@ -73,8 +74,15 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
         { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
         { name: Parameters.NumberStreetFloors, value: location.streetFloors },
-      ]);
+      ];
 
+      if (window.importFile) {
+        payload.push({ name: Parameters.ImportModel, value: window.importFile })
+      } else {
+        payload.push({ name: Parameters.ImportModel, value: '' })
+      }
+
+      const response = await this.api!.parameters.updateAsync(payload);
 
       if (response.err) {
         console.log(response.err);
@@ -210,6 +218,7 @@ const container = compose<Props, {}>(
     (state: RootState) => ({
       terrain: state.domains.shapediver.terrain,
       location: state.domains.shapediver.location,
+      importModel: state.domains.shapediver.importModel,
       area: getArea(state),
     }),
     {

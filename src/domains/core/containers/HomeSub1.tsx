@@ -100,25 +100,25 @@ const HomeSub1 = () => {
               </Box>
             </div>
           </Grid>
-          <Grid container xs={12} className={classes.JoinContainer}>
+          <Grid item container xs={12} className={classes.JoinContainer}>
 
             <Grid item xs={10} className={classes.phrase} >
               <Box component="p">
                 Download floorplans, technical drawings, supply chain suggestions and 3d Model.
               </Box>
-              
+
             </Grid>
 
             <Grid item xs={2}>
-              <Button 
+              <Button
                 endIcon={<ArrowForward />}
                 className={classes.buttonJoin}>
                   Join now
               </Button>
             </Grid>
-                
-            
-            
+
+
+
           </Grid>
         </Grid>
       </Container>

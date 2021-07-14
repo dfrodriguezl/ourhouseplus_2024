@@ -12,7 +12,8 @@ export enum Parameters {
   FlatSize = 'FLAT SIZE',
   FloorSelection = 'FLOOR SECTION SELECTION',
   RoomType = 'ROOM TYPE',
-  UnitsNumberType = 'UNITS NUMBER TYPE'
+  UnitsNumberType = 'UNITS NUMBER TYPE',
+  ImportModel = 'IMPORT DWG',
 }
 
 export enum DataParameters {
