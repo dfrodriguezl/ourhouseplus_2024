@@ -4,3 +4,4 @@ export { default as HomeSub1 } from './HomeSub1';
 export { default as PageContainer } from './PageContainer'
 export { default as FullPageOverlay } from './FullPageOverlay';
 export { default as Register } from './Register';
+export { default as SignUp } from './SignUp';

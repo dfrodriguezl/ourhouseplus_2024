@@ -61,6 +61,7 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
     <Accordion className={classes.accordion}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
+        
       >
         <Box fontSize={15} fontWeight='bold'>Advanced Settings</Box>
       </AccordionSummary>

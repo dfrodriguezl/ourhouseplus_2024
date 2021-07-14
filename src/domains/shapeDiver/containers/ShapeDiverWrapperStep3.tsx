@@ -10,6 +10,14 @@ import { setFloorSelectionOptions, setFloorSelection } from 'domains/shapeDiver/
 import { FullPageOverlay } from 'domains/core/containers';
 import { Location } from 'domains/core/models';
 
+const styles = {
+  container: {
+    width: '98%', 
+    height: '70%', 
+    background: 'white'
+  }
+};
+
 interface StateProps {
   roomType: number;
   location: Location | undefined;
@@ -138,7 +146,7 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
           !this.state.isLoaded &&
           <FullPageOverlay />
         }
-        <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '80%', background: '#141414' }}>
+        <div ref={this.containerSD} className="shapediver-container-flex" style={styles.container}>
           <div className='shapediver-viewport-flex'>
             <div id='sdv-container-viewport' style={{ opacity: 0 }}>
             </div>

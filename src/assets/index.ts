@@ -64,3 +64,6 @@ export { default as threeCircle } from './ThreeCircle.png';
 export { default as oneNoCircle } from './OneNoCircle.png';
 export { default as twoNoCircle } from './TwoNoCircle.png';
 export { default as threeNoCircle } from './ThreeNoCircle.png';
+
+export { default as download } from './download.png';
+export { default as save } from './save.png';

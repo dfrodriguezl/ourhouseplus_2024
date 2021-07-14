@@ -10,11 +10,17 @@ import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
 import { Location } from 'domains/core/models';
 import { ShapeDiverAdvancedOptions, ShapeDiverToolBarDetails } from '.';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+
+
 import { useRef } from 'react';
 
 const styles = makeStyles(() => ({
   container: {
-    borderRadius: '45px'
+    borderRadius: '45px',
+    scrollbarWidth: 'thin',
+    scrollbarColor: 'red'
   },
   firstSubContainer: {
     padding: '10px 30px 0 30px',
@@ -23,8 +29,12 @@ const styles = makeStyles(() => ({
     padding: '10px 30px 0 30px',
   },
   buttons: {
-    width: 46,
-    height: 46
+    width: 43,
+    height: 43
+  },
+  buttons_md: {
+    width: 30,
+    height: 30
   },
   regen: {
     width: 24,
@@ -51,6 +61,10 @@ function ShapeDiverToolBarStep1(props: Props) {
   const fileInput = useRef<HTMLInputElement>(null);
   const { setTerrain, setDensity, location, setUnitsNumberType, terrain, setImportModel } = props;
   const classes = styles();
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
+  const bigFont = 15;
+  const smallFont = 13;
 
   const uploadImage = (event: any) => {
     const selectedFile = event.target.files[0];
@@ -73,12 +87,12 @@ function ShapeDiverToolBarStep1(props: Props) {
   }
 
   return (
-    <Paper className={`${classes.container} controls-background`}>
-      <Grid container direction="column" >
+    <Paper className={`${classes.container} controls-background`} >
+      <Grid container direction="column" style={{overflow:"y"}}>
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold'>Choose your lot shape</Box>
+            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose your lot shape</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -86,16 +100,17 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Radio
                   checked={terrain === 0}
                   onClick={() => setTerrainAndClearImage(0)}
-                  checkedIcon={<img className={classes.buttons} src={squareSelected} alt="1:1" />}
-                  icon={<img className={classes.buttons} src={square} alt="1:1" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={squareSelected} alt="1:1" />}
+                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={square} alt="1:1" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
                   checked={terrain === 1}
                   onClick={() => setTerrainAndClearImage(1)}
-                  checkedIcon={<img className={classes.buttons} src={rectangleSelected} alt="2:1" />}
-                  icon={<img className={classes.buttons} src={rectangle} alt="2:1" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={rectangleSelected} alt="2:1" />}
+                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={rectangle} alt="2:1" />}
+
                 />
               </Grid>
               <Grid item xs={4}>
@@ -108,8 +123,8 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Radio
                   checked={terrain === 2}
                   onClick={() => handleFileUpload()}
-                  checkedIcon={<img className={classes.buttons} src={customSelected} alt="import" />}
-                  icon={<img className={classes.buttons} src={custom} alt="import" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={customSelected} alt="import" />}
+                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={custom} alt="import" />}
                 />
               </Grid>
             </Grid>
@@ -117,7 +132,7 @@ function ShapeDiverToolBarStep1(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold'>Choose level of density</Box>
+            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose level of density</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -125,24 +140,24 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Radio
                   checked={location.density === 0}
                   onClick={() => setDensity(0)}
-                  checkedIcon={<img className={classes.buttons} src={lowSelected} alt="low" />}
-                  icon={<img className={classes.buttons} src={low} alt="low" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={lowSelected} alt="low" />}
+                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={low} alt="low" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
                   checked={location.density === 1}
                   onClick={() => setDensity(1)}
-                  checkedIcon={<img className={classes.buttons} src={mediumSelected} alt="medium" />}
-                  icon={<img className={classes.buttons} src={medium} alt="medium" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={mediumSelected} alt="medium" />}
+                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={medium} alt="medium" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
                   checked={location.density === 2}
                   onClick={() => setDensity(2)}
-                  checkedIcon={<img className={classes.buttons} src={highSelected} alt="high" />}
-                  icon={<img className={classes.buttons} src={high} alt="high" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={highSelected} alt="high" />}
+                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={high} alt="high" />}
                 />
               </Grid>
             </Grid>
@@ -150,7 +165,7 @@ function ShapeDiverToolBarStep1(props: Props) {
         </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
-            <Box fontSize={15} fontWeight='bold'>Choose number of unit types</Box>
+            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose number of unit types</Box>
           </Grid>
           <RadioGroup>
             <Grid container justify="center">
@@ -158,24 +173,24 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Radio
                   checked={location.unitsNumberType === 0}
                   onClick={() => setUnitsNumberType(0)}
-                  checkedIcon={<img className={classes.buttons} src={twoSelected} alt="two" />}
-                  icon={<img className={classes.buttons} src={two} alt="two" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={twoSelected} alt="two" />}
+                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={two} alt="two" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
                   checked={location.unitsNumberType === 1}
                   onClick={() => setUnitsNumberType(1)}
-                  checkedIcon={<img className={classes.buttons} src={threeSelected} alt="three" />}
-                  icon={<img className={classes.buttons} src={three} alt="three" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={threeSelected} alt="three" />}
+                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={three} alt="three" />}
                 />
               </Grid>
               <Grid item xs={4}>
                 <Radio
                   checked={location.unitsNumberType === 2}
                   onClick={() => setUnitsNumberType(2)}
-                  checkedIcon={<img className={classes.buttons} src={fourSelected} alt="four" />}
-                  icon={<img className={classes.buttons} src={four} alt="four" />}
+                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={fourSelected} alt="four" />}
+                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={four} alt="four" />}
                 />
               </Grid>
             </Grid>

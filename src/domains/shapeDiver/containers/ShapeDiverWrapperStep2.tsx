@@ -9,6 +9,14 @@ import { setOptions } from 'domains/shapeDiver/slice';
 import { FullPageOverlay } from 'domains/core/containers';
 import { Location } from 'domains/core/models';
 
+const styles = {
+  container: {
+    width: '98%', 
+    height: '70%', 
+    background: 'white'
+  }
+};
+
 interface StateProps {
   location: Location | undefined;
   facadeDirection: number;
@@ -127,7 +135,7 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
           !this.state.isLoaded &&
           <FullPageOverlay />
         }
-        <div ref={this.containerSD} className="shapediver-container-flex" style={{ width: '98%', height: '80%', background: '#141414' }}>
+        <div ref={this.containerSD} className="shapediver-container-flex" style={styles.container}>
           <div className='shapediver-viewport-flex'>
             <div id='sdv-container-viewport' style={{ opacity: 0 }}>
             </div>
