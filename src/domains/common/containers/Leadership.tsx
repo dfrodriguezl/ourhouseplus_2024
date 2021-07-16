@@ -3,7 +3,7 @@ import { PageContainer } from 'domains/core/containers'
 
 export default function Leadership() {
   return (
-    <PageContainer>
+    <PageContainer >
       Leadership
     </PageContainer>
   )

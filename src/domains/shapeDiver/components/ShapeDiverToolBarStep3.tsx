@@ -20,10 +20,10 @@ const styles = makeStyles(() => ({
     borderRadius: '45px'
   },
   firstSubContainer: {
-    padding: '10px 30px 0 30px',
+    padding: '5px 30px 0 30px',
   },
   subContainer: {
-    padding: '10px 30px 0 30px',
+    padding: '5px 30px 0 30px',
   },
   buttons: {
     width: 46,

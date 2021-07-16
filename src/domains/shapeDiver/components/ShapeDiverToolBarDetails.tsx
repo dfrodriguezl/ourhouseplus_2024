@@ -12,7 +12,7 @@ import ShapeDiverProject from './ShapeDiverProject';
 
 const styles = makeStyles(() => ({
   container: {
-    padding: '3% 0 3% 30px',
+    padding: '3% 0 2% 30px',
   },
 }));
 
@@ -84,11 +84,11 @@ const LabelDetails:React.FC<LblProps> = ({step}) => {
             <Box fontSize={smallScreen?bigFont:smallFont}>Plot ratio</Box>
           </Fragment>:
             <Box fontSize={smallScreen?bigFont:smallFont}>Plot ratio</Box>
-          } 
-          <br />
+          }     
           {
             step!=="step1"?
             <Fragment>
+              <br/>
               <Box fontSize={smallScreen?bigFont:smallFont}>Total units (nbr)</Box>
               <Box fontSize={smallScreen?bigFont:smallFont}>Dwellings density (du/ha)</Box>
               <Box fontSize={smallScreen?bigFont:smallFont}>Avg. inhabitant per dwelling</Box>
@@ -190,10 +190,11 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
               />
             </Box>
           } 
-          <br />
+          {/* <br /> */}
           {
             step!=="step1"?
             <Fragment>
+              <br/>
               <Box fontSize={smallScreen?bigFont:smallFont}>
                 <NumberFormat
                   value={modelData.totalHousingUnits}

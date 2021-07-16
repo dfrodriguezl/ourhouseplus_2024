@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Grid, makeStyles, Paper, Radio, RadioGroup } from '@material-ui/core'
-import { getArea, setTerrain, setDensity, setUnitsNumberType, setImportModel } from 'domains/shapeDiver/slice';
+import { getArea, setTerrain, setDensity, setUnitsNumberType, setImportModel, setExpandAdvanced } from 'domains/shapeDiver/slice';
 
 import { high, low, medium, two, three, four, square, rectangle, custom } from 'assets'
 import { highSelected, lowSelected, mediumSelected, twoSelected, threeSelected, fourSelected, squareSelected, rectangleSelected, customSelected } from 'assets'
@@ -18,15 +18,13 @@ import { useRef } from 'react';
 
 const styles = makeStyles(() => ({
   container: {
-    borderRadius: '45px',
-    scrollbarWidth: 'thin',
-    scrollbarColor: 'red'
+    borderRadius: '45px'
   },
   firstSubContainer: {
-    padding: '10px 30px 0 30px',
+    padding: '5px 30px 0 30px',
   },
   subContainer: {
-    padding: '10px 30px 0 30px',
+    padding: '5px 30px 0px 30px',
   },
   buttons: {
     width: 43,
@@ -47,6 +45,7 @@ interface StateProps {
   terrain: number;
   options: ShapeDiverOptions | undefined;
   location: Location | undefined;
+  expandAdvanced: Object;
 }
 
 interface DispatchProps {
@@ -54,12 +53,13 @@ interface DispatchProps {
   setDensity: typeof setDensity;
   setUnitsNumberType: typeof setUnitsNumberType;
   setImportModel: typeof setImportModel;
+  setExpandAdvanced: typeof setExpandAdvanced;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep1(props: Props) {
   const fileInput = useRef<HTMLInputElement>(null);
-  const { setTerrain, setDensity, location, setUnitsNumberType, terrain, setImportModel } = props;
+  const { setTerrain, setDensity, location, setUnitsNumberType, terrain, setImportModel, expandAdvanced } = props;
   const classes = styles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
@@ -76,6 +76,14 @@ function ShapeDiverToolBarStep1(props: Props) {
     }
   }
 
+  let stylesH = {};
+  // console.log(expandAdvanced)
+  if(expandAdvanced.hasOwnProperty("height")){
+    console.log(expandAdvanced)
+    stylesH = {height: '50%'}
+ 
+  }
+
   const setTerrainAndClearImage = (terrain: number) => {
     setImportModel('');
     window.importFile = undefined;
@@ -86,9 +94,10 @@ function ShapeDiverToolBarStep1(props: Props) {
     fileInput.current!.click();
   }
 
+
   return (
     <Paper className={`${classes.container} controls-background`} >
-      <Grid container direction="column" style={{overflow:"y"}}>
+      <Grid container direction="column" >
         <ShapeDiverToolBarDetails />
         <Grid item container className={classes.firstSubContainer}>
           <Grid item xs={12}>
@@ -211,12 +220,14 @@ const container = compose<Props, {}>(
       options: state.domains.shapediver.options,
       location: state.domains.shapediver.location,
       terrain: state.domains.shapediver.terrain,
+      expandAdvanced: state.domains.shapediver.expandAdvanced
     }),
     {
       setTerrain,
       setDensity,
       setUnitsNumberType,
-      setImportModel
+      setImportModel,
+      setExpandAdvanced
     }
   )
 )(ShapeDiverToolBarStep1);

@@ -1,12 +1,15 @@
+import { useState } from 'react';
 import { compose } from 'recompose';
 import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
 import { Header } from 'domains/core/components'
+import { setExpandAdvanced } from 'domains/shapeDiver/slice';
+import { connect } from 'react-redux';
+import { RootState } from 'app/store';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     pageContainer: {
       minHeight: '100vh',
-      maxHeight: '120vh',
       height: '100vh',
       width: '100%',
       margin: 0
@@ -17,10 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
     bodyContainer: {
       flex: 1,
       minHeight: 0,
-      maxHeight: '100%',
-      '& div': {
-        maxHeight: '100%',
-      }
+      // maxHeight: '110%',
+      // '& div': {
+      //   maxHeight: '110%',
+      // }
     },
     menuButton: {
       marginLeft: '20px 0',
@@ -40,19 +43,32 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+// interface StateProps {
+//   expandAdvanced: boolean;
+// }
+
+interface DispatchProps {
+  setExpandAdvanced: typeof setExpandAdvanced;
+}
 interface OwnProps {
   background?: string;
   noHeader?: boolean;
   children: any;
 }
 
-type Props = OwnProps;
+interface StateProps {
+  expandAdvanced?: Object;
+}
+
+
+
+type Props = OwnProps & StateProps & DispatchProps;
 const PageContainer = (props: Props) => {
-  const { children, noHeader, background } = props;
+  const { children, noHeader, background,expandAdvanced, setExpandAdvanced} = props;
   const classes = useStyles();
 
   return (
-    <div className={background}>
+    <div className={background} style={expandAdvanced}>
       <Container>
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
           {
@@ -70,7 +86,16 @@ const PageContainer = (props: Props) => {
   );
 }
 
-const container = compose<Props, OwnProps>()(PageContainer);
+const container = connect<StateProps, DispatchProps, {}, RootState>(
+  (state: RootState) => ({
+    expandAdvanced: state.domains.shapediver.expandAdvanced
+  }),
+  {
+    setExpandAdvanced
+  }
+)(PageContainer);
+
+// const container = compose<Props, OwnProps>()(PageContainer);
 export default container;
 
 
