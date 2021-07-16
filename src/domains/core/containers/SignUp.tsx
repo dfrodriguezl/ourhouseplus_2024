@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import AppleIcon from '@material-ui/icons/Apple';
 import GTranslateIcon from '@material-ui/icons/GTranslate';
 import { makeStyles } from '@material-ui/core/styles';
+import { google } from 'assets';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -19,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '30%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -120,7 +121,11 @@ const useStyles = makeStyles((theme) => ({
   },
   text_underlined: {
     textDecoration: 'underline',
-  }
+  },
+  icon: {
+    width: 20,
+    height: 20
+  },
 }));
 
 export default function SignUp() {
@@ -133,13 +138,13 @@ export default function SignUp() {
         method="post"
         id="mc-embedded-subscribe-form"
         name="mc-embedded-subscribe-form"
-        className="validate"
+        className={classes.form}
         target="_blank"
       >
         <Grid container className={classes.paper}>
           <Grid item xs={12}>
           <div>
-              <Button className={classes.button_external_signup} variant="contained" startIcon={<GTranslateIcon />} classes={{label: classes.label_button}} disableElevation fullWidth={true}> 
+              <Button className={classes.button_external_signup} variant="contained" startIcon={<img className={classes.icon} src={google} alt="google icon" />} classes={{label: classes.label_button}} disableElevation fullWidth={true}> 
                 Sign up with Google
               </Button>
             </div>
@@ -150,25 +155,7 @@ export default function SignUp() {
             </div>      
             <DividerWithText>or</DividerWithText> 
           </Grid>
-          
-          
-          {/* <Typography>
-            <Link to="/home" className={classes.back}>
-              Back
-            </Link>
-            <h2>Hello!</h2>
-            <h4> We are currently in beta. <br /> Sign up for our waitlist.</h4>
-          </Typography> */}
-          
-          {/* <h2 id="simple-modal-title">Hello!</h2> */}
           <Grid item xs={12}>
-            {/* <div>
-              <label className={classes.label}> First Name </label>
-            </div>
-            <div>
-              <input type="text" name="FNAME" id="mce-FNAME" className={classes.input} required />
-            </div> */}
-
             <div>
               <div>
                 <label className={classes.label}> Name </label>
@@ -205,10 +192,6 @@ export default function SignUp() {
               </Link>      
             </Typography>
           </Grid>
-          
-          {/* <Link to="/home" className={classes.back}>
-              Continue as a guest
-            </Link> */}
         </Grid>
       </form>
       

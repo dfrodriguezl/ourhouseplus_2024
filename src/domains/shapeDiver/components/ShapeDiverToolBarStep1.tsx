@@ -76,14 +76,6 @@ function ShapeDiverToolBarStep1(props: Props) {
     }
   }
 
-  let stylesH = {};
-  // console.log(expandAdvanced)
-  if(expandAdvanced.hasOwnProperty("height")){
-    console.log(expandAdvanced)
-    stylesH = {height: '50%'}
- 
-  }
-
   const setTerrainAndClearImage = (terrain: number) => {
     setImportModel('');
     window.importFile = undefined;
