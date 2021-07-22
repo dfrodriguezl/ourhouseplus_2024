@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -9,6 +9,8 @@ import { Densities, Density, Location } from 'domains/core/models';
 import { ButtonWrapper, LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
 import { setInitialParams } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
@@ -17,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '5px 30px',
     borderRadius: 32,
     boxShadow: '4px 4px 3px #00000029',
-    border: '1px solid #707070',
+    border: '1px solid #707070'
   },
   fieldDivider: {
     backgroundColor: theme.palette.common.black,
@@ -40,6 +42,10 @@ const SearchToolBar = (props: Props) => {
   const [location, setLocation] = useState<Location>();
   const [area, setArea] = useState<number>();
   const [density, setDensity] = useState<Density>();
+  const [searchBoxSelected,setSearchBoxSelected] = useState(1);
+
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
 
   useEffect(() => {
@@ -75,41 +81,89 @@ const SearchToolBar = (props: Props) => {
         Start building here
       </Box>
       <Grid container className={classes.searchBox} >
-        <Grid item container direction="column" xs={3} justify="center" >
+
+        {!smallScreen?
+        <Fragment>
+          <Grid item container direction="column" xs={3} justify="center" >
+          <LocationMenu
+            updateLocation={updateLocation}
+            location={location}
+          />
+          </Grid>
+          <Grid item>
+            <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
+            </Grid>
+            <Grid item container direction="column" xs={3} justify="center">
+            <SearchPill
+              label="Area square feet"
+              placeholder="total terrain area"
+              onChange={updateArea}
+              value={area || ''}
+              type="number"
+            />
+          </Grid>
+          <Grid item>
+            <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
+          </Grid>
+          <Grid item container direction="column" xs={3} justify="center">
+            <UrbanismMenu
+              updateDensity={updateDensity}
+              density={density}
+            />
+          </Grid>
+          <Grid item container xs={1} justify="center">
+            <ButtonWrapper
+              label="Next"
+              size="small"
+              onClick={next}
+              disabled={!area || !location}
+            />
+          </Grid>
+        </Fragment>:
+        searchBoxSelected === 1?
+        <Fragment>
+        <Grid item container direction="column" xs={12} justify="center" >
           <LocationMenu
             updateLocation={updateLocation}
             location={location}
           />
         </Grid>
-        <Grid item>
+        {/* <Grid item>
           <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
-        </Grid>
-        <Grid item container direction="column" xs={3} justify="center">
-          <SearchPill
-            label="Area square feet"
-            placeholder="total terrain area"
-            onChange={updateArea}
-            value={area || ''}
-            type="number"
-          />
-        </Grid>
-        <Grid item>
-          <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
-        </Grid>
-        <Grid item container direction="column" xs={3} justify="center">
-          <UrbanismMenu
-            updateDensity={updateDensity}
-            density={density}
-          />
-        </Grid>
-        <Grid item container xs={1} justify="center">
-          <ButtonWrapper
-            label="Next"
-            size="small"
-            onClick={next}
-            disabled={!area || !location}
-          />
-        </Grid>
+        </Grid> */}
+        </Fragment>:null
+        }
+        {/* {smallScreen && searchBoxSelected == 1?null:
+          <Fragment>
+            <Grid item container direction="column" xs={3} justify="center" >
+              <LocationMenu
+                updateLocation={updateLocation}
+                location={location}
+              />
+            </Grid>
+            <Grid item>
+              <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
+            </Grid>
+          </Fragment>    
+        } */}
+
+        {/* {smallScreen && searchBoxSelected == 1?null:
+          <Fragment>
+            <Grid item container direction="column" xs={3} justify="center" >
+              <LocationMenu
+                updateLocation={updateLocation}
+                location={location}
+              />
+            </Grid>
+            <Grid item>
+              <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
+            </Grid>
+          </Fragment>    
+        } */}
+        
+        
+        
+        
       </Grid>
     </Grid>
   );

@@ -63,6 +63,7 @@ const LabelDetails:React.FC<LblProps> = ({step}) => {
   return (
       <Fragment>
           <Box fontSize={smallScreen?18:16} fontWeight='bold'>Location</Box>
+          <Box fontSize={smallScreen?bigFont:smallFont}>Avg. people per dwelling</Box>
           {step==="step1"?
           <Box fontSize={smallScreen?bigFont:smallFont}>Total gross floor area</Box>:<Box fontSize={14}>Gross land area</Box>}   
           <br />
@@ -108,6 +109,11 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
   return (
     <Fragment>
           <Box fontSize={smallScreen?18:16}>{propsDetail.location?.city}</Box>
+          <NumberFormat
+            value={propsDetail.location?.p_vivs}
+            displayType="text"
+          />
+          <br />
           {step==="step1"?
           <Box fontSize={smallScreen?bigFont:smallFont}>
           <NumberFormat

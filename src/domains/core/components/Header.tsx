@@ -1,15 +1,24 @@
-import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar } from '@material-ui/core';
+import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Drawer, IconButton } from '@material-ui/core';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import MenuIcon from '@material-ui/icons/Menu';
+import clsx from 'clsx';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 import logo from 'assets/logo-small.png';
 import whiteLogo from 'assets/logo-small-white.png';
 import { Mailchimp } from 'domains/common/components';
-import { useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
+
+const drawerWidth = 240;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       padding: '20px 0',
+      [theme.breakpoints.down('sm')]: {
+        padding: 0,
+      },
       background: 'transparent'
     },
     menuButton: {
@@ -41,18 +50,41 @@ const useStyles = makeStyles((theme: Theme) =>
       textTransform: 'none',
       border: '2px solid white',
       padding: '2px 10px'
-    }
+    },
+    drawer: {
+      width: drawerWidth,
+      flexShrink: 0,
+    },
+    drawerPaper: {
+      width: drawerWidth,
+    },
+    menuButton2: {
+    },
+    hide: {
+      display: 'none',
+    },
+    root: {
+      color: "#FFFFFF"
+    },
+    icon: {
+      fontSize: "50px !important"
+     }
   })
 );
 
 const Header = (props: RouteComponentProps) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [mobileView, setMobileView] = useState(false);
   const history = props.history;
 
   const isHome = props.history.location.pathname.indexOf('home') > -1;
   const isRegister = props.history.location.pathname.indexOf('register') > -1;
   const isSignUp = props.history.location.pathname.indexOf('signup') > -1;
+
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
 
   const handleClose = () => {
     setOpen(false);
@@ -62,14 +94,46 @@ const Header = (props: RouteComponentProps) => {
     history.push('/register');
   }
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   return (
-    <AppBar position="static" elevation={0} className={classes.header}>
+    smallScreen?
+    <Fragment>
+      <AppBar position="static" elevation={0} className={classes.header}>
       <Toolbar variant="regular">
         <Link to="/home">
           <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
         </Link>
-        {
-          !(isRegister || isSignUp)?
+        <div className={classes.menuButton}>
+          <IconButton
+            edge="end"
+            color="secondary"
+            aria-label="menu"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton2 && classes.root, open && classes.hide )}
+          >
+            <MenuIcon className={classes.icon}/>
+          </IconButton>  
+        </div>
+
+        <Drawer
+          className={classes.drawer}
+          anchor="right"
+          open={open}
+          onClose={handleDrawerClose}
+          classes={{
+            paper: classes.drawerPaper,
+          }}></Drawer>
+              
+        
+        {/* {
+          !(isRegister || isSignUp) || smallScreen?
           <div className={classes.menuButton}>
           <Button className={classes.whiteButtons}>
             Sign in
@@ -78,12 +142,35 @@ const Header = (props: RouteComponentProps) => {
             Become a member
           </Button>
         </div>:null
-        }
+        } */}
         
       </Toolbar>
-      <Mailchimp open={open} handleClose={handleClose}/>
+      {/* <Mailchimp open={open} handleClose={handleClose}/> */}
     </AppBar>
+    
+    </Fragment>
+    :
+      <AppBar position="static" elevation={0} className={classes.header}>
+        <Toolbar variant="regular">
+          <Link to="/home">
+            <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
+          </Link>  
+          {
+            !(isRegister || isSignUp)?
+            <div className={classes.menuButton}>
+            <Button className={classes.whiteButtons}>
+              Sign in
+            </Button>
+            <Button className={classes.becomeMember} onClick={() => openRegister()}>
+              Become a member
+            </Button>
+          </div>:null
+          }
+        
+      </Toolbar>
+    </AppBar>   
   );
 }
+
 
 export default withRouter(Header);
