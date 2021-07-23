@@ -1,4 +1,4 @@
-import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Drawer, IconButton } from '@material-ui/core';
+import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Drawer, IconButton, MenuItem } from '@material-ui/core';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
@@ -110,6 +110,8 @@ const Header = (props: RouteComponentProps) => {
         <Link to="/home">
           <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
         </Link>
+
+        {!(isRegister || isSignUp)?
         <div className={classes.menuButton}>
           <IconButton
             edge="end"
@@ -120,7 +122,9 @@ const Header = (props: RouteComponentProps) => {
           >
             <MenuIcon className={classes.icon}/>
           </IconButton>  
-        </div>
+        </div>:null
+        }
+        
 
         <Drawer
           className={classes.drawer}
@@ -129,7 +133,16 @@ const Header = (props: RouteComponentProps) => {
           onClose={handleDrawerClose}
           classes={{
             paper: classes.drawerPaper,
-          }}></Drawer>
+          }}>
+            <div>
+            <Button>
+              <MenuItem>Sign in</MenuItem>
+            </Button>
+            <Button onClick={() => openRegister()}>
+            <MenuItem>Become a member</MenuItem>
+            </Button>
+            </div>
+          </Drawer>
               
         
         {/* {
@@ -171,6 +184,7 @@ const Header = (props: RouteComponentProps) => {
     </AppBar>   
   );
 }
+
 
 
 export default withRouter(Header);
