@@ -38,7 +38,7 @@ const ShapeDiverAdditionalParams = (props: Props) => {
           </AccordionSummary>
           <AccordionDetails>
             <Grid container className={classes.container}>
-              <Grid item xs={4}>
+              <Grid item xs={6} sm={4}>
                 <Box fontSize={15}>Avg bedroom per dwelling (hr/du)</Box>
                 <Box fontSize={15}>Green space per inhabitant (m2)</Box>
                 <br />
@@ -52,7 +52,7 @@ const ShapeDiverAdditionalParams = (props: Props) => {
                 <Box fontSize={15}>Three bedroom</Box>
                 <Box fontSize={15}>Four bedroom</Box>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={6} sm={4}>
                 <Box fontSize={15}>{modelData.averageBedroomPerDwelling}</Box>
                 <Box fontSize={15}>{modelData.greenSpacePerInhabitant}</Box>
                 <br />

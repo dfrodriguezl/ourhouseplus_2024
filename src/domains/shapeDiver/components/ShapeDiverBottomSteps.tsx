@@ -5,8 +5,10 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { Location } from 'domains/core/models';
 import { oneCircle, twoCircle, threeCircle, oneNoCircle, twoNoCircle, threeNoCircle } from 'assets';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
-const styles = makeStyles(() => ({
+const styles = makeStyles((theme) => ({
   container: {
     padding: '10px 0px 30px 0px'
   },
@@ -21,9 +23,15 @@ const styles = makeStyles(() => ({
   },
   numbers: {
     width: 50,
+    [theme.breakpoints.down('sm')]: {
+      width: 35
+    },
   },
   numbersCircle: {
     width: 20,
+    [theme.breakpoints.down('sm')]: {
+      width: 15
+    },
   }
 }));
 
@@ -39,6 +47,9 @@ const ShapeDiverSteps = (props: Props) => {
   const isStep1 = history.location.pathname.indexOf('step1') > -1;
   const isStep2 = history.location.pathname.indexOf('step2') > -1;
   const isStep3 = history.location.pathname.indexOf('step3') > -1;
+
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const goToStep1 = () => {
     history.push('/shapediver/step1');

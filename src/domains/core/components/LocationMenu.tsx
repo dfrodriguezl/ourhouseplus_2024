@@ -9,7 +9,6 @@ import { useState } from 'react';
 import { setSearchClick } from 'domains/shapeDiver/slice';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { Header } from 'domains/core/components'
 
 const styles = makeStyles((theme: Theme) => ({
   radio: {
