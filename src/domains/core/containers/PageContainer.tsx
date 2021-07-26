@@ -67,6 +67,7 @@ const PageContainer = (props: Props) => {
   const { children, noHeader, background,expandAdvanced, setExpandAdvanced} = props;
   const classes = useStyles();
 
+  // console.log(background);
   return (
     <div className={background} style={expandAdvanced}>
       <Container>

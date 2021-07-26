@@ -6,18 +6,26 @@ import { SearchToolBar } from 'domains/core/components';
 import { PageContainer } from 'domains/core/containers';
 import { Slogan, ScrollDown } from 'domains/common/components';
 import { HomeSub1 } from 'domains/core/containers';
+import { connect } from 'react-redux';
+import { RootState } from 'app/store';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
-type Props = RouteComponentProps;
+
+interface StateProps {
+  searchClick?: Object;
+}
+
+type Props = RouteComponentProps & StateProps;
 const Home = (props: Props) => {
 
+  const { searchClick } = props;
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
+  
   return (
     <Fragment>
-      <PageContainer background="home">
+      <PageContainer background={!smallScreen?"home":searchClick?"home-black":"home"}>
         <Grid container justify="center">
           <Grid item xs={smallScreen?12:8}>
             <SearchToolBar />
@@ -38,8 +46,14 @@ const Home = (props: Props) => {
   )
 }
 
-const container = compose<Props, {}>(
-  withRouter
+const container = connect<StateProps, {}, {}, RootState>(
+  (state: RootState) => ({
+    searchClick: state.domains.shapediver.searchClick
+  })
 )(Home);
+
+// const container = compose<Props, {}>(
+//   withRouter
+// )(Home);
 
 export default container;

@@ -16,6 +16,7 @@ export interface ShapeDiverState {
   modelData: ModelData;
   importModel: string;
   expandAdvanced: Object;
+  searchClick: Boolean;
 }
 
 const initialState: ShapeDiverState = {
@@ -50,6 +51,7 @@ const initialState: ShapeDiverState = {
   },
   importModel: '',
   expandAdvanced: {height:'100vh'},
+  searchClick: false
 };
 
 export const shapeDiverSlice = createSlice({
@@ -110,6 +112,9 @@ export const shapeDiverSlice = createSlice({
     setExpandAdvanced: (state, action: PayloadAction<Object>) => {
       state.expandAdvanced = action.payload;
     },
+    setSearchClick: (state, action: PayloadAction<Boolean>) => {
+      state.searchClick = action.payload;
+    },
   },
 });
 
@@ -129,7 +134,8 @@ export const {
   setFloorSelection,
   setModelData,
   setImportModel,
-  setExpandAdvanced
+  setExpandAdvanced,
+  setSearchClick
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
