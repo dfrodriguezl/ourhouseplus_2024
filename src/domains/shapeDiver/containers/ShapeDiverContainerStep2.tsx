@@ -8,6 +8,8 @@ import { ShapeDiverToolBarStep2, ShapeDiverSteps, ShapeDiverAdditionalParams, Sh
 import { ShapeDiverWrapperStep2 } from 'domains/shapeDiver/containers';
 import { RootState } from 'app/store';
 import { Location } from 'domains/core/models';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 interface StateProps {
   location: Location | undefined;
@@ -16,6 +18,9 @@ interface StateProps {
 type Props = StateProps & RouteComponentProps;
 const ShapeDiverContainerStep2 = (props: Props) => {
 
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   if (!props.location) {
     props.history.push('/home');
     return (<Fragment />)
@@ -23,12 +28,12 @@ const ShapeDiverContainerStep2 = (props: Props) => {
 
   return (
     <PageContainer background="black-model">
-      <Grid item xs={9}>
+      <Grid item xs={12} sm={9} style={{height: smallScreen?'50%':''}}>
         <ShapeDiverAdditionalParams />
         <ShapeDiverWrapperStep2 />
         <ShapeDiverBottomSteps />
       </Grid>
-      <Grid item xs={3} >
+      <Grid item xs={12} sm={3}>
         <ShapeDiverToolBarStep2 />
         <ShapeDiverSteps />
       </Grid>
