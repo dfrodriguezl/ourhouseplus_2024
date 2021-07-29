@@ -10,6 +10,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import ShapeDiverProject from './ShapeDiverProject';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { setExpandAdvanced } from 'domains/shapeDiver/slice';
+import { compose } from 'recompose';
+import { withRouter } from 'react-router-dom';
 
 const styles = makeStyles((theme) => ({
   container: {
@@ -30,6 +33,10 @@ interface StateProps {
   modelData: ModelData;
 }
 
+interface dispatchProps {
+  setExpandAdvanced: typeof setExpandAdvanced;
+}
+
 interface LblProps {
   step?: string | null;
   propsDetail?: any;
@@ -46,10 +53,10 @@ interface DataProps {
 }
 
 
-type Props = StateProps;
+type Props = StateProps & dispatchProps;
 const ShapeDiverToolBarDetails = (props: Props) => {
   const classes = styles();
-  const { modelData } = props;
+  const { modelData, setExpandAdvanced } = props;
   const history = useHistory();
   const isStep1 = history.location.pathname.indexOf('step1') > -1;
   const isStep2 = history.location.pathname.indexOf('step2') > -1;
@@ -57,13 +64,32 @@ const ShapeDiverToolBarDetails = (props: Props) => {
   
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const onChangeAccordion = (event: object, expanded: boolean) => {
+
+    if(expanded){
+      setExpandAdvanced({height:'140vh'})
+      window.scroll({
+        top: document.body.offsetHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }else{
+      setExpandAdvanced({height:'100vh'})
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  }
   
 
   return (
     <Fragment>
       <ShapeDiverProject></ShapeDiverProject>
       {smallScreen?
-        <Accordion square className={classes.accordion}>
+        <Accordion square className={classes.accordion} onChange={onChangeAccordion}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
           >  
@@ -163,8 +189,6 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
  
   return (
     <Fragment>
-      
-      
           <Box fontSize={smallScreen?18:16}>{propsDetail.location?.city}</Box>
           {propsDetail.location?.p_vivs?
             <NumberFormat
@@ -286,11 +310,26 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
   )
 }
 
-const container = connect<StateProps, {}, {}, RootState>(
-  (state: RootState) => ({
-    location: state.domains.shapediver.location,
-    modelData: state.domains.shapediver.modelData,
-  })
+// const container = connect<StateProps, {}, {}, RootState>(
+//   (state: RootState) => ({
+//     location: state.domains.shapediver.location,
+//     modelData: state.domains.shapediver.modelData,
+//   }),{
+//     setExpandAdvanced
+//   }
+// )(ShapeDiverToolBarDetails);
+
+const container = compose<Props, {}>(
+  withRouter,
+  connect<StateProps, dispatchProps, {}, RootState>(
+    (state: RootState) => ({
+      location: state.domains.shapediver.location,
+      modelData: state.domains.shapediver.modelData,
+    }),{
+      setExpandAdvanced
+    }
+  )
 )(ShapeDiverToolBarDetails);
+
 
 export default container;

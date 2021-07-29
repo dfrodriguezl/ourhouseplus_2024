@@ -31,25 +31,23 @@ a {
 
 .home {
   background-image: url(assets/Background.png);
-  /* background-size: 100vw 100vh; */
-  /* background-image: url(assets/Background_2.svg); */
   background-size: 1920px 1080px; 
-  /* background-size: cover; */
   background-repeat: round;
-  /* background-repeat: round; */
-  /* background-repeat: space; */
+}
+
+@media screen and (max-width: 600px) {
+  .home {
+    background-image: url(assets/Background.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover; 
+  }
 }
 
 .home-black {
   background-color: #D9D6E1;
-  /* background-image: url(assets/Background.png); */
-  /* background-size: 100vw 100vh; */
-  /* background-image: url(assets/Background_2.svg); */
   background-size: 1920px 1080px; 
-  /* background-size: cover; */
   background-repeat: round;
-  /* background-repeat: round; */
-  /* background-repeat: space; */
 }
 
 .controls-background {

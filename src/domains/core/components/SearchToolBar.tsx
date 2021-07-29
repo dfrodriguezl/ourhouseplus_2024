@@ -7,7 +7,7 @@ import { Box, Divider, Grid, makeStyles, Theme, Dialog, List, ListItem } from '@
 import { getLocations } from 'domains/core/coreSlice';
 import { Densities, Density, Location } from 'domains/core/models';
 import { ButtonWrapper, LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
-import { setInitialParams } from 'domains/shapeDiver/slice';
+import { setInitialParams, setSearchClick } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -50,11 +50,12 @@ interface StateProps {
 interface DispatchProps {
   setInitialParams: typeof setInitialParams;
   getLocations: typeof getLocations;
+  setSearchClick: typeof setSearchClick;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
-  const { setInitialParams, history, locations, searchClick, getLocations } = props;
+  const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick } = props;
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
@@ -78,7 +79,8 @@ const SearchToolBar = (props: Props) => {
   const updateStep = (step:number) => {
     setSearchBoxSelected(step)
     if(step === 4){
-      next()
+      setSearchClick(false)
+      next() 
     }
   }
 
@@ -267,7 +269,8 @@ const container = compose<Props, {}>(
     }),
     {
       getLocations,
-      setInitialParams
+      setInitialParams,
+      setSearchClick
     }
   )
 )(SearchToolBar);
