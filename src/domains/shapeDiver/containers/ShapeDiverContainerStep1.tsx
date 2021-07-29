@@ -37,7 +37,8 @@ const ShapeDiverContainerStep1 = (props: Props) => {
       </Grid>
       <Grid item xs={12} sm={3}>
         <ShapeDiverToolBarStep1 />
-        <ShapeDiverSteps />
+        {!smallScreen?<ShapeDiverSteps />:null}
+        
       </Grid>
     </PageContainer>
   )
