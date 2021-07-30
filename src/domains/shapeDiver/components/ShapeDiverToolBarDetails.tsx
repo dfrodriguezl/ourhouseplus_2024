@@ -310,15 +310,6 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
   )
 }
 
-// const container = connect<StateProps, {}, {}, RootState>(
-//   (state: RootState) => ({
-//     location: state.domains.shapediver.location,
-//     modelData: state.domains.shapediver.modelData,
-//   }),{
-//     setExpandAdvanced
-//   }
-// )(ShapeDiverToolBarDetails);
-
 const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, dispatchProps, {}, RootState>(

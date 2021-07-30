@@ -39,13 +39,10 @@ const styles = makeStyles((theme) => ({
     height: 24
   },
   carrousel: {
-   
     [theme.breakpoints.down('sm')]: {
       height: '9vh',
       maxHeight: '9vh',
       overflowX: 'auto',
-      // flexWrap: 'nowrap !important'
-      // overflowY: 'auto'
     },
   }
 }));

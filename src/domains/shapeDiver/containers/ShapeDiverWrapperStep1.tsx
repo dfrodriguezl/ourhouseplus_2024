@@ -14,7 +14,6 @@ const styles = {
   container: {
     width: '98%', 
     height: '70%', 
-    // background: 'black'
   }
 };
 

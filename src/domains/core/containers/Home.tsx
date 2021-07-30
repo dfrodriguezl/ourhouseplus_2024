@@ -52,8 +52,4 @@ const container = connect<StateProps, {}, {}, RootState>(
   })
 )(Home);
 
-// const container = compose<Props, {}>(
-//   withRouter
-// )(Home);
-
 export default container;

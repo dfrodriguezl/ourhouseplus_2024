@@ -20,10 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
     bodyContainer: {
       flex: 1,
       minHeight: 0,
-      // maxHeight: '110%',
-      // '& div': {
-      //   maxHeight: '110%',
-      // }
     },
     menuButton: {
       marginLeft: '20px 0',
@@ -42,10 +38,6 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   })
 );
-
-// interface StateProps {
-//   expandAdvanced: boolean;
-// }
 
 interface DispatchProps {
   setExpandAdvanced: typeof setExpandAdvanced;
@@ -67,7 +59,7 @@ const PageContainer = (props: Props) => {
   const { children, noHeader, background,expandAdvanced, setExpandAdvanced} = props;
   const classes = useStyles();
 
-  // console.log(background);
+  
   return (
     <div className={background} style={expandAdvanced}>
       <Container>
@@ -96,7 +88,6 @@ const container = connect<StateProps, DispatchProps, {}, RootState>(
   }
 )(PageContainer);
 
-// const container = compose<Props, OwnProps>()(PageContainer);
 export default container;
 
 

@@ -64,7 +64,6 @@ export default function UrbanismMenu(props: Props) {
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setVisible(!visible);
-    // setAnchorEl(event.currentTarget);
     if(smallScreen){
       setOpenList(true)
       setOpenDialog(true)
