@@ -67,3 +67,8 @@ export { default as threeNoCircle } from './ThreeNoCircle.png';
 
 export { default as download } from './download.png';
 export { default as save } from './save.png';
+
+export { default as google } from './google.png';
+
+export { default as back } from './back.png';
+export { default as forward } from './forward.png';

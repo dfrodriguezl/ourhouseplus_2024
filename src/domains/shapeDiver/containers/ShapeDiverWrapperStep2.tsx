@@ -12,8 +12,7 @@ import { Location } from 'domains/core/models';
 const styles = {
   container: {
     width: '98%', 
-    height: '70%', 
-    background: 'white'
+    height: '70%',
   }
 };
 

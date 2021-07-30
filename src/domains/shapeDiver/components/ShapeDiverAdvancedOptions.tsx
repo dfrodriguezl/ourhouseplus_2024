@@ -2,7 +2,7 @@ import { Grid, Box, Slider, makeStyles, Accordion, AccordionSummary, AccordionDe
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Location } from 'domains/core/models';
 import { connect } from 'react-redux';
-import { setAdvancedOptions } from 'domains/shapeDiver/slice';
+import { setAdvancedOptions, setExpandAdvanced } from 'domains/shapeDiver/slice';
 
 import { RootState } from 'app/store';
 import React from 'react';
@@ -11,22 +11,23 @@ const styles = makeStyles(() => ({
   accordion: {
     width: '100%',
     background: 'transparent',
-    padding: '0 20px',
-    marginTop: 10,
+    padding: '0 20px'
   },
 }));
 
 interface DispatchProps {
   setAdvancedOptions: typeof setAdvancedOptions;
+  setExpandAdvanced: typeof setExpandAdvanced;
 }
 
 interface StateProps {
   location: Location | undefined;
+  expandAdvanced: Object;
 }
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions = (props: Props) => {
-  const { location, setAdvancedOptions } = props;
+  const { location,  expandAdvanced, setAdvancedOptions, setExpandAdvanced } = props;
   const classes = styles();
 
 
@@ -57,8 +58,27 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
     });
   }
 
+  const onChangeAccordion = (event: object, expanded: boolean) => {
+
+    if(expanded){
+      setExpandAdvanced({height:'140vh'})
+      window.scroll({
+        top: document.body.offsetHeight,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }else{
+      setExpandAdvanced({height:'100vh'})
+      window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+      });
+    }
+  }
+
   return (
-    <Accordion className={classes.accordion}>
+    <Accordion className={classes.accordion} onChange={onChangeAccordion}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         
@@ -112,9 +132,12 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
 const container = connect<StateProps, DispatchProps, {}, RootState>(
   (state: RootState) => ({
     location: state.domains.shapediver.location,
+    expandAdvanced: state.domains.shapediver.expandAdvanced
+    
   }),
   {
-    setAdvancedOptions
+    setAdvancedOptions,
+    setExpandAdvanced
   }
 )(ShapeDiverAdvancedOptions);
 

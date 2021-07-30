@@ -32,6 +32,14 @@ const useStyles = makeStyles((theme: Theme) =>
       '& img': {
         paddingLeft: 10
       },
+      [theme.breakpoints.down('sm')]: {
+        float: 'left',
+      }
+    },
+    socialButtons:{
+      [theme.breakpoints.down('sm')]: {
+        marginTop: 15
+      }
     }
   })
 );
@@ -45,14 +53,14 @@ const Footer = (props: Props) => {
       <Container maxWidth="lg">
         <footer className={classes.footer}>
           <Grid container>
-            <Grid item xs={2}>
+            <Grid item xs={12} sm={2}>
               <Box fontSize={14} lineHeight={1.7}><Link to="/about">About</Link></Box>
               <Box fontSize={14} lineHeight={1.7}><Link to="/how-it-works">How rea works</Link></Box>
               <Box fontSize={14} lineHeight={1.7}><Link to="/news">News</Link></Box>
               <Box fontSize={14} lineHeight={1.7}><Link to="/leadership">Leadership</Link> </Box>  
               <Box fontSize={14} lineHeight={1.7}><Link to="/">Job opportunities</Link> </Box>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm={2}>
               <Box fontSize={14} lineHeight={1.7}><Link to="/">Investors</Link></Box>
               <Box fontSize={14} lineHeight={1.7}><Link to="/contact-us">Contact rea</Link></Box>
               <Box fontSize={14} lineHeight={1.7}><Link to="/">Community</Link> </Box>
@@ -61,16 +69,16 @@ const Footer = (props: Props) => {
               <Box fontSize={14} lineHeight={1.7}><Link to="/">Help center</Link></Box>
             </Grid>
             <Grid item xs={6} />
-            <Grid item xs={1}>
-            <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
-                <LinkedIn />
-            </a>
-            <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
-                <Facebook />
-            </a>
-            <a href="https://www.linkedin.com/company/rea-web/">
-                <Instagram />
-            </a> 
+            <Grid item xs={12} sm={1} className={classes.socialButtons}>
+              <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
+                  <LinkedIn />
+              </a>
+              <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
+                  <Facebook />
+              </a>
+              <a href="https://www.linkedin.com/company/rea-web/">
+                  <Instagram />
+              </a> 
             </Grid>
           </Grid>
           <div className={classes.bottomLinks}>

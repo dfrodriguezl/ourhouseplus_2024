@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container, Grid, Box, Paper, makeStyles, Button } from '@material-ui/core';
+import { Container, Grid, Box, Paper, makeStyles, Button, Theme } from '@material-ui/core';
 import { ArrowForward } from '@material-ui/icons';
 
-const styles = makeStyles(() => ({
+const styles = makeStyles((theme: Theme) => ({
   image: {
     height: 200,
     width: 300
@@ -28,13 +28,21 @@ const styles = makeStyles(() => ({
     backgroundColor: '#F7F7F7',
     marginTop: 40,
     marginBottom: 40,
-    paddingLeft: 40
+    paddingLeft: 40,  
+    [theme.breakpoints.down('sm')]: {
+      alignItems: 'center',
+      paddingLeft: 0,
+    },
+    
   },
   buttonJoin: {
     color: "#FF6C6C",
     textTransform: 'none',
     fontSize: 18,
-    height: "100%"
+    height: "100%",
+    [theme.breakpoints.down('sm')]: {
+      justifySelf: 'center'
+    }
   },
   phrase: {
     fontSize: 17,
@@ -52,7 +60,7 @@ const HomeSub1 = () => {
           <Grid item xs={12} className={classes.title}>
             <Box component="h1" color="primary">Plan and design housing projects in three steps</Box>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item sm={12} md={4}>
             <Paper elevation={1} className={classes.image}>
 
             </Paper>
@@ -68,7 +76,7 @@ const HomeSub1 = () => {
               </Box>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item sm={12} md={4}>
             <Paper elevation={1} className={classes.image}>
 
             </Paper>
@@ -84,7 +92,7 @@ const HomeSub1 = () => {
               </Box>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item sm={12} md={4}>
             <Paper elevation={1} className={classes.image}>
 
             </Paper>
@@ -100,7 +108,7 @@ const HomeSub1 = () => {
               </Box>
             </div>
           </Grid>
-          <Grid item container xs={12} className={classes.JoinContainer}>
+          <Grid item container xs={12} sm={12} className={classes.JoinContainer} justify="center" style={{  maxWidth: '100%' }}>
 
             <Grid item xs={10} className={classes.phrase} >
               <Box component="p">
@@ -109,10 +117,11 @@ const HomeSub1 = () => {
 
             </Grid>
 
-            <Grid item xs={2}>
+            <Grid item xs={4} sm={2} justify='center'>
               <Button
                 endIcon={<ArrowForward />}
-                className={classes.buttonJoin}>
+                className={classes.buttonJoin}
+                >
                   Join now
               </Button>
             </Grid>

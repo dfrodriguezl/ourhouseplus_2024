@@ -17,6 +17,9 @@ export interface Location {
   flatSize: number;
   flatType: number;
   regen: number;
+  lat: number;
+  lon: number;
+  p_vivs: number;
 }
 
 export interface Density {

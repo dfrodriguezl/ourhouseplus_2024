@@ -1,7 +1,9 @@
 import React from 'react';
 import { SearchPill, StyledMenu, StyledMenuItem } from '.';
-import { FormControl, FormControlLabel, makeStyles, Radio, RadioGroup, Theme } from '@material-ui/core';
+import { FormControl, FormControlLabel, makeStyles, Radio, RadioGroup, Theme, Dialog, List, ListItem } from '@material-ui/core';
 import { Densities, Density } from '../models';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 import _ from 'lodash';
 
 const styles = makeStyles((theme: Theme) => ({
@@ -24,25 +26,51 @@ const styles = makeStyles((theme: Theme) => ({
   },
   menuList:{
     marginTop:30
+  },
+  dialog:{
+    height: '100%',
+    marginTop: '30%',
+    backgroundColor: '#FFF',
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32
+  },
+  list: {
+    borderTopLeftRadius: 32,
+    borderTopRightRadius: 32,
+  },
+  itemList: {
+    paddingLeft: 25
   }
 }))
 
 export interface OwnProps {
   updateDensity(value: string): void;
   density: Density | undefined;
+  updateStep(step: number): void;
 }
 
 type Props = OwnProps;
 export default function UrbanismMenu(props: Props) {
-  const { density, updateDensity } = props;
+  const { density, updateDensity, updateStep } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [visible, setVisible] = React.useState<Boolean>(false);
+  const [openDialog, setOpenDialog] = React.useState(true)
+  const [openList, setOpenList] = React.useState(false)
+
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const classes = styles();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setVisible(!visible);
-    setAnchorEl(event.currentTarget);
+    if(smallScreen){
+      setOpenList(true)
+      setOpenDialog(true)
+    }else{
+      setAnchorEl(event.currentTarget)
+      setOpenDialog(false)
+    }
   };
 
   const handleClose = () => {
@@ -64,6 +92,50 @@ export default function UrbanismMenu(props: Props) {
             onClick={handleClick}
             onChange={handleOnChange}
           />
+
+          <Dialog 
+            fullScreen
+            open={smallScreen?openDialog:false} 
+            onClose={handleClose}
+            className={classes.dialog}
+            PaperProps={{
+              style: {
+                borderTopLeftRadius: 32,
+                borderTopRightRadius: 32,
+              }
+            }}
+            >
+
+            <List className={classes.list}>
+              <ListItem className={classes.list}>
+                <SearchPill
+                        label="Street Density"
+                        placeholder="Choose type of urbanism"
+                        value={density?.label || ''}
+                        onClick={handleClick}
+                        onChange={handleOnChange}
+                      />
+              </ListItem>
+
+              {openList?
+                _.map(Densities,x => {
+                  
+                  return <ListItem button key={x.value} className={classes.itemList} onClick={() => {
+                    updateDensity(x.label);
+                    setVisible(!visible);
+                    updateStep(4);
+                    }}>
+                    <div>
+                      <span className={classes.radioLabel}>{x.label}</span> 
+                      <br/> 
+                      <span className={classes.radioSubLabel}>{x.subLabel}</span>
+                    </div>
+                  </ListItem>
+                }):null
+            }
+            </List>
+          </Dialog>
+
           {
             visible?<StyledMenu
             id="customized-menu"
