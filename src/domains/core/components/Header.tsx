@@ -75,20 +75,15 @@ const useStyles = makeStyles((theme: Theme) =>
 const Header = (props: RouteComponentProps) => {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [mobileView, setMobileView] = useState(false);
   const history = props.history;
 
   const isHome = props.history.location.pathname.indexOf('home') > -1;
   const isRegister = props.history.location.pathname.indexOf('register') > -1;
   const isSignUp = props.history.location.pathname.indexOf('signup') > -1;
+  const isWaiting = props.history.location.pathname.indexOf('waiting') > -1;
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-
-  const handleClose = () => {
-    setOpen(false);
-  }
 
   const openRegister = () => {
     history.push('/register');
@@ -108,10 +103,10 @@ const Header = (props: RouteComponentProps) => {
       <AppBar position="static" elevation={0} className={classes.header}>
       <Toolbar variant="regular">
         <Link to="/home">
-          <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
+          <img src={isHome || isRegister || isSignUp || isWaiting? logo : whiteLogo} alt="logo" width={100} />
         </Link>
 
-        {!(isRegister || isSignUp)?
+        {!(isRegister || isSignUp || isWaiting)?
         <div className={classes.menuButton}>
           <IconButton
             edge="end"
@@ -135,30 +130,15 @@ const Header = (props: RouteComponentProps) => {
             paper: classes.drawerPaper,
           }}>
             <div>
-            <Button>
-              <MenuItem>Sign in</MenuItem>
-            </Button>
-            <Button onClick={() => openRegister()}>
-            <MenuItem>Become a member</MenuItem>
-            </Button>
+              <Button>
+                <MenuItem>Sign in</MenuItem>
+              </Button>
+              <Button onClick={() => openRegister()}>
+                <MenuItem>Become a member</MenuItem>
+              </Button>
             </div>
           </Drawer>
-              
-        
-        {/* {
-          !(isRegister || isSignUp) || smallScreen?
-          <div className={classes.menuButton}>
-          <Button className={classes.whiteButtons}>
-            Sign in
-          </Button>
-          <Button className={classes.becomeMember} onClick={() => openRegister()}>
-            Become a member
-          </Button>
-        </div>:null
-        } */}
-        
       </Toolbar>
-      {/* <Mailchimp open={open} handleClose={handleClose}/> */}
     </AppBar>
     
     </Fragment>
@@ -166,10 +146,10 @@ const Header = (props: RouteComponentProps) => {
       <AppBar position="static" elevation={0} className={classes.header}>
         <Toolbar variant="regular">
           <Link to="/home">
-            <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
+            <img src={isHome || isRegister || isSignUp || isWaiting? logo : whiteLogo} alt="logo" width={100} />
           </Link>  
           {
-            !(isRegister || isSignUp)?
+            !(isRegister || isSignUp || isWaiting)?
             <div className={classes.menuButton}>
             <Button className={classes.whiteButtons}>
               Sign in
