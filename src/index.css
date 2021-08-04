@@ -62,3 +62,10 @@ a {
 .black-model {
   background-color: #141414;
 }
+
+.img-landing {
+  background-image: url(assets/Background.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; 
+}
