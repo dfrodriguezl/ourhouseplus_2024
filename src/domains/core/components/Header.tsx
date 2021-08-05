@@ -138,7 +138,7 @@ const Header = (props: RouteComponentProps) => {
               }}>
               <div>
                 {
-                  isAuthenticated
+                  !isAuthenticated
                     ?
                     <Button onClick={() => loginWithPopup()}>
                       <MenuItem>Sign in</MenuItem>
