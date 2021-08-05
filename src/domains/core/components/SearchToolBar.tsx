@@ -11,9 +11,8 @@ import { setInitialParams, setSearchClick } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { back } from 'assets';
-import { forward } from 'assets';
-import { isReturnStatement } from 'typescript';
+import { back, forward } from 'assets';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     backgroundColor: theme.palette.common.black,
     height: '100%'
   },
-  dialog:{
+  dialog: {
     height: '100%',
     marginTop: '30%',
     backgroundColor: '#FFF',
@@ -55,13 +54,14 @@ interface DispatchProps {
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
+  const { isAuthenticated, loginWithPopup } = useAuth0();
   const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick } = props;
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
   const [area, setArea] = useState<number>();
   const [density, setDensity] = useState<Density>();
-  const [searchBoxSelected,setSearchBoxSelected] = useState(1);
+  const [searchBoxSelected, setSearchBoxSelected] = useState(1);
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -76,17 +76,17 @@ const SearchToolBar = (props: Props) => {
     setLocation(loc);
   }
 
-  const updateStep = (step:number) => {
+  const updateStep = (step: number) => {
     setSearchBoxSelected(step)
-    if(step === 4){
+    if (step === 4) {
       setSearchClick(false)
-      next() 
+      next()
     }
   }
 
   const updateArea = (event: React.ChangeEvent<HTMLInputElement>) => {
     setArea(parseInt(event.target.value));
-    
+
   }
 
   const updateDensity = (value: string) => {
@@ -96,107 +96,57 @@ const SearchToolBar = (props: Props) => {
 
 
   const next = () => {
-    setInitialParams({
-      location,
-      area: area!,
-      density: density!
-    });
-    history.push('/shapediver/step1');
+    if (isAuthenticated) {
+      setInitialParams({
+        location,
+        area: area!,
+        density: density!
+      });
+      history.push('/shapediver/step1');
+    } else {
+      loginWithPopup();
+    }
   }
-
 
   return (
     <Grid container>
-      {smallScreen && searchClick?
+      {smallScreen && searchClick ?
         <Fragment>
           <Grid item xs={1}>
-            {searchBoxSelected !== 1?
+            {searchBoxSelected !== 1 ?
               <img src={back} alt="back-arrow" />
-            :null}
+              : null}
           </Grid>
           <Grid item xs={10}>
-            <Box fontSize={23} style={smallScreen && searchClick?{ color: 'white', textAlign: 'center' }:{marginLeft: 30, color: 'white'}}>
+            <Box fontSize={23} style={smallScreen && searchClick ? { color: 'white', textAlign: 'center' } : { marginLeft: 30, color: 'white' }}>
               Start building here
             </Box>
           </Grid>
           <Grid item xs={1} >
             <img src={forward} alt="forward-arrow" />
           </Grid>
-        </Fragment>:
-        <Box fontSize={23} style={smallScreen && searchClick?{ color: 'white', textAlign: 'center' }:{marginLeft: 30, color: 'white'}}>
+        </Fragment> :
+        <Box fontSize={23} style={smallScreen && searchClick ? { color: 'white', textAlign: 'center' } : { marginLeft: 30, color: 'white' }}>
           Start building here
         </Box>
-    }
-      
-      
+      }
+
+
       <Grid container className={classes.searchBox} >
 
-        {!smallScreen?
-        <Fragment>
-          <Grid item container direction="column" xs={12} sm={3} justify="center" >
-          <LocationMenu
-            updateLocation={updateLocation}
-            location={location}
-            updateStep={updateStep}
-          />
-          </Grid>
-          <Grid item>
-            <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
+        {!smallScreen ?
+          <Fragment>
+            <Grid item container direction="column" xs={12} sm={3} justify="center" >
+              <LocationMenu
+                updateLocation={updateLocation}
+                location={location}
+                updateStep={updateStep}
+              />
+            </Grid>
+            <Grid item>
+              <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
             </Grid>
             <Grid item container direction="column" xs={12} sm={3} justify="center">
-            <SearchPill
-              label="Area square feet"
-              placeholder="total terrain area"
-              onChange={updateArea}
-              value={area || ''}
-              type="number"
-            />
-          </Grid>
-          <Grid item>
-            <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
-          </Grid>
-          <Grid item container direction="column" xs={12} sm={3} justify="center">
-            <UrbanismMenu
-              updateDensity={updateDensity}
-              density={density}
-              updateStep={updateStep}
-            />
-          </Grid>
-          <Grid item container xs={1} justify="center">
-            <ButtonWrapper
-              label="Next"
-              size="small"
-              onClick={next}
-              disabled={!area || !location}
-            />
-          </Grid>
-        </Fragment>:
-        searchBoxSelected === 1?
-        <Fragment>
-        <Grid container direction="column" xs={12} justify="center" >
-          <LocationMenu
-            updateLocation={updateLocation}
-            location={location}
-            updateStep={updateStep}
-          />
-        </Grid>
-        </Fragment>:
-        searchBoxSelected === 2?
-        <Grid item container direction="column" xs={12} sm={3} justify="center">
-          <Dialog 
-            fullScreen
-            open={true} 
-            className={classes.dialog}
-            PaperProps={{
-              style: {
-                borderTopLeftRadius: 32,
-                borderTopRightRadius: 32,
-              }
-            }}
-            >
-
-            <List className={classes.list}>
-              <ListItem className={classes.list} onKeyDown={(e) => e.key==='Enter'?setSearchBoxSelected(3):null}>
               <SearchPill
                 label="Area square feet"
                 placeholder="total terrain area"
@@ -204,18 +154,71 @@ const SearchToolBar = (props: Props) => {
                 value={area || ''}
                 type="number"
               />
-              </ListItem>
-            </List>
-          </Dialog >
-        </Grid>:
-        searchBoxSelected === 3?
-        <Grid item container direction="column" xs={12} sm={3} justify="center">
-          <UrbanismMenu
-            updateDensity={updateDensity}
-            density={density}
-            updateStep={updateStep}
-          />
-        </Grid>:null
+            </Grid>
+            <Grid item>
+              <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
+            </Grid>
+            <Grid item container direction="column" xs={12} sm={3} justify="center">
+              <UrbanismMenu
+                updateDensity={updateDensity}
+                density={density}
+                updateStep={updateStep}
+              />
+            </Grid>
+            <Grid item container xs={1} justify="center">
+              <ButtonWrapper
+                label="Next"
+                size="small"
+                onClick={next}
+                disabled={!area || !location}
+              />
+            </Grid>
+          </Fragment> :
+          searchBoxSelected === 1 ?
+            <Fragment>
+              <Grid container direction="column" xs={12} justify="center" >
+                <LocationMenu
+                  updateLocation={updateLocation}
+                  location={location}
+                  updateStep={updateStep}
+                />
+              </Grid>
+            </Fragment> :
+            searchBoxSelected === 2 ?
+              <Grid item container direction="column" xs={12} sm={3} justify="center">
+                <Dialog
+                  fullScreen
+                  open={true}
+                  className={classes.dialog}
+                  PaperProps={{
+                    style: {
+                      borderTopLeftRadius: 32,
+                      borderTopRightRadius: 32,
+                    }
+                  }}
+                >
+
+                  <List className={classes.list}>
+                    <ListItem className={classes.list} onKeyDown={(e) => e.key === 'Enter' ? setSearchBoxSelected(3) : null}>
+                      <SearchPill
+                        label="Area square feet"
+                        placeholder="total terrain area"
+                        onChange={updateArea}
+                        value={area || ''}
+                        type="number"
+                      />
+                    </ListItem>
+                  </List>
+                </Dialog >
+              </Grid> :
+              searchBoxSelected === 3 ?
+                <Grid item container direction="column" xs={12} sm={3} justify="center">
+                  <UrbanismMenu
+                    updateDensity={updateDensity}
+                    density={density}
+                    updateStep={updateStep}
+                  />
+                </Grid> : null
         }
         {/* {smallScreen && searchBoxSelected == 1?null:
           <Fragment>
@@ -228,7 +231,7 @@ const SearchToolBar = (props: Props) => {
             <Grid item>
               <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
             </Grid>
-          </Fragment>    
+          </Fragment>
         } */}
 
         {/* {smallScreen && searchBoxSelected == 1?null:
@@ -242,19 +245,19 @@ const SearchToolBar = (props: Props) => {
             <Grid item>
               <Divider orientation="vertical" variant="middle" className={classes.fieldDivider} />
             </Grid>
-          </Fragment>    
+          </Fragment>
         } */}
-        
-        
-        
-        
+
+
+
+
       </Grid>
-      {smallScreen?
+      {smallScreen ?
         <Box fontSize={19} style={{ marginLeft: 30, color: 'white', marginTop: 10 }}>
           3 step selection
-        </Box>:null
-      } 
-      
+        </Box> : null
+      }
+
     </Grid>
   );
 }

@@ -8,7 +8,8 @@ import { useTheme } from '@material-ui/core/styles';
 import logo from 'assets/logo-small.png';
 import whiteLogo from 'assets/logo-small-white.png';
 import { Mailchimp } from 'domains/common/components';
-import { Fragment, useState, useEffect } from 'react';
+import { Fragment, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const drawerWidth = 240;
 
@@ -68,11 +69,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon: {
       fontSize: "50px !important"
-     }
+    }
   })
 );
 
 const Header = (props: RouteComponentProps) => {
+  const { isAuthenticated, loginWithPopup, logout } = useAuth0();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [mobileView, setMobileView] = useState(false);
@@ -103,49 +105,57 @@ const Header = (props: RouteComponentProps) => {
   };
 
   return (
-    smallScreen?
-    <Fragment>
-      <AppBar position="static" elevation={0} className={classes.header}>
-      <Toolbar variant="regular">
-        <Link to="/home">
-          <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
-        </Link>
+    smallScreen ?
+      <Fragment>
+        <AppBar position="static" elevation={0} className={classes.header}>
+          <Toolbar variant="regular">
+            <Link to="/home">
+              <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
+            </Link>
 
-        {!(isRegister || isSignUp)?
-        <div className={classes.menuButton}>
-          <IconButton
-            edge="end"
-            color="secondary"
-            aria-label="menu"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton2 && classes.root, open && classes.hide )}
-          >
-            <MenuIcon className={classes.icon}/>
-          </IconButton>  
-        </div>:null
-        }
-        
+            {!(isRegister || isSignUp) ?
+              <div className={classes.menuButton}>
+                <IconButton
+                  edge="end"
+                  color="secondary"
+                  aria-label="menu"
+                  onClick={handleDrawerOpen}
+                  className={clsx(classes.menuButton2 && classes.root, open && classes.hide)}
+                >
+                  <MenuIcon className={classes.icon} />
+                </IconButton>
+              </div> : null
+            }
 
-        <Drawer
-          className={classes.drawer}
-          anchor="right"
-          open={open}
-          onClose={handleDrawerClose}
-          classes={{
-            paper: classes.drawerPaper,
-          }}>
-            <div>
-            <Button>
-              <MenuItem>Sign in</MenuItem>
-            </Button>
-            <Button onClick={() => openRegister()}>
-            <MenuItem>Become a member</MenuItem>
-            </Button>
-            </div>
-          </Drawer>
-              
-        
-        {/* {
+
+            <Drawer
+              className={classes.drawer}
+              anchor="right"
+              open={open}
+              onClose={handleDrawerClose}
+              classes={{
+                paper: classes.drawerPaper,
+              }}>
+              <div>
+                {
+                  isAuthenticated
+                    ?
+                    <Button onClick={() => loginWithPopup()}>
+                      <MenuItem>Sign in</MenuItem>
+                    </Button>
+                    :
+                    <Button onClick={() => logout()}>
+                      <MenuItem>Sign out</MenuItem>
+                    </Button>
+                }
+                <Button onClick={() => openRegister()}>
+                  <MenuItem>Become a member</MenuItem>
+                </Button>
+              </div>
+            </Drawer>
+
+
+            {/* {
           !(isRegister || isSignUp) || smallScreen?
           <div className={classes.menuButton}>
           <Button className={classes.whiteButtons}>
@@ -156,35 +166,41 @@ const Header = (props: RouteComponentProps) => {
           </Button>
         </div>:null
         } */}
-        
-      </Toolbar>
-      {/* <Mailchimp open={open} handleClose={handleClose}/> */}
-    </AppBar>
-    
-    </Fragment>
-    :
+
+          </Toolbar>
+          {/* <Mailchimp open={open} handleClose={handleClose}/> */}
+        </AppBar>
+
+      </Fragment>
+      :
       <AppBar position="static" elevation={0} className={classes.header}>
         <Toolbar variant="regular">
           <Link to="/home">
             <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
-          </Link>  
+          </Link>
           {
-            !(isRegister || isSignUp)?
-            <div className={classes.menuButton}>
-            <Button className={classes.whiteButtons}>
-              Sign in
-            </Button>
-            <Button className={classes.becomeMember} onClick={() => openRegister()}>
-              Become a member
-            </Button>
-          </div>:null
+            !(isRegister || isSignUp) ?
+              <div className={classes.menuButton}>
+                {
+                  !isAuthenticated
+                    ?
+                    <Button className={classes.whiteButtons} onClick={() => loginWithPopup()}>
+                      Sign in
+                    </Button>
+                    :
+                    <Button className={classes.whiteButtons} onClick={() => logout()}>
+                      Sign out
+                    </Button>
+                }
+                <Button className={classes.becomeMember} onClick={() => openRegister()}>
+                  Become a member
+                </Button>
+              </div> : null
           }
-        
-      </Toolbar>
-    </AppBar>   
+
+        </Toolbar>
+      </AppBar>
   );
 }
-
-
 
 export default withRouter(Header);
