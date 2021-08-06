@@ -165,6 +165,4 @@ const Header = (props: RouteComponentProps) => {
   );
 }
 
-
-
 export default withRouter(Header);

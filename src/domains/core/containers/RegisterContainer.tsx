@@ -1,11 +1,14 @@
 import React, {useState,Fragment} from 'react';
 import { Typography, Grid, TextField,Input, Fab, InputAdornment, IconButton} from '@material-ui/core';
 import { PageContainer } from 'domains/core/containers';
-import { Link } from 'react-router-dom';
+import { Link, useHistory,withRouter  } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import { postBaseURL } from 'app/api';
+import { ApiOptions } from 'app/applicationTypes';
+import MailchimpSubscribe from 'react-mailchimp-subscribe';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -104,6 +107,12 @@ icon_play:{
 }
 }));
 
+interface FormProps {
+  status?: any;
+  message?: any;
+  onValidated?: any;
+}
+
 interface OwnProps {
   children?: any;
 }
@@ -141,19 +150,49 @@ export function RegisterContainer(props:OwnProps) {
         </Grid>
       </Grid>
       <Grid item sm={12} style={{alignSelf:'flex-end', textAlign: 'center'}}>
-        <Link to="/waiting" className="btn btn-primary">
           <Fab size="small" className={classes.fab} >         
                   <ArrowForwardIosIcon fontSize="small" className={classes.icon_works}></ArrowForwardIosIcon>
           </Fab>
-        </Link>
         <p style={{fontSize: 12}}>Learn how it works</p>
       </Grid>
     </PageContainer>
   );
 }
 
-export const FormMail = () => {
+const FormMail = (props:FormProps) => {
   const classes = useStyles();
+  const {status,message,onValidated} = props;
+
+  const [email, setEmail] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+
+  const history = useHistory();
+
+  const handleChange1 = (e:any) => {
+    setFirstName(e.target.value)
+  }
+
+  const handleChange2 = (e:any) => {
+    setLastName(e.target.value)
+  }
+
+  const handleChange3 = (e:any) => {
+    setEmail(e.target.value)
+  }
+
+  const handleSubmit = (e:any) => {
+    e.preventDefault();
+    email &&
+    firstName &&
+    lastName &&
+    email.indexOf("@") > -1 &&
+    onValidated({
+        EMAIL: email,
+        FNAME: firstName,
+        LNAME: lastName,
+    });
+  }
 
   return (
     <RegisterContainer>
@@ -171,9 +210,12 @@ export const FormMail = () => {
           name="mc-embedded-subscribe-form"
           className="validate"
           target="_blank"
+          onSubmit={handleSubmit}
         >
-          <Input type="text" name="FNAME" id="mce-FNAME" placeholder="First name" className={classes.input} disableUnderline required/>
-          <Input type="text" name="LNAME" id="mce-LNAME" placeholder="Last Name" className={classes.input} disableUnderline required/>
+          {status === "success" || status === "error"?
+            history.push("/waiting/" + firstName + "_" + lastName):null}
+          <Input type="text" name="FNAME" id="mce-FNAME" placeholder="First name" onChange={handleChange1} className={classes.input} disableUnderline required/>
+          <Input type="text" name="LNAME" id="mce-LNAME" placeholder="Last Name" onChange={handleChange2} className={classes.input} disableUnderline required/>
           <div>
             <div className="response" id="mce-error-response" style={{ display: 'none' }}></div>
             <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
@@ -182,6 +224,7 @@ export const FormMail = () => {
             <input type="text" name="b_3c39cbec5fc9d998a5b584676_4064b46da9" /> 
           </div>
           <Input type="text" name="EMAIL" id="mce-EMAIL"
+            onChange={handleChange3}
             placeholder="Enter email to sign up" 
             className={classes.input} 
             disableUnderline
@@ -189,7 +232,7 @@ export const FormMail = () => {
             endAdornment={
               <InputAdornment position="end">
                   <IconButton className={classes.iconButton} type="submit" name="subscribe"> 
-                    <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon>
+                      <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon> 
                   </IconButton>
               </InputAdornment>
             }
@@ -201,3 +244,22 @@ export const FormMail = () => {
         
   )
 }
+
+export const MailchimpFormContainer = (props:any) => {
+
+  const postUrl = 'https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9';
+
+  return (
+    <MailchimpSubscribe
+                url={postUrl}
+                render={({ subscribe, status, message }) => (
+                    <FormMail
+                        status={status} 
+                        message={message}
+                        onValidated={(formData:any) => subscribe(formData)}
+                    />
+                )}
+            />
+  )
+}
+
