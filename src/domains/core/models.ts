@@ -46,3 +46,46 @@ export const Densities = [
     subLabel: 'Low rise - Low density',
   }
 ]
+
+export const teamMembers = [
+  {
+    name: 'Juan Perez Amaya',
+    position: 'CEO',
+    city: 'Paris, France',
+  },
+  {
+    name: 'Felix Beytout',
+    position: 'CTO / Technology Developer & Lead Architect',
+    city: 'Paris, France',
+  },
+  {
+    name: 'Alex Garcia',
+    position: 'CDO / Senior Software Engineer & AI Developer',
+    city: 'Milwaukee, USA',
+  },
+  {
+    name: 'Sebastien David',
+    position: 'Advisor CSO / Global Market Research',
+    city: 'London, UK',
+  },
+  {
+    name: 'Lucas Botero',
+    position: 'Advisor CSO / Latam Market Research',
+    city: 'Bogotá, Colombia',
+  },
+  {
+    name: 'Urszula Manschot',
+    position: 'Lead UX/UI Designer',
+    city: 'Milwaukee, USA',
+  },
+  {
+    name: 'Diego Rodríguez',
+    position: 'Lead Data / Front End Developer',
+    city: 'Bogotá, Colombia',
+  },
+  {
+    name: 'Radhi Aditya',
+    position: 'Asian Market Research & Development',
+    city: 'Jakarta, Indonesia',
+  }
+]

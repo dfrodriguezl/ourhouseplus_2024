@@ -6,9 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import { postBaseURL } from 'app/api';
-import { ApiOptions } from 'app/applicationTypes';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -104,6 +104,18 @@ icon_play:{
   textAlign: 'center', 
   fontSize: 75, 
   color: 'white'
+},
+textContainer:{
+  paddingLeft: '25px',
+  [theme.breakpoints.down('sm')]: {
+    paddingLeft: '15px',
+  },
+},
+containerForm:{
+  alignSelf: 'flex-end',
+  [theme.breakpoints.down('sm')]: {
+    alignSelf: 'flex-start',
+  },
 }
 }));
 
@@ -119,44 +131,59 @@ interface OwnProps {
 
 export function RegisterContainer(props:OwnProps) {
   const classes = useStyles();
-  const [play, setPlay] = useState(false);
-  const {children} = props;
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   
+  const {children} = props;
+
+  return (
+    <PageContainer background="controls-background">
+      <Grid container sm={12} xs={12}>
+        <Grid container item sm={6} xs={12} className={classes.textContainer}>
+          {children}
+        </Grid>
+        {!smallScreen?
+          <Grid item container sm={6} xs={12}>
+            <ImgVideo></ImgVideo>
+          </Grid>:null
+          }
+        
+      </Grid>
+      {!smallScreen?
+      <Grid item sm={12} style={{alignSelf:'flex-end', textAlign: 'center'}}>
+        <Fab size="small" className={classes.fab} >         
+                <ArrowForwardIosIcon fontSize="small" className={classes.icon_works}></ArrowForwardIosIcon>
+        </Fab>
+        <p style={{fontSize: 12}}>Learn how it works</p>
+      </Grid>:null
+      }
+      
+    </PageContainer>
+  );
+}
+
+const ImgVideo = () => {
+  const classes = useStyles();
+  const [play, setPlay] = useState(false);
 
   const handlePlay = () => {
     setPlay(true);
   }
 
-
   return (
-    <PageContainer background="controls-background">
-      <Grid container sm={12}>
-        <Grid container item sm={6} >
-          {children}
-        </Grid>
-        <Grid item container sm={6}>
-          <Grid item sm={12} style={{textAlign: 'center'}}>
-            {play?
-              <iframe width="100%" height="100%"
-              src="https://www.youtube.com/embed/G6jz86kFJCk?autoplay=1&controls=0&mute=1">
-            </iframe>:
-            <div className="img-landing" style={{height: '100%', borderRadius: 20}}>
-              <IconButton style={{height: '100%'}} onClick={handlePlay}>
-                <PlayCircleOutlineIcon className={classes.icon_play}></PlayCircleOutlineIcon>
-              </IconButton>
-            </div>
-            } 
-          </Grid>  
-        </Grid>
-      </Grid>
-      <Grid item sm={12} style={{alignSelf:'flex-end', textAlign: 'center'}}>
-          <Fab size="small" className={classes.fab} >         
-                  <ArrowForwardIosIcon fontSize="small" className={classes.icon_works}></ArrowForwardIosIcon>
-          </Fab>
-        <p style={{fontSize: 12}}>Learn how it works</p>
-      </Grid>
-    </PageContainer>
-  );
+    <Grid item sm={12} xs={12} style={{textAlign: 'center'}}>
+      {play?
+        <iframe width="100%" height="100%"
+        src="https://www.youtube.com/embed/G6jz86kFJCk?autoplay=1&controls=0&mute=1">
+      </iframe>:
+      <div className="img-landing" style={{height: '100%', borderRadius: 20}}>
+        <IconButton style={{height: '100%'}} onClick={handlePlay}>
+          <PlayCircleOutlineIcon className={classes.icon_play}></PlayCircleOutlineIcon>
+        </IconButton>
+      </div>
+      } 
+    </Grid> 
+  )
 }
 
 const FormMail = (props:FormProps) => {
@@ -166,6 +193,9 @@ const FormMail = (props:FormProps) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const history = useHistory();
 
@@ -196,13 +226,16 @@ const FormMail = (props:FormProps) => {
 
   return (
     <RegisterContainer>
-      <Grid item sm={12} style={{alignSelf:'flex-end'}}>
-      <Typography>
-        <h2>Building Future <br/> <span style={{textDecoration: 'underline'}}>Communities Together.</span></h2>
-        <h4> Generate a preliminary design study of multi-dweling <br /> smart housing projects in three simple steps.</h4>
-      </Typography>
+      <Grid item container sm={12} xs={10} className={classes.containerForm}>
+        <Typography>
+          <h2 style={{lineHeight:1.2}}>Building Future <br/> <span style={{textDecoration: 'underline'}}>Communities Together.</span></h2>
+          {smallScreen?<p style={{fontSize:13,lineHeight:1.2}}>Generate a preliminary design study of multi-dweling smart housing projects in three simple steps.</p>:
+          <h4> Generate a preliminary design study of multi-dweling <br /> smart housing projects in three simple steps.</h4>}
+        </Typography>
       </Grid>
-      <Grid item sm={12} style={{alignSelf:'flex-end'}}>
+      {smallScreen?
+        <ImgVideo></ImgVideo>:null}
+      <Grid item sm={12} xs={12} style={{alignSelf:'flex-end'}}>
         <form
           action="https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9"
           method="post"

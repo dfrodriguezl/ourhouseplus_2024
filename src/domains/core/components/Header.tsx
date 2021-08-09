@@ -7,7 +7,6 @@ import { useTheme } from '@material-ui/core/styles';
 
 import logo from 'assets/logo-small.png';
 import whiteLogo from 'assets/logo-small-white.png';
-import { Mailchimp } from 'domains/common/components';
 import { Fragment, useState, useEffect } from 'react';
 
 const drawerWidth = 240;
@@ -16,9 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       padding: '20px 0',
-      [theme.breakpoints.down('sm')]: {
-        padding: 0,
-      },
       background: 'transparent'
     },
     menuButton: {
@@ -81,6 +77,7 @@ const Header = (props: RouteComponentProps) => {
   const isRegister = props.history.location.pathname.indexOf('register') > -1;
   const isSignUp = props.history.location.pathname.indexOf('signup') > -1;
   const isWaiting = props.history.location.pathname.indexOf('waiting') > -1;
+  const isAbout = props.history.location.pathname.indexOf('about') > -1;
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -103,10 +100,10 @@ const Header = (props: RouteComponentProps) => {
       <AppBar position="static" elevation={0} className={classes.header}>
       <Toolbar variant="regular">
         <Link to="/home">
-          <img src={isHome || isRegister || isSignUp || isWaiting? logo : whiteLogo} alt="logo" width={100} />
+          <img src={isHome || isRegister || isSignUp || isWaiting || isAbout? logo : whiteLogo} alt="logo" width={100} />
         </Link>
 
-        {!(isRegister || isSignUp || isWaiting)?
+        {!(isRegister || isSignUp || isWaiting || isAbout)?
         <div className={classes.menuButton}>
           <IconButton
             edge="end"
@@ -146,10 +143,10 @@ const Header = (props: RouteComponentProps) => {
       <AppBar position="static" elevation={0} className={classes.header}>
         <Toolbar variant="regular">
           <Link to="/home">
-            <img src={isHome || isRegister || isSignUp || isWaiting? logo : whiteLogo} alt="logo" width={100} />
+            <img src={isHome || isRegister || isSignUp || isWaiting || isAbout? logo : whiteLogo} alt="logo" width={100} />
           </Link>  
           {
-            !(isRegister || isSignUp || isWaiting)?
+            !(isRegister || isSignUp || isWaiting || isAbout)?
             <div className={classes.menuButton}>
             <Button className={classes.whiteButtons}>
               Sign in

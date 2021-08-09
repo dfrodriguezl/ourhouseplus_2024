@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: '100vh',
       height: '100vh',
       width: '100%',
-      margin: 0
+      margin: 0,
+      [theme.breakpoints.down('sm')]: {
+        minHeight: '80vh',
+        height: '90vh'
+      },
     },
     headerContainer: {
       justifyContent: 'center',
