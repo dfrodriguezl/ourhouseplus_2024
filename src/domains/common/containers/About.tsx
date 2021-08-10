@@ -1,5 +1,5 @@
-import React from 'react'
-import { Grid, Typography, createStyles, makeStyles, Theme, List, ListItem, ListItemAvatar, Avatar, ListItemText, Divider } from '@material-ui/core';
+import React, { Fragment, useState } from 'react'
+import { Grid, Typography, createStyles, makeStyles, Theme, List, ListItem, ListItemAvatar, Avatar, ListItemText, Divider, Grow  } from '@material-ui/core';
 import { PageContainer } from 'domains/core/containers'
 import { teamMembers } from 'domains/core/models';
 
@@ -11,11 +11,21 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     list: {
       marginTop: '2%'
+    },
+    textItem:{
+      fontSize: 13,
+      fontWeight: 'bold',
+    },
+    large: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+      marginRight: theme.spacing(2)
     }
   }))
 
 export default function About() {
   const classes = useStyles();
+  const [hover, setHover] = useState(0);
 
   return (
     <PageContainer background="controls-background">
@@ -45,17 +55,26 @@ export default function About() {
           <Divider />
           {teamMembers.map((tm) => {
             return (
-              <ListItem divider >
-                <ListItemText primary={tm.name} style={{width: '30%'}}/>
-                <ListItemAvatar>
-                  <Avatar src='/assets/team.png'/>
+              <ListItem key={tm.id} divider button onMouseEnter={() => setHover(tm.id)} onMouseLeave={() => setHover(0)}>
+                <ListItemText primary={tm.name} className={classes.textItem} style={{width: '30%'}} disableTypography/>
+                <ListItemAvatar >
+                  <Avatar className={hover === tm.id ?classes.large: ''} src='/assets/team.png'/>
                 </ListItemAvatar>
-                <ListItemText primary={tm.position} style={{width: '30%'}}/>
-                <ListItemText primary={tm.city} style={{width: '30%'}}/>
+                {hover === tm.id && tm.desc_1?
+                  <Grow in={true} {...(1 === 1 ? { timeout: 1000 } : {})}>
+                    <ListItemText className={classes.textItem} style={{width: '70%'}} disableTypography >
+                      <p>{tm.desc_1}</p>
+                      <p>{tm.desc_2}</p>
+                    </ListItemText>
+                  </Grow>:
+                  <Fragment>
+                    <ListItemText primary={tm.position} className={classes.textItem} style={{width: '50%'}} disableTypography/>
+                    <ListItemText primary={tm.city} className={classes.textItem} style={{width: '20%'}} disableTypography/>
+                  </Fragment> 
+                }
               </ListItem>
             )
           })}
-            
           </List>
         </Grid> 
       </Grid>
@@ -63,3 +82,4 @@ export default function About() {
     </PageContainer>
   )
 }
+
