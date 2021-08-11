@@ -79,3 +79,13 @@ a {
   background-size: cover; 
   padding: 10px;
 }
+
+@media screen and (max-width: 600px) {
+  .img-team {
+    background-image: url(assets/team.png);
+    background-repeat: no-repeat;
+    background-position: center bottom -30px;
+    background-size: cover; 
+    padding: 10px;
+  }
+}

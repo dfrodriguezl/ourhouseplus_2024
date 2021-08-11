@@ -5,6 +5,7 @@ import { Header } from 'domains/core/components'
 import { setExpandAdvanced } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -17,6 +18,9 @@ const useStyles = makeStyles((theme: Theme) =>
         minHeight: '80vh',
         height: '90vh'
       },
+      // [theme.breakpoints.down('xl')]: {
+      //   height: '130vh'
+      // },
     },
     headerContainer: {
       justifyContent: 'center',
@@ -62,10 +66,11 @@ type Props = OwnProps & StateProps & DispatchProps;
 const PageContainer = (props: Props) => {
   const { children, noHeader, background,expandAdvanced, setExpandAdvanced} = props;
   const classes = useStyles();
-
+  const history = useHistory();
+  const isAbout= history.location.pathname.indexOf('about') > -1;
   
   return (
-    <div className={background} style={expandAdvanced}>
+    <div className={background} style={isAbout?{height:'130vh'}:expandAdvanced}>
       <Container>
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
           {

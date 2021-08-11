@@ -1,12 +1,11 @@
-import React, {useState,Fragment} from 'react';
-import { Grid,IconButton } from '@material-ui/core';
+import {useState,Fragment} from 'react';
+import { Grid } from '@material-ui/core';
 import { RegisterContainer } from 'domains/core/containers';
 import { withRouter,RouteComponentProps,useParams  } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -70,7 +69,7 @@ const WaitingList = (props: RouteComponentProps) => {
                 <Grid item sm={12} xs={5} >
                     <p>Hi {name?name.replace("_"," "):null} </p> 
                     {smallScreen?
-                        <p>Thank you for your interest in <span style={{fontWeight: 'bold'}}>rea</span>!<br/>We are so grateful for and overwhelmed by the number of people
+                        <p style={{textAlign: 'justify'}}>Thank you for your interest in <span style={{fontWeight: 'bold'}}>rea</span>!<br/>We are so grateful for and overwhelmed by the number of people
                         that have signed up to be earley testers.<br/>We will be in touch when we are ready to release <span style={{fontWeight: 'bold'}}>rea</span> in your
                         country.<br/>Thank you for being part of the <span style={{fontWeight: 'bold'}}>rea</span> team.<br/><br/>Let's build the future together!</p>:
                         <p>Thank you for your interest in <span style={{fontWeight: 'bold'}}>rea</span>!<br/>We are so grateful for and overwhelmed by the number of people<br/>
