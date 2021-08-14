@@ -1,14 +1,15 @@
 import React, {useState,Fragment} from 'react';
 import { Typography, Grid, TextField,Input, Fab, InputAdornment, IconButton} from '@material-ui/core';
 import { PageContainer } from 'domains/core/containers';
-import { Link, useHistory,withRouter  } from 'react-router-dom';
+import { useHistory  } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import MailchimpSubscribe from 'react-mailchimp-subscribe';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import { HomeSub1 } from 'domains/core/containers';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -136,29 +137,41 @@ export function RegisterContainer(props:OwnProps) {
   
   const {children} = props;
 
+  const handleScroll = () => {
+    window.scroll({
+        top: document.body.offsetHeight,
+        left: 0,
+        behavior: 'smooth'
+    });
+  }
+
   return (
-    <PageContainer background="controls-background">
-      <Grid container sm={12} xs={12}>
-        <Grid container item sm={6} xs={12} className={classes.textContainer}>
-          {children}
+    <Fragment>
+      <PageContainer background="controls-background">
+        <Grid container sm={12} xs={12}>
+          <Grid container item sm={6} xs={12} className={classes.textContainer}>
+            {children}
+          </Grid>
+          {!smallScreen?
+            <Grid item container sm={6} xs={12}>
+              <ImgVideo></ImgVideo>
+            </Grid>:null
+            }
+          
         </Grid>
         {!smallScreen?
-          <Grid item container sm={6} xs={12}>
-            <ImgVideo></ImgVideo>
-          </Grid>:null
-          }
-        
-      </Grid>
-      {!smallScreen?
-      <Grid item sm={12} style={{alignSelf:'flex-end', textAlign: 'center'}}>
-        <Fab size="small" className={classes.fab} >         
-                <ArrowForwardIosIcon fontSize="small" className={classes.icon_works}></ArrowForwardIosIcon>
-        </Fab>
-        <p style={{fontSize: 12}}>Learn how it works</p>
-      </Grid>:null
-      }
+        <Grid item sm={12} style={{alignSelf:'flex-end', textAlign: 'center'}}>
+          <Fab size="small" className={classes.fab} >         
+                  <KeyboardArrowDown fontSize="large" className={classes.icon_works} onClick={handleScroll}></KeyboardArrowDown>
+          </Fab>
+          <p style={{fontSize: 12}}>Learn how it works</p>
+        </Grid>:null
+        }
       
-    </PageContainer>
+      </PageContainer>
+      <HomeSub1 />
+    </Fragment>
+    
   );
 }
 
@@ -224,11 +237,12 @@ const FormMail = (props:FormProps) => {
     });
   }
 
+
   return (
     <RegisterContainer>
       <Grid item container sm={12} xs={10} className={classes.containerForm}>
         <Typography>
-          <h2 style={{lineHeight:1.2}}>Building Future <br/> <span style={{textDecoration: 'underline'}}>Communities Together.</span></h2>
+          <h2 style={{lineHeight:1.2}}>BUILDING FUTURE <br/> <span style={{textDecoration: 'underline'}}>COMMUNITIES TOGETHER.</span></h2>
           {smallScreen?<p style={{fontSize:13,lineHeight:1.2}}>Generate a preliminary design study of multi-dweling smart housing projects in three simple steps.</p>:
           <h4> Generate a preliminary design study of multi-dweling <br /> smart housing projects in three simple steps.</h4>}
         </Typography>

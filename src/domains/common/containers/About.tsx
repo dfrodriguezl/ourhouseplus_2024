@@ -111,30 +111,25 @@ const About = () => {
                       </Fragment> 
                     }
                   </Fragment>:
-                  <Fragment>
-
-                    
+                  <Fragment>   
                     <ListItemText className={classes.textItem} style={{width: '70%'}} disableTypography >
                       <span className={classes.nameTitle}>{tm.name}</span>
                       {hover === tm.id && tm.desc_1?
                         <Grow in={true} {...(1 === 1 ? { timeout: 1000 } : {})}>
                           <span className={classes.nameSubtitle} style={{padding: 10}}>{tm.desc_1 + tm.desc_2}</span>
                         </Grow>
-                      :<Fragment>
-                        <span className={classes.nameSubtitle}>{tm.position}</span>
-                        <br />
-                        <span className={classes.nameCity}>{tm.city}</span>
-                      </Fragment>
-                        
+                        :<Fragment>
+                          <span className={classes.nameSubtitle}>{tm.position}</span>
+                          <br />
+                          <span className={classes.nameCity}>{tm.city}</span>
+                        </Fragment>
                       }
-                      
                     </ListItemText>
                     <ListItemAvatar >
                       <Avatar className={hover === tm.id ?classes.large: ''} src='/assets/team.png'/>
                     </ListItemAvatar>
                   </Fragment>
                 }
-                
               </ListItem>
             )
           })}

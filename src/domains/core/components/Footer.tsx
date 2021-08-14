@@ -13,15 +13,13 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
       flexDirection: 'row',
-      backgroundColor: '#010100',
-      padding: '20px'
+      backgroundColor: '#010100'
     },
     footer: {
       fontSize: 12,
       padding: theme.spacing(2, 2),
       lineHeight: '16px',
       '& a': {
-        // color: theme.palette.common.white,
         color: 'white',
         opacity: '89%'
       }

@@ -72,3 +72,7 @@ export { default as google } from './google.png';
 
 export { default as back } from './back.png';
 export { default as forward } from './forward.png';
+
+export { default as basicVolume } from './BasicVolume.svg';
+export { default as facade } from './Facade.svg';
+export { default as interior } from './Interior.svg';
