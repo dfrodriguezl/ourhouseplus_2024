@@ -147,7 +147,7 @@ export function RegisterContainer(props:OwnProps) {
 
   return (
     <Fragment>
-      <PageContainer background="controls-background">
+      <PageContainer background="waiting-background">
         <Grid container sm={12} xs={12}>
           <Grid container item sm={6} xs={12} className={classes.textContainer}>
             {children}

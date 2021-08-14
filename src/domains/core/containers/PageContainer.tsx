@@ -64,13 +64,13 @@ interface StateProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 const PageContainer = (props: Props) => {
-  const { children, noHeader, background,expandAdvanced, setExpandAdvanced} = props;
+  const { children, noHeader, background,expandAdvanced } = props;
   const classes = useStyles();
   const history = useHistory();
   const isAbout= history.location.pathname.indexOf('about') > -1;
   
   return (
-    <div className={background} style={isAbout?{height:'130vh'}:expandAdvanced}>
+    <div className={background} style={isAbout?{height:'140vh'}:expandAdvanced}>
       <Container>
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
           {

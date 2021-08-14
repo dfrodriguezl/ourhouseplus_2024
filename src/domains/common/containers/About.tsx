@@ -61,9 +61,19 @@ const About = () => {
   const [hover, setHover] = useState(0);
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const handleScroll = () => {
+    window.scroll({
+        top: 0,
+        left: 0,
+        behavior: 'smooth'
+    });
+  }
+
+  handleScroll();
   
   return (
-    <PageContainer background="controls-background">
+    <PageContainer background="waiting-background">
       <Grid item sm={1} />
       <Grid item container sm={10} xs={12} className={classes.container}>
         <Grid item container sm={12}>

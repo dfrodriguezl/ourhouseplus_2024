@@ -55,6 +55,11 @@ a {
   background: transparent linear-gradient(136deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box;
 }
 
+.waiting-background {
+  opacity: 1;
+  background: transparent linear-gradient(180deg, #FFFFFF 0%, #F2EBE0 100%) 0% 0% no-repeat padding-box;
+}
+
 .home-sub-1 {
   background-color: #d9e7ed;
 }
