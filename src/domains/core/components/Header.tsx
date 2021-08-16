@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Header = (props: RouteComponentProps) => {
-  const { isAuthenticated, loginWithPopup, logout } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [mobileView, setMobileView] = useState(false);
@@ -140,7 +140,7 @@ const Header = (props: RouteComponentProps) => {
                 {
                   !isAuthenticated
                     ?
-                    <Button onClick={() => loginWithPopup()}>
+                    <Button onClick={() => loginWithRedirect()}>
                       <MenuItem>Sign in</MenuItem>
                     </Button>
                     :
@@ -184,7 +184,7 @@ const Header = (props: RouteComponentProps) => {
                 {
                   !isAuthenticated
                     ?
-                    <Button className={classes.whiteButtons} onClick={() => loginWithPopup()}>
+                    <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
                       Sign in
                     </Button>
                     :

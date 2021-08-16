@@ -54,7 +54,7 @@ interface DispatchProps {
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
-  const { isAuthenticated, loginWithPopup } = useAuth0();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
   const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick } = props;
 
   const classes = useStyles();
@@ -104,7 +104,7 @@ const SearchToolBar = (props: Props) => {
       });
       history.push('/shapediver/step1');
     } else {
-      loginWithPopup();
+      loginWithRedirect();
     }
   }
 
