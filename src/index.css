@@ -55,10 +55,42 @@ a {
   background: transparent linear-gradient(136deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box;
 }
 
+.waiting-background {
+  opacity: 1;
+  background: transparent linear-gradient(180deg, #FFFFFF 0%, #F2EBE0 100%) 0% 0% no-repeat padding-box;
+}
+
 .home-sub-1 {
   background-color: #d9e7ed;
 }
 
 .black-model {
   background-color: #141414;
+}
+
+.img-landing {
+  background-image: url(assets/Background.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; 
+  padding: 10px;
+}
+
+
+.img-team {
+  background-image: url(assets/team.png);
+  background-repeat: no-repeat;
+  background-position: center bottom -70px;
+  background-size: cover; 
+  padding: 10px;
+}
+
+@media screen and (max-width: 600px) {
+  .img-team {
+    background-image: url(assets/team.png);
+    background-repeat: no-repeat;
+    background-position: center bottom -30px;
+    background-size: cover; 
+    padding: 10px;
+  }
 }

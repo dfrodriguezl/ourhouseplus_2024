@@ -17,9 +17,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       padding: '20px 0',
-      [theme.breakpoints.down('sm')]: {
-        padding: 0,
-      },
       background: 'transparent'
     },
     menuButton: {
@@ -77,20 +74,16 @@ const Header = (props: RouteComponentProps) => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
-  const [mobileView, setMobileView] = useState(false);
   const history = props.history;
 
   const isHome = props.history.location.pathname.indexOf('home') > -1;
   const isRegister = props.history.location.pathname.indexOf('register') > -1;
   const isSignUp = props.history.location.pathname.indexOf('signup') > -1;
+  const isWaiting = props.history.location.pathname.indexOf('waiting') > -1;
+  const isAbout = props.history.location.pathname.indexOf('about') > -1;
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
-
-  const handleClose = () => {
-    setOpen(false);
-  }
 
   const openRegister = () => {
     history.push('/register');
@@ -105,39 +98,39 @@ const Header = (props: RouteComponentProps) => {
   };
 
   return (
-    smallScreen ?
-      <Fragment>
-        <AppBar position="static" elevation={0} className={classes.header}>
-          <Toolbar variant="regular">
-            <Link to="/home">
-              <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
-            </Link>
+    smallScreen?
+    <Fragment>
+      <AppBar position="static" elevation={0} className={classes.header}>
+      <Toolbar variant="regular">
+        <Link to="/home">
+          <img src={isHome || isRegister || isSignUp || isWaiting || isAbout? logo : whiteLogo} alt="logo" width={100} />
+        </Link>
 
-            {!(isRegister || isSignUp) ?
-              <div className={classes.menuButton}>
-                <IconButton
-                  edge="end"
-                  color="secondary"
-                  aria-label="menu"
-                  onClick={handleDrawerOpen}
-                  className={clsx(classes.menuButton2 && classes.root, open && classes.hide)}
-                >
-                  <MenuIcon className={classes.icon} />
-                </IconButton>
-              </div> : null
-            }
+        {!(isRegister || isSignUp || isWaiting || isAbout)?
+        <div className={classes.menuButton}>
+          <IconButton
+            edge="end"
+            color="secondary"
+            aria-label="menu"
+            onClick={handleDrawerOpen}
+            className={clsx(classes.menuButton2 && classes.root, open && classes.hide )}
+          >
+            <MenuIcon className={classes.icon}/>
+          </IconButton>  
+        </div>:null
+        }
+        
 
-
-            <Drawer
-              className={classes.drawer}
-              anchor="right"
-              open={open}
-              onClose={handleDrawerClose}
-              classes={{
-                paper: classes.drawerPaper,
-              }}>
-              <div>
-                {
+        <Drawer
+          className={classes.drawer}
+          anchor="right"
+          open={open}
+          onClose={handleDrawerClose}
+          classes={{
+            paper: classes.drawerPaper,
+          }}>
+            <div>
+              {
                   !isAuthenticated
                     ?
                     <Button onClick={() => loginWithRedirect()}>
@@ -148,54 +141,38 @@ const Header = (props: RouteComponentProps) => {
                       <MenuItem>Sign out</MenuItem>
                     </Button>
                 }
-                <Button onClick={() => openRegister()}>
-                  <MenuItem>Become a member</MenuItem>
-                </Button>
-              </div>
-            </Drawer>
-
-
-            {/* {
-          !(isRegister || isSignUp) || smallScreen?
-          <div className={classes.menuButton}>
-          <Button className={classes.whiteButtons}>
-            Sign in
-          </Button>
-          <Button className={classes.becomeMember} onClick={() => openRegister()}>
-            Become a member
-          </Button>
-        </div>:null
-        } */}
-
-          </Toolbar>
-          {/* <Mailchimp open={open} handleClose={handleClose}/> */}
-        </AppBar>
-
-      </Fragment>
-      :
+              <Button onClick={() => openRegister()}>
+                <MenuItem>Become a member</MenuItem>
+              </Button>
+            </div>
+          </Drawer>
+      </Toolbar>
+    </AppBar>  
+    </Fragment>
+    :
       <AppBar position="static" elevation={0} className={classes.header}>
         <Toolbar variant="regular">
           <Link to="/home">
-            <img src={isHome || isRegister || isSignUp ? logo : whiteLogo} alt="logo" width={100} />
-          </Link>
+            <img src={isHome || isRegister || isSignUp || isWaiting || isAbout? logo : whiteLogo} alt="logo" width={100} />
+          </Link>  
           {
-            !(isRegister || isSignUp) ?
-              <div className={classes.menuButton}>
-                {
-                  !isAuthenticated
-                    ?
-                    <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
-                      Sign in
-                    </Button>
-                    :
-                    <Button className={classes.whiteButtons} onClick={() => logout()}>
-                      Sign out
-                    </Button>
+            !(isRegister || isSignUp || isWaiting || isAbout)?
+            <div className={classes.menuButton}>
+              {
+                !isAuthenticated
+                  ?
+                  <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
+                    Sign in
+                  </Button>
+                  :
+                  <Button className={classes.whiteButtons} onClick={() => logout()}>
+                    Sign out
+                  </Button>
                 }
-                <Button className={classes.becomeMember} onClick={() => openRegister()}>
-                  Become a member
-                </Button>
-              </div> : null
+            <Button className={classes.becomeMember} onClick={() => openRegister()}>
+              Become a member
+            </Button>
+          </div>:null
           }
 
         </Toolbar>
