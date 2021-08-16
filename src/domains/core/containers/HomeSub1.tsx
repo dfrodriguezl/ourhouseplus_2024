@@ -1,11 +1,13 @@
 import React from 'react';
 import { Container, Grid, Box, Paper, makeStyles, Button, Theme } from '@material-ui/core';
 import { ArrowForward } from '@material-ui/icons';
+import { basicVolume, facade, interior } from 'assets';
 
 const styles = makeStyles((theme: Theme) => ({
   image: {
     height: 200,
-    width: 300
+    width: 300,
+    backgroundColor: 'transparent'
   },
   title: {
     paddingTop: 40,
@@ -47,6 +49,10 @@ const styles = makeStyles((theme: Theme) => ({
   phrase: {
     fontSize: 17,
     color: "#696969"
+  },
+  svg: {
+    width: '100%',
+    height: '100%'
   }
 }));
 
@@ -61,8 +67,8 @@ const HomeSub1 = () => {
             <Box component="h1" color="primary">Plan and design housing projects in three steps</Box>
           </Grid>
           <Grid item sm={12} md={4}>
-            <Paper elevation={1} className={classes.image}>
-
+            <Paper elevation={0} className={classes.image}>
+              <img src={basicVolume} alt="" className={classes.svg}/>
             </Paper>
             <div className={classes.step}>
               <Box component="span" >Step One</Box>
@@ -77,8 +83,8 @@ const HomeSub1 = () => {
             </div>
           </Grid>
           <Grid item sm={12} md={4}>
-            <Paper elevation={1} className={classes.image}>
-
+            <Paper elevation={0} className={classes.image}>
+              <img src={facade} alt="" className={classes.svg}/>
             </Paper>
             <div className={classes.step}>
               <Box component="span" >Step Two</Box>
@@ -93,8 +99,8 @@ const HomeSub1 = () => {
             </div>
           </Grid>
           <Grid item sm={12} md={4}>
-            <Paper elevation={1} className={classes.image}>
-
+            <Paper elevation={0} className={classes.image}>
+              <img src={interior} alt="" className={classes.svg}/>
             </Paper>
             <div className={classes.step}>
               <Box component="span" >Step Three</Box>

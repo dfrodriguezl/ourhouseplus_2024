@@ -72,3 +72,16 @@ export { default as google } from './google.png';
 
 export { default as back } from './back.png';
 export { default as forward } from './forward.png';
+
+export { default as basicVolume } from './BasicVolume.png';
+export { default as facade } from './Facade.png';
+export { default as interior } from './Interior.png';
+
+export { default as juan } from './juan.jpeg';
+export { default as felix } from './felix.jpeg';
+export { default as alex } from './alex.jpeg';
+export { default as sebastien } from './sebastien.jpeg';
+export { default as lucas } from './lucas.jpeg';
+export { default as ula } from './ula.jpeg';
+export { default as diego } from './diego.jpg';
+export { default as radhi } from './radhi.jpeg';
