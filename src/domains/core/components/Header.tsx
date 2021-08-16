@@ -7,7 +7,9 @@ import { useTheme } from '@material-ui/core/styles';
 
 import logo from 'assets/logo-small.png';
 import whiteLogo from 'assets/logo-small-white.png';
-import { Fragment, useState, useEffect } from 'react';
+import { Mailchimp } from 'domains/common/components';
+import { Fragment, useState } from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const drawerWidth = 240;
 
@@ -64,11 +66,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon: {
       fontSize: "50px !important"
-     }
+    }
   })
 );
 
 const Header = (props: RouteComponentProps) => {
+  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const history = props.history;
@@ -127,17 +130,24 @@ const Header = (props: RouteComponentProps) => {
             paper: classes.drawerPaper,
           }}>
             <div>
-              <Button>
-                <MenuItem>Sign in</MenuItem>
-              </Button>
+              {
+                  !isAuthenticated
+                    ?
+                    <Button onClick={() => loginWithRedirect()}>
+                      <MenuItem>Sign in</MenuItem>
+                    </Button>
+                    :
+                    <Button onClick={() => logout()}>
+                      <MenuItem>Sign out</MenuItem>
+                    </Button>
+                }
               <Button onClick={() => openRegister()}>
                 <MenuItem>Become a member</MenuItem>
               </Button>
             </div>
           </Drawer>
       </Toolbar>
-    </AppBar>
-    
+    </AppBar>  
     </Fragment>
     :
       <AppBar position="static" elevation={0} className={classes.header}>
@@ -148,17 +158,25 @@ const Header = (props: RouteComponentProps) => {
           {
             !(isRegister || isSignUp || isWaiting || isAbout)?
             <div className={classes.menuButton}>
-            <Button className={classes.whiteButtons}>
-              Sign in
-            </Button>
+              {
+                !isAuthenticated
+                  ?
+                  <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
+                    Sign in
+                  </Button>
+                  :
+                  <Button className={classes.whiteButtons} onClick={() => logout()}>
+                    Sign out
+                  </Button>
+                }
             <Button className={classes.becomeMember} onClick={() => openRegister()}>
               Become a member
             </Button>
           </div>:null
           }
-        
-      </Toolbar>
-    </AppBar>   
+
+        </Toolbar>
+      </AppBar>
   );
 }
 

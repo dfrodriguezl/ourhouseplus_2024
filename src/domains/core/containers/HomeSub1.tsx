@@ -51,7 +51,8 @@ const styles = makeStyles((theme: Theme) => ({
     color: "#696969"
   },
   svg: {
-    width: '100%'
+    width: '100%',
+    height: '100%'
   }
 }));
 

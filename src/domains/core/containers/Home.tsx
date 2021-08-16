@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
-import { compose } from 'recompose';
 import { Grid } from '@material-ui/core';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { SearchToolBar } from 'domains/core/components';
 import { PageContainer } from 'domains/core/containers';
 import { Slogan, ScrollDown } from 'domains/common/components';
@@ -22,24 +21,24 @@ const Home = (props: Props) => {
   const { searchClick } = props;
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  
+
   return (
     <Fragment>
-      <PageContainer background={!smallScreen?"home":searchClick?"home-black":"home"}>
+      <PageContainer background={!smallScreen ? "home" : searchClick ? "home-black" : "home"}>
         <Grid container justify="center">
-          <Grid item xs={smallScreen?12:8}>
+          <Grid item xs={smallScreen ? 12 : 8}>
             <SearchToolBar />
           </Grid>
-          <Grid item container xs={12} direction="row" style={{marginTop: '38vh'}}>
+          <Grid item container xs={12} direction="row" style={{ marginTop: '38vh' }}>
             <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
               <Slogan />
             </Grid>
-            {smallScreen?null:
-            <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
-            <ScrollDown />
-          </Grid>}
-          </Grid> 
-        </Grid>  
+            {smallScreen ? null :
+              <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
+                <ScrollDown />
+              </Grid>}
+          </Grid>
+        </Grid>
       </PageContainer>
       <HomeSub1 />
     </Fragment>

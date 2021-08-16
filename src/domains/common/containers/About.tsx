@@ -106,7 +106,7 @@ const About = () => {
                   <Fragment>
                     <ListItemText primary={tm.name} className={classes.textItem} style={{width: '30%'}} disableTypography/>
                     <ListItemAvatar >
-                      <Avatar className={hover === tm.id ?classes.large: ''} src='/assets/team.png'/>
+                      <Avatar className={hover === tm.id ?classes.large: ''} src={tm.picture}/>
                     </ListItemAvatar>
                     {hover === tm.id && tm.desc_1?
                       <Grow in={true} {...(1 === 1 ? { timeout: 1000 } : {})}>
