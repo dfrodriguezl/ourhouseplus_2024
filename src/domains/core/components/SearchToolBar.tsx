@@ -54,7 +54,7 @@ interface DispatchProps {
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, user } = useAuth0();
   const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick } = props;
 
   const classes = useStyles();
@@ -65,7 +65,6 @@ const SearchToolBar = (props: Props) => {
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
 
   useEffect(() => {
     getLocations();
@@ -96,13 +95,15 @@ const SearchToolBar = (props: Props) => {
 
 
   const next = () => {
-    if (isAuthenticated) {
-      setInitialParams({
-        location,
-        area: area!,
-        density: density!
-      });
-      history.push('/shapediver/step1');
+    if (isAuthenticated && user) {
+      if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
+        setInitialParams({
+          location,
+          area: area!,
+          density: density!
+        });
+        history.push('/shapediver/step1');
+      }
     } else {
       loginWithRedirect();
     }
