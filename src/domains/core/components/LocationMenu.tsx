@@ -70,7 +70,7 @@ interface OwnProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 function LocationMenu(props: Props) {
-  const { location, updateLocation, updateStep, searchClick,setSearchClick } = props;
+  const { location, updateLocation, updateStep, setSearchClick } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [visible, setVisible] = useState<Boolean>(false);
   const [openDialog, setOpenDialog] = useState(false)

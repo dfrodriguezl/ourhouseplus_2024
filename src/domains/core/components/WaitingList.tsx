@@ -1,7 +1,7 @@
 import {useState,Fragment} from 'react';
 import { Grid } from '@material-ui/core';
 import { RegisterContainer } from 'domains/core/containers';
-import { withRouter,RouteComponentProps,useParams  } from 'react-router-dom';
+import { withRouter,useParams  } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -53,7 +53,7 @@ interface ownParams {
     name?: string | undefined;
 }
 
-const WaitingList = (props: RouteComponentProps) => {
+const WaitingList = () => {
     const classes = useStyles();
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -117,17 +117,13 @@ const SocialNetwork = () => {
 }
 
 const ImgVideo = () => {
-    const classes = useStyles();
     const [play, setPlay] = useState(false);
   
-    const handlePlay = () => {
-      setPlay(true);
-    }
   
     return (
       <Grid item sm={12} xs={12} style={{textAlign: 'center',height: '100%', padding: '20% 0'}}>
         {play?
-          <iframe width="100%" height="100%"
+          <iframe width="100%" height="100%" title="video-rea"
           src="https://www.youtube.com/embed/G6jz86kFJCk?autoplay=1&controls=0&mute=1">
         </iframe>:
         <div className="img-landing" style={{height: '100%', borderRadius: 20}}>

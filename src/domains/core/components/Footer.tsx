@@ -1,12 +1,11 @@
 import React, {Fragment} from 'react';
 import { compose } from 'recompose';
-import { Box, Container, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Box, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
-import { logoSmallWhite } from 'assets'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

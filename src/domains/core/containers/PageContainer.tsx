@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { compose } from 'recompose';
 import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
 import { Header } from 'domains/core/components'
 import { setExpandAdvanced } from 'domains/shapeDiver/slice';

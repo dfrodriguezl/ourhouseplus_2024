@@ -7,7 +7,6 @@ import { useTheme } from '@material-ui/core/styles';
 
 import logo from 'assets/logo-small.png';
 import whiteLogo from 'assets/logo-small-white.png';
-import { Mailchimp } from 'domains/common/components';
 import { Fragment, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
