@@ -70,7 +70,11 @@ const About = () => {
     });
   }
 
-  handleScroll();
+  if(hover === 0){
+    handleScroll();
+  }
+
+  
   
   return (
     <PageContainer background="waiting-background">
