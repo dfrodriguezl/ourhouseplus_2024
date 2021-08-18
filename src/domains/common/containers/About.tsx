@@ -136,7 +136,7 @@ const About = () => {
                       }
                     </ListItemText>
                     <ListItemAvatar >
-                      <Avatar className={hover === tm.id ?classes.large: ''} src='/assets/team.png'/>
+                      <Avatar className={hover === tm.id ?classes.large: ''} src={tm.picture}/>
                     </ListItemAvatar>
                   </Fragment>
                 }
