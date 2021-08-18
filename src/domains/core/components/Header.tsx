@@ -1,5 +1,7 @@
-import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Drawer, IconButton, MenuItem } from '@material-ui/core';
+import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Drawer, IconButton, MenuItem, MenuList, Popper, Grow, Paper, ClickAwayListener } from '@material-ui/core';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import PersonIcon from '@material-ui/icons/Person';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -7,8 +9,9 @@ import { useTheme } from '@material-ui/core/styles';
 
 import logo from 'assets/logo-small.png';
 import whiteLogo from 'assets/logo-small-white.png';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+
 
 const drawerWidth = 240;
 
@@ -65,14 +68,21 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon: {
       fontSize: "50px !important"
+    },
+    menu: {
+      borderRadius: 15,
+      marginTop: 3,
+      width: '100%'
     }
   })
 );
 
 const Header = (props: RouteComponentProps) => {
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
+  const anchorRef = useRef<any>(null);
   const history = props.history;
 
   const isHome = props.history.location.pathname.indexOf('home') > -1;
@@ -95,6 +105,26 @@ const Header = (props: RouteComponentProps) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleClick = () => {
+    setOpenMenu((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = (event:any) => {
+    if (anchorRef.current && anchorRef.current.contains(event.target)) {
+      return;
+    }
+
+    setOpenMenu(false);
+  };
+
+  const handleListKeyDown = (event:any) => {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      setOpenMenu(false);
+    }
+  }
+
 
   return (
     smallScreen?
@@ -132,17 +162,26 @@ const Header = (props: RouteComponentProps) => {
               {
                   !isAuthenticated
                     ?
-                    <Button onClick={() => loginWithRedirect()}>
-                      <MenuItem>Sign in</MenuItem>
-                    </Button>
+                    <Fragment>
+                      <Button onClick={() => loginWithRedirect()}>
+                        <MenuItem>Sign in</MenuItem>
+                      </Button>
+                      <Button onClick={() => openRegister()}>
+                        <MenuItem>Become a member</MenuItem>
+                      </Button>
+                    </Fragment> 
                     :
-                    <Button onClick={() => logout()}>
-                      <MenuItem>Sign out</MenuItem>
-                    </Button>
+                    <Fragment>
+                      <Button onClick={() => logout()}>
+                        <MenuItem>Sign out</MenuItem>
+                      </Button>
+                      <Button>
+                        <MenuItem>{user.name}</MenuItem>
+                      </Button>
+                    </Fragment>
+                    
                 }
-              <Button onClick={() => openRegister()}>
-                <MenuItem>Become a member</MenuItem>
-              </Button>
+              
             </div>
           </Drawer>
       </Toolbar>
@@ -160,17 +199,51 @@ const Header = (props: RouteComponentProps) => {
               {
                 !isAuthenticated
                   ?
-                  <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
-                    Sign in
-                  </Button>
+                  <Fragment>
+                    <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
+                      Sign in
+                    </Button>
+                    <Button className={classes.becomeMember} onClick={() => openRegister()}>
+                      Become a member
+                    </Button>
+                  </Fragment>    
                   :
-                  <Button className={classes.whiteButtons} onClick={() => logout()}>
-                    Sign out
-                  </Button>
+                  <Fragment>
+                    {/* <Button className={classes.whiteButtons} onClick={() => logout()}>
+                      Sign out
+                    </Button> */}
+                    <Button 
+                      className={classes.becomeMember} 
+                      startIcon={<PersonIcon />} 
+                      endIcon={<ExpandMoreIcon />} 
+                      ref={anchorRef}
+                      aria-controls={openMenu ? 'menu-list-grow' : undefined}
+                      aria-haspopup="true" 
+                      onClick={handleClick}>
+                      {user.name}
+                    </Button>
+                    <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                      {({ TransitionProps, placement }) => (
+                        <Grow
+                          {...TransitionProps}
+                          style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                        >
+                          <Paper className={classes.menu}>
+                            <ClickAwayListener onClickAway={handleClose}>
+                              <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                <MenuItem onClick={handleClose}>Your projects</MenuItem>
+                                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
+                              </MenuList>
+                            </ClickAwayListener>
+                          </Paper>
+                        </Grow>
+                      )}
+                    </Popper>
+                  </Fragment>
+                  
                 }
-            <Button className={classes.becomeMember} onClick={() => openRegister()}>
-              Become a member
-            </Button>
+            
           </div>:null
           }
 
