@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Home, Login, MailchimpFormContainer, SignUp } from 'domains/core/containers';
+import { Home, Login, MailchimpFormContainer, SignUp, ListProjects } from 'domains/core/containers';
 import { ThemeProvider } from '@material-ui/core';
 import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News } from 'domains/common/containers';
 import theme from 'app/theme';
@@ -22,6 +22,7 @@ function App() {
         <Route path="/register" component={MailchimpFormContainer} />
         <Route path="/waiting/:name" component={WaitingList} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/projects" component={ListProjects} />
         <Route path="/shapediver/step1" component={ShapeDiverContainerStep1} />
         <Route path="/shapediver/step2" component={ShapeDiverContainerStep2} />
         <Route path="/shapediver/step3" component={ShapeDiverContainerStep3} />

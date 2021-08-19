@@ -16,9 +16,6 @@ const useStyles = makeStyles((theme: Theme) =>
         minHeight: '80vh',
         height: '90vh'
       },
-      // [theme.breakpoints.down('xl')]: {
-      //   height: '130vh'
-      // },
     },
     headerContainer: {
       justifyContent: 'center',

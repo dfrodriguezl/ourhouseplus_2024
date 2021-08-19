@@ -98,6 +98,10 @@ const Header = (props: RouteComponentProps) => {
     history.push('/register');
   }
 
+  const openProjects = () => {
+    history.push('/projects');
+  }
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -231,7 +235,7 @@ const Header = (props: RouteComponentProps) => {
                           <Paper className={classes.menu}>
                             <ClickAwayListener onClickAway={handleClose}>
                               <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                <MenuItem onClick={handleClose}>Your projects</MenuItem>
+                                <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
                                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                                 <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
                               </MenuList>

@@ -5,3 +5,4 @@ export { default as PageContainer } from './PageContainer'
 export { default as FullPageOverlay } from './FullPageOverlay';
 export { RegisterContainer, MailchimpFormContainer } from './RegisterContainer';
 export { default as SignUp } from './SignUp';
+export { default as ListProjects } from './ListProjects';

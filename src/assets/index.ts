@@ -85,3 +85,6 @@ export { default as lucas } from './lucas.jpeg';
 export { default as ula } from './ula.jpeg';
 export { default as diego } from './diego.jpg';
 export { default as radhi } from './radhi.jpeg';
+
+export { default as cube } from './cube.png';
+export { default as metamorphose } from './metamorphose.png';
