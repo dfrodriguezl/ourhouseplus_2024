@@ -1,26 +1,38 @@
-import React, { Fragment } from 'react';
-import { Grid, makeStyles, createStyles, Theme, IconButton, Typography, Button } from '@material-ui/core';
-import { RouteComponentProps } from 'react-router-dom';
-import { SearchToolBar } from 'domains/core/components';
+import { Fragment, useState } from 'react';
+import { Grid, makeStyles, createStyles, Theme, IconButton, Typography, Button, Box, Link } from '@material-ui/core';
+import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
-import { Slogan, ScrollDown } from 'domains/common/components';
-import { HomeSub1 } from 'domains/core/containers';
-import { connect } from 'react-redux';
-import { RootState } from 'app/store';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-import { cube, metamorphose } from 'assets';
+import { cube, metamorphose, basicVolume, download_white } from 'assets';
 import AddIcon from '@material-ui/icons/Add';
+import AddSharpIcon from '@material-ui/icons/AddSharp';
+import EditIcon from '@material-ui/icons/Edit';
 
+// Delete this const
+const projects = [
+    {
+        id: 1,
+        name: 'Project 1'
+    },
+    {
+        id: 2,
+        name: 'Project 2'
+    },
+    {
+        id: 3,
+        name: 'Project 3'
+    }
+];
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     topPanel: {
-      background: 'transparent linear-gradient(93deg, #D6D5E4 0%, #D9D7E1 52%, #E5DED0 100%) 0% 0% no-repeat padding-box'
+      background: 'transparent linear-gradient(93deg, #D6D5E4 0%, #D9D7E1 52%, #E5DED0 100%) 0% 0% no-repeat padding-box',
+      height: '60px'
     },
     iconTop:{
-        width:20,
-        height: 20
+        width:15,
+        height: 15
     },
     textTop:{
         fontSize:10
@@ -35,10 +47,77 @@ const useStyles = makeStyles((theme: Theme) =>
         color: 'white',
         textTransform: 'none',
         border: '2px solid white',
-        padding: '2px 5px',
-        width: '13%',
-        fontSize:12
+        padding: '0px',
+        width: '50%',
+        fontSize:10,
+        marginTop: 5
       },
+      compareButton: {
+        borderRadius: 15,
+        color: 'black',
+        textTransform: 'none',
+        width: '60%',
+        // border: '2px solid white',
+        padding: '2px 5px',
+        marginTop: 30,
+        background: '#D6D5E4 0% 0% no-repeat padding-box',
+        fontSize: 15,
+        letterSpacing: '0.69px',
+        opacity: 1,
+        fontWeight: 'bold',
+        '&:hover': {
+            color: 'white',
+          }
+      },
+      subtitleProjects: {
+          color: 'white',
+          marginTop: 30
+      },
+      backgroundNew: {
+        background: '#FFFFFF33 0% 0% no-repeat padding-box',
+        height: '30vh',
+        width: '100%',
+        marginTop: 10,
+        display: 'flex'
+      },
+      AddBox: {
+          background: '#FFFFFF 0% 0% no-repeat padding-box',
+          opacity: 0.9,
+          border: '1px solid #707070',
+          marginBottom: 10,
+          height: '10vh',
+          width: '10vh',
+          display: 'flex'
+      },
+      text:{
+          color: 'white',
+          marginTop: 10
+      },
+      backgroundProject: {
+        background: '#FFFFFF1A 0% 0% no-repeat padding-box',
+        height: '30vh',
+        width: '100%',
+        marginTop: 10,
+        display: 'flex',
+        '&:hover': {
+            backgroundColor: '#FFFFFF33'
+          }
+    },
+    optionsProject: {
+        color: '#FFFFFFB3',
+        fontSize: 15
+    },
+    containerOptions:{
+        marginTop: 10
+    },
+    optionsIcon:{
+        marginLeft: 10, 
+        fontSize: 15
+    },
+    imgIcon: {
+        height: '15px',
+        marginLeft: 10, 
+    }
   })
 );
 
@@ -50,26 +129,90 @@ type Props = RouteComponentProps & StateProps;
 const ListProjects = (props: Props) => {
 
     const classes = useStyles();
-    const { searchClick } = props;
     const theme = useTheme();
-    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+    const history = useHistory();
+    const [ hover, setHover ] = useState(0);
+
+    const goToHome = () => {
+        history.push("/home")
+    }
 
   return (
     <Fragment>
       <PageContainer background="black-model">
-          <Grid container xs={12} className={classes.topPanel}>
+          <Grid container xs={12} className={classes.topPanel} >
               <TopPanel />
-          </Grid>
-          <Grid item container xs={12} direction="column">
-            <Typography className={classes.textProfile}>
-                Finish setting up your profile to create sharable links and pdf documents
-            </Typography>
-            <br />
-            <Button 
-                className={classes.becomeMember} 
-                startIcon={<AddIcon />}>
-                    Finish your profile
-            </Button>
+              <Grid item xs={12}>
+                <Typography className={classes.textProfile}>
+                    Finish setting up your profile to create sharable links and pdf documents
+                </Typography>
+              </Grid>
+              <Grid item container xs={3} direction="column">
+                <Button 
+                    className={classes.becomeMember} 
+                    startIcon={<AddIcon />}>
+                        Finish your profile
+                </Button>
+                <Button className={classes.compareButton}>
+                    Compare your projects
+                </Button>
+                <Typography variant="h6" className={classes.subtitleProjects}>
+                    Your projects
+                </Typography> 
+              </Grid>
+              <Grid item container xs={12}>
+                    <Grid item container xs ={2} className={classes.backgroundNew} direction="column" justify="center" alignItems="center">
+                        <Box component="div" className={classes.AddBox} alignItems="center" justifyContent="center">
+                            <IconButton onClick={() => goToHome()}>
+                                <AddSharpIcon style={{ fontSize: 80 }}/>
+                            </IconButton>
+                        </Box>
+                        <Typography variant="body2" className={ classes.text }>
+                            Create new
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={1}></Grid>
+                    {projects.map((p) => {
+                        return (
+                            <Fragment>
+                                <Grid item container xs={2}>
+                                    <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center">
+                                        <Box component="div" alignItems="center" justifyContent="center">
+                                            <IconButton>
+                                                <img alt={p.name} src={basicVolume} style={{ width: '90%' }}/>
+                                            </IconButton>
+                                        </Box>
+                                        <Typography variant="body2" className={ classes.text }>
+                                            {p.name}
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item className={classes.containerOptions}>
+                                        <Link href="#">
+                                            <Typography className={classes.optionsProject}>
+                                                Edit
+                                                <EditIcon className={ classes.optionsIcon }/>
+                                            </Typography>
+                                            
+                                        </Link>
+                                        <Link href="#" onMouseEnter={() => setHover(p.id)} onMouseLeave={() => setHover(0)}>
+                                            <Typography className={classes.optionsProject}>
+                                                {
+                                                    hover === p.id?
+                                                    "Create and download pdf":
+                                                    "Download pdf"
+                                                }
+                                                <img alt="download-pdf" src={download_white} className={ classes.imgIcon }/>
+                                            </Typography>
+                                            
+                                        </Link>
+                                    </Grid>
+                                    
+                                </Grid>
+                                <Grid item xs={1}></Grid>
+                            </Fragment>  
+                        )
+                    })}
+            </Grid>
           </Grid>
       </PageContainer>
     </Fragment>
@@ -91,7 +234,7 @@ const TopPanel = () => {
             </Grid>
             <Grid item container spacing={0} xs={1} direction="column" alignItems="center">
                 <IconButton aria-label="investors">
-                <img src={metamorphose} alt="investors" className={classes.iconTop}/>
+                    <img src={metamorphose} alt="investors" className={classes.iconTop}/>
                 </IconButton>
                 <Typography className={classes.textTop}>
                     Investor

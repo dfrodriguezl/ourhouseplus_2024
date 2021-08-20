@@ -88,3 +88,5 @@ export { default as radhi } from './radhi.jpeg';
 
 export { default as cube } from './cube.png';
 export { default as metamorphose } from './metamorphose.png';
+
+export { default as download_white } from './download_white.png';
