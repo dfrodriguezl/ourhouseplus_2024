@@ -117,7 +117,7 @@ const SocialNetwork = () => {
 }
 
 const ImgVideo = () => {
-    const [play, setPlay] = useState(false);
+    const [ play ] = useState(false);
   
   
     return (

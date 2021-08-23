@@ -23,6 +23,7 @@
     "axios": "0.21.1",
     "fontsource-roboto": "^4.0.0",
     "lodash": "^4.17.20",
+    "ol": "^6.6.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-mailchimp-subscribe": "^2.1.3",

@@ -2,8 +2,7 @@ import { Fragment, useState } from 'react';
 import { Grid, makeStyles, createStyles, Theme, IconButton, Typography, Button, Box, Link } from '@material-ui/core';
 import { RouteComponentProps, useHistory } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
-import { useTheme } from '@material-ui/core/styles';
-import { cube, metamorphose, basicVolume, download_white } from 'assets';
+import { cube, investor_inactive, basicVolume, download_white } from 'assets';
 import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 import EditIcon from '@material-ui/icons/Edit';
@@ -126,15 +125,18 @@ interface StateProps {
 }
 
 type Props = RouteComponentProps & StateProps;
-const ListProjects = (props: Props) => {
+export const ListProjects = (props: Props) => {
 
     const classes = useStyles();
-    const theme = useTheme();
     const history = useHistory();
     const [ hover, setHover ] = useState(0);
 
     const goToHome = () => {
         history.push("/home")
+    }
+
+    const goToProject = (id:string) => {
+        history.push("/details/" + id)
     }
 
   return (
@@ -178,7 +180,7 @@ const ListProjects = (props: Props) => {
                                 <Grid item container xs={2}>
                                     <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center">
                                         <Box component="div" alignItems="center" justifyContent="center">
-                                            <IconButton>
+                                            <IconButton onClick={() => goToProject(String(p.id))}>
                                                 <img alt={p.name} src={basicVolume} style={{ width: '90%' }}/>
                                             </IconButton>
                                         </Box>
@@ -219,7 +221,7 @@ const ListProjects = (props: Props) => {
   )
 }
 
-const TopPanel = () => {
+export const TopPanel = () => {
     const classes = useStyles();
 
     return (
@@ -234,7 +236,7 @@ const TopPanel = () => {
             </Grid>
             <Grid item container spacing={0} xs={1} direction="column" alignItems="center">
                 <IconButton aria-label="investors">
-                    <img src={metamorphose} alt="investors" className={classes.iconTop}/>
+                    <img src={investor_inactive} alt="investors" className={classes.iconTop}/>
                 </IconButton>
                 <Typography className={classes.textTop}>
                     Investor
@@ -244,10 +246,3 @@ const TopPanel = () => {
     )
 }
 
-// const container = connect<StateProps, {}, {}, RootState>(
-//   (state: RootState) => ({
-//     searchClick: state.domains.shapediver.searchClick
-//   })
-// )(ListProjects);
-
-export default ListProjects;
