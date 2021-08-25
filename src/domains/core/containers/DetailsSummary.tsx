@@ -219,7 +219,7 @@ const DetailsSummary = (props: Props) => {
               <Grid item container xs={12} direction="row">
                 <Grid item container xs={5}>
                     <Typography variant="h6" className={classes.nameProject}>
-                        {project[0].name} <span className={classes.summaryText}>Summary</span>
+                        Project 1 <span className={classes.summaryText}>Summary</span>
                     </Typography>
                 </Grid>
                 <Grid item container xs={7} style={{justifyContent:'flex-end'}}>

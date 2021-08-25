@@ -80,7 +80,7 @@ const PageContainer = (props: Props) => {
   return (
     <div className={background} style={(isAbout || isDetails)?{ overflow: 'auto' }:expandAdvanced}>
       <Container>
-        <Grid container direction="column" alignItems="stretch" className={ classes.pageContainer }>
+        <Grid container direction="column" alignItems="stretch" className={ classes.pageContainer } >
           {
             !noHeader &&
             <Grid item>

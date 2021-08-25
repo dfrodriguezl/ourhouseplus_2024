@@ -73,7 +73,7 @@ const WaitingList = () => {
                         that have signed up to be earley testers.<br/>We will be in touch when we are ready to release <span style={{fontWeight: 'bold'}}>rea</span> in your
                         country.<br/>Thank you for being part of the <span style={{fontWeight: 'bold'}}>rea</span> team.<br/><br/>Let's build the future together!</p>:
                         <p>Thank you for your interest in <span style={{fontWeight: 'bold'}}>rea</span>!<br/>We are so grateful for and overwhelmed by the number of people<br/>
-                        that have signed up to be earley testers.<br/>We will be in touch when we are ready to release <span style={{fontWeight: 'bold'}}>rea</span> in your
+                        that have signed up to be early testers.<br/>We will be in touch when we are ready to release <span style={{fontWeight: 'bold'}}>rea</span> in your
                         country.<br/>Thank you for being part of the <span style={{fontWeight: 'bold'}}>rea</span> team.<br/><br/>Let's build the future together!</p> 
                     }
 
@@ -127,9 +127,6 @@ const ImgVideo = () => {
           src="https://www.youtube.com/embed/G6jz86kFJCk?autoplay=1&controls=0&mute=1">
         </iframe>:
         <div className="img-landing" style={{height: '100%', borderRadius: 20}}>
-          {/* <IconButton style={{height: '100%'}} onClick={handlePlay}>
-            <PlayCircleOutlineIcon className={classes.icon_play}></PlayCircleOutlineIcon>
-          </IconButton> */}
         </div>
         } 
       </Grid> 

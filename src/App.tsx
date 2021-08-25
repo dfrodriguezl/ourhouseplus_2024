@@ -29,7 +29,7 @@ function App() {
         <Route path="/shapediver/step2" component={ShapeDiverContainerStep2} />
         <Route path="/shapediver/step3" component={ShapeDiverContainerStep3} />
         <Route path="/home" component={Home} />
-        <Redirect from="/" to="/home" />
+        <Redirect from="/" to="/register" />
       </Switch>
       <Footer />
     </ThemeProvider>

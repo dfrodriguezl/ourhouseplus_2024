@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Grid, Box, Paper, makeStyles, Button, Theme } from '@material-ui/core';
+import { useHistory} from 'react-router-dom';
 import { ArrowForward } from '@material-ui/icons';
 import { basicVolume, facade, interior } from 'assets';
 
@@ -59,8 +60,16 @@ const styles = makeStyles((theme: Theme) => ({
 const HomeSub1 = () => {
   const classes = styles();
 
+  const history = useHistory();
+
+  const isWaiting = history.location.pathname.indexOf('register') > -1;
+
+  const goToWaiting = () => {
+    history.push('/register')
+  }
+
   return (
-    <div className="home-sub-1">
+    <div className={isWaiting?"home-sub-1-waiting":"home-sub-1"}>
       <Container >
         <Grid container>
           <Grid item xs={12} className={classes.title}>
@@ -127,8 +136,9 @@ const HomeSub1 = () => {
               <Button
                 endIcon={<ArrowForward />}
                 className={classes.buttonJoin}
+                onClick={() => goToWaiting()}
                 >
-                  Join now
+                  Watch demo
               </Button>
             </Grid>
 

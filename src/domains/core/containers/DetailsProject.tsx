@@ -213,9 +213,12 @@ export const DetailsProjects = (props: Props) => {
 
     const params:ownParams = useParams();
     const id = params.id;
+    console.log(id)
     let project = projects.filter((p:any) => {
         return p.id === id;
     })
+
+    console.log(project)
 
   return (
     <Fragment>
@@ -225,7 +228,7 @@ export const DetailsProjects = (props: Props) => {
               <Grid item container xs={12} direction="row">
                 <Grid item container xs={5}>
                     <Typography variant="h6" className={classes.nameProject}>
-                        {project[0].name} <span className={classes.summaryText}>Summary</span>
+                        Project 1 <span className={classes.summaryText}>Summary</span>
                     </Typography>
                 </Grid>
                 <Grid item container xs={7} style={{justifyContent:'flex-end'}}>
@@ -239,7 +242,7 @@ export const DetailsProjects = (props: Props) => {
                     </Button>
                     <Button className={classes.compareButton}
                         endIcon={<img alt="downlaod-icon" src={download} width={15}/>}
-                        onClick={() => goToSummary(String(project[0].id))}>
+                        onClick={() => goToSummary(String(id))}>
                         Download pdf
                     </Button>
                 </Grid>

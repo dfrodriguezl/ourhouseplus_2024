@@ -51,6 +51,12 @@ const useStyles = makeStyles((theme: Theme) =>
     nameCity:{
       fontSize: 10,
       display: 'block'
+    },
+    boldText: {
+      fontWeight: 'bolder'
+    },
+    titleContainer:{
+      marginTop: 20
     }
   }))
 
@@ -77,23 +83,24 @@ const About = () => {
   
   
   return (
-    <PageContainer background="waiting-background">
+    <PageContainer background="waiting-back">
       <Grid item sm={1} />
       <Grid item container sm={10} xs={12} className={classes.container}>
-        <Grid item container sm={12}>
+        <Grid item container sm={12} className={ classes.titleContainer }>
             <Typography className={classes.title}>
+              <span className={classes.boldText}>Rea helps you to create your real estate projects faster.</span><br />
               Our team is a group of architecture and tech specialists constantly working on bringing you a solution to improve your journey with developing
-              a new housing project
+              a new housing project.
             </Typography>
         </Grid>
         
-        <Grid item container sm={12} style={{height: '20%',alignSelf: 'center'}}>
-          <Grid item sm={2} xs={2} style={{alignSelf: 'center'}}>
+        <Grid item container sm={12} style={{height: '30%',alignSelf: 'center'}}>
+          <Grid item sm={3} xs={3} style={{alignSelf: 'center'}}>
             <Typography className={classes.text}>
               TEAM
             </Typography>
             </Grid>
-          <Grid item sm={10} xs={10} className={classes.imgContainer}>
+          <Grid item sm={8} xs={8} className={classes.imgContainer}>
             <div className="img-team" style={{height: '100%', borderRadius: 20}}>
             </div>
           </Grid>

@@ -73,6 +73,10 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: 15,
       marginTop: 3,
       width: '100%'
+    },
+    blackButton:{
+      borderColor: '#707070',
+      color: '#707070'
     }
   })
 );
@@ -135,7 +139,7 @@ const Header = (props: RouteComponentProps) => {
     <Fragment>
       <AppBar position="static" elevation={0} className={classes.header}>
       <Toolbar variant="regular">
-        <Link to="/home">
+        <Link to="/register">
           <img src={isHome || isRegister || isSignUp || isWaiting || isAbout? logo : whiteLogo} alt="logo" width={100} />
         </Link>
 
@@ -194,28 +198,34 @@ const Header = (props: RouteComponentProps) => {
     :
       <AppBar position="static" elevation={0} className={classes.header}>
         <Toolbar variant="regular">
-          <Link to="/home">
+          <Link to="/register">
             <img src={isHome || isRegister || isSignUp || isWaiting || isAbout? logo : whiteLogo} alt="logo" width={100} />
           </Link>  
           {
-            !(isRegister || isSignUp || isWaiting || isAbout)?
+            !( isSignUp )?
             <div className={classes.menuButton}>
               {
                 !isAuthenticated
                   ?
                   <Fragment>
-                    <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
-                      Sign in
-                    </Button>
-                    <Button className={classes.becomeMember} onClick={() => openRegister()}>
+                    {
+                      isAbout || isRegister || isWaiting?
+                      <Button className={clsx(classes.becomeMember,true && classes.blackButton,true)}>
                       Become a member
-                    </Button>
+                    </Button>:
+                    <Fragment>
+                      <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
+                        Sign in
+                      </Button>
+                      <Button className={classes.becomeMember} onClick={() => openRegister()}>
+                        Become a member
+                      </Button>
+                    </Fragment> 
+                    }
+                    
                   </Fragment>    
                   :
                   <Fragment>
-                    {/* <Button className={classes.whiteButtons} onClick={() => logout()}>
-                      Sign out
-                    </Button> */}
                     <Button 
                       className={classes.becomeMember} 
                       startIcon={<PersonIcon />} 

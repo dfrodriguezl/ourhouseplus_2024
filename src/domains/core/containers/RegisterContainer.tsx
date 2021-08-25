@@ -136,6 +136,9 @@ export function RegisterContainer(props:OwnProps) {
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   
   const {children} = props;
+  const history = useHistory();
+
+  const isWaiting = history.location.pathname.indexOf('waiting') > -1;
 
   const handleScroll = () => {
     window.scroll({
@@ -147,8 +150,8 @@ export function RegisterContainer(props:OwnProps) {
 
   return (
     <Fragment>
-      <PageContainer background="waiting-background">
-        <Grid container sm={12} xs={12}>
+      <PageContainer background="waiting-back">
+        <Grid container sm={12} xs={12} style={{marginTop: 50}}>
           <Grid container item sm={6} xs={12} className={classes.textContainer}>
             {children}
           </Grid>
@@ -161,15 +164,25 @@ export function RegisterContainer(props:OwnProps) {
         </Grid>
         {!smallScreen?
         <Grid item sm={12} style={{alignSelf:'flex-end', textAlign: 'center'}}>
-          <Fab size="small" className={classes.fab} >         
-                  <KeyboardArrowDown fontSize="large" className={classes.icon_works} onClick={handleScroll}></KeyboardArrowDown>
-          </Fab>
-          <p style={{fontSize: 12}}>Learn how it works</p>
+          {
+            !isWaiting?
+            <Fragment>
+              <Fab size="small" className={classes.fab} >         
+                <KeyboardArrowDown fontSize="large" className={classes.icon_works} onClick={handleScroll}></KeyboardArrowDown>
+              </Fab>
+              <p style={{fontSize: 12}}>Learn how it works</p>
+            </Fragment>:null
+            }
+          
         </Grid>:null
         }
       
       </PageContainer>
-      <HomeSub1 />
+      {
+        !isWaiting?
+          <HomeSub1 />:null
+      }
+      
     </Fragment>
     
   );
