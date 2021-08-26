@@ -66,7 +66,7 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep1(props: Props) {
   const fileInput = useRef<HTMLInputElement>(null);
-  const { setTerrain, setDensity, location, setUnitsNumberType, terrain, setImportModel, expandAdvanced } = props;
+  const { setTerrain, setDensity, location, setUnitsNumberType, terrain, setImportModel } = props;
   const classes = styles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));

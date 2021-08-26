@@ -149,7 +149,7 @@ const SearchToolBar = (props: Props) => {
             </Grid>
             <Grid item container direction="column" xs={12} sm={3} justify="center">
               <SearchPill
-                label="Area square feet"
+                label="Area hectares"
                 placeholder="total terrain area"
                 onChange={updateArea}
                 value={area || ''}

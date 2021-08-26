@@ -60,8 +60,17 @@ a {
   background: transparent linear-gradient(180deg, #FFFFFF 0%, #F2EBE0 100%) 0% 0% no-repeat padding-box;
 }
 
+.waiting-back {
+  opacity: 1;
+  background: transparent linear-gradient(103deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box;
+}
+
 .home-sub-1 {
-  background-color: #d9e7ed;
+  background: transparent linear-gradient(103deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box;
+}
+
+.home-sub-1-waiting {
+  background: #83828266;
 }
 
 .black-model {
@@ -80,7 +89,7 @@ a {
 .img-team {
   background-image: url(assets/team.png);
   background-repeat: no-repeat;
-  background-position: center bottom -70px;
+  background-position: center bottom -45px;
   background-size: cover; 
   padding: 10px;
 }
@@ -94,3 +103,26 @@ a {
     padding: 10px;
   }
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #ABAAAB;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  border-radius: 10px;
+}
+

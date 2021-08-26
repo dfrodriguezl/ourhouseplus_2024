@@ -1,5 +1,5 @@
 import React, {useState,Fragment} from 'react';
-import { Typography, Grid, TextField,Input, Fab, InputAdornment, IconButton} from '@material-ui/core';
+import { Typography, Grid, Input, Fab, InputAdornment, IconButton} from '@material-ui/core';
 import { PageContainer } from 'domains/core/containers';
 import { useHistory  } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -136,6 +136,9 @@ export function RegisterContainer(props:OwnProps) {
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   
   const {children} = props;
+  const history = useHistory();
+
+  const isWaiting = history.location.pathname.indexOf('waiting') > -1;
 
   const handleScroll = () => {
     window.scroll({
@@ -147,8 +150,8 @@ export function RegisterContainer(props:OwnProps) {
 
   return (
     <Fragment>
-      <PageContainer background="waiting-background">
-        <Grid container sm={12} xs={12}>
+      <PageContainer background="waiting-back">
+        <Grid container sm={12} xs={12} style={{marginTop: 50}}>
           <Grid container item sm={6} xs={12} className={classes.textContainer}>
             {children}
           </Grid>
@@ -161,15 +164,25 @@ export function RegisterContainer(props:OwnProps) {
         </Grid>
         {!smallScreen?
         <Grid item sm={12} style={{alignSelf:'flex-end', textAlign: 'center'}}>
-          <Fab size="small" className={classes.fab} >         
-                  <KeyboardArrowDown fontSize="large" className={classes.icon_works} onClick={handleScroll}></KeyboardArrowDown>
-          </Fab>
-          <p style={{fontSize: 12}}>Learn how it works</p>
+          {
+            !isWaiting?
+            <Fragment>
+              <Fab size="small" className={classes.fab} >         
+                <KeyboardArrowDown fontSize="large" className={classes.icon_works} onClick={handleScroll}></KeyboardArrowDown>
+              </Fab>
+              <p style={{fontSize: 12}}>Learn how it works</p>
+            </Fragment>:null
+            }
+          
         </Grid>:null
         }
       
       </PageContainer>
-      <HomeSub1 />
+      {
+        !isWaiting?
+          <HomeSub1 />:null
+      }
+      
     </Fragment>
     
   );
@@ -186,7 +199,7 @@ const ImgVideo = () => {
   return (
     <Grid item sm={12} xs={12} style={{textAlign: 'center'}}>
       {play?
-        <iframe width="100%" height="100%"
+        <iframe width="100%" height="100%" title="video-rea"
         src="https://www.youtube.com/embed/G6jz86kFJCk?autoplay=1&controls=0&mute=1">
       </iframe>:
       <div className="img-landing" style={{height: '100%', borderRadius: 20}}>
@@ -201,7 +214,7 @@ const ImgVideo = () => {
 
 const FormMail = (props:FormProps) => {
   const classes = useStyles();
-  const {status,message,onValidated} = props;
+  const {status,onValidated} = props;
 
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -292,7 +305,7 @@ const FormMail = (props:FormProps) => {
   )
 }
 
-export const MailchimpFormContainer = (props:any) => {
+export const MailchimpFormContainer = () => {
 
   const postUrl = 'https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9';
 

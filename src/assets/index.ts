@@ -85,3 +85,14 @@ export { default as lucas } from './lucas.jpeg';
 export { default as ula } from './ula.jpeg';
 export { default as diego } from './diego.jpg';
 export { default as radhi } from './radhi.jpeg';
+
+export { default as cube } from './cube.png';
+export { default as investor_inactive } from './investor_inactive.png';
+
+export { default as download_white } from './download_white.png';
+
+export { default as img_basic_volume } from './img_basic_volume.png';
+export { default as img_facade } from './img_facade.png';
+export { default as img_interior } from './img_interior.png';
+
+export { default as sum } from './sum_example.png';

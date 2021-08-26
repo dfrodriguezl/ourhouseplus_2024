@@ -3,7 +3,6 @@ import { Typography, Button, Grid } from '@material-ui/core';
 import { PageContainer } from 'domains/core/containers';
 import { Link } from 'react-router-dom';
 import AppleIcon from '@material-ui/icons/Apple';
-import GTranslateIcon from '@material-ui/icons/GTranslate';
 import { makeStyles } from '@material-ui/core/styles';
 import { google } from 'assets';
 

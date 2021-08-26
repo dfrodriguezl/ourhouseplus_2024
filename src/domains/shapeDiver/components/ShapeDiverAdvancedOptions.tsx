@@ -27,7 +27,7 @@ interface StateProps {
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions = (props: Props) => {
-  const { location,  expandAdvanced, setAdvancedOptions, setExpandAdvanced } = props;
+  const { location, setAdvancedOptions, setExpandAdvanced } = props;
   const classes = styles();
 
 

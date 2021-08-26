@@ -1,11 +1,10 @@
-import { useState } from 'react';
-import { compose } from 'recompose';
 import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
 import { Header } from 'domains/core/components'
 import { setExpandAdvanced } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { useHistory } from 'react-router-dom';
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,9 +17,16 @@ const useStyles = makeStyles((theme: Theme) =>
         minHeight: '80vh',
         height: '90vh'
       },
-      // [theme.breakpoints.down('xl')]: {
-      //   height: '130vh'
-      // },
+    },
+    pageContainerExcept: {
+      minHeight: '140vh',
+      height: '140vh',
+      width: '100%',
+      margin: 0,
+      [theme.breakpoints.down('sm')]: {
+        minHeight: '80vh',
+        height: '90vh'
+      },
     },
     headerContainer: {
       justifyContent: 'center',
@@ -43,7 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
       zIndex: -1,
       width: '100vw',
       height: '100vh'
-    }
+    },
   })
 );
 
@@ -66,13 +72,15 @@ type Props = OwnProps & StateProps & DispatchProps;
 const PageContainer = (props: Props) => {
   const { children, noHeader, background,expandAdvanced } = props;
   const classes = useStyles();
+
   const history = useHistory();
-  const isAbout= history.location.pathname.indexOf('about') > -1;
+  const isAbout = history.location.pathname.indexOf('about') > -1;
+  const isDetails = history.location.pathname.indexOf('details') > -1;
   
   return (
-    <div className={background} style={isAbout?{height:'140vh'}:expandAdvanced}>
+    <div className={background} style={(isAbout || isDetails)?{ overflow: 'auto' }:expandAdvanced}>
       <Container>
-        <Grid container direction="column" alignItems="stretch" className={classes.pageContainer}>
+        <Grid container direction="column" alignItems="stretch" className={ classes.pageContainer } >
           {
             !noHeader &&
             <Grid item>
