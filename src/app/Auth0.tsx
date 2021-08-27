@@ -19,7 +19,7 @@ const Auth0 = (props: Props) => {
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      redirectUri={window.location.origin}
+      redirectUri={window.location.origin + '/home'}
       onRedirectCallback={onRedirectCallback}
     >
       {props.children}

@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from 'app/store';
+import { AppThunk, RootState } from 'app/store';
 import { SearchParams } from 'domains/core/models';
-import { AdvancedOptions, ModelData, ShapeDiverOptions } from 'domains/shapeDiver/models';
+import { AdvancedOptions, ModelData, Project, ShapeDiverOptions } from 'domains/shapeDiver/models';
 import { Location } from 'domains/core/models';
+import { get, post } from 'app/api';
+import { AxiosResponse } from 'axios';
 
 export interface ShapeDiverState {
   area: number;
@@ -17,6 +19,8 @@ export interface ShapeDiverState {
   importModel: string;
   expandAdvanced: Object;
   searchClick: Boolean;
+  projects: Project[];
+  currentProject: Project | undefined;
 }
 
 const initialState: ShapeDiverState = {
@@ -50,8 +54,10 @@ const initialState: ShapeDiverState = {
     fourBedroom: 0
   },
   importModel: '',
-  expandAdvanced: {height:'100vh'},
-  searchClick: false
+  expandAdvanced: { height: '100vh' },
+  searchClick: false,
+  projects: [],
+  currentProject: undefined,
 };
 
 export const shapeDiverSlice = createSlice({
@@ -115,6 +121,15 @@ export const shapeDiverSlice = createSlice({
     setSearchClick: (state, action: PayloadAction<Boolean>) => {
       state.searchClick = action.payload;
     },
+    setSaveSuccess: (state, action: PayloadAction<boolean>) => {
+
+    },
+    setLoadProjects: (state, action: PayloadAction<Project[]>) => {
+      state.projects = action.payload;
+    },
+    setCurrentProject: (state, action: PayloadAction<Project>) => {
+      state.currentProject = action.payload;
+    }
   },
 });
 
@@ -135,9 +150,39 @@ export const {
   setModelData,
   setImportModel,
   setExpandAdvanced,
-  setSearchClick
+  setSearchClick,
+  setSaveSuccess,
+  setLoadProjects,
+  setCurrentProject
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
+export const getProjectData = (state: RootState) => ({
+  area: state.domains.shapediver.area,
+  location: state.domains.shapediver.location,
+  terrain: state.domains.shapediver.terrain,
+  facadeDirection: state.domains.shapediver.facadeDirection,
+  roomType: state.domains.shapediver.roomType,
+  floorSelection: state.domains.shapediver.floorSelection,
+  modelData: state.domains.shapediver.modelData
+});
 
 export default shapeDiverSlice.reducer;
+
+export const saveProject = (project: Project): AppThunk => dispatch => {
+  post('/SaveProject', { data: project }).then((data: AxiosResponse) => {
+    dispatch(setSaveSuccess(data.data))
+  });
+};
+
+export const loadProjectsByUsername = (username: string): AppThunk => dispatch => {
+  get(`/LoadProjectsByUserName?username=${username}`).then((data: AxiosResponse) => {
+    dispatch(setLoadProjects(data.data))
+  });
+};
+
+export const loadProjectById = (id: string): AppThunk => dispatch => {
+  get(`/LoadProjectById?id=${id}`).then((data: AxiosResponse) => {
+    dispatch(setCurrentProject(data.data))
+  });
+};
