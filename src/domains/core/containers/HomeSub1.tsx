@@ -8,7 +8,8 @@ const styles = makeStyles((theme: Theme) => ({
   image: {
     height: 200,
     width: 300,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    margin: 'auto'
   },
   title: {
     paddingTop: 40,
@@ -53,7 +54,7 @@ const styles = makeStyles((theme: Theme) => ({
   },
   svg: {
     width: '100%',
-    height: '100%'
+    // height: '100%'
   }
 }));
 
