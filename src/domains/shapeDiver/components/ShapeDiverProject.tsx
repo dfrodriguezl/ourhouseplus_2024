@@ -1,11 +1,13 @@
+import React, { Fragment } from 'react';
+import { useState } from 'react';
+import { compose } from 'recompose';
+import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, makeStyles, Divider, IconButton, Theme } from '@material-ui/core';
-import { Location } from 'domains/core/models';
 import { connect } from 'react-redux';
-import { setAdvancedOptions } from 'domains/shapeDiver/slice';
+import { getProjectData, saveProject, setAdvancedOptions } from 'domains/shapeDiver/slice';
 import { download, save } from 'assets'
 
 import { RootState } from 'app/store';
-import React, { Fragment } from 'react';
 
 const styles = makeStyles((theme: Theme) => ({
   container: {
@@ -31,15 +33,28 @@ const styles = makeStyles((theme: Theme) => ({
 
 interface DispatchProps {
   setAdvancedOptions: typeof setAdvancedOptions;
+  saveProject: typeof saveProject;
 }
 
 interface StateProps {
-  location: Location | undefined;
+  projectData: any;
 }
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverProject = (props: Props) => {
+  const { saveProject, projectData } = props;
+  const { user } = useAuth0();
+  const [projectName, setProjectName] = useState('');
   const classes = styles();
+
+  const saveModelHandler = () => {
+    saveProject({
+      projectName,
+      email: user.email,
+      ...projectData,
+    });
+  }
+
   return (
     <Fragment>
       <Grid container xs={12} direction="row" className={classes.container}>
@@ -49,10 +64,12 @@ const ShapeDiverProject = (props: Props) => {
             type="text"
             placeholder="Project 1"
             className={classes.fieldInput}
+            value={projectName}
+            onChange={(e) => setProjectName(e.target.value)}
           />
         </Grid>
         <Grid item xs={2}>
-          <IconButton>
+          <IconButton onClick={saveModelHandler} disabled={projectName === ''}>
             <img className={classes.buttons} src={save} alt="50" />
           </IconButton>
         </Grid>
@@ -67,13 +84,16 @@ const ShapeDiverProject = (props: Props) => {
   );
 }
 
-const container = connect<StateProps, DispatchProps, {}, RootState>(
-  (state: RootState) => ({
-    location: state.domains.shapediver.location,
-  }),
-  {
-    setAdvancedOptions
-  }
+const container = compose<Props, {}>(
+  connect<StateProps, DispatchProps, {}, RootState>(
+    (state: RootState) => ({
+      projectData: getProjectData(state)
+    }),
+    {
+      setAdvancedOptions,
+      saveProject,
+    }
+  )
 )(ShapeDiverProject);
 
 export default container;
