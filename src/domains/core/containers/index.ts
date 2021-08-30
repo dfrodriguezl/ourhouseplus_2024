@@ -8,3 +8,4 @@ export { default as SignUp } from './SignUp';
 export { ListProjects, TopPanel } from './ListProjects';
 export { DetailsProjects, GeneralParameters } from './DetailsProject';
 export { default as DetailsSummary } from './DetailsSummary';
+export { default as GeoContainer } from './GeoContainer';

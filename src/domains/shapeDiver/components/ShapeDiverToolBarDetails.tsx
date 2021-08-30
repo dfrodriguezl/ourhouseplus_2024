@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Box, Divider, Grid, makeStyles, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import { RootState } from 'app/store';
 import { Location } from 'domains/core/models';
@@ -13,6 +14,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { setExpandAdvanced } from 'domains/shapeDiver/slice';
 import { compose } from 'recompose';
 import { withRouter } from 'react-router-dom';
+import { marker } from 'assets';
+import { GeoContainer } from 'domains/core/containers'
 
 const styles = makeStyles((theme) => ({
   container: {
@@ -25,6 +28,11 @@ const styles = makeStyles((theme) => ({
     width: '100%',
     background: 'transparent',
     padding: '0 20px'
+  },
+  iconLocation: {
+    '&:hover': {
+      cursor: 'pointer'
+    },
   }
 }));
 
@@ -182,14 +190,21 @@ const LabelDetails:React.FC<LblProps> = ({step, propsDetail}) => {
 
 const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
 
+  const [ open, setOpen ] = useState(false);
+  const classes = styles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const bigFont = 14;
   const smallFont = 12;
+
+  const openGeoDialog = () => {
+    setOpen(true);
+  }
  
   return (
     <Fragment>
-          <Box fontSize={smallScreen?18:16}>{propsDetail.location?.city}</Box>
+          <GeoContainer open={open} />
+          <Box fontSize={smallScreen?18:16}>{propsDetail.location?.city} <img src={marker} alt="geolocation-icon" width="15%" className={classes.iconLocation} onClick={() => openGeoDialog()} /></Box>
           {propsDetail.location?.p_vivs?
             <NumberFormat
             value={propsDetail.location?.p_vivs}

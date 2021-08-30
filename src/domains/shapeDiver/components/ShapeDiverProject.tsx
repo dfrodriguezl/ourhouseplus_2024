@@ -56,11 +56,6 @@ const ShapeDiverProject = (props: Props) => {
             <img className={classes.buttons} src={save} alt="50" />
           </IconButton>
         </Grid>
-        <Grid item xs={2}>
-          <IconButton>
-            <img className={classes.buttons} src={download} alt="50" />
-          </IconButton>
-        </Grid>
       </Grid>
       <Divider orientation="horizontal" variant="middle" ></Divider>
     </Fragment>

@@ -99,46 +99,46 @@ function ShapeDiverToolBarStep1(props: Props) {
       <Grid container direction="column" >
         <ShapeDiverToolBarDetails />
         <Container className={classes.carrousel}>
-        <Grid item container className={classes.firstSubContainer} >
-          <Grid item xs={12} >
-            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose your lot shape</Box>
-          </Grid>
-          <RadioGroup>
-            <Grid container justify="center">
-              <Grid item xs={4}>
-                <Radio
-                  checked={terrain === 0}
-                  onClick={() => setTerrainAndClearImage(0)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={squareSelected} alt="1:1" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={square} alt="1:1" />}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Radio
-                  checked={terrain === 1}
-                  onClick={() => setTerrainAndClearImage(1)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={rectangleSelected} alt="2:1" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={rectangle} alt="2:1" />}
-
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <input
-                  ref={fileInput}
-                  type="file"
-                  onChange={(event) => uploadImage(event)}
-                  style={{ display: 'none' }}
-                />
-                <Radio
-                  checked={terrain === 2}
-                  onClick={() => handleFileUpload()}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={customSelected} alt="import" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={custom} alt="import" />}
-                />
-              </Grid>
+          <Grid item container className={classes.firstSubContainer} >
+            <Grid item xs={12} >
+              <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose your lot shape</Box>
             </Grid>
-          </RadioGroup>
-        </Grid>
+            <RadioGroup>
+              <Grid container justify="center">
+                <Grid item xs={4}>
+                  <Radio
+                    checked={terrain === 0}
+                    onClick={() => setTerrainAndClearImage(0)}
+                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={squareSelected} alt="1:1" />}
+                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={square} alt="1:1" />}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Radio
+                    checked={terrain === 1}
+                    onClick={() => setTerrainAndClearImage(1)}
+                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={rectangleSelected} alt="2:1" />}
+                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={rectangle} alt="2:1" />}
+
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <input
+                    ref={fileInput}
+                    type="file"
+                    onChange={(event) => uploadImage(event)}
+                    style={{ display: 'none' }}
+                  />
+                  <Radio
+                    checked={terrain === 2}
+                    onClick={() => handleFileUpload()}
+                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={customSelected} alt="import" />}
+                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={custom} alt="import" />}
+                  />
+                </Grid>
+              </Grid>
+            </RadioGroup>
+          </Grid>
         <Grid item container className={classes.subContainer}>
           <Grid item xs={12}>
             <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose level of density</Box>

@@ -96,3 +96,5 @@ export { default as img_facade } from './img_facade.png';
 export { default as img_interior } from './img_interior.png';
 
 export { default as sum } from './sum_example.png';
+
+export { default as marker } from './marker.png';
