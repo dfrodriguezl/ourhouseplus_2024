@@ -1,3 +1,5 @@
+import { Location } from 'domains/core/models';
+
 export enum Parameters {
   Area = 'AREA',
   Terrain = 'LAND SHAPE',
@@ -69,4 +71,19 @@ export interface ModelData {
   twoBedroom: number;
   threeBedroom: number;
   fourBedroom: number;
+}
+
+export interface Project extends ProjectData {
+  projectName: string;
+  email: string;
+}
+
+export interface ProjectData {
+  area: number;
+  location: Location;
+  terrain: number;
+  facadeDirection: number;
+  roomType: number;
+  floorSelection: number;
+  modelData: ModelData;
 }

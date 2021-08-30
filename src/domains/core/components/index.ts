@@ -9,3 +9,4 @@ export { default as LocationMenu } from './LocationMenu';
 export { default as WaitingList } from './WaitingList';
 export { default as MapGeo } from './Map';
 export { default as Geolocation } from './Geolocation';
+export { default as TopPanel } from './TopPanel';

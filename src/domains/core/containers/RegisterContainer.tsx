@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     marginTop: '8px',
   },
   endText: {
-    fontSize: 13, 
+    fontSize: 13,
     color: '#908F8C'
   },
   fab: {
@@ -87,8 +87,8 @@ boxText: {
   color: "white"
 },
 icon:{
-  color:'white', 
-  background: 'black', 
+  color:'white',
+  background: 'black',
   borderRadius: '50%',
    cursor: 'pointer',
    '&:hover': {
@@ -99,11 +99,11 @@ iconButton:{
   padding: '5px',
 },
 icon_works:{
-  color:'black', 
+  color:'black',
 },
 icon_play:{
-  textAlign: 'center', 
-  fontSize: 75, 
+  textAlign: 'center',
+  fontSize: 75,
   color: 'white'
 },
 textContainer:{
@@ -134,7 +134,7 @@ export function RegisterContainer(props:OwnProps) {
   const classes = useStyles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  
+
   const {children} = props;
   const history = useHistory();
 
@@ -151,7 +151,7 @@ export function RegisterContainer(props:OwnProps) {
   return (
     <Fragment>
       <PageContainer background="waiting-back">
-        <Grid container sm={12} xs={12} style={{marginTop: 50}}>
+        <Grid container item sm={12} xs={12} style={{marginTop: 50}}>
           <Grid container item sm={6} xs={12} className={classes.textContainer}>
             {children}
           </Grid>
@@ -160,31 +160,31 @@ export function RegisterContainer(props:OwnProps) {
               <ImgVideo></ImgVideo>
             </Grid>:null
             }
-          
+
         </Grid>
         {!smallScreen?
         <Grid item sm={12} style={{alignSelf:'flex-end', textAlign: 'center'}}>
           {
             !isWaiting?
             <Fragment>
-              <Fab size="small" className={classes.fab} >         
+              <Fab size="small" className={classes.fab} >
                 <KeyboardArrowDown fontSize="large" className={classes.icon_works} onClick={handleScroll}></KeyboardArrowDown>
               </Fab>
               <p style={{fontSize: 12}}>Learn how it works</p>
             </Fragment>:null
             }
-          
+
         </Grid>:null
         }
-      
+
       </PageContainer>
       {
         !isWaiting?
           <HomeSub1 />:null
       }
-      
+
     </Fragment>
-    
+
   );
 }
 
@@ -207,8 +207,8 @@ const ImgVideo = () => {
           <PlayCircleOutlineIcon className={classes.icon_play}></PlayCircleOutlineIcon>
         </IconButton>
       </div>
-      } 
-    </Grid> 
+      }
+    </Grid>
   )
 }
 
@@ -256,8 +256,8 @@ const FormMail = (props:FormProps) => {
       <Grid item container sm={12} xs={10} className={classes.containerForm}>
         <Typography>
           <h2 style={{lineHeight:1.2}}>BUILDING FUTURE <br/> <span style={{textDecoration: 'underline'}}>COMMUNITIES TOGETHER.</span></h2>
-          {smallScreen?<p style={{fontSize:13,lineHeight:1.2}}>Generate a preliminary design study of multi-dweling smart housing projects in three simple steps.</p>:
-          <h4> Generate a preliminary design study of multi-dweling <br /> smart housing projects in three simple steps.</h4>}
+          {smallScreen?<p style={{fontSize:13,lineHeight:1.2}}>Generate a preliminary design study of multi-dwelling smart housing projects in three simple steps.</p>:
+          <h4> Generate a preliminary design study of multi-dwelling <br /> smart housing projects in three simple steps.</h4>}
         </Typography>
       </Grid>
       {smallScreen?
@@ -281,18 +281,18 @@ const FormMail = (props:FormProps) => {
             <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
           </div>
           <div style={{ position: 'absolute', left: -5000 }} aria-hidden="true">
-            <input type="text" name="b_3c39cbec5fc9d998a5b584676_4064b46da9" /> 
+            <input type="text" name="b_3c39cbec5fc9d998a5b584676_4064b46da9" />
           </div>
           <Input type="text" name="EMAIL" id="mce-EMAIL"
             onChange={handleChange3}
-            placeholder="Enter email to sign up" 
-            className={classes.input} 
+            placeholder="Enter email to sign up"
+            className={classes.input}
             disableUnderline
             required
             endAdornment={
               <InputAdornment position="end">
-                  <IconButton className={classes.iconButton} type="submit" name="subscribe"> 
-                      <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon> 
+                  <IconButton className={classes.iconButton} type="submit" name="subscribe">
+                      <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon>
                   </IconButton>
               </InputAdornment>
             }
@@ -301,7 +301,7 @@ const FormMail = (props:FormProps) => {
         <p className={classes.endText}>We are currently in beta, sign up to our waiting list.</p>
       </Grid>
     </RegisterContainer>
-        
+
   )
 }
 
@@ -314,7 +314,7 @@ export const MailchimpFormContainer = () => {
                 url={postUrl}
                 render={({ subscribe, status, message }) => (
                     <FormMail
-                        status={status} 
+                        status={status}
                         message={message}
                         onValidated={(formData:any) => subscribe(formData)}
                     />
