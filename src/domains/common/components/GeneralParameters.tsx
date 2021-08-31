@@ -46,7 +46,7 @@ const GeneralParameters = (props: Props) => {
       </Grid>
       <Grid item container xs={4} style={{ justifyContent: 'center' }}>
         <Typography variant="body2" className={classes.principalParameters}>
-          <span className={classes.summaryText}>Area</span> {project?.area} m2
+          <span className={classes.summaryText}>Area</span> {project?.area} ha
         </Typography>
       </Grid>
       <Grid item container xs={4} style={{ justifyContent: 'center' }}>

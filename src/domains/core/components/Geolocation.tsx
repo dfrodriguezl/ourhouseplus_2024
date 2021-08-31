@@ -13,7 +13,6 @@ const styles = makeStyles((theme: Theme) => ({
     boxMarker:{
         borderBottom: '1px solid #707070',
         padding: '5px 0px',
-        // margin: '20px 0px',
         width: '100%'
     },
     button: {
