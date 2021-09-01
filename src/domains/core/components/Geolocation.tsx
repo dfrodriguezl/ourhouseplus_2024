@@ -25,9 +25,15 @@ const styles = makeStyles((theme: Theme) => ({
       },
 }));
 
-const Geolocation = () => {
+interface StateProps {
+    location?: string;
+}
+
+type Props = StateProps;
+const Geolocation = ( props:Props ) => {
 
     const classes = styles();
+    const { location } = props;
 
     return (
             <Grid container item xs={12}>
@@ -40,10 +46,12 @@ const Geolocation = () => {
                     <Grid xs={12} item className={ classes.gridMarker }>
                         <Box className={ classes.boxMarker } >
                             <img src={marker} alt="add-geolocation-icon" width="20px"/>
+                            <span className={ classes.whiteText } style={{ marginLeft: 20 }}>{location}</span>
                         </Box>
+                        
                     </Grid>
                     <Grid item container xs={12} style={{height: '70%'}}>
-                        <MapGeo markerDrop={true}/>
+                        <MapGeo markerDrop={true} location={location}/>
                     </Grid>
                     <Box>
                         <Button className={ classes.button }>

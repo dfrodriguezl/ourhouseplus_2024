@@ -20,19 +20,20 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface ownProps {
     open : boolean;
+    location?: string;
 }
 
 
 const GeoContainer = (props: ownProps) => {
 
     const classes = useStyles();
-    const { open } = props;
+    const { open, location } = props;
 
 
   return (
     <Dialog fullScreen open={open} >
         <PageContainer background="black-model" >
-            <Geolocation />
+            <Geolocation location={location}/>
         </PageContainer>
     </Dialog>
   )

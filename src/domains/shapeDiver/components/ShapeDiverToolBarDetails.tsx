@@ -203,7 +203,7 @@ const ValueDetails:React.FC<LblProps> = ({step,propsDetail,modelData}) => {
  
   return (
     <Fragment>
-          <GeoContainer open={open} />
+          <GeoContainer open={open} location={propsDetail.location?.city}/>
           <Box fontSize={smallScreen?18:16}>{propsDetail.location?.city} <img src={marker} alt="geolocation-icon" width="15%" className={classes.iconLocation} onClick={() => openGeoDialog()} /></Box>
           {propsDetail.location?.p_vivs?
             <NumberFormat
