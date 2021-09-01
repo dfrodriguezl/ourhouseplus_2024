@@ -404,7 +404,7 @@ const DetailsSummary = (props: Props) => {
 
             </Grid>
             <Grid item container xs={12} style={{ height: '30vh', marginTop: 25 }}>
-              <MapGeo />
+              <MapGeo location={currentProject?.location?.city}/>
             </Grid>
           </Grid>
         </Grid>

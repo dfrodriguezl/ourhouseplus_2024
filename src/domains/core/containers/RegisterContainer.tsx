@@ -1,5 +1,6 @@
 import React, {useState,Fragment} from 'react';
 import { Typography, Grid, Input, Fab, InputAdornment, IconButton} from '@material-ui/core';
+import ReactPlayer from 'react-player'
 import { PageContainer } from 'domains/core/containers';
 import { useHistory  } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
@@ -197,12 +198,11 @@ const ImgVideo = () => {
   }
 
   return (
-    <Grid item sm={12} xs={12} style={{textAlign: 'center'}}>
+    <Grid item container sm={12} xs={12} style={ {textAlign: 'center', alignItems: 'center' }} >
       {play?
-        <iframe width="100%" height="100%" title="video-rea"
-        src="https://www.youtube.com/embed/G6jz86kFJCk?autoplay=1&controls=0&mute=1">
-      </iframe>:
-      <div className="img-landing" style={{height: '100%', borderRadius: 20}}>
+        // Render a YouTube video player
+        <ReactPlayer url='https://www.youtube.com/watch?v=G6jz86kFJCk' playing={true}/>:     
+      <div className="img-landing" style={{height: '100%', width: '100%', borderRadius: 20}}>
         <IconButton style={{height: '100%'}} onClick={handlePlay}>
           <PlayCircleOutlineIcon className={classes.icon_play}></PlayCircleOutlineIcon>
         </IconButton>
@@ -255,7 +255,7 @@ const FormMail = (props:FormProps) => {
     <RegisterContainer>
       <Grid item container sm={12} xs={10} className={classes.containerForm}>
         <Typography>
-          <h2 style={{lineHeight:1.2}}>BUILDING FUTURE <br/> <span style={{textDecoration: 'underline'}}>COMMUNITIES TOGETHER.</span></h2>
+          <h2 style={{lineHeight:1.2}}>Building future <br/> <span style={{textDecoration: 'underline'}}>Communities together.</span></h2>
           {smallScreen?<p style={{fontSize:13,lineHeight:1.2}}>Generate a preliminary design study of multi-dwelling smart housing projects in three simple steps.</p>:
           <h4> Generate a preliminary design study of multi-dwelling <br /> smart housing projects in three simple steps.</h4>}
         </Typography>
