@@ -8,10 +8,10 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { fromLonLat } from 'ol/proj';
+import { fromLonLat, transform } from 'ol/proj';
 import Fill from 'ol/style/Fill';
 import { Style, Icon } from 'ol/style';
-import { marker } from 'assets';
+import { marker_map } from 'assets';
 
 interface mapProps {
   markerDrop?: boolean;
@@ -24,10 +24,10 @@ const MapGeo = ( props:mapProps ) => {
     const { markerDrop } = props;
 
     let icon_marker = new Icon({
-      anchor: [0.5, 12],
+      anchor: [0.5, 1],
       anchorXUnits: 'fraction',
       anchorYUnits: 'pixels',
-      src: marker
+      src: marker_map
     });
 
     useEffect(() => {
@@ -45,6 +45,16 @@ const MapGeo = ( props:mapProps ) => {
             }
       })
 
+      if(markerDrop){
+        flayer.setSource(new VectorSource({
+          features: [
+            new Feature({
+              geometry: new Point(transform([-74.070556,4.612778],'EPSG:4326', 'EPSG:3857'))
+            })
+          ]
+        }))
+      }
+
         // create map
     const initialMap = new Map({
         target: "map",
@@ -52,26 +62,10 @@ const MapGeo = ( props:mapProps ) => {
           new TileLayer({
             source: new OSM()
           }),
-          new VectorLayer({
-            source: new VectorSource({
-              features: [
-                new Feature({
-                  geometry: new Point(fromLonLat([-74.070556,4.612778]))
-                })
-              ]
-            }),
-            style: function(feature){
-                  let style = new Style({
-                    image: icon_marker
-                  })
-        
-                  return style;
-                }
-          })
+          flayer
         ],
         view: new View({
-          projection: 'EPSG:4326',
-          center: [-74.070556, 4.612778],
+          center: fromLonLat([-74.070556, 4.612778]),
           zoom: 15
         }),
         controls: []
@@ -82,45 +76,7 @@ const MapGeo = ( props:mapProps ) => {
       setMap(initialMap)
       setLayer(flayer)
 
-      console.log(layer)
-
-      // if(markerDrop){
-      //   layer.setSource(
-      //     new VectorSource({
-      //       features: [
-      //         new Feature({
-      //           geometry: new Point(fromLonLat([-74.070556,4.612778]))
-      //         })
-      //       ]
-      //     })
-      //   )  
-      // }
-
     },[])
-
-    // useEffect(() => {
-
-    //   const addMarker = () => {
-    //     if(markerDrop){
-    //       layer.setSource(
-    //         new VectorSource({
-    //           features: [
-    //             new Feature({
-    //               geometry: new Point(fromLonLat([-74.070556,4.612778]))
-    //             })
-    //           ]
-    //         })
-    //       )  
-    //     }
-    //   }
-
-    //   addMarker()
-
-    // },[])
-
-    
-
-    
 
     return (
         <div id="map" className="map-container" style={{height:'100%',width:'100%'}}></div>
