@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import { Grid, makeStyles, createStyles, Theme, IconButton, Typography, Button, Box, Link } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { PageContainer } from 'domains/core/containers';
+import { PageContainer, FullPageOverlay } from 'domains/core/containers';
 import { basicVolume, download_white } from 'assets';
 import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
@@ -119,6 +119,7 @@ export const ListProjects = (props: Props) => {
   const { user } = useAuth0();
   const classes = useStyles();
   const [hover, setHover] = useState(0);
+  const [ isLoaded, setIsLoaded ] = useState(false);
 
   const goToHome = () => {
     history.push("/home")
@@ -131,11 +132,18 @@ export const ListProjects = (props: Props) => {
   useEffect(() => {
     if (user?.email) {
       loadProjectsByUsername(user.email);
+      if(projects){
+        setIsLoaded(true)
+      }  
     }
   }, [loadProjectsByUsername, user])
 
   return (
     <Fragment>
+      {
+          !isLoaded &&
+          <FullPageOverlay />
+        }
       <PageContainer background="black-model">
         <Grid container xs={12} className={classes.topPanel} >
           <TopPanel />

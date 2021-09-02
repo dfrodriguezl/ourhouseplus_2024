@@ -77,9 +77,10 @@ const PageContainer = (props: Props) => {
   const isAbout = history.location.pathname.indexOf('about') > -1;
   const isDetails = history.location.pathname.indexOf('details') > -1;
   const isStep1 = history.location.pathname.indexOf('step1') > -1;
+  const isListProjects = history.location.pathname.indexOf('projects') > -1;
   
   return (
-    <div className={background} style={( isAbout || isDetails || isStep1 )?{ overflow: 'auto' }:expandAdvanced}>
+    <div className={background} style={( isAbout || isDetails || isStep1 || isListProjects )?{ overflow: 'auto' }:expandAdvanced}>
       <Container>
         <Grid container direction="column" alignItems="stretch" className={ classes.pageContainer } >
           {

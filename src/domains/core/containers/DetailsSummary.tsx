@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Grid, makeStyles, createStyles, Theme, Typography, Button, Box, Divider } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
@@ -8,12 +8,15 @@ import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
 import { GeneralParameters } from 'domains/common/components';
-import { loadProjectById } from 'domains/shapeDiver/slice';
+import { loadProjectById, setInitialParams } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { Project } from 'domains/shapeDiver/models';
 import { compose } from 'recompose';
 import { useEffect } from 'react';
+import { Densities, Density, Location } from 'domains/core/models';
+import { useAuth0 } from '@auth0/auth0-react';
+import _ from 'lodash';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -174,6 +177,9 @@ const useStyles = makeStyles((theme: Theme) =>
     blackContainer: {
       padding: '20px 60px',
     },
+    numberResult: {
+      float: 'right'
+    }
   })
 );
 
@@ -191,16 +197,41 @@ interface pillProps {
 
 interface DispatchProps {
   loadProjectById: typeof loadProjectById;
+  setInitialParams: typeof setInitialParams;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps<RouteProps>;
 const DetailsSummary = (props: Props) => {
-  const { currentProject, loadProjectById, match: { params } } = props;
+  const { currentProject, loadProjectById, setInitialParams, match: { params }, history  } = props;
   const classes = useStyles();
+  const { isAuthenticated, loginWithRedirect, user } = useAuth0();
 
   useEffect(() => {
     loadProjectById(params.id);
   }, [loadProjectById, params])
+
+  const gotTo3DView = () => {
+    if (isAuthenticated && user) {
+
+      if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
+        
+        setInitialParams({
+          location: currentProject?.location,
+          area: currentProject?.area!,
+          density: getDensity(currentProject?.location?.density!)!
+        });
+        
+        history.push('/shapediver/step1');
+      }
+    } else {
+      loginWithRedirect();
+    }
+  }
+
+  const getDensity = (value: number) => {
+    const den = _.find(Densities, (x:Density) => x.value === value);
+    return den;
+  }
 
   return (
     <Fragment>
@@ -210,7 +241,7 @@ const DetailsSummary = (props: Props) => {
           <Grid item container xs={12} direction="row">
             <Grid item container xs={5}>
               <Typography variant="h6" className={classes.nameProject}>
-                Project 1 <span className={classes.summaryText}>Summary</span>
+                {currentProject?.projectName} <span className={classes.summaryText}>Summary</span>
               </Typography>
             </Grid>
             <Grid item container xs={7} style={{ justifyContent: 'flex-end' }}>
@@ -238,51 +269,55 @@ const DetailsSummary = (props: Props) => {
                 Project Name
               </Typography>
               <Typography variant="body1" className={classes.whiteText}>
-                Mix family housing
+                {currentProject?.projectName}
               </Typography>
               <Box className={clsx(classes.whiteText, true && classes.containerMiddle, true)}>
                 <Typography variant="body2">
-                  Site area (ha)
+                  Site area (ha) <span className={ classes.numberResult }> {currentProject?.area} </span>
                 </Typography>
                 <Divider className={classes.divider} />
                 <Typography variant="body2">
-                  Total dwellings
+                  Total dwellings  <span className={ classes.numberResult }> {currentProject?.modelData?.totalHousingUnits} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Density u/ha
+                  Density u/ha <span className={ classes.numberResult }> {currentProject?.modelData?.dwellingsDensity} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Density hr/ha
-                </Typography>
-                <Divider className={classes.divider} />
-                <Typography variant="body2">
-                  Plot ratio
+                  Density hr/ha <span className={ classes.numberResult }> {currentProject?.modelData?.dwellingsDensity} </span>
                 </Typography>
                 <Divider className={classes.divider} />
                 <Typography variant="body2">
-                  Max floors
+                  Plot ratio <span className={ classes.numberResult }> {currentProject?.modelData?.plotRatio} </span>
+                </Typography>
+                <Divider className={classes.divider} />
+                <Typography variant="body2">
+                  Max floors <span className={ classes.numberResult }> {
+                    currentProject?.location?.maxPriFloors !== undefined && currentProject?.location?.maxSecFloors !== undefined ? 
+                    currentProject?.location?.maxPriFloors + currentProject?.location?.maxSecFloors:
+                    currentProject?.location?.maxPriFloors === undefined?currentProject?.location?.maxSecFloors:
+                    currentProject?.location?.maxSecFloors === undefined?currentProject?.location?.maxPriFloors: 0} </span>
                 </Typography>
               </Box>
             </Grid>
             <Grid item container xs={4} className={clsx(classes.whiteText, true && classes.containerEnd, true)} alignItems="center">
-              <Box>
+              <Box style={{ width: '100%' }}>
                 <Typography variant="body2">
-                  Studios
+                  Studios <span className={ classes.numberResult }> {currentProject?.modelData?.studios} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Large studios
+                  Large studios <span className={ classes.numberResult }> {currentProject?.modelData?.largeStudios} </span>
                 </Typography>
                 <Typography variant="body2">
-                  One bedroom
+                  One bedroom <span className={ classes.numberResult }> {currentProject?.modelData?.oneBedroom} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Two bedroom
+                  Two bedroom <span className={ classes.numberResult }> {currentProject?.modelData?.twoBedroom} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Three bedroom
+                  Three bedroom <span className={ classes.numberResult }> {currentProject?.modelData?.threeBedroom} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Four bedroom
+                  Four bedroom <span className={ classes.numberResult }> {currentProject?.modelData?.fourBedroom} </span>
                 </Typography>
               </Box>
             </Grid>
@@ -312,7 +347,7 @@ const DetailsSummary = (props: Props) => {
                   Side walks
                 </Typography>
                 <Typography variant="body2" className={classes.groupText}>
-                  <span className={classes.boldText}>Urbanism</span>
+                  <span className={classes.boldText}>Project</span>
                   <br />
                   Building total area
                   <br />
@@ -385,19 +420,19 @@ const DetailsSummary = (props: Props) => {
                   <br />
                   small, open kitchen
                   <br />
-                  xxxx
+                  {currentProject?.modelData?.studios}
                   <br />
-                  xxxx
+                  {currentProject?.modelData?.largeStudios}
                   <br />
-                  xxxx
+                  {currentProject?.modelData?.oneBedroom}
                   <br />
-                  xxxx
+                  {currentProject?.modelData?.twoBedroom}
                   <br />
-                  xxxx
+                  {currentProject?.modelData?.threeBedroom}
                 </Typography>
               </Grid>
               <Grid item container xs={12} justify="flex-end">
-                <Button className={classes.compareButton} >
+                <Button className={classes.compareButton} onClick={() => gotTo3DView()}>
                   View project 3D
                 </Button>
               </Grid>
@@ -420,7 +455,8 @@ const container = compose<Props, {}>(
       currentProject: state.domains.shapediver.currentProject
     }),
     {
-      loadProjectById
+      loadProjectById,
+      setInitialParams
     }
   )
 )(DetailsSummary)

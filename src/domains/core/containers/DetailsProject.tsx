@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Grid, makeStyles, createStyles, Theme, Typography, Button } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
@@ -220,6 +220,7 @@ export const DetailsProjects = (props: Props) => {
     floorAreaRatio: currentProject?.modelData?.floorAreaRatio,
     totalHousingUnits: currentProject?.modelData?.totalHousingUnits,
     terrain: currentProject?.terrain,
+    terr: currentProject?.terrain,
     averageBedroomPerDwelling: currentProject?.modelData?.averageBedroomPerDwelling,
     greenSpacePerInhabitant: currentProject?.modelData?.greenSpacePerInhabitant,
     greenSpaceDensity: currentProject?.modelData?.greenSpaceDensity,
@@ -231,14 +232,20 @@ export const DetailsProjects = (props: Props) => {
     threeBedroom: currentProject?.modelData?.threeBedroom,
     fourBedroom: currentProject?.modelData?.fourBedroom,
     windowPercentage: currentProject?.location?.windowPercentage,
+    windowPc: currentProject?.location?.windowPercentage,
     facadeDirection: currentProject?.facadeDirection,
+    facadeDir: currentProject?.facadeDirection,
     maxPriFloors: currentProject?.location?.maxPriFloors,
     maxSecFloors: currentProject?.location?.maxSecFloors,
     streetFloors: currentProject?.location?.streetFloors,
     flatSize: currentProject?.location?.flatSize,
+    flatS: currentProject?.location?.flatSize,
     density: currentProject?.location?.density,
+    den: currentProject?.location?.density,
     unitsNumberType: currentProject?.location?.unitsNumberType,
+    unitsNumberT: currentProject?.location?.unitsNumberType,
     roomType: currentProject?.roomType,
+    roomT: currentProject?.roomType,
     totalGrossFloorArea: currentProject?.modelData?.totalGrossFloorArea,
     totalGrossLeasableArea: currentProject?.modelData?.totalGrossLeasableArea,
     plotRatio: currentProject?.modelData?.plotRatio,
@@ -302,51 +309,60 @@ export default container;
 const ContainerInfo = (props: containerInfo) => {
   const classes = useStyles();
   const { img, vars, title, project } = props;
-  
-  if(project.terrain === 0){
+
+  if(project.terr === 0){
     project.terrain = "Square"
-  }else if(project.terrain === 1){
+  }else if(project.terr === 1){
     project.terrain = "Rectangle"
   }else{
     project.terrain = "Custom"
   }
 
-  if(project.windowPercentage === 0){
+  
+  if(project.windowPc === 0){
     project.windowPercentage = "50%"
-  }else if(project.windowPercentage === 1){
+  }else if(project.windowPc === 1){
     project.windowPercentage = "60%"
   }else{
     project.windowPercentage = "70%"
   }
 
-  if(project.facadeDirection === 0){
+  if(project.facadeDir === 0){
     project.facadeDirection = "Horizontal"
-  }else if(project.facadeDirection === 1){
+  }else if(project.facadeDir === 1){
     project.facadeDirection = "Vertical"
   }
 
-  if(project.density === 0){
+  if(project.den === 0){
     project.density = "Suburban"
-  }else if(project.density === 1){
+  }else if(project.den === 1){
     project.density = "Urban City"
   }else{
     project.density = "Center City"
   }
 
-  if(project.flatSize === 0){
+  if(project.flatS === 0){
     project.flatSize = "Small"
-  }else if(project.flatSize === 1){
+  }else if(project.flatS === 1){
     project.flatSize = "Medium"
   }else{
     project.flatSize = "Large"
   }
 
-  if(project.roomType === 0){
+  if(project.roomT === 0){
     project.roomType = "Close"
   }else if(project.roomType === 1){
-    project.roomType = "Open"
+    project.roomT = "Open"
   }else{
     project.roomType = "Work"
+  }
+
+  if(project.unitsNumberT === 0){
+    project.unitsNumberType = "2"
+  }else if(project.unitsNumberT === 1){
+    project.unitsNumberType = "3"
+  }else{
+    project.unitsNumberType = "4"
   }
 
   return (
