@@ -41,7 +41,7 @@ const styles = makeStyles((theme) => ({
     width: 30,
     height: 30
   },
-  carrousel: {  
+  carrousel: {
     [theme.breakpoints.down('sm')]: {
       height: '9vh',
       maxHeight: '9vh',
@@ -82,7 +82,7 @@ function ShapeDiverToolBarStep3(props: Props) {
         <Container className={classes.carrousel}>
           <Grid item container className={classes.firstSubContainer}>
             <Grid item xs={12}>
-              <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose your flat size</Box>
+              <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose your flat size</Box>
             </Grid>
             <RadioGroup>
               <Grid container justify="center">
@@ -90,24 +90,24 @@ function ShapeDiverToolBarStep3(props: Props) {
                   <Radio
                     checked={location.flatSize === 0}
                     onClick={() => setFlatSize(0)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md}src={smallFlatSelected} alt="50" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={smallFlat} alt="50" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={smallFlatSelected} alt="50" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={smallFlat} alt="50" />}
                   />
                 </Grid>
                 <Grid item xs={4}>
                   <Radio
                     checked={location.flatSize === 1}
                     onClick={() => setFlatSize(1)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={mediumFlatSelected} alt="60" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={mediumFlat} alt="60" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={mediumFlatSelected} alt="60" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={mediumFlat} alt="60" />}
                   />
                 </Grid>
                 <Grid item xs={4}>
                   <Radio
                     checked={location.flatSize === 2}
                     onClick={() => setFlatSize(2)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={largeFlatSelected} alt="70" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={largeFlat} alt="70" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={largeFlatSelected} alt="70" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={largeFlat} alt="70" />}
                   />
                 </Grid>
               </Grid>
@@ -115,7 +115,7 @@ function ShapeDiverToolBarStep3(props: Props) {
           </Grid>
           <Grid item container className={classes.subContainer}>
             <Grid item xs={12}>
-              <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose room type</Box>
+              <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose room type</Box>
             </Grid>
             <RadioGroup>
               <Grid container alignItems="center">
@@ -123,24 +123,24 @@ function ShapeDiverToolBarStep3(props: Props) {
                   <Radio
                     checked={roomType === 0}
                     onClick={() => setRoomType(0)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={closeSelected} alt="close" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={close} alt="close" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={closeSelected} alt="close" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={close} alt="close" />}
                   />
                 </Grid>
                 <Grid item xs={4}>
                   <Radio
                     checked={roomType === 1}
                     onClick={() => setRoomType(1)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={openSelected} alt="open" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={open} alt="open" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={openSelected} alt="open" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={open} alt="open" />}
                   />
                 </Grid>
                 <Grid item xs={4}>
                   <Radio
                     checked={roomType === 2}
                     onClick={() => setRoomType(2)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={workSelected} alt="work" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={work} alt="work" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={workSelected} alt="work" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={work} alt="work" />}
                   />
                 </Grid>
               </Grid>
@@ -148,7 +148,7 @@ function ShapeDiverToolBarStep3(props: Props) {
           </Grid>
           <Grid item container className={classes.subContainer}>
             <Grid item xs={12}>
-              <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose floor</Box>
+              <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose floor</Box>
             </Grid>
             <Grid item xs={12}>
               <Select
@@ -165,7 +165,7 @@ function ShapeDiverToolBarStep3(props: Props) {
             </Grid>
           </Grid>
         </Container>
-        
+
 
         <ShapeDiverAdvancedOptions />
 

@@ -12,13 +12,13 @@ import { FullPageOverlay } from 'domains/core/containers';
 
 const styles = {
   container: {
-    width: '98%', 
-    height: '70%', 
+    width: '98%',
+    height: '70%',
   }
 };
 
 
-  
+
 
 interface StateProps {
   terrain: number;
@@ -42,8 +42,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
   private containerSD: React.RefObject<HTMLDivElement>;
   private api: Api.ApiInterfaceV2 | null;
   private parameters: any | null;
-  
-  
+
+
 
   constructor(props: Props) {
     super(props);
@@ -122,12 +122,12 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
 
   public async componentDidMount() {
     const { terrain, area, location, setOptions, setModelData } = this.props;
-    
+
 
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
-    
+
 
     // ShapeDiver Viewer constructor settings
     // Refer to https://app.shapediver.com/api for details
@@ -192,7 +192,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
 
   render() {
 
-    
+
 
     return (
       <Fragment>

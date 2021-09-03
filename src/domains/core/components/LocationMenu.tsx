@@ -28,13 +28,13 @@ const styles = makeStyles((theme: Theme) => ({
   radioSubLabel: {
     fontSize: 12,
   },
-  menuList:{
-    marginTop:30,
+  menuList: {
+    marginTop: 30,
     [theme.breakpoints.down('sm')]: {
       marginTop: 16
-    },  
+    },
   },
-  dialog:{
+  dialog: {
     height: '100%',
     marginTop: '30%',
     backgroundColor: '#FFF',
@@ -83,13 +83,13 @@ function LocationMenu(props: Props) {
 
 
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => { 
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setVisible(true);
     setSearchClick(true);
-    if(smallScreen){
+    if (smallScreen) {
       setOpenList(true)
       setOpenDialog(true)
-    }else{
+    } else {
       setAnchorEl(event.currentTarget)
       setOpenDialog(false)
     }
@@ -110,7 +110,7 @@ function LocationMenu(props: Props) {
     <div>
       <FormControl component="fieldset">
         <RadioGroup aria-label="location" name="location" value={location?.city || ''} onChange={handleOnChange}>
-          
+
           <SearchPill
             label="Location"
             placeholder="Where will the project be?"
@@ -119,9 +119,9 @@ function LocationMenu(props: Props) {
             onChange={handleOnChange}
           />
 
-          <Dialog 
+          <Dialog
             fullScreen
-            open={openDialog} 
+            open={openDialog}
             onClose={handleClose}
             className={classes.dialog}
             PaperProps={{
@@ -130,70 +130,70 @@ function LocationMenu(props: Props) {
                 borderTopRightRadius: 32,
               }
             }}
-            >
+          >
 
             <List className={classes.list}>
               <ListItem className={classes.list}>
                 <SearchPill
-                        label="Location"
-                        placeholder="Where will the project be?"
-                        value={location?.city || ''}
-                        onClick={handleClick}
-                        onChange={handleOnChange}
-                      />
+                  label="Location"
+                  placeholder="Where will the project be?"
+                  value={location?.city || ''}
+                  onClick={handleClick}
+                  onChange={handleOnChange}
+                />
               </ListItem>
 
-              {openList?
+              {openList ?
                 props.locations.map(x => {
-                  
+
                   return <ListItem button key={x.id} className={classes.itemList} onClick={() => {
                     updateLocation(x.city);
                     setVisible(false);
                     updateStep(2);
-                    }}>
+                  }}>
                     <div>
-                      <span className={classes.radioLabel}>{x.city}</span> 
-                      <br/> 
+                      <span className={classes.radioLabel}>{x.city}</span>
+                      <br />
                       <span className={classes.radioSubLabel}>{x.description}</span>
                     </div>
                   </ListItem>
-                }):null
-            }
+                }) : null
+              }
             </List>
           </Dialog>
-          
+
           {
-            visible?<StyledMenu
-            id="location-menu"
-            className={classes.menuList}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {
-              props.locations.map(x =>
-                <StyledMenuItem key={x.id} onClick={() => {
-                  updateLocation(x.city);
-                  setVisible(false);
+            visible ? <StyledMenu
+              id="location-menu"
+              className={classes.menuList}
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              {
+                props.locations.map(x =>
+                  <StyledMenuItem key={x.id} onClick={() => {
+                    updateLocation(x.city);
+                    setVisible(false);
                   }}>
-                  <FormControlLabel
-                    value={x.city}
-                    control={<Radio className={classes.radio} />}
-                    labelPlacement="start"
-                    label={
-                      <label>
-                        <div className={classes.radioLabel}>{x.city}</div>
-                        <div className={classes.radioSubLabel}>{x.description}</div>
-                      </label>
-                    }
-                  />
-                </StyledMenuItem>
-              )
-            }
-          </StyledMenu>:null
+                    <FormControlLabel
+                      value={x.city}
+                      control={<Radio className={classes.radio} />}
+                      labelPlacement="start"
+                      label={
+                        <label>
+                          <div className={classes.radioLabel}>{x.city}</div>
+                          <div className={classes.radioSubLabel}>{x.description}</div>
+                        </label>
+                      }
+                    />
+                  </StyledMenuItem>
+                )
+              }
+            </StyledMenu> : null
           }
-          
+
         </RadioGroup>
       </FormControl>
     </div>

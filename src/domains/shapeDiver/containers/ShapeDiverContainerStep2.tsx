@@ -28,14 +28,14 @@ const ShapeDiverContainerStep2 = (props: Props) => {
 
   return (
     <PageContainer background="black-model">
-      <Grid item xs={12} sm={9} style={{height: smallScreen?'50%':''}}>
+      <Grid item xs={12} sm={9} style={{ height: smallScreen ? '50%' : '' }}>
         <ShapeDiverAdditionalParams />
         <ShapeDiverWrapperStep2 />
         <ShapeDiverBottomSteps />
       </Grid>
       <Grid item xs={12} sm={3}>
         <ShapeDiverToolBarStep2 />
-        {!smallScreen?<ShapeDiverSteps />:null}
+        {!smallScreen ? <ShapeDiverSteps /> : null}
       </Grid>
     </PageContainer>
   )

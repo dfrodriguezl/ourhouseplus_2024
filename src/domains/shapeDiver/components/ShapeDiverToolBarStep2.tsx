@@ -68,7 +68,7 @@ function ShapeDiverToolBarStep2(props: Props) {
         <Container className={classes.carrousel}>
           <Grid item container className={classes.firstSubContainer}>
             <Grid item xs={12}>
-              <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose your window size</Box>
+              <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose your window size</Box>
             </Grid>
             <RadioGroup>
               <Grid container justify="center">
@@ -76,24 +76,24 @@ function ShapeDiverToolBarStep2(props: Props) {
                   <Radio
                     checked={location.windowPercentage === 0}
                     onClick={() => setWindow(0)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={fiftySelected} alt="50" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={fifty} alt="50" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={fiftySelected} alt="50" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={fifty} alt="50" />}
                   />
                 </Grid>
                 <Grid item xs={4}>
                   <Radio
                     checked={location.windowPercentage === 1}
                     onClick={() => setWindow(1)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={sixtySelected} alt="60" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={sixty} alt="60" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={sixtySelected} alt="60" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={sixty} alt="60" />}
                   />
                 </Grid>
                 <Grid item xs={4}>
                   <Radio
                     checked={location.windowPercentage === 2}
                     onClick={() => setWindow(2)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={seventySelected} alt="70" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={seventy} alt="70" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={seventySelected} alt="70" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={seventy} alt="70" />}
                   />
                 </Grid>
               </Grid>
@@ -101,7 +101,7 @@ function ShapeDiverToolBarStep2(props: Props) {
           </Grid>
           <Grid item container className={classes.subContainer}>
             <Grid item xs={12}>
-              <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose facade direction</Box>
+              <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose facade direction</Box>
             </Grid>
             <RadioGroup>
               <Grid container alignItems="center">
@@ -109,16 +109,16 @@ function ShapeDiverToolBarStep2(props: Props) {
                   <Radio
                     checked={facadeDirection === 0}
                     onClick={() => setFacadeDirection(0)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={horizontalSelected} alt="horizontal" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={horizontal} alt="horizontal" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={horizontalSelected} alt="horizontal" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={horizontal} alt="horizontal" />}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <Radio
                     checked={facadeDirection === 1}
                     onClick={() => setFacadeDirection(1)}
-                    checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={verticalSelected} alt="vertical" />}
-                    icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={vertical} alt="vertical" />}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={verticalSelected} alt="vertical" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={vertical} alt="vertical" />}
                   />
                 </Grid>
               </Grid>

@@ -119,7 +119,7 @@ export const ListProjects = (props: Props) => {
   const { user } = useAuth0();
   const classes = useStyles();
   const [hover, setHover] = useState(0);
-  const [ isLoaded, setIsLoaded ] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const goToHome = () => {
     history.push("/home")
@@ -132,18 +132,18 @@ export const ListProjects = (props: Props) => {
   useEffect(() => {
     if (user?.email) {
       loadProjectsByUsername(user.email);
-      if(projects){
+      if (projects) {
         setIsLoaded(true)
-      }  
+      }
     }
   }, [loadProjectsByUsername, user])
 
   return (
     <Fragment>
       {
-          !isLoaded &&
-          <FullPageOverlay />
-        }
+        !isLoaded &&
+        <FullPageOverlay />
+      }
       <PageContainer background="black-model">
         <Grid container xs={12} className={classes.topPanel} >
           <TopPanel />

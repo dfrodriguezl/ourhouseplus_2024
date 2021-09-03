@@ -310,58 +310,58 @@ const ContainerInfo = (props: containerInfo) => {
   const classes = useStyles();
   const { img, vars, title, project } = props;
 
-  if(project.terr === 0){
+  if (project.terr === 0) {
     project.terrain = "Square"
-  }else if(project.terr === 1){
+  } else if (project.terr === 1) {
     project.terrain = "Rectangle"
-  }else{
+  } else {
     project.terrain = "Custom"
   }
 
-  
-  if(project.windowPc === 0){
+
+  if (project.windowPc === 0) {
     project.windowPercentage = "50%"
-  }else if(project.windowPc === 1){
+  } else if (project.windowPc === 1) {
     project.windowPercentage = "60%"
-  }else{
+  } else {
     project.windowPercentage = "70%"
   }
 
-  if(project.facadeDir === 0){
+  if (project.facadeDir === 0) {
     project.facadeDirection = "Horizontal"
-  }else if(project.facadeDir === 1){
+  } else if (project.facadeDir === 1) {
     project.facadeDirection = "Vertical"
   }
 
-  if(project.den === 0){
+  if (project.den === 0) {
     project.density = "Suburban"
-  }else if(project.den === 1){
+  } else if (project.den === 1) {
     project.density = "Urban City"
-  }else{
+  } else {
     project.density = "Center City"
   }
 
-  if(project.flatS === 0){
+  if (project.flatS === 0) {
     project.flatSize = "Small"
-  }else if(project.flatS === 1){
+  } else if (project.flatS === 1) {
     project.flatSize = "Medium"
-  }else{
+  } else {
     project.flatSize = "Large"
   }
 
-  if(project.roomT === 0){
+  if (project.roomT === 0) {
     project.roomType = "Close"
-  }else if(project.roomType === 1){
+  } else if (project.roomType === 1) {
     project.roomT = "Open"
-  }else{
+  } else {
     project.roomType = "Work"
   }
 
-  if(project.unitsNumberT === 0){
+  if (project.unitsNumberT === 0) {
     project.unitsNumberType = "2"
-  }else if(project.unitsNumberT === 1){
+  } else if (project.unitsNumberT === 1) {
     project.unitsNumberType = "3"
-  }else{
+  } else {
     project.unitsNumberType = "4"
   }
 
@@ -381,12 +381,12 @@ const ContainerInfo = (props: containerInfo) => {
                 v.column === 1 ?
                   v.bottom ?
                     <Typography variant="body2" style={{ marginBottom: 15 }} className={classes.titleContainer}>
-                      {v.label} <span style={{float: 'right'}}>
+                      {v.label} <span style={{ float: 'right' }}>
                         {project[v.name]}
-                        </span>
+                      </span>
                     </Typography> :
                     <Typography variant="body2" style={{ marginBottom: 2 }} className={classes.titleContainer}>
-                      {v.label} <span style={{float: 'right'}}>
+                      {v.label} <span style={{ float: 'right' }}>
                         {project[v.name]}
                       </span>
                     </Typography> : null
@@ -401,14 +401,14 @@ const ContainerInfo = (props: containerInfo) => {
               v.column === 2 ?
                 v.bottom ?
                   <Typography variant="body2" style={{ marginBottom: 15 }} className={classes.titleContainer}>
-                    {v.label} <span style={{float: 'right'}}>
-                        {project[v.name]}
-                      </span>
+                    {v.label} <span style={{ float: 'right' }}>
+                      {project[v.name]}
+                    </span>
                   </Typography> :
                   <Typography variant="body2" style={{ marginBottom: 2 }} className={classes.titleContainer}>
-                    {v.label} <span style={{float: 'right'}}>
-                        {project[v.name]}
-                      </span>
+                    {v.label} <span style={{ float: 'right' }}>
+                      {project[v.name]}
+                    </span>
                   </Typography> : null
             )
           })}

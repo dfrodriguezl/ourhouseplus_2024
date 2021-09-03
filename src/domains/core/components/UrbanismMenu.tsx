@@ -24,10 +24,10 @@ const styles = makeStyles((theme: Theme) => ({
   radioSubLabel: {
     fontSize: 12,
   },
-  menuList:{
-    marginTop:30
+  menuList: {
+    marginTop: 30
   },
-  dialog:{
+  dialog: {
     height: '100%',
     marginTop: '30%',
     backgroundColor: '#FFF',
@@ -64,10 +64,10 @@ export default function UrbanismMenu(props: Props) {
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setVisible(!visible);
-    if(smallScreen){
+    if (smallScreen) {
       setOpenList(true)
       setOpenDialog(true)
-    }else{
+    } else {
       setAnchorEl(event.currentTarget)
       setOpenDialog(false)
     }
@@ -93,9 +93,9 @@ export default function UrbanismMenu(props: Props) {
             onChange={handleOnChange}
           />
 
-          <Dialog 
+          <Dialog
             fullScreen
-            open={smallScreen?openDialog:false} 
+            open={smallScreen ? openDialog : false}
             onClose={handleClose}
             className={classes.dialog}
             PaperProps={{
@@ -104,70 +104,70 @@ export default function UrbanismMenu(props: Props) {
                 borderTopRightRadius: 32,
               }
             }}
-            >
+          >
 
             <List className={classes.list}>
               <ListItem className={classes.list}>
                 <SearchPill
-                        label="Street Density"
-                        placeholder="Choose type of urbanism"
-                        value={density?.label || ''}
-                        onClick={handleClick}
-                        onChange={handleOnChange}
-                      />
+                  label="Street Density"
+                  placeholder="Choose type of urbanism"
+                  value={density?.label || ''}
+                  onClick={handleClick}
+                  onChange={handleOnChange}
+                />
               </ListItem>
 
-              {openList?
-                _.map(Densities,x => {
-                  
+              {openList ?
+                _.map(Densities, x => {
+
                   return <ListItem button key={x.value} className={classes.itemList} onClick={() => {
                     updateDensity(x.label);
                     setVisible(!visible);
                     updateStep(4);
-                    }}>
+                  }}>
                     <div>
-                      <span className={classes.radioLabel}>{x.label}</span> 
-                      <br/> 
+                      <span className={classes.radioLabel}>{x.label}</span>
+                      <br />
                       <span className={classes.radioSubLabel}>{x.subLabel}</span>
                     </div>
                   </ListItem>
-                }):null
-            }
+                }) : null
+              }
             </List>
           </Dialog>
 
           {
-            visible?<StyledMenu
-            id="customized-menu"
-            className={classes.menuList}
-            anchorEl={anchorEl}
-            keepMounted
-            open={Boolean(anchorEl)}
-            onClose={handleClose}
-          >
-            {
-              _.map(Densities, x =>
-                <StyledMenuItem key={x.value} onClick={() => {
-                  updateDensity(x.label);
-                  setVisible(!visible);
+            visible ? <StyledMenu
+              id="customized-menu"
+              className={classes.menuList}
+              anchorEl={anchorEl}
+              keepMounted
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              {
+                _.map(Densities, x =>
+                  <StyledMenuItem key={x.value} onClick={() => {
+                    updateDensity(x.label);
+                    setVisible(!visible);
                   }}>
-                  <FormControlLabel
-                    value={x.label}
-                    control={<Radio className={classes.radio} />}
-                    labelPlacement="start"
-                    label={
-                      <label>
-                        <div className={classes.radioLabel}>{x.label}</div>
-                        <div className={classes.radioSubLabel}>{x.subLabel}</div>
-                      </label>
-                    }
-                  />
-                </StyledMenuItem>
-              )
-            }
-          </StyledMenu>:null
+                    <FormControlLabel
+                      value={x.label}
+                      control={<Radio className={classes.radio} />}
+                      labelPlacement="start"
+                      label={
+                        <label>
+                          <div className={classes.radioLabel}>{x.label}</div>
+                          <div className={classes.radioSubLabel}>{x.subLabel}</div>
+                        </label>
+                      }
+                    />
+                  </StyledMenuItem>
+                )
+              }
+            </StyledMenu> : null
           }
-          
+
         </RadioGroup>
       </FormControl>
     </div>

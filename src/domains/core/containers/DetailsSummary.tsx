@@ -202,7 +202,7 @@ interface DispatchProps {
 
 type Props = DispatchProps & StateProps & RouteComponentProps<RouteProps>;
 const DetailsSummary = (props: Props) => {
-  const { currentProject, loadProjectById, setInitialParams, match: { params }, history  } = props;
+  const { currentProject, loadProjectById, setInitialParams, match: { params }, history } = props;
   const classes = useStyles();
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
 
@@ -214,13 +214,13 @@ const DetailsSummary = (props: Props) => {
     if (isAuthenticated && user) {
 
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
-        
+
         setInitialParams({
           location: currentProject?.location,
           area: currentProject?.area!,
           density: getDensity(currentProject?.location?.density!)!
         });
-        
+
         history.push('/shapediver/step1');
       }
     } else {
@@ -229,7 +229,7 @@ const DetailsSummary = (props: Props) => {
   }
 
   const getDensity = (value: number) => {
-    const den = _.find(Densities, (x:Density) => x.value === value);
+    const den = _.find(Densities, (x: Density) => x.value === value);
     return den;
   }
 
@@ -273,51 +273,51 @@ const DetailsSummary = (props: Props) => {
               </Typography>
               <Box className={clsx(classes.whiteText, true && classes.containerMiddle, true)}>
                 <Typography variant="body2">
-                  Site area (ha) <span className={ classes.numberResult }> {currentProject?.area} </span>
+                  Site area (ha) <span className={classes.numberResult}> {currentProject?.area} </span>
                 </Typography>
                 <Divider className={classes.divider} />
                 <Typography variant="body2">
-                  Total dwellings  <span className={ classes.numberResult }> {currentProject?.modelData?.totalHousingUnits} </span>
+                  Total dwellings  <span className={classes.numberResult}> {currentProject?.modelData?.totalHousingUnits} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Density u/ha <span className={ classes.numberResult }> {currentProject?.modelData?.dwellingsDensity} </span>
+                  Density u/ha <span className={classes.numberResult}> {currentProject?.modelData?.dwellingsDensity} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Density hr/ha <span className={ classes.numberResult }> {currentProject?.modelData?.dwellingsDensity} </span>
-                </Typography>
-                <Divider className={classes.divider} />
-                <Typography variant="body2">
-                  Plot ratio <span className={ classes.numberResult }> {currentProject?.modelData?.plotRatio} </span>
+                  Density hr/ha <span className={classes.numberResult}> {currentProject?.modelData?.dwellingsDensity} </span>
                 </Typography>
                 <Divider className={classes.divider} />
                 <Typography variant="body2">
-                  Max floors <span className={ classes.numberResult }> {
-                    currentProject?.location?.maxPriFloors !== undefined && currentProject?.location?.maxSecFloors !== undefined ? 
-                    currentProject?.location?.maxPriFloors + currentProject?.location?.maxSecFloors:
-                    currentProject?.location?.maxPriFloors === undefined?currentProject?.location?.maxSecFloors:
-                    currentProject?.location?.maxSecFloors === undefined?currentProject?.location?.maxPriFloors: 0} </span>
+                  Plot ratio <span className={classes.numberResult}> {currentProject?.modelData?.plotRatio} </span>
+                </Typography>
+                <Divider className={classes.divider} />
+                <Typography variant="body2">
+                  Max floors <span className={classes.numberResult}> {
+                    currentProject?.location?.maxPriFloors !== undefined && currentProject?.location?.maxSecFloors !== undefined ?
+                      currentProject?.location?.maxPriFloors + currentProject?.location?.maxSecFloors :
+                      currentProject?.location?.maxPriFloors === undefined ? currentProject?.location?.maxSecFloors :
+                        currentProject?.location?.maxSecFloors === undefined ? currentProject?.location?.maxPriFloors : 0} </span>
                 </Typography>
               </Box>
             </Grid>
             <Grid item container xs={4} className={clsx(classes.whiteText, true && classes.containerEnd, true)} alignItems="center">
               <Box style={{ width: '100%' }}>
                 <Typography variant="body2">
-                  Studios <span className={ classes.numberResult }> {currentProject?.modelData?.studios} </span>
+                  Studios <span className={classes.numberResult}> {currentProject?.modelData?.studios} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Large studios <span className={ classes.numberResult }> {currentProject?.modelData?.largeStudios} </span>
+                  Large studios <span className={classes.numberResult}> {currentProject?.modelData?.largeStudios} </span>
                 </Typography>
                 <Typography variant="body2">
-                  One bedroom <span className={ classes.numberResult }> {currentProject?.modelData?.oneBedroom} </span>
+                  One bedroom <span className={classes.numberResult}> {currentProject?.modelData?.oneBedroom} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Two bedroom <span className={ classes.numberResult }> {currentProject?.modelData?.twoBedroom} </span>
+                  Two bedroom <span className={classes.numberResult}> {currentProject?.modelData?.twoBedroom} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Three bedroom <span className={ classes.numberResult }> {currentProject?.modelData?.threeBedroom} </span>
+                  Three bedroom <span className={classes.numberResult}> {currentProject?.modelData?.threeBedroom} </span>
                 </Typography>
                 <Typography variant="body2">
-                  Four bedroom <span className={ classes.numberResult }> {currentProject?.modelData?.fourBedroom} </span>
+                  Four bedroom <span className={classes.numberResult}> {currentProject?.modelData?.fourBedroom} </span>
                 </Typography>
               </Box>
             </Grid>
@@ -439,7 +439,7 @@ const DetailsSummary = (props: Props) => {
 
             </Grid>
             <Grid item container xs={12} style={{ height: '30vh', marginTop: 25 }}>
-              <MapGeo location={currentProject?.location?.city}/>
+              <MapGeo location={currentProject?.location?.city} />
             </Grid>
           </Grid>
         </Grid>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Grid, Box, Paper, makeStyles, Button, Theme } from '@material-ui/core';
-import { useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ArrowForward } from '@material-ui/icons';
 import { basicVolume, facade, interior } from 'assets';
 
@@ -32,12 +32,12 @@ const styles = makeStyles((theme: Theme) => ({
     backgroundColor: '#F7F7F7',
     marginTop: 40,
     marginBottom: 40,
-    paddingLeft: 40,  
+    paddingLeft: 40,
     [theme.breakpoints.down('sm')]: {
       alignItems: 'center',
       paddingLeft: 0,
     },
-    
+
   },
   buttonJoin: {
     color: "#FF6C6C",
@@ -70,7 +70,7 @@ const HomeSub1 = () => {
   }
 
   return (
-    <div className={isWaiting?"home-sub-1-waiting":"home-sub-1"}>
+    <div className={isWaiting ? "home-sub-1-waiting" : "home-sub-1"}>
       <Container >
         <Grid container>
           <Grid item xs={12} className={classes.title}>
@@ -78,7 +78,7 @@ const HomeSub1 = () => {
           </Grid>
           <Grid item sm={12} md={4}>
             <Paper elevation={0} className={classes.image}>
-              <img src={basicVolume} alt="" className={classes.svg}/>
+              <img src={basicVolume} alt="" className={classes.svg} />
             </Paper>
             <div className={classes.step}>
               <Box component="span" >Step One</Box>
@@ -94,7 +94,7 @@ const HomeSub1 = () => {
           </Grid>
           <Grid item sm={12} md={4}>
             <Paper elevation={0} className={classes.image}>
-              <img src={facade} alt="" className={classes.svg}/>
+              <img src={facade} alt="" className={classes.svg} />
             </Paper>
             <div className={classes.step}>
               <Box component="span" >Step Two</Box>
@@ -110,7 +110,7 @@ const HomeSub1 = () => {
           </Grid>
           <Grid item sm={12} md={4}>
             <Paper elevation={0} className={classes.image}>
-              <img src={interior} alt="" className={classes.svg}/>
+              <img src={interior} alt="" className={classes.svg} />
             </Paper>
             <div className={classes.step}>
               <Box component="span" >Step Three</Box>
@@ -124,7 +124,7 @@ const HomeSub1 = () => {
               </Box>
             </div>
           </Grid>
-          <Grid item container xs={12} sm={12} className={classes.JoinContainer} justify="center" style={{  maxWidth: '100%' }}>
+          <Grid item container xs={12} sm={12} className={classes.JoinContainer} justify="center" style={{ maxWidth: '100%' }}>
 
             <Grid item xs={10} className={classes.phrase} >
               <Box component="p">
@@ -138,8 +138,8 @@ const HomeSub1 = () => {
                 endIcon={<ArrowForward />}
                 className={classes.buttonJoin}
                 onClick={() => goToWaiting()}
-                >
-                  Watch demo
+              >
+                Watch demo
               </Button>
             </Grid>
 

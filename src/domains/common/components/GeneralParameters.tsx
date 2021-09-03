@@ -40,7 +40,7 @@ const GeneralParameters = (props: Props) => {
   const classes = useStyles();
 
   const getDensity = (value: number) => {
-    const den = _.find(Densities, (x:Density) => x.value === value);
+    const den = _.find(Densities, (x: Density) => x.value === value);
     return den;
   }
 

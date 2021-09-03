@@ -70,7 +70,7 @@ interface StateProps {
 
 type Props = OwnProps & StateProps & DispatchProps;
 const PageContainer = (props: Props) => {
-  const { children, noHeader, background,expandAdvanced } = props;
+  const { children, noHeader, background, expandAdvanced } = props;
   const classes = useStyles();
 
   const history = useHistory();
@@ -78,11 +78,11 @@ const PageContainer = (props: Props) => {
   const isDetails = history.location.pathname.indexOf('details') > -1;
   const isStep1 = history.location.pathname.indexOf('step1') > -1;
   const isListProjects = history.location.pathname.indexOf('projects') > -1;
-  
+
   return (
-    <div className={background} style={( isAbout || isDetails || isStep1 || isListProjects )?{ overflow: 'auto' }:expandAdvanced}>
+    <div className={background} style={(isAbout || isDetails || isStep1 || isListProjects) ? { overflow: 'auto' } : expandAdvanced}>
       <Container>
-        <Grid container direction="column" alignItems="stretch" className={ classes.pageContainer } >
+        <Grid container direction="column" alignItems="stretch" className={classes.pageContainer} >
           {
             !noHeader &&
             <Grid item>

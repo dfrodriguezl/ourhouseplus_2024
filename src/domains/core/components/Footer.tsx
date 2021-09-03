@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import { compose } from 'recompose';
 import { Box, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
         opacity: '89%'
       }
     },
-    links:{
+    links: {
       marginRight: 10
     },
     bottomLinks: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
         float: 'none'
       }
     },
-    socialButtons:{
+    socialButtons: {
       [theme.breakpoints.down('sm')]: {
         marginTop: 15,
         textAlign: 'center',
@@ -77,9 +77,9 @@ const Footer = (props: Props) => {
               <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/news">News</Link></Box>
               <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/contact-us">Contact</Link></Box>
             </Grid>
-            {smallScreen?
+            {smallScreen ?
               <Fragment>
-                <SocialNetwork classes={classes}/>
+                <SocialNetwork classes={classes} />
                 <Grid item xs={12} sm={5}>
                   <div className={classes.bottomLinks}>
                     <Box fontSize={10} color='white'>
@@ -87,7 +87,7 @@ const Footer = (props: Props) => {
                     </Box>
                   </div>
                 </Grid>
-              </Fragment>:
+              </Fragment> :
               <Fragment>
                 <Grid item xs={12} sm={5}>
                   <div className={classes.bottomLinks}>
@@ -96,35 +96,35 @@ const Footer = (props: Props) => {
                     </Box>
                   </div>
                 </Grid>
-                <SocialNetwork classes={classes}/>
+                <SocialNetwork classes={classes} />
               </Fragment>
-          }
+            }
           </Grid>
-          
+
         </footer>
       </Container>
     </Grid>
   );
 }
 
-const SocialNetwork = (propsClasses:propsClasses) => {
+const SocialNetwork = (propsClasses: propsClasses) => {
 
-  const {classes} = propsClasses;
+  const { classes } = propsClasses;
 
   return (
     <Grid item xs={12} sm={1} className={classes.socialButtons} style={{ alignSelf: 'flex-end' }}>
       <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
-            <LinkedIn />
-        </a>
-        <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
-            <Facebook />
-        </a>
-        <a href="https://www.linkedin.com/company/rea-web/">
-            <Instagram />
-        </a> 
-      </Grid>
+        <LinkedIn />
+      </a>
+      <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
+        <Facebook />
+      </a>
+      <a href="https://www.linkedin.com/company/rea-web/">
+        <Instagram />
+      </a>
+    </Grid>
   )
-  
+
 }
 
 const container = compose<Props, {}>(

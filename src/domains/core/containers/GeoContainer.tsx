@@ -14,27 +14,27 @@ import { Geolocation } from 'domains/core/components';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    
+
   })
 );
 
 interface ownProps {
-    open : boolean;
-    location?: string;
+  open: boolean;
+  location?: string;
 }
 
 
 const GeoContainer = (props: ownProps) => {
 
-    const classes = useStyles();
-    const { open, location } = props;
+  const classes = useStyles();
+  const { open, location } = props;
 
 
   return (
     <Dialog fullScreen open={open} >
-        <PageContainer background="black-model" >
-            <Geolocation location={location}/>
-        </PageContainer>
+      <PageContainer background="black-model" >
+        <Geolocation location={location} />
+      </PageContainer>
     </Dialog>
   )
 }
