@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Grid, makeStyles, createStyles, Theme, IconButton, Typography, Button, Box, Link } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer, FullPageOverlay } from 'domains/core/containers';
@@ -11,7 +11,6 @@ import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { TopPanel } from 'domains/core/components';
-import { useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -136,7 +135,7 @@ export const ListProjects = (props: Props) => {
         setIsLoaded(true)
       }
     }
-  }, [loadProjectsByUsername, user])
+  }, [loadProjectsByUsername, user, projects])
 
   return (
     <Fragment>

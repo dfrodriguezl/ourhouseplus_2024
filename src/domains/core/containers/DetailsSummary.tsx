@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Grid, makeStyles, createStyles, Theme, Typography, Button, Box, Divider } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
@@ -14,7 +14,7 @@ import { RootState } from 'app/store';
 import { Project } from 'domains/shapeDiver/models';
 import { compose } from 'recompose';
 import { useEffect } from 'react';
-import { Densities, Density, Location } from 'domains/core/models';
+import { Densities, Density } from 'domains/core/models';
 import { useAuth0 } from '@auth0/auth0-react';
 import _ from 'lodash';
 

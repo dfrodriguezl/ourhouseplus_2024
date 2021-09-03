@@ -5,7 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, makeStyles, Divider, IconButton, Theme } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { getProjectData, saveProject, setAdvancedOptions } from 'domains/shapeDiver/slice';
-import { download, save } from 'assets'
+import { save } from 'assets'
 
 import { RootState } from 'app/store';
 

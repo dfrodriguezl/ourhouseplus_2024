@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { makeStyles, Theme, Typography, Grid, Box, Button } from '@material-ui/core';
 import { MapGeo } from 'domains/core/components'
 import { marker } from 'assets'
