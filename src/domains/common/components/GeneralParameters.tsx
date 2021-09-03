@@ -1,5 +1,7 @@
 import { createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { Project } from 'domains/shapeDiver/models';
+import { Densities, Density } from 'domains/core/models';
+import _ from 'lodash';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +39,11 @@ const GeneralParameters = (props: Props) => {
   const { project } = props;
   const classes = useStyles();
 
+  const getDensity = (value: number) => {
+    const den = _.find(Densities, (x: Density) => x.value === value);
+    return den;
+  }
+
   return (
     <Grid item container xs={12} className={classes.backgroundProject} direction="row">
       <Grid item container xs={4} style={{ justifyContent: 'center' }}>
@@ -46,12 +53,12 @@ const GeneralParameters = (props: Props) => {
       </Grid>
       <Grid item container xs={4} style={{ justifyContent: 'center' }}>
         <Typography variant="body2" className={classes.principalParameters}>
-          <span className={classes.summaryText}>Area</span> {project?.area} m2
+          <span className={classes.summaryText}>Area</span> {project?.area} ha
         </Typography>
       </Grid>
       <Grid item container xs={4} style={{ justifyContent: 'center' }}>
         <Typography variant="body2" className={classes.principalParameters}>
-          <span className={classes.summaryText}>Building Plan</span> Suburban
+          <span className={classes.summaryText}>Building Plan</span> {getDensity(project?.location?.density!)?.label!}
         </Typography>
       </Grid>
 

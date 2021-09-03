@@ -99,114 +99,114 @@ function ShapeDiverToolBarStep1(props: Props) {
       <Grid container direction="column" >
         <ShapeDiverToolBarDetails />
         <Container className={classes.carrousel}>
-        <Grid item container className={classes.firstSubContainer} >
-          <Grid item xs={12} >
-            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose your lot shape</Box>
-          </Grid>
-          <RadioGroup>
-            <Grid container justify="center">
-              <Grid item xs={4}>
-                <Radio
-                  checked={terrain === 0}
-                  onClick={() => setTerrainAndClearImage(0)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={squareSelected} alt="1:1" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={square} alt="1:1" />}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Radio
-                  checked={terrain === 1}
-                  onClick={() => setTerrainAndClearImage(1)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={rectangleSelected} alt="2:1" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={rectangle} alt="2:1" />}
+          <Grid item container className={classes.firstSubContainer} >
+            <Grid item xs={12} >
+              <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose your lot shape</Box>
+            </Grid>
+            <RadioGroup>
+              <Grid container justify="center">
+                <Grid item xs={4}>
+                  <Radio
+                    checked={terrain === 0}
+                    onClick={() => setTerrainAndClearImage(0)}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={squareSelected} alt="1:1" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={square} alt="1:1" />}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Radio
+                    checked={terrain === 1}
+                    onClick={() => setTerrainAndClearImage(1)}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={rectangleSelected} alt="2:1" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={rectangle} alt="2:1" />}
 
-                />
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <input
+                    ref={fileInput}
+                    type="file"
+                    onChange={(event) => uploadImage(event)}
+                    style={{ display: 'none' }}
+                  />
+                  <Radio
+                    checked={terrain === 2}
+                    onClick={() => handleFileUpload()}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={customSelected} alt="import" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={custom} alt="import" />}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={4}>
-                <input
-                  ref={fileInput}
-                  type="file"
-                  onChange={(event) => uploadImage(event)}
-                  style={{ display: 'none' }}
-                />
-                <Radio
-                  checked={terrain === 2}
-                  onClick={() => handleFileUpload()}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={customSelected} alt="import" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={custom} alt="import" />}
-                />
-              </Grid>
-            </Grid>
-          </RadioGroup>
-        </Grid>
-        <Grid item container className={classes.subContainer}>
-          <Grid item xs={12}>
-            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose level of density</Box>
+            </RadioGroup>
           </Grid>
-          <RadioGroup>
-            <Grid container justify="center">
-              <Grid item xs={4}>
-                <Radio
-                  checked={location.density === 0}
-                  onClick={() => setDensity(0)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={lowSelected} alt="low" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={low} alt="low" />}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Radio
-                  checked={location.density === 1}
-                  onClick={() => setDensity(1)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={mediumSelected} alt="medium" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={medium} alt="medium" />}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Radio
-                  checked={location.density === 2}
-                  onClick={() => setDensity(2)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={highSelected} alt="high" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={high} alt="high" />}
-                />
-              </Grid>
+          <Grid item container className={classes.subContainer}>
+            <Grid item xs={12}>
+              <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose level of density</Box>
             </Grid>
-          </RadioGroup>
-        </Grid>
-        <Grid item container className={classes.subContainer}>
-          <Grid item xs={12}>
-            <Box fontSize={smallScreen?bigFont:smallFont} fontWeight='bold'>Choose number of unit types</Box>
+            <RadioGroup>
+              <Grid container justify="center">
+                <Grid item xs={4}>
+                  <Radio
+                    checked={location.density === 0}
+                    onClick={() => setDensity(0)}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={lowSelected} alt="low" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={low} alt="low" />}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Radio
+                    checked={location.density === 1}
+                    onClick={() => setDensity(1)}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={mediumSelected} alt="medium" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={medium} alt="medium" />}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Radio
+                    checked={location.density === 2}
+                    onClick={() => setDensity(2)}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={highSelected} alt="high" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={high} alt="high" />}
+                  />
+                </Grid>
+              </Grid>
+            </RadioGroup>
           </Grid>
-          <RadioGroup>
-            <Grid container justify="center">
-              <Grid item xs={4}>
-                <Radio
-                  checked={location.unitsNumberType === 0}
-                  onClick={() => setUnitsNumberType(0)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={twoSelected} alt="two" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={two} alt="two" />}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Radio
-                  checked={location.unitsNumberType === 1}
-                  onClick={() => setUnitsNumberType(1)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={threeSelected} alt="three" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={three} alt="three" />}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <Radio
-                  checked={location.unitsNumberType === 2}
-                  onClick={() => setUnitsNumberType(2)}
-                  checkedIcon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={fourSelected} alt="four" />}
-                  icon={<img className={smallScreen?classes.buttons:classes.buttons_md} src={four} alt="four" />}
-                />
-              </Grid>
+          <Grid item container className={classes.subContainer}>
+            <Grid item xs={12}>
+              <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose number of unit types</Box>
             </Grid>
-          </RadioGroup>
-        </Grid>
+            <RadioGroup>
+              <Grid container justify="center">
+                <Grid item xs={4}>
+                  <Radio
+                    checked={location.unitsNumberType === 0}
+                    onClick={() => setUnitsNumberType(0)}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={twoSelected} alt="two" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={two} alt="two" />}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Radio
+                    checked={location.unitsNumberType === 1}
+                    onClick={() => setUnitsNumberType(1)}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={threeSelected} alt="three" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={three} alt="three" />}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Radio
+                    checked={location.unitsNumberType === 2}
+                    onClick={() => setUnitsNumberType(2)}
+                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={fourSelected} alt="four" />}
+                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={four} alt="four" />}
+                  />
+                </Grid>
+              </Grid>
+            </RadioGroup>
+          </Grid>
         </Container>
-        
+
 
         <ShapeDiverAdvancedOptions />
 

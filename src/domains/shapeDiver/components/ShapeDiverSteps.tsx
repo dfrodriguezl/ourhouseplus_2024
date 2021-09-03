@@ -83,7 +83,7 @@ const ShapeDiverSteps = (props: Props) => {
           onMouseEnter={() => setHoverReset(true)}
           onMouseLeave={() => setHoverReset(false)}
         >
-          {hoverReset?<RotateLeftIcon></RotateLeftIcon>:"Reset"}
+          {hoverReset ? <RotateLeftIcon></RotateLeftIcon> : "Reset"}
         </Button>
       </Grid>
       <Grid item xs={6}>
@@ -94,7 +94,7 @@ const ShapeDiverSteps = (props: Props) => {
           onMouseEnter={() => setHoverNext(true)}
           onMouseLeave={() => setHoverNext(false)}
         >
-          {hoverNext?<ArrowForward></ArrowForward>:"Next"}
+          {hoverNext ? <ArrowForward></ArrowForward> : "Next"}
         </Button>
       </Grid>
     </Grid>

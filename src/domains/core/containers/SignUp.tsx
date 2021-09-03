@@ -55,7 +55,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     textAlign: 'left'
   },
-  back:{
+  back: {
     color: '#000000',
     fontWeight: 600
   },
@@ -74,8 +74,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#707070",
     height: '100%'
   },
-  div_button:{
-    align:"center"
+  div_button: {
+    align: "center"
   },
   container_divider: {
     display: "flex",
@@ -142,17 +142,17 @@ export default function SignUp() {
       >
         <Grid container className={classes.paper}>
           <Grid item xs={12}>
-          <div>
-              <Button className={classes.button_external_signup} variant="contained" startIcon={<img className={classes.icon} src={google} alt="google icon" />} classes={{label: classes.label_button}} disableElevation fullWidth={true}> 
+            <div>
+              <Button className={classes.button_external_signup} variant="contained" startIcon={<img className={classes.icon} src={google} alt="google icon" />} classes={{ label: classes.label_button }} disableElevation fullWidth={true}>
                 Sign up with Google
               </Button>
             </div>
             <div className={classes.div_button}>
-              <Button className={classes.button_external_signup} variant="contained" startIcon={<AppleIcon />} classes={{label: classes.label_button}} disableElevation fullWidth={true}> 
+              <Button className={classes.button_external_signup} variant="contained" startIcon={<AppleIcon />} classes={{ label: classes.label_button }} disableElevation fullWidth={true}>
                 Sign up with Apple
               </Button>
-            </div>      
-            <DividerWithText>or</DividerWithText> 
+            </div>
+            <DividerWithText>or</DividerWithText>
           </Grid>
           <Grid item xs={12}>
             <div>
@@ -177,23 +177,23 @@ export default function SignUp() {
             <div className={classes.container_submit}>
               <input type="submit" value="Sign up" name="subscribe" className={classes.button} />
             </div>
-            <DividerWithText>or</DividerWithText> 
+            <DividerWithText>or</DividerWithText>
             <Typography className={classes.guest_text}>
               <Link to="/home">
                 Continue as a guest
-              </Link>     
+              </Link>
             </Typography>
 
             <Typography className={classes.container_text}>
               <span className={classes.text_account}>Already have and account?</span>&nbsp;
               <Link to="/home">
                 <span className={classes.text_underlined}>Sign in</span>
-              </Link>      
+              </Link>
             </Typography>
           </Grid>
         </Grid>
       </form>
-      
+
     </PageContainer>
   );
 }
@@ -204,14 +204,14 @@ interface DivProps {
 
 type Props = DivProps;
 
-const DividerWithText = ( props:Props ) => {
+const DividerWithText = (props: Props) => {
   const { children } = props;
   const classes = useStyles();
   return (
-   <div className={classes.container_divider}>
-     <div className={classes.border} />
-     <span className={classes.content}>{children}</span>
-     <div className={classes.border} />
-   </div>
+    <div className={classes.container_divider}>
+      <div className={classes.border} />
+      <span className={classes.content}>{children}</span>
+      <div className={classes.border} />
+    </div>
   );
- };
+};

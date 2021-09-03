@@ -42,12 +42,12 @@ interface OwnProps {
 
 type Props = OwnProps
 export default function SearchPill(props: Props) {
-  const { label, placeholder, value, onChange, type, onClick} = props;
+  const { label, placeholder, value, onChange, type, onClick } = props;
   const [hover, setHover] = useState(false);
   const classes = useStyles();
 
   return (
-    <div className={`${classes.field} ${classes.box} ${hover?classes.fieldHover:''}`} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <div className={`${classes.field} ${classes.box} ${hover ? classes.fieldHover : ''}`} onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <label className={classes.fieldWrapper}>
         <div >
           <div className={classes.fieldLabel}>{label}</div>

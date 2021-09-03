@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       color: 'white',
       position: 'relative',
-      letterSpacing: '1px', 
+      letterSpacing: '1px',
       [theme.breakpoints.down('sm')]: {
         marginBottom: '10vh'
       },

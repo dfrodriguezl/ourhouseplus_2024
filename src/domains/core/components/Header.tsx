@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: 3,
       width: '100%'
     },
-    blackButton:{
+    blackButton: {
       borderColor: '#707070',
       color: '#707070'
     }
@@ -118,7 +118,7 @@ const Header = (props: RouteComponentProps) => {
     setOpenMenu((prevOpen) => !prevOpen);
   };
 
-  const handleClose = (event:any) => {
+  const handleClose = (event: any) => {
     if (anchorRef.current && anchorRef.current.contains(event.target)) {
       return;
     }
@@ -126,7 +126,7 @@ const Header = (props: RouteComponentProps) => {
     setOpenMenu(false);
   };
 
-  const handleListKeyDown = (event:any) => {
+  const handleListKeyDown = (event: any) => {
     if (event.key === 'Tab') {
       event.preventDefault();
       setOpenMenu(false);
@@ -135,39 +135,39 @@ const Header = (props: RouteComponentProps) => {
 
 
   return (
-    smallScreen?
-    <Fragment>
-      <AppBar position="static" elevation={0} className={classes.header}>
-      <Toolbar variant="regular">
-        <Link to="/register">
-          <img src={isHome || isRegister || isSignUp || isWaiting || isAbout? logo : whiteLogo} alt="logo" width={100} />
-        </Link>
+    smallScreen ?
+      <Fragment>
+        <AppBar position="static" elevation={0} className={classes.header}>
+          <Toolbar variant="regular">
+            <Link to="/register">
+              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={100} />
+            </Link>
 
-        {!(isRegister || isSignUp || isWaiting || isAbout)?
-        <div className={classes.menuButton}>
-          <IconButton
-            edge="end"
-            color="secondary"
-            aria-label="menu"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton2 && classes.root, open && classes.hide )}
-          >
-            <MenuIcon className={classes.icon}/>
-          </IconButton>  
-        </div>:null
-        }
-        
+            {!(isRegister || isSignUp || isWaiting || isAbout) ?
+              <div className={classes.menuButton}>
+                <IconButton
+                  edge="end"
+                  color="secondary"
+                  aria-label="menu"
+                  onClick={handleDrawerOpen}
+                  className={clsx(classes.menuButton2 && classes.root, open && classes.hide)}
+                >
+                  <MenuIcon className={classes.icon} />
+                </IconButton>
+              </div> : null
+            }
 
-        <Drawer
-          className={classes.drawer}
-          anchor="right"
-          open={open}
-          onClose={handleDrawerClose}
-          classes={{
-            paper: classes.drawerPaper,
-          }}>
-            <div>
-              {
+
+            <Drawer
+              className={classes.drawer}
+              anchor="right"
+              open={open}
+              onClose={handleDrawerClose}
+              classes={{
+                paper: classes.drawerPaper,
+              }}>
+              <div>
+                {
                   !isAuthenticated
                     ?
                     <Fragment>
@@ -177,7 +177,7 @@ const Header = (props: RouteComponentProps) => {
                       <Button onClick={() => openRegister()}>
                         <MenuItem>Become a member</MenuItem>
                       </Button>
-                    </Fragment> 
+                    </Fragment>
                     :
                     <Fragment>
                       <Button onClick={() => logout()}>
@@ -187,78 +187,78 @@ const Header = (props: RouteComponentProps) => {
                         <MenuItem>{user.name}</MenuItem>
                       </Button>
                     </Fragment>
-                    
+
                 }
-              
-            </div>
-          </Drawer>
-      </Toolbar>
-    </AppBar>  
-    </Fragment>
-    :
+
+              </div>
+            </Drawer>
+          </Toolbar>
+        </AppBar>
+      </Fragment>
+      :
       <AppBar position="static" elevation={0} className={classes.header}>
         <Toolbar variant="regular">
           <Link to="/register">
-            <img src={isHome || isRegister || isSignUp || isWaiting || isAbout? logo : whiteLogo} alt="logo" width={100} />
-          </Link>  
+            <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={100} />
+          </Link>
           {
-            !( isSignUp )?
-            <div className={classes.menuButton}>
-              {
-                !isAuthenticated
-                  ?
-                  <Fragment>
-                    {
-                      isAbout || isRegister || isWaiting?
-                      <Button className={clsx(classes.becomeMember,true && classes.blackButton,true)}>
-                      Become a member
-                    </Button>:
+            !(isSignUp) ?
+              <div className={classes.menuButton}>
+                {
+                  !isAuthenticated
+                    ?
                     <Fragment>
-                      <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
-                        Sign in
+                      {
+                        isAbout || isRegister || isWaiting ?
+                          <Button className={clsx(classes.becomeMember, true && classes.blackButton, true)}>
+                            Become a member
+                          </Button> :
+                          <Fragment>
+                            <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
+                              Sign in
+                            </Button>
+                            <Button className={classes.becomeMember} onClick={() => openRegister()}>
+                              Become a member
+                            </Button>
+                          </Fragment>
+                      }
+
+                    </Fragment>
+                    :
+                    <Fragment>
+                      <Button
+                        className={classes.becomeMember}
+                        startIcon={<PersonIcon />}
+                        endIcon={<ExpandMoreIcon />}
+                        ref={anchorRef}
+                        aria-controls={openMenu ? 'menu-list-grow' : undefined}
+                        aria-haspopup="true"
+                        onClick={handleClick}>
+                        {user.name}
                       </Button>
-                      <Button className={classes.becomeMember} onClick={() => openRegister()}>
-                        Become a member
-                      </Button>
-                    </Fragment> 
-                    }
-                    
-                  </Fragment>    
-                  :
-                  <Fragment>
-                    <Button 
-                      className={classes.becomeMember} 
-                      startIcon={<PersonIcon />} 
-                      endIcon={<ExpandMoreIcon />} 
-                      ref={anchorRef}
-                      aria-controls={openMenu ? 'menu-list-grow' : undefined}
-                      aria-haspopup="true" 
-                      onClick={handleClick}>
-                      {user.name}
-                    </Button>
-                    <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                      {({ TransitionProps, placement }) => (
-                        <Grow
-                          {...TransitionProps}
-                          style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                        >
-                          <Paper className={classes.menu}>
-                            <ClickAwayListener onClickAway={handleClose}>
-                              <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
-                              </MenuList>
-                            </ClickAwayListener>
-                          </Paper>
-                        </Grow>
-                      )}
-                    </Popper>
-                  </Fragment>
-                  
+                      <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                        {({ TransitionProps, placement }) => (
+                          <Grow
+                            {...TransitionProps}
+                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                          >
+                            <Paper className={classes.menu}>
+                              <ClickAwayListener onClickAway={handleClose}>
+                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                  <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
+                                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                  <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
+                                </MenuList>
+                              </ClickAwayListener>
+                            </Paper>
+                          </Grow>
+                        )}
+                      </Popper>
+                    </Fragment>
+
                 }
-            
-          </div>:null
+
+              </div> : null
           }
 
         </Toolbar>

@@ -1,7 +1,8 @@
-import React, {useState,Fragment} from 'react';
-import { Typography, Grid, Input, Fab, InputAdornment, IconButton} from '@material-ui/core';
+import React, { useState, Fragment } from 'react';
+import { Typography, Grid, Input, Fab, InputAdornment, IconButton } from '@material-ui/core';
+import ReactPlayer from 'react-player'
 import { PageContainer } from 'domains/core/containers';
-import { useHistory  } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
@@ -81,43 +82,43 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "rgba(240, 224, 216, 0.7)",
     width: 43,
     height: 43
-},
-boxText: {
-  marginBottom: 10,
-  color: "white"
-},
-icon:{
-  color:'white',
-  background: 'black',
-  borderRadius: '50%',
-   cursor: 'pointer',
-   '&:hover': {
-    background: 'gray'
   },
-},
-iconButton:{
-  padding: '5px',
-},
-icon_works:{
-  color:'black',
-},
-icon_play:{
-  textAlign: 'center',
-  fontSize: 75,
-  color: 'white'
-},
-textContainer:{
-  paddingLeft: '25px',
-  [theme.breakpoints.down('sm')]: {
-    paddingLeft: '15px',
+  boxText: {
+    marginBottom: 10,
+    color: "white"
   },
-},
-containerForm:{
-  alignSelf: 'flex-end',
-  [theme.breakpoints.down('sm')]: {
-    alignSelf: 'flex-start',
+  icon: {
+    color: 'white',
+    background: 'black',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    '&:hover': {
+      background: 'gray'
+    },
   },
-}
+  iconButton: {
+    padding: '5px',
+  },
+  icon_works: {
+    color: 'black',
+  },
+  icon_play: {
+    textAlign: 'center',
+    fontSize: 75,
+    color: 'white'
+  },
+  textContainer: {
+    paddingLeft: '25px',
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: '15px',
+    },
+  },
+  containerForm: {
+    alignSelf: 'flex-end',
+    [theme.breakpoints.down('sm')]: {
+      alignSelf: 'flex-start',
+    },
+  }
 }));
 
 interface FormProps {
@@ -130,57 +131,57 @@ interface OwnProps {
   children?: any;
 }
 
-export function RegisterContainer(props:OwnProps) {
+export function RegisterContainer(props: OwnProps) {
   const classes = useStyles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const {children} = props;
+  const { children } = props;
   const history = useHistory();
 
   const isWaiting = history.location.pathname.indexOf('waiting') > -1;
 
   const handleScroll = () => {
     window.scroll({
-        top: document.body.offsetHeight,
-        left: 0,
-        behavior: 'smooth'
+      top: document.body.offsetHeight,
+      left: 0,
+      behavior: 'smooth'
     });
   }
 
   return (
     <Fragment>
       <PageContainer background="waiting-back">
-        <Grid container item sm={12} xs={12} style={{marginTop: 50}}>
+        <Grid container item sm={12} xs={12} style={{ marginTop: 50 }}>
           <Grid container item sm={6} xs={12} className={classes.textContainer}>
             {children}
           </Grid>
-          {!smallScreen?
+          {!smallScreen ?
             <Grid item container sm={6} xs={12}>
               <ImgVideo></ImgVideo>
-            </Grid>:null
-            }
+            </Grid> : null
+          }
 
         </Grid>
-        {!smallScreen?
-        <Grid item sm={12} style={{alignSelf:'flex-end', textAlign: 'center'}}>
-          {
-            !isWaiting?
-            <Fragment>
-              <Fab size="small" className={classes.fab} >
-                <KeyboardArrowDown fontSize="large" className={classes.icon_works} onClick={handleScroll}></KeyboardArrowDown>
-              </Fab>
-              <p style={{fontSize: 12}}>Learn how it works</p>
-            </Fragment>:null
+        {!smallScreen ?
+          <Grid item sm={12} style={{ alignSelf: 'flex-end', textAlign: 'center' }}>
+            {
+              !isWaiting ?
+                <Fragment>
+                  <Fab size="small" className={classes.fab} >
+                    <KeyboardArrowDown fontSize="large" className={classes.icon_works} onClick={handleScroll}></KeyboardArrowDown>
+                  </Fab>
+                  <p style={{ fontSize: 12 }}>Learn how it works</p>
+                </Fragment> : null
             }
 
-        </Grid>:null
+          </Grid> : null
         }
 
       </PageContainer>
       {
-        !isWaiting?
-          <HomeSub1 />:null
+        !isWaiting ?
+          <HomeSub1 /> : null
       }
 
     </Fragment>
@@ -197,24 +198,23 @@ const ImgVideo = () => {
   }
 
   return (
-    <Grid item sm={12} xs={12} style={{textAlign: 'center'}}>
-      {play?
-        <iframe width="100%" height="100%" title="video-rea"
-        src="https://www.youtube.com/embed/G6jz86kFJCk?autoplay=1&controls=0&mute=1">
-      </iframe>:
-      <div className="img-landing" style={{height: '100%', borderRadius: 20}}>
-        <IconButton style={{height: '100%'}} onClick={handlePlay}>
-          <PlayCircleOutlineIcon className={classes.icon_play}></PlayCircleOutlineIcon>
-        </IconButton>
-      </div>
+    <Grid item container sm={12} xs={12} style={{ textAlign: 'center', alignItems: 'center' }} >
+      {play ?
+        // Render a YouTube video player
+        <ReactPlayer url='https://www.youtube.com/watch?v=G6jz86kFJCk' playing={true} /> :
+        <div className="img-landing" style={{ height: '100%', width: '100%', borderRadius: 20 }}>
+          <IconButton style={{ height: '100%' }} onClick={handlePlay}>
+            <PlayCircleOutlineIcon className={classes.icon_play}></PlayCircleOutlineIcon>
+          </IconButton>
+        </div>
       }
     </Grid>
   )
 }
 
-const FormMail = (props:FormProps) => {
+const FormMail = (props: FormProps) => {
   const classes = useStyles();
-  const {status,onValidated} = props;
+  const { status, onValidated } = props;
 
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -225,29 +225,29 @@ const FormMail = (props:FormProps) => {
 
   const history = useHistory();
 
-  const handleChange1 = (e:any) => {
+  const handleChange1 = (e: any) => {
     setFirstName(e.target.value)
   }
 
-  const handleChange2 = (e:any) => {
+  const handleChange2 = (e: any) => {
     setLastName(e.target.value)
   }
 
-  const handleChange3 = (e:any) => {
+  const handleChange3 = (e: any) => {
     setEmail(e.target.value)
   }
 
-  const handleSubmit = (e:any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
     email &&
-    firstName &&
-    lastName &&
-    email.indexOf("@") > -1 &&
-    onValidated({
+      firstName &&
+      lastName &&
+      email.indexOf("@") > -1 &&
+      onValidated({
         EMAIL: email,
         FNAME: firstName,
         LNAME: lastName,
-    });
+      });
   }
 
 
@@ -255,14 +255,14 @@ const FormMail = (props:FormProps) => {
     <RegisterContainer>
       <Grid item container sm={12} xs={10} className={classes.containerForm}>
         <Typography>
-          <h2 style={{lineHeight:1.2}}>BUILDING FUTURE <br/> <span style={{textDecoration: 'underline'}}>COMMUNITIES TOGETHER.</span></h2>
-          {smallScreen?<p style={{fontSize:13,lineHeight:1.2}}>Generate a preliminary design study of multi-dwelling smart housing projects in three simple steps.</p>:
-          <h4> Generate a preliminary design study of multi-dwelling <br /> smart housing projects in three simple steps.</h4>}
+          <h2 style={{ lineHeight: 1.2, fontWeight: 'bold' }}>We help you build better cities <br /> for the future.</h2>
+          {smallScreen ? <p style={{ fontSize: 13, lineHeight: 1.2 }}>Generate a preliminary design study of multi-dwelling smart housing projects in three simple steps.</p> :
+            <h4 style={{ lineHeight: 1.0, fontWeight: 'normal' }}> Generate a preliminary design study of multi-dwelling <br /> smart housing projects in three simple steps.</h4>}
         </Typography>
       </Grid>
-      {smallScreen?
-        <ImgVideo></ImgVideo>:null}
-      <Grid item sm={12} xs={12} style={{alignSelf:'flex-end'}}>
+      {smallScreen ?
+        <ImgVideo></ImgVideo> : null}
+      <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end' }}>
         <form
           action="https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9"
           method="post"
@@ -272,10 +272,10 @@ const FormMail = (props:FormProps) => {
           target="_blank"
           onSubmit={handleSubmit}
         >
-          {status === "success" || status === "error"?
-            history.push("/waiting/" + firstName + "_" + lastName):null}
-          <Input type="text" name="FNAME" id="mce-FNAME" placeholder="First name" onChange={handleChange1} className={classes.input} disableUnderline required/>
-          <Input type="text" name="LNAME" id="mce-LNAME" placeholder="Last Name" onChange={handleChange2} className={classes.input} disableUnderline required/>
+          {status === "success" || status === "error" ?
+            history.push("/waiting/" + firstName + "_" + lastName) : null}
+          <Input type="text" name="FNAME" id="mce-FNAME" placeholder="First name" onChange={handleChange1} className={classes.input} disableUnderline required />
+          <Input type="text" name="LNAME" id="mce-LNAME" placeholder="Last Name" onChange={handleChange2} className={classes.input} disableUnderline required />
           <div>
             <div className="response" id="mce-error-response" style={{ display: 'none' }}></div>
             <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
@@ -291,9 +291,9 @@ const FormMail = (props:FormProps) => {
             required
             endAdornment={
               <InputAdornment position="end">
-                  <IconButton className={classes.iconButton} type="submit" name="subscribe">
-                      <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon>
-                  </IconButton>
+                <IconButton className={classes.iconButton} type="submit" name="subscribe">
+                  <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon>
+                </IconButton>
               </InputAdornment>
             }
           />
@@ -311,15 +311,15 @@ export const MailchimpFormContainer = () => {
 
   return (
     <MailchimpSubscribe
-                url={postUrl}
-                render={({ subscribe, status, message }) => (
-                    <FormMail
-                        status={status}
-                        message={message}
-                        onValidated={(formData:any) => subscribe(formData)}
-                    />
-                )}
-            />
+      url={postUrl}
+      render={({ subscribe, status, message }) => (
+        <FormMail
+          status={status}
+          message={message}
+          onValidated={(formData: any) => subscribe(formData)}
+        />
+      )}
+    />
   )
 }
 

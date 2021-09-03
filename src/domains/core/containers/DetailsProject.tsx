@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Grid, makeStyles, createStyles, Theme, Typography, Button } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
@@ -19,11 +19,11 @@ import { GeneralParameters } from 'domains/common/components';
 const varsBasicVolume = [
   { name: "totalLandArea", label: "Total gross floor area", column: 1 },
   { name: "landUserRatio", label: "Land use ratio (LUR)", column: 1 },
-  { name: "landUserRatio", label: "Floor area ratio (FAR)", column: 1 },
+  { name: "floorAreaRatio", label: "Floor area ratio (FAR)", column: 1 },
   { name: "totalHousingUnits", label: "Total Units", column: 1, bottom: 2 },
   { name: "terrain", label: "Lot shape", column: 1 },
   { name: "density", label: "Level of density", column: 1 },
-  { name: "unitTypes", label: "Number of unit types", column: 1 },
+  { name: "unitsNumberType", label: "Number of unit types", column: 1 },
   { name: "averageBedroomPerDwelling", label: "Avg bedroom per dwelling (hr/du)", column: 2 },
   { name: "greenSpacePerInhabitant", label: "Green space per inhabitant (m2)", column: 2, bottom: 2 },
   { name: "greenSpaceDensity", label: "Green space density (%)", column: 2 },
@@ -37,16 +37,16 @@ const varsBasicVolume = [
 ]
 
 const varsFacade = [
-  { name: "WindowPercentage", label: "Windows size", column: 1 },
-  { name: "FacadeDirection", label: "Facade direction", column: 1 },
-  { name: "landUserRatio", label: "Max primary floors", column: 2 },
-  { name: "totalHousingUnits", label: "Max secondary floors", column: 2 },
-  { name: "terrain", label: "Street floors", column: 2 },
+  { name: "windowPercentage", label: "Windows size", column: 1 },
+  { name: "facadeDirection", label: "Facade direction", column: 1 },
+  { name: "maxPriFloors", label: "Max primary floors", column: 2 },
+  { name: "maxSecFloors", label: "Max secondary floors", column: 2 },
+  { name: "streetFloors", label: "Street floors", column: 2 },
 ]
 
 const varsInterior = [
-  { name: "FlatSize", label: "Flat size", column: 1 },
-  { name: "RoomType", label: "Room type", column: 1 },
+  { name: "flatSize", label: "Flat size", column: 1 },
+  { name: "roomType", label: "Room type", column: 1 },
   { name: "totalLandArea", label: "Gross land area", column: 2, bottom: 2 },
   { name: "totalGrossFloorArea", label: "Gross floor area (GFA)", column: 2 },
   { name: "totalGrossLeasableArea", label: "Gross leasable area (GLA)", column: 2, bottom: 2 },
@@ -174,7 +174,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     rigthContainer: {
       borderLeft: '0.5px solid #ffffff33',
-      paddingLeft: 30
+      paddingLeft: 30,
+      paddingRight: 30
     }
   })
 );
@@ -187,6 +188,7 @@ interface containerInfo {
   img?: any;
   vars?: any;
   title?: string;
+  project: any;
 }
 
 interface StateProps {
@@ -207,9 +209,51 @@ export const DetailsProjects = (props: Props) => {
     history.push("/detailsSum/" + id)
   }
 
+
   useEffect(() => {
     loadProjectById(params.id);
   }, [loadProjectById, params])
+
+  const projectObj = {
+    totalLandArea: currentProject?.modelData?.totalLandArea,
+    landUserRatio: currentProject?.modelData?.landUserRatio,
+    floorAreaRatio: currentProject?.modelData?.floorAreaRatio,
+    totalHousingUnits: currentProject?.modelData?.totalHousingUnits,
+    terrain: currentProject?.terrain,
+    terr: currentProject?.terrain,
+    averageBedroomPerDwelling: currentProject?.modelData?.averageBedroomPerDwelling,
+    greenSpacePerInhabitant: currentProject?.modelData?.greenSpacePerInhabitant,
+    greenSpaceDensity: currentProject?.modelData?.greenSpaceDensity,
+    roadDensity: currentProject?.modelData?.roadDensity,
+    studios: currentProject?.modelData?.studios,
+    largeStudios: currentProject?.modelData?.largeStudios,
+    oneBedroom: currentProject?.modelData?.oneBedroom,
+    twoBedroom: currentProject?.modelData?.twoBedroom,
+    threeBedroom: currentProject?.modelData?.threeBedroom,
+    fourBedroom: currentProject?.modelData?.fourBedroom,
+    windowPercentage: currentProject?.location?.windowPercentage,
+    windowPc: currentProject?.location?.windowPercentage,
+    facadeDirection: currentProject?.facadeDirection,
+    facadeDir: currentProject?.facadeDirection,
+    maxPriFloors: currentProject?.location?.maxPriFloors,
+    maxSecFloors: currentProject?.location?.maxSecFloors,
+    streetFloors: currentProject?.location?.streetFloors,
+    flatSize: currentProject?.location?.flatSize,
+    flatS: currentProject?.location?.flatSize,
+    density: currentProject?.location?.density,
+    den: currentProject?.location?.density,
+    unitsNumberType: currentProject?.location?.unitsNumberType,
+    unitsNumberT: currentProject?.location?.unitsNumberType,
+    roomType: currentProject?.roomType,
+    roomT: currentProject?.roomType,
+    totalGrossFloorArea: currentProject?.modelData?.totalGrossFloorArea,
+    totalGrossLeasableArea: currentProject?.modelData?.totalGrossLeasableArea,
+    plotRatio: currentProject?.modelData?.plotRatio,
+    dwellingsDensity: currentProject?.modelData?.dwellingsDensity,
+    averageInhabitantPerDwelling: currentProject?.modelData?.averageInhabitantPerDwelling,
+  }
+
+
 
   return (
     <Fragment>
@@ -219,7 +263,7 @@ export const DetailsProjects = (props: Props) => {
           <Grid item container xs={12} direction="row">
             <Grid item container xs={5}>
               <Typography variant="h6" className={classes.nameProject}>
-                Project 1 <span className={classes.summaryText}>Summary</span>
+                {currentProject?.projectName} <span className={classes.summaryText}>Summary</span>
               </Typography>
             </Grid>
             <Grid item container xs={7} style={{ justifyContent: 'flex-end' }}>
@@ -239,9 +283,9 @@ export const DetailsProjects = (props: Props) => {
             </Grid>
           </Grid>
           <GeneralParameters project={currentProject} />
-          <ContainerInfo img={img_basic_volume} vars={varsBasicVolume} title={"Basic volume"} />
-          <ContainerInfo img={img_facade} vars={varsFacade} title={"Facade"} />
-          <ContainerInfo img={img_interior} vars={varsInterior} title={"Interior"} />
+          <ContainerInfo img={img_basic_volume} vars={varsBasicVolume} title={"Basic volume"} project={projectObj} />
+          <ContainerInfo img={img_facade} vars={varsFacade} title={"Facade"} project={projectObj} />
+          <ContainerInfo img={img_interior} vars={varsInterior} title={"Interior"} project={projectObj} />
         </Grid>
       </PageContainer>
     </Fragment>
@@ -264,7 +308,62 @@ export default container;
 
 const ContainerInfo = (props: containerInfo) => {
   const classes = useStyles();
-  const { img, vars, title } = props;
+  const { img, vars, title, project } = props;
+
+  if (project.terr === 0) {
+    project.terrain = "Square"
+  } else if (project.terr === 1) {
+    project.terrain = "Rectangle"
+  } else {
+    project.terrain = "Custom"
+  }
+
+
+  if (project.windowPc === 0) {
+    project.windowPercentage = "50%"
+  } else if (project.windowPc === 1) {
+    project.windowPercentage = "60%"
+  } else {
+    project.windowPercentage = "70%"
+  }
+
+  if (project.facadeDir === 0) {
+    project.facadeDirection = "Horizontal"
+  } else if (project.facadeDir === 1) {
+    project.facadeDirection = "Vertical"
+  }
+
+  if (project.den === 0) {
+    project.density = "Suburban"
+  } else if (project.den === 1) {
+    project.density = "Urban City"
+  } else {
+    project.density = "Center City"
+  }
+
+  if (project.flatS === 0) {
+    project.flatSize = "Small"
+  } else if (project.flatS === 1) {
+    project.flatSize = "Medium"
+  } else {
+    project.flatSize = "Large"
+  }
+
+  if (project.roomT === 0) {
+    project.roomType = "Close"
+  } else if (project.roomType === 1) {
+    project.roomT = "Open"
+  } else {
+    project.roomType = "Work"
+  }
+
+  if (project.unitsNumberT === 0) {
+    project.unitsNumberType = "2"
+  } else if (project.unitsNumberT === 1) {
+    project.unitsNumberType = "3"
+  } else {
+    project.unitsNumberType = "4"
+  }
 
   return (
     <Grid item container xs={12} direction="row">
@@ -282,10 +381,14 @@ const ContainerInfo = (props: containerInfo) => {
                 v.column === 1 ?
                   v.bottom ?
                     <Typography variant="body2" style={{ marginBottom: 15 }} className={classes.titleContainer}>
-                      {v.label}
+                      {v.label} <span style={{ float: 'right' }}>
+                        {project[v.name]}
+                      </span>
                     </Typography> :
                     <Typography variant="body2" style={{ marginBottom: 2 }} className={classes.titleContainer}>
-                      {v.label}
+                      {v.label} <span style={{ float: 'right' }}>
+                        {project[v.name]}
+                      </span>
                     </Typography> : null
 
               )
@@ -298,10 +401,14 @@ const ContainerInfo = (props: containerInfo) => {
               v.column === 2 ?
                 v.bottom ?
                   <Typography variant="body2" style={{ marginBottom: 15 }} className={classes.titleContainer}>
-                    {v.label}
+                    {v.label} <span style={{ float: 'right' }}>
+                      {project[v.name]}
+                    </span>
                   </Typography> :
                   <Typography variant="body2" style={{ marginBottom: 2 }} className={classes.titleContainer}>
-                    {v.label}
+                    {v.label} <span style={{ float: 'right' }}>
+                      {project[v.name]}
+                    </span>
                   </Typography> : null
             )
           })}
