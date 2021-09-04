@@ -6,30 +6,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import { ImgVideo } from 'domains/common/components';
 
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    alignItems: 'center',
-    padding: 20,
-  },
   links: {
     marginRight: 10
-  },
-  bottomLinks: {
-    float: 'right',
-    marginRight: 20,
-    paddingTop: 5,
-    '& img': {
-      paddingLeft: 10
-    },
-    [theme.breakpoints.down('sm')]: {
-      textAlign: 'center',
-      marginRight: 0,
-      float: 'none'
-    }
   },
   endText: {
     fontSize: 13,
@@ -40,12 +22,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       alignSelf: 'flex-start',
     }
-  },
-  icon_play: {
-    textAlign: 'center',
-    fontSize: 75,
-    color: 'white'
-  },
+  }
 })
 )
 
@@ -112,23 +89,6 @@ const SocialNetwork = () => {
         <Instagram fontSize="large" />
       </a>
       <p className={classes.endText}>Follow us on social.</p>
-    </Grid>
-  )
-}
-
-const ImgVideo = () => {
-  const [play] = useState(false);
-
-
-  return (
-    <Grid item sm={12} xs={12} style={{ textAlign: 'center', height: '100%', padding: '20% 0' }}>
-      {play ?
-        <iframe width="100%" height="100%" title="video-rea"
-          src="https://www.youtube.com/embed/G6jz86kFJCk?autoplay=1&controls=0&mute=1">
-        </iframe> :
-        <div className="img-landing" style={{ height: '100%', borderRadius: 20 }}>
-        </div>
-      }
     </Grid>
   )
 }

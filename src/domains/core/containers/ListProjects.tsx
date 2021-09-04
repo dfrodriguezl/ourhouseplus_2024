@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect } from 'react';
-import { Grid, makeStyles, createStyles, Theme, IconButton, Typography, Button, Box, Link } from '@material-ui/core';
+import { Grid, makeStyles, createStyles, IconButton, Typography, Button, Box, Link } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer, FullPageOverlay } from 'domains/core/containers';
 import { height_6, download_white, height_12, height_13 } from 'assets';
@@ -13,7 +13,7 @@ import { compose } from 'recompose';
 import { TopPanel } from 'domains/core/components';
 import { useAuth0 } from '@auth0/auth0-react';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
     topPanel: {
       background: 'transparent linear-gradient(93deg, #D6D5E4 0%, #D9D7E1 52%, #E5DED0 100%) 0% 0% no-repeat padding-box',
@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme: Theme) =>
       color: 'black',
       textTransform: 'none',
       width: '60%',
-      // border: '2px solid white',
       padding: '2px 5px',
       marginTop: 30,
       background: '#D6D5E4 0% 0% no-repeat padding-box',
