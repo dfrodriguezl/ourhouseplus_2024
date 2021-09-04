@@ -3,7 +3,7 @@ import { Grid, makeStyles, createStyles, Theme, Typography, Button, Box, Divider
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
 import { MapGeo, TopPanel } from 'domains/core/components';
-import { download, sum } from 'assets';
+import { download, height_6, height_12, height_13 } from 'assets';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
@@ -138,7 +138,8 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: 30
     },
     imgProject: {
-      borderRadius: 32
+      borderRadius: 32,
+      width: '100%'
     },
     imgContainer: {
       padding: 20
@@ -262,7 +263,13 @@ const DetailsSummary = (props: Props) => {
           <GeneralParameters project={currentProject} />
           <Grid item container xs={12}>
             <Grid item xs={4} className={classes.imgContainer}>
-              <img alt="img-project" src={sum} className={classes.imgProject}></img>
+              {
+                currentProject?.location?.maxPriFloors! <= 6 ?
+                  <img alt="img-project" src={height_6} className={classes.imgProject}></img>:
+                  currentProject?.location?.maxPriFloors!  <= 12 ?
+                  <img alt="img-project" src={height_12} className={classes.imgProject}></img>:
+                  <img alt="img-project" src={height_13} className={classes.imgProject}></img>
+              }
             </Grid>
             <Grid item xs={4} style={{ padding: '0px 75px' }}>
               <Typography variant="h6" className={classes.whiteText}>

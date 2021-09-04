@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { Grid, makeStyles, createStyles, Theme, IconButton, Typography, Button, Box, Link } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer, FullPageOverlay } from 'domains/core/containers';
-import { basicVolume, download_white } from 'assets';
+import { height_6, download_white, height_12, height_13 } from 'assets';
 import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 import EditIcon from '@material-ui/icons/Edit';
@@ -183,7 +183,14 @@ export const ListProjects = (props: Props) => {
                     <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center">
                       <Box component="div" alignItems="center" justifyContent="center">
                         <IconButton onClick={() => goToProject(String(p.id))}>
-                          <img alt={p.name} src={basicVolume} style={{ width: '90%' }} />
+                          {
+                            p?.location?.maxPriFloors <= 6 ?
+                              <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
+                              p?.location?.maxPriFloors <= 12 ?
+                                <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} />
+                          }
+
                         </IconButton>
                       </Box>
                       <Typography variant="body2" className={classes.text}>

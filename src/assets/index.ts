@@ -95,7 +95,9 @@ export { default as img_basic_volume } from './img_basic_volume.png';
 export { default as img_facade } from './img_facade.png';
 export { default as img_interior } from './img_interior.png';
 
-export { default as sum } from './sum_example.png';
+export { default as height_6 } from './height_6.png';
+export { default as height_12 } from './height_12.png';
+export { default as height_13 } from './height_13.png';
 
 export { default as marker } from './marker.png';
 export { default as marker_map } from './marker_map.png';
