@@ -8,15 +8,18 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { fromLonLat, transform, transformExtent, get } from 'ol/proj';
+import { fromLonLat, transform, transformExtent, get, toLonLat } from 'ol/proj';
 import { Style, Icon } from 'ol/style';
 import { marker_map } from 'assets';
-import { geocode, NominatimResponse } from "nominatim-browser";
+import { geocode, NominatimResponse, reverseGeocode } from "nominatim-browser";
 import { boundingExtent } from 'ol/extent';
+import { Translate, defaults as defaultInteractions } from 'ol/interaction';
+import { Collection } from 'ol';
 
 interface mapProps {
   markerDrop?: boolean;
   location?: string;
+  changeLocation?: any;
 }
 
 type Props = mapProps;
@@ -25,9 +28,7 @@ const MapGeo = (props: Props) => {
   const [map, setMap] = useState<Map>();
   const [layer, setLayer] = useState<any>();
 
-  const { markerDrop, location } = props;
-
-
+  const { markerDrop, location, changeLocation } = props;
 
   useEffect(() => {
 
@@ -35,6 +36,21 @@ const MapGeo = (props: Props) => {
       anchor: [0.5, 1],
       src: marker_map
     });
+
+    const getLocationFromCoords = (lat: number, lon: number) => {
+      reverseGeocode({
+        lat: String(lat),
+        lon: String(lon),
+        addressdetails: true
+      })
+        .then((results: NominatimResponse) => {
+          changeLocation(results.display_name);
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
+
 
     const initializeMap = (lon: number, lat: number, boundingBox: string[]) => {
       const flayer = new VectorLayer({
@@ -57,12 +73,19 @@ const MapGeo = (props: Props) => {
 
       bb = transformExtent(bb, get('EPSG:4326'), get('EPSG:3857'));
 
+      const pointFeature = new Feature({
+        geometry: new Point(transform([lon, lat], 'EPSG:4326', 'EPSG:3857'))
+      });
+
+
+      const translate = new Translate({
+        features: new Collection([pointFeature])
+      });
+
       if (markerDrop) {
         flayer.setSource(new VectorSource({
           features: [
-            new Feature({
-              geometry: new Point(transform([lon, lat], 'EPSG:4326', 'EPSG:3857'))
-            })
+            pointFeature
           ]
         }))
       }
@@ -70,6 +93,7 @@ const MapGeo = (props: Props) => {
       // create map
       const initialMap = new Map({
         target: "map",
+        interactions: defaultInteractions().extend([translate]),
         layers: [
           new TileLayer({
             source: new OSM()
@@ -84,6 +108,11 @@ const MapGeo = (props: Props) => {
       })
 
       initialMap.getView().fit(bb);
+
+      translate.on('translateend', (e) => {
+        const coordinates = toLonLat(e.coordinate);
+        getLocationFromCoords(coordinates[1], coordinates[0]);
+      })
 
       setMap(initialMap)
       setLayer(flayer)
@@ -106,9 +135,8 @@ const MapGeo = (props: Props) => {
         console.error(error);
       });
 
-
-
   }, [markerDrop, location])
+
 
 
 
