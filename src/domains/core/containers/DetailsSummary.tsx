@@ -181,10 +181,10 @@ const DetailsSummary = (props: Props) => {
             <Grid item xs={4} className={classes.imgContainer}>
               {
                 currentProject?.location?.maxPriFloors! <= 6 ?
-                  <img alt="img-project" src={height_6} className={classes.imgProject}></img>:
-                  currentProject?.location?.maxPriFloors!  <= 12 ?
-                  <img alt="img-project" src={height_12} className={classes.imgProject}></img>:
-                  <img alt="img-project" src={height_13} className={classes.imgProject}></img>
+                  <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
+                  currentProject?.location?.maxPriFloors! <= 12 ?
+                    <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
+                    <img alt="img-project" src={height_13} className={classes.imgProject}></img>
               }
             </Grid>
             <Grid item xs={4} style={{ padding: '0px 75px' }}>
@@ -215,10 +215,8 @@ const DetailsSummary = (props: Props) => {
                 <Divider className={classes.divider} />
                 <Typography variant="body2">
                   Max floors <span className={classes.numberResult}> {
-                    currentProject?.location?.maxPriFloors !== undefined && currentProject?.location?.maxSecFloors !== undefined ?
-                      currentProject?.location?.maxPriFloors + currentProject?.location?.maxSecFloors :
-                      currentProject?.location?.maxPriFloors === undefined ? currentProject?.location?.maxSecFloors :
-                        currentProject?.location?.maxSecFloors === undefined ? currentProject?.location?.maxPriFloors : 0} </span>
+                    Math.max(currentProject?.location?.maxPriFloors!, currentProject?.location?.maxSecFloors!)
+                  } </span>
                 </Typography>
               </Box>
             </Grid>

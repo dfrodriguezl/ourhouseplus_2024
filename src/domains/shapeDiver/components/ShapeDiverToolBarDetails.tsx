@@ -154,7 +154,10 @@ const LabelDetails: React.FC<LblProps> = ({ step, propsDetail }) => {
       {propsDetail.location?.p_vivs ?
         <Box fontSize={smallScreen ? bigFont : smallFont}>Avg. people per dwelling</Box> : null}
       {step === "step1" ?
-        <Box fontSize={smallScreen ? bigFont : smallFont}>Total gross floor area</Box> : <Box fontSize={14}>Gross land area</Box>}
+        <Fragment>
+          <Box fontSize={14}>Gross land area</Box>
+          <Box fontSize={smallScreen ? bigFont : smallFont}>Total gross floor area</Box>
+        </Fragment> : <Box fontSize={14}>Gross land area</Box>}
       <br />
       {step !== "step1" ?
         <Fragment>
@@ -170,8 +173,8 @@ const LabelDetails: React.FC<LblProps> = ({ step, propsDetail }) => {
       <br />
       {step === "step1" ?
         <Fragment>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>Total units</Box>
           <Box fontSize={smallScreen ? bigFont : smallFont}>Plot ratio</Box>
+          <br />
         </Fragment> :
         <Box fontSize={smallScreen ? bigFont : smallFont}>Plot ratio</Box>
       }
@@ -182,6 +185,19 @@ const LabelDetails: React.FC<LblProps> = ({ step, propsDetail }) => {
             <Box fontSize={smallScreen ? bigFont : smallFont}>Total units (nbr)</Box>
             <Box fontSize={smallScreen ? bigFont : smallFont}>Dwellings density (du/ha)</Box>
             <Box fontSize={smallScreen ? bigFont : smallFont}>Avg. inhabitant per dwelling</Box>
+          </Fragment> :
+          <Fragment>
+            <Box fontSize={smallScreen ? bigFont : smallFont}>Total units (nbr)</Box>
+            <Box fontSize={smallScreen ? bigFont : smallFont}>Dwellings density (du/ha)</Box>
+          </Fragment>
+      }
+      {
+        step === "step1" ?
+          <Fragment>
+            <br />
+            <Box fontSize={12}>Avg. inhabitant by location</Box>
+            <Box fontSize={12}>Avg. age inhabitant by location</Box>
+            <Box fontSize={12}>Housing deficit in 400 m (circ.)</Box>
           </Fragment> : null
       }
     </Fragment>
@@ -201,9 +217,13 @@ const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData }) => {
     setOpen(true);
   }
 
+  const closeGeoDialog = () => {
+    setOpen(false);
+  }
+
   return (
     <Fragment>
-      <GeoContainer open={open} location={propsDetail.location?.city} />
+      <GeoContainer open={open} location={propsDetail.location?.city} closeFunction={closeGeoDialog} />
       <Box fontSize={smallScreen ? 18 : 16}>{propsDetail.location?.city} <img src={marker} alt="geolocation-icon" width="15%" className={classes.iconLocation} onClick={() => openGeoDialog()} /></Box>
       {propsDetail.location?.p_vivs ?
         <NumberFormat
@@ -212,13 +232,23 @@ const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData }) => {
         /> : null
       }
       {step === "step1" ?
-        <Box fontSize={smallScreen ? bigFont : smallFont}>
-          <NumberFormat
-            value={modelData.totalLandArea}
-            displayType="text"
-            thousandSeparator
-          />
-        </Box> : <Box fontSize={smallScreen ? bigFont : smallFont}>
+        <Fragment>
+          <Box fontSize={smallScreen ? bigFont : smallFont}>
+            <NumberFormat
+              value={modelData.totalLandArea}
+              displayType="text"
+              thousandSeparator
+            />
+          </Box>
+          <Box fontSize={smallScreen ? bigFont : smallFont}>
+            <NumberFormat
+              value={modelData.totalGrossFloorArea}
+              displayType="text"
+              thousandSeparator
+            />
+          </Box>
+        </Fragment>
+        : <Box fontSize={smallScreen ? bigFont : smallFont}>
           <NumberFormat
             value={modelData.totalLandArea}
             displayType="text"
@@ -272,18 +302,12 @@ const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData }) => {
         <Fragment>
           <Box fontSize={smallScreen ? bigFont : smallFont}>
             <NumberFormat
-              value={modelData.totalHousingUnits}
-              displayType="text"
-              thousandSeparator
-            />
-          </Box>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>
-            <NumberFormat
               value={modelData.plotRatio}
               displayType="text"
               decimalScale={2}
             />
           </Box>
+          <br />
         </Fragment> :
         <Box fontSize={smallScreen ? bigFont : smallFont}>
           <NumberFormat
@@ -314,6 +338,49 @@ const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData }) => {
             <Box fontSize={smallScreen ? bigFont : smallFont}>
               <NumberFormat
                 value={modelData.averageInhabitantPerDwelling}
+                displayType="text"
+                decimalScale={2}
+              />
+            </Box>
+          </Fragment> :
+          <Fragment>
+            <Box fontSize={smallScreen ? bigFont : smallFont}>
+              <NumberFormat
+                value={modelData.totalHousingUnits}
+                displayType="text"
+                thousandSeparator
+              />
+            </Box>
+            <Box fontSize={smallScreen ? bigFont : smallFont}>
+              <NumberFormat
+                value={modelData.dwellingsDensity}
+                displayType="text"
+                decimalScale={2}
+              />
+            </Box>
+          </Fragment>
+      }
+      {
+        step === "step1" ?
+          <Fragment>
+            <br />
+            <Box fontSize={12}>
+              <NumberFormat
+                value="0.2"
+                displayType="text"
+                decimalScale={2}
+              />
+            </Box>
+            <Box fontSize={12}>
+              <NumberFormat
+                value="0.2"
+                displayType="text"
+                decimalScale={2}
+              />
+            </Box>
+            <Box fontSize={12}>
+              <NumberFormat
+                value="0.2"
                 displayType="text"
                 decimalScale={2}
               />

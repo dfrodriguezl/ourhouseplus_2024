@@ -27,18 +27,23 @@ const styles = makeStyles((theme: Theme) => ({
 
 interface StateProps {
     location?: string;
+    close?: any;
 }
 
 type Props = StateProps;
 const Geolocation = (props: Props) => {
 
     const classes = styles();
-    const { location } = props;
-    const [ textLocation, setTextLocation] = useState<string>(location!)
+    const { location, close } = props;
+    const [textLocation, setTextLocation] = useState<string>(location!)
 
 
-    const updateLocationText = (text:string) => {
+    const updateLocationText = (text: string) => {
         setTextLocation(text)
+    }
+
+    const closeDialog = () => {
+        close()
     }
 
     return (
@@ -57,10 +62,10 @@ const Geolocation = (props: Props) => {
 
                 </Grid>
                 <Grid item container xs={12} style={{ height: '70%' }}>
-                    <MapGeo markerDrop={true} location={location} changeLocation={updateLocationText}/>
+                    <MapGeo markerDrop={true} location={location} changeLocation={updateLocationText} />
                 </Grid>
                 <Box>
-                    <Button className={classes.button}>
+                    <Button className={classes.button} onClick={() => closeDialog()}>
                         Save location
                     </Button>
                 </Box>

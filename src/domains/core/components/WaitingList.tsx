@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { Fragment } from 'react';
 import { Grid } from '@material-ui/core';
 import { RegisterContainer } from 'domains/core/containers';
 import { withRouter, useParams } from 'react-router-dom';
