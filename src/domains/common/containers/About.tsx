@@ -120,7 +120,7 @@ const About = () => {
                         <Avatar className={hover === tm.id ? classes.large : ''} src={tm.picture} />
                       </ListItemAvatar>
                       {hover === tm.id && tm.desc_1 ?
-                        <Grow in={true} {...(1 === 1 ? { timeout: 1000 } : {})}>
+                        <Grow in={true} {...({ timeout: 1000 })}>
                           <ListItemText className={classes.textItem} style={{ width: '70%' }} disableTypography >
                             <p>{tm.desc_1}</p>
                             <p>{tm.desc_2}</p>
@@ -136,7 +136,7 @@ const About = () => {
                       <ListItemText className={classes.textItem} style={{ width: '70%' }} disableTypography >
                         <span className={classes.nameTitle}>{tm.name}</span>
                         {hover === tm.id && tm.desc_1 ?
-                          <Grow in={true} {...(1 === 1 ? { timeout: 1000 } : {})}>
+                          <Grow in={true} {...({ timeout: 1000 })}>
                             <span className={classes.nameSubtitle} style={{ padding: 10 }}>{tm.desc_1 + tm.desc_2}</span>
                           </Grow>
                           : <Fragment>

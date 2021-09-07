@@ -20,10 +20,10 @@ const styles = makeStyles((theme) => ({
     borderRadius: '45px'
   },
   firstSubContainer: {
-    padding: '5px 30px 0 30px',
+    padding: '5px 0px 0 0px',
   },
   subContainer: {
-    padding: '5px 30px 0 30px',
+    padding: '5px 0px 0 0px',
   },
   buttons: {
     width: 46,
@@ -47,6 +47,9 @@ const styles = makeStyles((theme) => ({
       maxHeight: '9vh',
       overflowX: 'auto',
     },
+  },
+  radioStyle: {
+    width: '100%'
   }
 }));
 
@@ -84,7 +87,7 @@ function ShapeDiverToolBarStep3(props: Props) {
             <Grid item xs={12}>
               <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose your flat size</Box>
             </Grid>
-            <RadioGroup>
+            <RadioGroup className={classes.radioStyle}>
               <Grid container justify="center">
                 <Grid item xs={4}>
                   <Radio
@@ -117,7 +120,7 @@ function ShapeDiverToolBarStep3(props: Props) {
             <Grid item xs={12}>
               <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose room type</Box>
             </Grid>
-            <RadioGroup>
+            <RadioGroup className={classes.radioStyle}>
               <Grid container alignItems="center">
                 <Grid item xs={4}>
                   <Radio

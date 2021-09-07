@@ -18,10 +18,10 @@ const styles = makeStyles((theme) => ({
     borderRadius: '45px'
   },
   firstSubContainer: {
-    padding: '5px 30px 0 30px',
+    padding: '5px 0px 0 0px',
   },
   subContainer: {
-    padding: '5px 30px 0 30px',
+    padding: '5px 0px 0 0px',
   },
   buttons: {
     width: 46,
@@ -37,6 +37,9 @@ const styles = makeStyles((theme) => ({
       maxHeight: '9vh',
       overflowX: 'auto',
     },
+  },
+  radioStyle: {
+    width: '100%'
   }
 }));
 
@@ -58,7 +61,7 @@ function ShapeDiverToolBarStep2(props: Props) {
   const classes = styles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
-  const bigFont = 15;
+  const bigFont = 13;
   const smallFont = 13;
 
   return (
@@ -70,7 +73,7 @@ function ShapeDiverToolBarStep2(props: Props) {
             <Grid item xs={12}>
               <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose your window size</Box>
             </Grid>
-            <RadioGroup>
+            <RadioGroup className={classes.radioStyle}>
               <Grid container justify="center">
                 <Grid item xs={4}>
                   <Radio
@@ -103,9 +106,9 @@ function ShapeDiverToolBarStep2(props: Props) {
             <Grid item xs={12}>
               <Box fontSize={smallScreen ? bigFont : smallFont} fontWeight='bold'>Choose facade direction</Box>
             </Grid>
-            <RadioGroup>
+            <RadioGroup className={classes.radioStyle}>
               <Grid container alignItems="center">
-                <Grid item xs={6}>
+                <Grid item container xs={6} justify="center">
                   <Radio
                     checked={facadeDirection === 0}
                     onClick={() => setFacadeDirection(0)}
@@ -113,7 +116,7 @@ function ShapeDiverToolBarStep2(props: Props) {
                     icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={horizontal} alt="horizontal" />}
                   />
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item container xs={6} justify="center">
                   <Radio
                     checked={facadeDirection === 1}
                     onClick={() => setFacadeDirection(1)}

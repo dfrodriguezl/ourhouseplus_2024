@@ -5,3 +5,4 @@ export { default as Investors } from './Investors'
 export { default as Leadership } from './Leadership'
 export { default as HowItWorks } from './HowItWorks';
 export { default as Jobs } from './Jobs';
+export { default as MailChimpFormContainer } from './MailChimpFormContainer';
