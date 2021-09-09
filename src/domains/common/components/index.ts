@@ -6,3 +6,4 @@ export { default as ContainerInfo } from './ContainerInfo';
 export { default as WhitePill } from './WhitePill';
 export { default as ImgVideo } from './ImgVideo';
 export { default as FormMail } from './FormMail';
+export { default as CustomTooltip } from './CustomTooltip';
