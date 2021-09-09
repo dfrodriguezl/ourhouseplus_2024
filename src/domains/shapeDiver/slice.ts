@@ -21,6 +21,7 @@ export interface ShapeDiverState {
   searchClick: Boolean;
   projects: Project[];
   currentProject: Project | undefined;
+  saveSuccess: boolean;
 }
 
 const initialState: ShapeDiverState = {
@@ -58,6 +59,7 @@ const initialState: ShapeDiverState = {
   searchClick: false,
   projects: [],
   currentProject: undefined,
+  saveSuccess: false
 };
 
 export const shapeDiverSlice = createSlice({
@@ -122,7 +124,7 @@ export const shapeDiverSlice = createSlice({
       state.searchClick = action.payload;
     },
     setSaveSuccess: (state, action: PayloadAction<boolean>) => {
-
+      state.saveSuccess = action.payload;
     },
     setLoadProjects: (state, action: PayloadAction<Project[]>) => {
       state.projects = action.payload;
@@ -171,7 +173,7 @@ export default shapeDiverSlice.reducer;
 
 export const saveProject = (project: Project): AppThunk => dispatch => {
   post('/SaveProject', { data: project }).then((data: AxiosResponse) => {
-    dispatch(setSaveSuccess(data.data))
+    dispatch(setSaveSuccess(data.data === "Success" ? true : false))
   });
 };
 
