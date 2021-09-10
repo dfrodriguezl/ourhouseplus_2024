@@ -7,7 +7,7 @@ import { Box, Divider, Grid, makeStyles, Theme, Dialog, List, ListItem } from '@
 import { getLocations } from 'domains/core/coreSlice';
 import { Densities, Density, Location } from 'domains/core/models';
 import { ButtonWrapper, LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
-import { setInitialParams, setSearchClick } from 'domains/shapeDiver/slice';
+import { setInitialParams, setSearchClick, setSaveSuccess } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -50,12 +50,13 @@ interface DispatchProps {
   setInitialParams: typeof setInitialParams;
   getLocations: typeof getLocations;
   setSearchClick: typeof setSearchClick;
+  setSaveSuccess: typeof setSaveSuccess;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
-  const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick } = props;
+  const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick, setSaveSuccess } = props;
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
@@ -102,6 +103,7 @@ const SearchToolBar = (props: Props) => {
           area: area!,
           density: density!
         });
+        setSaveSuccess(false)
         history.push('/shapediver/step1');
       }
     } else {
@@ -274,7 +276,8 @@ const container = compose<Props, {}>(
     {
       getLocations,
       setInitialParams,
-      setSearchClick
+      setSearchClick,
+      setSaveSuccess
     }
   )
 )(SearchToolBar);

@@ -21,6 +21,8 @@ export interface ShapeDiverState {
   searchClick: Boolean;
   projects: Project[];
   currentProject: Project | undefined;
+  saveSuccess: boolean;
+  nameProject: string;
 }
 
 const initialState: ShapeDiverState = {
@@ -58,6 +60,8 @@ const initialState: ShapeDiverState = {
   searchClick: false,
   projects: [],
   currentProject: undefined,
+  saveSuccess: false,
+  nameProject: ''
 };
 
 export const shapeDiverSlice = createSlice({
@@ -122,13 +126,16 @@ export const shapeDiverSlice = createSlice({
       state.searchClick = action.payload;
     },
     setSaveSuccess: (state, action: PayloadAction<boolean>) => {
-
+      state.saveSuccess = action.payload;
     },
     setLoadProjects: (state, action: PayloadAction<Project[]>) => {
       state.projects = action.payload;
     },
     setCurrentProject: (state, action: PayloadAction<Project>) => {
       state.currentProject = action.payload;
+    },
+    setNameProject: (state, action: PayloadAction<string>) => {
+      state.nameProject = action.payload;
     }
   },
 });
@@ -153,7 +160,8 @@ export const {
   setSearchClick,
   setSaveSuccess,
   setLoadProjects,
-  setCurrentProject
+  setCurrentProject,
+  setNameProject
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
@@ -171,7 +179,7 @@ export default shapeDiverSlice.reducer;
 
 export const saveProject = (project: Project): AppThunk => dispatch => {
   post('/SaveProject', { data: project }).then((data: AxiosResponse) => {
-    dispatch(setSaveSuccess(data.data))
+    dispatch(setSaveSuccess(data.data === "Success" ? true : false))
   });
 };
 

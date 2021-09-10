@@ -3,6 +3,7 @@ import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Grid, makeStyles, Paper, Radio, RadioGroup, Container } from '@material-ui/core'
 import { getArea, setTerrain, setDensity, setUnitsNumberType, setImportModel, setExpandAdvanced } from 'domains/shapeDiver/slice';
+import { CustomTooltip } from 'domains/common/components';
 
 import { high, low, medium, two, three, four, square, rectangle, custom } from 'assets'
 import { highSelected, lowSelected, mediumSelected, twoSelected, threeSelected, fourSelected, squareSelected, rectangleSelected, customSelected } from 'assets'
@@ -49,6 +50,7 @@ const styles = makeStyles((theme) => ({
     width: '100%'
   }
 }));
+
 
 interface StateProps {
   area: number;
@@ -109,21 +111,26 @@ function ShapeDiverToolBarStep1(props: Props) {
             <RadioGroup className={classes.radioStyle}>
               <Grid container justify="center">
                 <Grid item xs={4}>
-                  <Radio
-                    checked={terrain === 0}
-                    onClick={() => setTerrainAndClearImage(0)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={squareSelected} alt="1:1" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={square} alt="1:1" />}
-                  />
+                  <CustomTooltip title="Square" placement="top-end">
+                    <Radio
+                      checked={terrain === 0}
+                      onClick={() => setTerrainAndClearImage(0)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={squareSelected} alt="1:1" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={square} alt="1:1" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
                 <Grid item xs={4}>
-                  <Radio
-                    checked={terrain === 1}
-                    onClick={() => setTerrainAndClearImage(1)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={rectangleSelected} alt="2:1" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={rectangle} alt="2:1" />}
+                  <CustomTooltip title="Rectangle" placement="top-end">
+                    <Radio
+                      checked={terrain === 1}
+                      onClick={() => setTerrainAndClearImage(1)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={rectangleSelected} alt="2:1" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={rectangle} alt="2:1" />}
 
-                  />
+                    />
+                  </CustomTooltip>
+
                 </Grid>
                 <Grid item xs={4}>
                   <input
@@ -132,12 +139,14 @@ function ShapeDiverToolBarStep1(props: Props) {
                     onChange={(event) => uploadImage(event)}
                     style={{ display: 'none' }}
                   />
-                  <Radio
-                    checked={terrain === 2}
-                    onClick={() => handleFileUpload()}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={customSelected} alt="import" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={custom} alt="import" />}
-                  />
+                  <CustomTooltip title="Add DXF file with lot shape" placement="top-end">
+                    <Radio
+                      checked={terrain === 2}
+                      onClick={() => handleFileUpload()}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={customSelected} alt="import" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={custom} alt="import" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
               </Grid>
             </RadioGroup>
@@ -149,28 +158,34 @@ function ShapeDiverToolBarStep1(props: Props) {
             <RadioGroup className={classes.radioStyle}>
               <Grid container justify="center">
                 <Grid item xs={4}>
-                  <Radio
-                    checked={location.density === 0}
-                    onClick={() => setDensity(0)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={lowSelected} alt="low" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={low} alt="low" />}
-                  />
+                  <CustomTooltip title="Low" placement="top-end">
+                    <Radio
+                      checked={location.density === 0}
+                      onClick={() => setDensity(0)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={lowSelected} alt="low" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={low} alt="low" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
                 <Grid item xs={4}>
-                  <Radio
-                    checked={location.density === 1}
-                    onClick={() => setDensity(1)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={mediumSelected} alt="medium" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={medium} alt="medium" />}
-                  />
+                  <CustomTooltip title="Medium" placement="top-end">
+                    <Radio
+                      checked={location.density === 1}
+                      onClick={() => setDensity(1)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={mediumSelected} alt="medium" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={medium} alt="medium" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
                 <Grid item xs={4}>
-                  <Radio
-                    checked={location.density === 2}
-                    onClick={() => setDensity(2)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={highSelected} alt="high" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={high} alt="high" />}
-                  />
+                  <CustomTooltip title="High" placement="top-end">
+                    <Radio
+                      checked={location.density === 2}
+                      onClick={() => setDensity(2)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={highSelected} alt="high" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={high} alt="high" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
               </Grid>
             </RadioGroup>
@@ -182,28 +197,34 @@ function ShapeDiverToolBarStep1(props: Props) {
             <RadioGroup className={classes.radioStyle}>
               <Grid container justify="center">
                 <Grid item xs={4}>
-                  <Radio
-                    checked={location.unitsNumberType === 0}
-                    onClick={() => setUnitsNumberType(0)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={twoSelected} alt="two" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={two} alt="two" />}
-                  />
+                  <CustomTooltip title="Two types" placement="top-end">
+                    <Radio
+                      checked={location.unitsNumberType === 0}
+                      onClick={() => setUnitsNumberType(0)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={twoSelected} alt="two" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={two} alt="two" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
                 <Grid item xs={4}>
-                  <Radio
-                    checked={location.unitsNumberType === 1}
-                    onClick={() => setUnitsNumberType(1)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={threeSelected} alt="three" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={three} alt="three" />}
-                  />
+                  <CustomTooltip title="Three types" placement="top-end">
+                    <Radio
+                      checked={location.unitsNumberType === 1}
+                      onClick={() => setUnitsNumberType(1)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={threeSelected} alt="three" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={three} alt="three" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
                 <Grid item xs={4}>
-                  <Radio
-                    checked={location.unitsNumberType === 2}
-                    onClick={() => setUnitsNumberType(2)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={fourSelected} alt="four" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={four} alt="four" />}
-                  />
+                  <CustomTooltip title="Four types" placement="top-end">
+                    <Radio
+                      checked={location.unitsNumberType === 2}
+                      onClick={() => setUnitsNumberType(2)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={fourSelected} alt="four" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={four} alt="four" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
               </Grid>
             </RadioGroup>

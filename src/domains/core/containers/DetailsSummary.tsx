@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
 import { GeneralParameters } from 'domains/common/components';
-import { loadProjectById, setInitialParams } from 'domains/shapeDiver/slice';
+import { loadProjectById, setInitialParams, setSaveSuccess, setNameProject } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { Project } from 'domains/shapeDiver/models';
@@ -115,11 +115,13 @@ interface RouteProps {
 interface DispatchProps {
   loadProjectById: typeof loadProjectById;
   setInitialParams: typeof setInitialParams;
+  setSaveSuccess: typeof setSaveSuccess;
+  setNameProject: typeof setNameProject;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps<RouteProps>;
 const DetailsSummary = (props: Props) => {
-  const { currentProject, loadProjectById, setInitialParams, match: { params }, history } = props;
+  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject } = props;
   const classes = useStyles();
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
 
@@ -138,6 +140,8 @@ const DetailsSummary = (props: Props) => {
           density: getDensity(currentProject?.location?.density!)!
         });
 
+        setSaveSuccess(true)
+        setNameProject(currentProject?.projectName!)
         history.push('/shapediver/step1');
       }
     } else {
@@ -377,7 +381,9 @@ const container = compose<Props, {}>(
     }),
     {
       loadProjectById,
-      setInitialParams
+      setInitialParams,
+      setSaveSuccess,
+      setNameProject
     }
   )
 )(DetailsSummary)

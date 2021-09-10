@@ -12,6 +12,7 @@ import { Location } from 'domains/core/models';
 import { ShapeDiverAdvancedOptions, ShapeDiverToolBarDetails } from 'domains/shapeDiver/components';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import { CustomTooltip } from 'domains/common/components';
 
 const styles = makeStyles((theme) => ({
   container: {
@@ -109,20 +110,24 @@ function ShapeDiverToolBarStep2(props: Props) {
             <RadioGroup className={classes.radioStyle}>
               <Grid container alignItems="center">
                 <Grid item container xs={6} justify="center">
-                  <Radio
-                    checked={facadeDirection === 0}
-                    onClick={() => setFacadeDirection(0)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={horizontalSelected} alt="horizontal" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={horizontal} alt="horizontal" />}
-                  />
+                  <CustomTooltip title="Horizontal" placement="top-end">
+                    <Radio
+                      checked={facadeDirection === 0}
+                      onClick={() => setFacadeDirection(0)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={horizontalSelected} alt="horizontal" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={horizontal} alt="horizontal" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
                 <Grid item container xs={6} justify="center">
-                  <Radio
-                    checked={facadeDirection === 1}
-                    onClick={() => setFacadeDirection(1)}
-                    checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={verticalSelected} alt="vertical" />}
-                    icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={vertical} alt="vertical" />}
-                  />
+                  <CustomTooltip title="Vertical" placement="top-end">
+                    <Radio
+                      checked={facadeDirection === 1}
+                      onClick={() => setFacadeDirection(1)}
+                      checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={verticalSelected} alt="vertical" />}
+                      icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={vertical} alt="vertical" />}
+                    />
+                  </CustomTooltip>
                 </Grid>
               </Grid>
             </RadioGroup>
