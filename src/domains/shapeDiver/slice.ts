@@ -22,6 +22,7 @@ export interface ShapeDiverState {
   projects: Project[];
   currentProject: Project | undefined;
   saveSuccess: boolean;
+  nameProject: string;
 }
 
 const initialState: ShapeDiverState = {
@@ -59,7 +60,8 @@ const initialState: ShapeDiverState = {
   searchClick: false,
   projects: [],
   currentProject: undefined,
-  saveSuccess: false
+  saveSuccess: false,
+  nameProject: ''
 };
 
 export const shapeDiverSlice = createSlice({
@@ -131,6 +133,9 @@ export const shapeDiverSlice = createSlice({
     },
     setCurrentProject: (state, action: PayloadAction<Project>) => {
       state.currentProject = action.payload;
+    },
+    setNameProject: (state, action: PayloadAction<string>) => {
+      state.nameProject = action.payload;
     }
   },
 });
@@ -155,7 +160,8 @@ export const {
   setSearchClick,
   setSaveSuccess,
   setLoadProjects,
-  setCurrentProject
+  setCurrentProject,
+  setNameProject
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
