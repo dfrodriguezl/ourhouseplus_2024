@@ -35,14 +35,27 @@ const styles = makeStyles((theme: Theme) => ({
     marginBottom: '5px'
   },
   rootAccordionSummary: {
-    margin: 0,
-    minHeight: 0,
+    margin: '0 !important',
+    minHeight: '0 !important',
     '&$expanded': {
-      minHeight: 0,
-      margin: 0
+      minHeight: '0 !important',
+      margin: '0 !important'
     }
+  },
+  tabContainer: {
+    width: '100%'
+  },
+  titlePanel: {
+    marginBottom: 10
+  },
+  inputNumber: {
+    border: 'none',
+    width: '100%',
+    height: '80%',
+    background: theme.palette.common.white,
+    color: '#49494F',
+    textAlign: 'center'
   }
-
 }));
 
 interface DispatchProps {
@@ -53,6 +66,12 @@ interface DispatchProps {
 interface StateProps {
   location: Location | undefined;
   expandAdvanced: Object;
+}
+
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: any;
+  value: any;
 }
 
 type Props = StateProps & DispatchProps;
@@ -114,7 +133,7 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
 
 
   return (
-    <Accordion className={classes.accordion} onChange={onChangeAccordion}>
+    <Accordion className={classes.accordion} onChange={onChangeAccordion} classes={{ root: classes.rootAccordionSummary, expanded: classes.rootAccordionSummary }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         className={classes.accordionSummary}
@@ -128,48 +147,156 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
           <Grid item xs={12} >
             <Tabs variant="fullWidth" value={value} onChange={handleChange} className={classes.rootTabs}>
               <Tab label="Floors" wrapped classes={{ root: classes.root }} />
-              <Tab label="Density" wrapped classes={{ root: classes.root }} />
+              <Tab label="Housing" wrapped classes={{ root: classes.root }} />
               <Tab label="Program" wrapped classes={{ root: classes.root }} />
               <Tab label="Roads" wrapped classes={{ root: classes.root }} />
             </Tabs>
           </Grid>
           <Grid item container xs={12} className={classes.details}>
-            <Grid item xs={12} >
-              <Box fontSize={14} fontWeight='bold' textAlign="end">Max Primary Floors</Box>
-            </Grid>
-            <Slider
-              value={location ? location.maxPriFloors : 0}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="auto"
-              step={1}
-              min={1}
-              max={50}
-              onChange={updateMaxPriFloors}
-            />
-            <Grid item xs={12}>
-              <Box fontSize={14} fontWeight='bold' textAlign="end">Max Secondary Floors</Box>
-            </Grid>
-            <Slider
-              value={location ? location.maxSecFloors : 0}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="auto"
-              step={1}
-              min={1}
-              max={50}
-              onChange={updateMaxSecFloors}
-            />
-            <Grid item xs={12}>
-              <Box fontSize={14} fontWeight='bold' textAlign="end">Street Floors</Box>
-            </Grid>
-            <Slider
-              value={location ? location.streetFloors : 0}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="auto"
-              step={1}
-              min={1}
-              max={10}
-              onChange={updateStreetFloors}
-            />
+            <TabPanel value={value} index={0} >
+              <Grid item xs={12} className={classes.titlePanel}>
+                <Box fontSize={18} fontWeight='bold' textAlign="start">Maximum height</Box>
+              </Grid>
+              <Grid item xs={12} >
+                <Box fontSize={12} textAlign="start">Max primary floors</Box>
+              </Grid>
+              <Grid item container direction="row" xs={12}>
+                <Grid xs={9}>
+                  <Slider
+                    value={location ? location.maxPriFloors : 0}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    min={1}
+                    max={50}
+                    onChange={updateMaxPriFloors}
+                  />
+                </Grid>
+                <Grid xs={1} />
+                <Grid xs={2}>
+                  <input type="text" value={location ? location.maxPriFloors : 0} className={classes.inputNumber} disabled />
+                </Grid>
+
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box fontSize={12} textAlign="start">Max secondary floors</Box>
+              </Grid>
+              <Grid item container direction="row" xs={12}>
+                <Grid xs={9}>
+                  <Slider
+                    value={location ? location.maxSecFloors : 0}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    min={1}
+                    max={50}
+                    onChange={updateMaxSecFloors}
+                  />
+                </Grid>
+                <Grid xs={1} />
+                <Grid xs={2}>
+                  <input type="text" value={location ? location.maxSecFloors : 0} className={classes.inputNumber} disabled />
+                </Grid>
+
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box fontSize={12} textAlign="start">Street floors</Box>
+              </Grid>
+              <Grid item container direction="row" xs={12}>
+                <Grid xs={9}>
+                  <Slider
+                    value={location ? location.streetFloors : 0}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    min={1}
+                    max={10}
+                    onChange={updateStreetFloors}
+                  />
+                </Grid>
+                <Grid xs={1} />
+                <Grid xs={2}>
+                  <input type="text" value={location ? location.streetFloors : 0} className={classes.inputNumber} disabled />
+                </Grid>
+
+              </Grid>
+            </TabPanel>
+            <TabPanel value={value} index={2} >
+              <Grid item xs={12} className={classes.titlePanel}>
+                <Box fontSize={18} fontWeight='bold' textAlign="start">Commercial and non-residential space</Box>
+              </Grid>
+              <Grid item xs={12} >
+                <Box fontSize={12} textAlign="start">Mall distance <span style={{float:'right'}}>XXXXXXX</span></Box>
+              </Grid>
+              <Grid item xs={12} style={{margin: '10px 0'}}>
+                <Box fontSize={12} fontWeight="bold" textAlign="start">Add ground floor free space </Box>
+              </Grid>
+              <Grid item container direction="row" xs={12}>
+                <Grid xs={9}>
+                  <Slider
+                    value={location ? location.maxPriFloors : 0}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    min={1}
+                    max={50}
+                    onChange={updateMaxPriFloors}
+                  />
+                </Grid>
+                <Grid xs={1} />
+                <Grid xs={2}>
+                  <input type="text" value={location ? location.maxPriFloors : 0} className={classes.inputNumber} disabled />
+                </Grid>
+
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box fontSize={12} textAlign="start">Max secondary floors</Box>
+              </Grid>
+              <Grid item container direction="row" xs={12}>
+                <Grid xs={9}>
+                  <Slider
+                    value={location ? location.maxSecFloors : 0}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    min={1}
+                    max={50}
+                    onChange={updateMaxSecFloors}
+                  />
+                </Grid>
+                <Grid xs={1} />
+                <Grid xs={2}>
+                  <input type="text" value={location ? location.maxSecFloors : 0} className={classes.inputNumber} disabled />
+                </Grid>
+
+              </Grid>
+
+              <Grid item xs={12}>
+                <Box fontSize={12} textAlign="start">Street floors</Box>
+              </Grid>
+              <Grid item container direction="row" xs={12}>
+                <Grid xs={9}>
+                  <Slider
+                    value={location ? location.streetFloors : 0}
+                    aria-labelledby="discrete-slider"
+                    valueLabelDisplay="auto"
+                    step={1}
+                    min={1}
+                    max={10}
+                    onChange={updateStreetFloors}
+                  />
+                </Grid>
+                <Grid xs={1} />
+                <Grid xs={2}>
+                  <input type="text" value={location ? location.streetFloors : 0} className={classes.inputNumber} disabled />
+                </Grid>
+
+              </Grid>
+            </TabPanel>
+
           </Grid>
 
         </Grid>
@@ -182,7 +309,6 @@ const container = connect<StateProps, DispatchProps, {}, RootState>(
   (state: RootState) => ({
     location: state.domains.shapediver.location,
     expandAdvanced: state.domains.shapediver.expandAdvanced
-
   }),
   {
     setAdvancedOptions,
@@ -191,3 +317,24 @@ const container = connect<StateProps, DispatchProps, {}, RootState>(
 )(ShapeDiverAdvancedOptions);
 
 export default container;
+
+
+const TabPanel = (props: TabPanelProps) => {
+  const { children, value, index, ...other } = props;
+  const classes = styles();
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+      className={classes.tabContainer}
+    >
+      {value === index && (
+        children
+      )}
+    </div>
+  );
+}
