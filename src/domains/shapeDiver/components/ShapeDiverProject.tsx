@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { useState } from 'react';
 import { compose } from 'recompose';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Grid, makeStyles, Divider, IconButton, Theme, Snackbar } from '@material-ui/core';
+import { Grid, makeStyles, Divider, IconButton, Theme, Snackbar, SnackbarContent } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { getProjectData, saveProject, setAdvancedOptions } from 'domains/shapeDiver/slice';
 import { save } from 'assets'
@@ -31,7 +31,7 @@ const styles = makeStyles((theme: Theme) => ({
     height: 20
   },
   root: {
-    backgroundColor: theme.palette.common.white,
+    background: theme.palette.common.white,
     color: theme.palette.common.black,
   }
 }));
@@ -100,17 +100,21 @@ const ShapeDiverProject = (props: Props) => {
           horizontal: 'center',
         }}
         open={open}
-        autoHideDuration={6000}
-        message="Your project has been saved"
-        classes={{ root: classes.root }}
-        action={
-          <Fragment>
-            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-              <CloseIcon fontSize="small" />
-            </IconButton>
-          </Fragment>
-        }
-      />
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+      >
+        <SnackbarContent
+          message="Your project has been saved" 
+          className={classes.root}
+          action={
+            <Fragment>
+              <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose} style={{color:'black'}}>
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </Fragment>
+          }/>
+
+      </Snackbar>
     </Fragment>
   );
 }
