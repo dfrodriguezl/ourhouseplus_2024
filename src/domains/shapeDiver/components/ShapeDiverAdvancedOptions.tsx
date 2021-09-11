@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Grid, Box, Slider, makeStyles, Accordion, AccordionSummary, AccordionDetails, Tabs, Tab, Theme } from '@material-ui/core';
+import { Grid, Box, makeStyles, Accordion, AccordionSummary, AccordionDetails, Tabs, Tab, Theme } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Location } from 'domains/core/models';
 import { connect } from 'react-redux';
 import { setAdvancedOptions, setExpandAdvanced } from 'domains/shapeDiver/slice';
 
 import { RootState } from 'app/store';
+import { TabPanel } from 'domains/common/components';
+import { ShapeDiverAdvancedOptions1, ShapeDiverAdvancedOptions2, ShapeDiverAdvancedOptions3, ShapeDiverAdvancedOptions4 } from '.';
 
 
 const styles = makeStyles((theme: Theme) => ({
@@ -13,9 +15,6 @@ const styles = makeStyles((theme: Theme) => ({
     width: '100%',
     background: 'transparent',
     padding: '0 0px'
-  },
-  labelContainer: {
-    padding: 0
   },
   root: {
     minWidth: 0,
@@ -41,20 +40,6 @@ const styles = makeStyles((theme: Theme) => ({
       minHeight: '0 !important',
       margin: '0 !important'
     }
-  },
-  tabContainer: {
-    width: '100%'
-  },
-  titlePanel: {
-    marginBottom: 10
-  },
-  inputNumber: {
-    border: 'none',
-    width: '100%',
-    height: '80%',
-    background: theme.palette.common.white,
-    color: '#49494F',
-    textAlign: 'center'
   }
 }));
 
@@ -68,45 +53,14 @@ interface StateProps {
   expandAdvanced: Object;
 }
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: any;
-  value: any;
-}
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions = (props: Props) => {
-  const { location, setAdvancedOptions, setExpandAdvanced } = props;
+  const { setExpandAdvanced } = props;
   const [value, setValue] = useState(0);
   const classes = styles();
 
 
-  const updateMaxPriFloors = (_: any, value: number | number[]) => {
-    if (!location) return;
-    setAdvancedOptions({
-      maxPriFloors: Number(value),
-      maxSecFloors: location!.maxSecFloors,
-      streetFloors: location!.streetFloors,
-    });
-  }
-
-  const updateMaxSecFloors = (_: any, value: number | number[]) => {
-    if (!location) return;
-    setAdvancedOptions({
-      maxPriFloors: location!.maxPriFloors,
-      maxSecFloors: Number(value),
-      streetFloors: location!.streetFloors,
-    });
-  }
-
-  const updateStreetFloors = (_: any, value: number | number[]) => {
-    if (!location) return;
-    setAdvancedOptions({
-      maxPriFloors: location!.maxPriFloors,
-      maxSecFloors: location!.maxSecFloors,
-      streetFloors: Number(value),
-    });
-  }
 
   const onChangeAccordion = (event: object, expanded: boolean) => {
 
@@ -148,157 +102,24 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
             <Tabs variant="fullWidth" value={value} onChange={handleChange} className={classes.rootTabs}>
               <Tab label="Floors" wrapped classes={{ root: classes.root }} />
               <Tab label="Housing" wrapped classes={{ root: classes.root }} />
-              <Tab label="Program" wrapped classes={{ root: classes.root }} />
+              <Tab label="Free space" wrapped classes={{ root: classes.root }} />
               <Tab label="Roads" wrapped classes={{ root: classes.root }} />
             </Tabs>
           </Grid>
           <Grid item container xs={12} className={classes.details}>
             <TabPanel value={value} index={0} >
-              <Grid item xs={12} className={classes.titlePanel}>
-                <Box fontSize={18} fontWeight='bold' textAlign="start">Maximum height</Box>
-              </Grid>
-              <Grid item xs={12} >
-                <Box fontSize={12} textAlign="start">Max primary floors</Box>
-              </Grid>
-              <Grid item container direction="row" xs={12}>
-                <Grid xs={9}>
-                  <Slider
-                    value={location ? location.maxPriFloors : 0}
-                    aria-labelledby="discrete-slider"
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={1}
-                    max={50}
-                    onChange={updateMaxPriFloors}
-                  />
-                </Grid>
-                <Grid xs={1} />
-                <Grid xs={2}>
-                  <input type="text" value={location ? location.maxPriFloors : 0} className={classes.inputNumber} disabled />
-                </Grid>
-
-              </Grid>
-
-              <Grid item xs={12}>
-                <Box fontSize={12} textAlign="start">Max secondary floors</Box>
-              </Grid>
-              <Grid item container direction="row" xs={12}>
-                <Grid xs={9}>
-                  <Slider
-                    value={location ? location.maxSecFloors : 0}
-                    aria-labelledby="discrete-slider"
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={1}
-                    max={50}
-                    onChange={updateMaxSecFloors}
-                  />
-                </Grid>
-                <Grid xs={1} />
-                <Grid xs={2}>
-                  <input type="text" value={location ? location.maxSecFloors : 0} className={classes.inputNumber} disabled />
-                </Grid>
-
-              </Grid>
-
-              <Grid item xs={12}>
-                <Box fontSize={12} textAlign="start">Street floors</Box>
-              </Grid>
-              <Grid item container direction="row" xs={12}>
-                <Grid xs={9}>
-                  <Slider
-                    value={location ? location.streetFloors : 0}
-                    aria-labelledby="discrete-slider"
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={1}
-                    max={10}
-                    onChange={updateStreetFloors}
-                  />
-                </Grid>
-                <Grid xs={1} />
-                <Grid xs={2}>
-                  <input type="text" value={location ? location.streetFloors : 0} className={classes.inputNumber} disabled />
-                </Grid>
-
-              </Grid>
+              <ShapeDiverAdvancedOptions1 />
+            </TabPanel>
+            <TabPanel value={value} index={1} >
+              <ShapeDiverAdvancedOptions4 />
             </TabPanel>
             <TabPanel value={value} index={2} >
-              <Grid item xs={12} className={classes.titlePanel}>
-                <Box fontSize={18} fontWeight='bold' textAlign="start">Commercial and non-residential space</Box>
-              </Grid>
-              <Grid item xs={12} >
-                <Box fontSize={12} textAlign="start">Mall distance <span style={{float:'right'}}>XXXXXXX</span></Box>
-              </Grid>
-              <Grid item xs={12} style={{margin: '10px 0'}}>
-                <Box fontSize={12} fontWeight="bold" textAlign="start">Add ground floor free space </Box>
-              </Grid>
-              <Grid item container direction="row" xs={12}>
-                <Grid xs={9}>
-                  <Slider
-                    value={location ? location.maxPriFloors : 0}
-                    aria-labelledby="discrete-slider"
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={1}
-                    max={50}
-                    onChange={updateMaxPriFloors}
-                  />
-                </Grid>
-                <Grid xs={1} />
-                <Grid xs={2}>
-                  <input type="text" value={location ? location.maxPriFloors : 0} className={classes.inputNumber} disabled />
-                </Grid>
-
-              </Grid>
-
-              <Grid item xs={12}>
-                <Box fontSize={12} textAlign="start">Max secondary floors</Box>
-              </Grid>
-              <Grid item container direction="row" xs={12}>
-                <Grid xs={9}>
-                  <Slider
-                    value={location ? location.maxSecFloors : 0}
-                    aria-labelledby="discrete-slider"
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={1}
-                    max={50}
-                    onChange={updateMaxSecFloors}
-                  />
-                </Grid>
-                <Grid xs={1} />
-                <Grid xs={2}>
-                  <input type="text" value={location ? location.maxSecFloors : 0} className={classes.inputNumber} disabled />
-                </Grid>
-
-              </Grid>
-
-              <Grid item xs={12}>
-                <Box fontSize={12} textAlign="start">Street floors</Box>
-              </Grid>
-              <Grid item container direction="row" xs={12}>
-                <Grid xs={9}>
-                  <Slider
-                    value={location ? location.streetFloors : 0}
-                    aria-labelledby="discrete-slider"
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={1}
-                    max={10}
-                    onChange={updateStreetFloors}
-                  />
-                </Grid>
-                <Grid xs={1} />
-                <Grid xs={2}>
-                  <input type="text" value={location ? location.streetFloors : 0} className={classes.inputNumber} disabled />
-                </Grid>
-
-              </Grid>
+              <ShapeDiverAdvancedOptions2 />
             </TabPanel>
-
+            <TabPanel value={value} index={3} >
+              <ShapeDiverAdvancedOptions3 />
+            </TabPanel>
           </Grid>
-
         </Grid>
       </AccordionDetails>
     </Accordion>
@@ -319,22 +140,4 @@ const container = connect<StateProps, DispatchProps, {}, RootState>(
 export default container;
 
 
-const TabPanel = (props: TabPanelProps) => {
-  const { children, value, index, ...other } = props;
-  const classes = styles();
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-      className={classes.tabContainer}
-    >
-      {value === index && (
-        children
-      )}
-    </div>
-  );
-}
