@@ -6,7 +6,8 @@ import { setAdvancedOptions } from '../slice';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { Fragment, useState } from 'react';
-import { squareSelected, rectangleSelected, square, rectangle, fiftySelected, fifty, sixty, sixtySelected, seventy, seventySelected } from 'assets'
+import { singleSelected, singleInactive, dobleSelected, dobleInactive, nineSelected, nineInactive, twelveSelected, twelveInactive, 
+  fifteenInactive, fifteenSelected } from 'assets'
 
 const styles = makeStyles((theme: Theme) => ({
   titlePanel: {
@@ -48,16 +49,53 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
   const { location, setAdvancedOptions } = props;
   const classes = styles();
 
-  // Temporal states
-  const [mainAxisDirection, setMainAxisDirection] = useState(0);
-  const [blockSize, setBlockSize] = useState(0);
-  const [roadsWidth, setRoadsWidth] = useState(0);
-
-
-
-
   const updateMainAxisDirection = (_: any, value: number | number[]) => {
-    setMainAxisDirection(Number(value));
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: Number(value),
+    });
+  }
+
+  const updateMainAxisDirectionLocal = (value: number) => {
+    updateMainAxisDirection('', Number(value))
+  }
+
+  const updateBlockSize = (value: number | number[]) => {
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: Number(value),
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection
+    });
+  }
+
+  const updateRoadsWidth = (value: number | number[]) => {
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: Number(value),
+      axisSelection: location!.axisSelection
+    });
   }
 
 
@@ -72,27 +110,27 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9} container spacing={2}>
           <Grid item>
-            <RemoveIcon onClick={() => setMainAxisDirection(mainAxisDirection - 1)} className={classes.hover} />
+            <RemoveIcon onClick={() => updateMainAxisDirectionLocal(location!.axisSelection - 1)} className={classes.hover} />
           </Grid>
           <Grid item xs >
             <Slider
-              value={mainAxisDirection ? mainAxisDirection : 0}
+              value={location!.axisSelection ? location!.axisSelection : 0}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
               step={1}
-              min={1}
-              max={50}
+              min={0}
+              max={19}
               onChange={updateMainAxisDirection}
             />
           </Grid>
           <Grid item>
-            <AddIcon onClick={() => setMainAxisDirection(mainAxisDirection + 1)} className={classes.hover} />
+            <AddIcon onClick={() => updateMainAxisDirectionLocal(location!.axisSelection + 1)} className={classes.hover} />
           </Grid>
 
         </Grid>
         <Grid xs={1} />
         <Grid item container xs={2} justify="flex-end">
-          <input type="text" value={mainAxisDirection ? mainAxisDirection : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location!.axisSelection ? location!.axisSelection : 0} className={classes.inputNumber} disabled />
         </Grid>
 
       </Grid>
@@ -104,18 +142,18 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
         <Grid container justify="center">
           <Grid item xs={4}>
             <Radio
-              checked={blockSize === 0}
-              onClick={() => setBlockSize(0)}
-              checkedIcon={<img className={classes.buttons} src={squareSelected} alt="1:1" />}
-              icon={<img className={classes.buttons} src={square} alt="1:1" />}
+              checked={location?.streetDensity === 0}
+              onClick={() => updateBlockSize(0)}
+              checkedIcon={<img className={classes.buttons} src={singleSelected} alt="1:1" />}
+              icon={<img className={classes.buttons} src={singleInactive} alt="1:1" />}
             />
           </Grid>
           <Grid item xs={4}>
             <Radio
-              checked={blockSize === 1}
-              onClick={() => setBlockSize(1)}
-              checkedIcon={<img className={classes.buttons} src={rectangleSelected} alt="1:1" />}
-              icon={<img className={classes.buttons} src={rectangle} alt="1:1" />}
+              checked={location?.streetDensity === 1}
+              onClick={() => updateBlockSize(1)}
+              checkedIcon={<img className={classes.buttons} src={dobleSelected} alt="1:1" />}
+              icon={<img className={classes.buttons} src={dobleInactive} alt="1:1" />}
             />
           </Grid>
         </Grid>
@@ -128,26 +166,26 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
         <Grid container justify="center">
           <Grid item xs={4}>
             <Radio
-              checked={roadsWidth === 0}
-              onClick={() => setRoadsWidth(0)}
-              checkedIcon={<img className={classes.buttons} src={fiftySelected} alt="1:1" />}
-              icon={<img className={classes.buttons} src={fifty} alt="1:1" />}
+              checked={location?.islandSpacings === 2}
+              onClick={() => updateRoadsWidth(2)}
+              checkedIcon={<img className={classes.buttons} src={nineSelected} alt="1:1" />}
+              icon={<img className={classes.buttons} src={nineInactive} alt="1:1" />}
             />
           </Grid>
           <Grid item xs={4}>
             <Radio
-              checked={roadsWidth === 1}
-              onClick={() => setRoadsWidth(1)}
-              checkedIcon={<img className={classes.buttons} src={sixtySelected} alt="1:1" />}
-              icon={<img className={classes.buttons} src={sixty} alt="1:1" />}
+              checked={location?.islandSpacings === 1}
+              onClick={() => updateRoadsWidth(1)}
+              checkedIcon={<img className={classes.buttons} src={twelveSelected} alt="1:1" />}
+              icon={<img className={classes.buttons} src={twelveInactive} alt="1:1" />}
             />
           </Grid>
           <Grid item xs={4}>
             <Radio
-              checked={roadsWidth === 2}
-              onClick={() => setRoadsWidth(2)}
-              checkedIcon={<img className={classes.buttons} src={seventySelected} alt="1:1" />}
-              icon={<img className={classes.buttons} src={seventy} alt="1:1" />}
+              checked={location?.islandSpacings === 0}
+              onClick={() => updateRoadsWidth(0)}
+              checkedIcon={<img className={classes.buttons} src={fifteenSelected} alt="1:1" />}
+              icon={<img className={classes.buttons} src={fifteenInactive} alt="1:1" />}
             />
           </Grid>
         </Grid>

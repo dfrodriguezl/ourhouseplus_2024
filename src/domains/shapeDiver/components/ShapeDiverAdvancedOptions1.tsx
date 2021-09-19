@@ -39,6 +39,12 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       maxPriFloors: Number(value),
       maxSecFloors: location!.maxSecFloors,
       streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
     });
   }
 
@@ -48,6 +54,12 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       maxPriFloors: location!.maxPriFloors,
       maxSecFloors: Number(value),
       streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
     });
   }
 
@@ -57,6 +69,12 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       maxPriFloors: location!.maxPriFloors,
       maxSecFloors: location!.maxSecFloors,
       streetFloors: Number(value),
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
     });
   }
 

@@ -7,6 +7,7 @@ import { setAdvancedOptions } from '../slice';
 import RemoveIcon from '@material-ui/icons/Remove';
 import AddIcon from '@material-ui/icons/Add';
 import { Fragment, useState } from 'react';
+import { values } from 'lodash';
 
 const styles = makeStyles((theme: Theme) => ({
   titlePanel: {
@@ -44,16 +45,42 @@ const ShapeDiverAdvancedOptions2 = (props: Props) => {
   const { location, setAdvancedOptions } = props;
   const classes = styles();
 
-  // Temporal states
-  const [groundFloorFreeSpace, setGroundFloorFreeSpace] = useState(0);
-  const [multipleFloorFreeSpace, setMultipleFloorFreeSpace] = useState(0);
-
   const updateGroundFloorFreeSpace = (_: any, value: number | number[]) => {
-    setGroundFloorFreeSpace(Number(value));
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: Number(value),
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+    });
+  }
+
+  const updateGroundFloorFreeSpaceLocal = (value: number) => {
+    updateGroundFloorFreeSpace('', Number(value))
   }
 
   const updateMultipleFloorFreeSpace = (_: any, value: number | number[]) => {
-    setMultipleFloorFreeSpace(Number(value));
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: Number(value),
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+    });
+  }
+
+  const updateMultipleFloorFreeSpaceLocal = (value: number) => {
+    updateMultipleFloorFreeSpace('', Number(value))
   }
 
 
@@ -71,26 +98,26 @@ const ShapeDiverAdvancedOptions2 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9} container spacing={2}>
           <Grid item>
-            <RemoveIcon onClick={() => setGroundFloorFreeSpace(groundFloorFreeSpace - 1)} className={classes.hover} />
+            <RemoveIcon onClick={() => updateGroundFloorFreeSpaceLocal(location!.emptySpaceSelection - 1)} className={classes.hover} />
           </Grid>
           <Grid item xs >
             <Slider
-              value={groundFloorFreeSpace ? groundFloorFreeSpace : 0}
+              value={location?.emptySpaceSelection ? location?.emptySpaceSelection : 0}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
               step={1}
-              min={1}
-              max={50}
+              min={0}
+              max={9}
               onChange={updateGroundFloorFreeSpace}
             />
           </Grid>
           <Grid item>
-            <AddIcon onClick={() => setGroundFloorFreeSpace(groundFloorFreeSpace + 1)} className={classes.hover} />
+            <AddIcon onClick={() => updateGroundFloorFreeSpaceLocal(location!.emptySpaceSelection + 1)} className={classes.hover} />
           </Grid>
         </Grid>
         <Grid xs={1} />
         <Grid item container xs={2} justify="flex-end">
-          <input type="text" value={groundFloorFreeSpace ? groundFloorFreeSpace : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location?.emptySpaceSelection ? location?.emptySpaceSelection : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
       <Grid item xs={12} style={{ margin: '10px 0' }}>
@@ -99,26 +126,26 @@ const ShapeDiverAdvancedOptions2 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9} container spacing={2}>
           <Grid item>
-            <RemoveIcon onClick={() => setMultipleFloorFreeSpace(multipleFloorFreeSpace - 1)} className={classes.hover} />
+            <RemoveIcon onClick={() => updateMultipleFloorFreeSpaceLocal(location!.undefinedTower - 1)} className={classes.hover} />
           </Grid>
           <Grid item xs >
             <Slider
-              value={multipleFloorFreeSpace ? multipleFloorFreeSpace : 0}
+              value={location?.undefinedTower ? location?.undefinedTower : 0}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
               step={1}
-              min={1}
-              max={50}
+              min={0}
+              max={1}
               onChange={updateMultipleFloorFreeSpace}
             />
           </Grid>
           <Grid item>
-            <AddIcon onClick={() => setMultipleFloorFreeSpace(multipleFloorFreeSpace + 1)} className={classes.hover} />
+            <AddIcon onClick={() => updateMultipleFloorFreeSpaceLocal(location!.undefinedTower + 1)} className={classes.hover} />
           </Grid>
         </Grid>
         <Grid xs={1} />
         <Grid item container xs={2} justify="flex-end">
-          <input type="text" value={multipleFloorFreeSpace ? multipleFloorFreeSpace : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location?.undefinedTower ? location?.undefinedTower : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
     </Fragment>

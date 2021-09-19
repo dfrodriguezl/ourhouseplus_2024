@@ -18,17 +18,8 @@ const styles = makeStyles((theme: Theme) => ({
     color: '#49494F',
     textAlign: 'center'
   },
-  hover: {
-    '&:hover': {
-      cursor: 'pointer'
-    }
-  },
   radioStyle: {
     width: '100%'
-  },
-  buttons: {
-    width: 43,
-    height: 43
   },
   bold: {
     fontWeight: 'bold'
@@ -40,11 +31,11 @@ const styles = makeStyles((theme: Theme) => ({
     float: 'right',
     fontWeight: 'normal'
   },
-  avatar:{
+  avatar: {
     backgroundColor: "#FFFFFF",
     color: "#707070"
   },
-  avatarSelected:{
+  avatarSelected: {
     color: "#000000",
     backgroundColor: "#FFFFFF",
   }
@@ -64,8 +55,20 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
   const { location, setAdvancedOptions } = props;
   const classes = styles();
 
-  // Temporal states
-  const [housingMix, setHousingMix] = useState(0);
+  const updateTypology = (value: number) => {
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: Number(value),
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+    });
+  }
 
 
 
@@ -92,40 +95,40 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
           <Grid container spacing={6}>
             <Grid item xs={2}>
               <Radio
-                checked={housingMix === 1}
-                onClick={() => setHousingMix(1)}
+                checked={location!.typologies === 0}
+                onClick={() => updateTypology(0)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>1</Avatar>}
                 icon={<Avatar className={classes.avatar}>1</Avatar>}
               />
             </Grid>
             <Grid item xs={2}>
               <Radio
-                checked={housingMix === 2}
-                onClick={() => setHousingMix(2)}
+                checked={location!.typologies === 1}
+                onClick={() => updateTypology(1)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>2</Avatar>}
                 icon={<Avatar className={classes.avatar}>2</Avatar>}
               />
             </Grid>
             <Grid item xs={2}>
-            <Radio
-                checked={housingMix === 3}
-                onClick={() => setHousingMix(3)}
+              <Radio
+                checked={location!.typologies === 2}
+                onClick={() => updateTypology(2)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>3</Avatar>}
                 icon={<Avatar className={classes.avatar}>3</Avatar>}
               />
             </Grid>
             <Grid item xs={2}>
-            <Radio
-                checked={housingMix === 4}
-                onClick={() => setHousingMix(4)}
+              <Radio
+                checked={location!.typologies === 3}
+                onClick={() => updateTypology(3)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>4</Avatar>}
                 icon={<Avatar className={classes.avatar}>4</Avatar>}
               />
             </Grid>
             <Grid item xs={2}>
-            <Radio
-                checked={housingMix === 5}
-                onClick={() => setHousingMix(5)}
+              <Radio
+                checked={location!.typologies === 4}
+                onClick={() => updateTypology(4)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>5</Avatar>}
                 icon={<Avatar className={classes.avatar}>5</Avatar>}
               />
@@ -137,41 +140,41 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
         <RadioGroup className={classes.radioStyle}>
           <Grid container spacing={6}>
             <Grid item xs={2}>
-            <Radio
-                checked={housingMix === 6}
-                onClick={() => setHousingMix(6)}
+              <Radio
+                checked={location!.typologies === 5}
+                onClick={() => updateTypology(5)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>6</Avatar>}
                 icon={<Avatar className={classes.avatar}>6</Avatar>}
               />
             </Grid>
             <Grid item xs={2}>
-            <Radio
-                checked={housingMix === 7}
-                onClick={() => setHousingMix(7)}
+              <Radio
+                checked={location!.typologies === 6}
+                onClick={() => updateTypology(6)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>7</Avatar>}
                 icon={<Avatar className={classes.avatar}>7</Avatar>}
               />
             </Grid>
             <Grid item xs={2}>
-            <Radio
-                checked={housingMix === 8}
-                onClick={() => setHousingMix(8)}
+              <Radio
+                checked={location!.typologies === 7}
+                onClick={() => updateTypology(7)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>8</Avatar>}
                 icon={<Avatar className={classes.avatar}>8</Avatar>}
               />
             </Grid>
             <Grid item xs={2}>
-            <Radio
-                checked={housingMix === 9}
-                onClick={() => setHousingMix(9)}
+              <Radio
+                checked={location!.typologies === 8}
+                onClick={() => updateTypology(8)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>9</Avatar>}
                 icon={<Avatar className={classes.avatar}>9</Avatar>}
               />
             </Grid>
             <Grid item xs={2}>
-            <Radio
-                checked={housingMix === 10}
-                onClick={() => setHousingMix(10)}
+              <Radio
+                checked={location!.typologies === 9}
+                onClick={() => updateTypology(9)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>10</Avatar>}
                 icon={<Avatar className={classes.avatar}>10</Avatar>}
               />

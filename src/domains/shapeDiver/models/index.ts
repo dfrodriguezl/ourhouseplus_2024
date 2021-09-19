@@ -16,6 +16,12 @@ export enum Parameters {
   RoomType = 'ROOM TYPE',
   UnitsNumberType = 'UNITS NUMBER TYPE',
   ImportModel = 'IMPORT DWG',
+  AxisSelection = 'AXIS SELECTION',
+  Typologies = 'TYPOLOGIES',
+  EmptySpaceSelection = 'NBR EMPTY SPACE SELECTION',
+  UndefinedTower = 'UNDEFINED TOWER ON/OFF',
+  StreetDensity = 'STREET DENSITY',
+  IslandSpacings = 'ISLAND SPACINGS'
 }
 
 export enum DataParameters {
@@ -49,6 +55,12 @@ export interface AdvancedOptions {
   maxPriFloors: number;
   maxSecFloors: number;
   streetFloors: number;
+  axisSelection: number;
+  typologies: number;
+  emptySpaceSelection: number;
+  undefinedTower: number;
+  streetDensity: number;
+  islandSpacings: number;
 }
 
 export interface ModelData {
