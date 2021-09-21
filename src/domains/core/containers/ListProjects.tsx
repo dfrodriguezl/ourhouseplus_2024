@@ -6,7 +6,8 @@ import { height_6, download_white, height_12, height_13 } from 'assets';
 import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 import EditIcon from '@material-ui/icons/Edit';
-import { loadProjectsByUsername } from 'domains/shapeDiver/slice';
+import DeleteIcon from '@material-ui/icons/Delete';
+import { deleteProjectById, loadProjectsByUsername } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -86,7 +87,8 @@ const useStyles = makeStyles(() =>
     },
     optionsProject: {
       color: '#FFFFFFB3',
-      fontSize: 15
+      fontSize: 15,
+      cursor: 'pointer'
     },
     containerOptions: {
       marginTop: 10
@@ -105,19 +107,20 @@ const useStyles = makeStyles(() =>
 interface StateProps {
   searchClick?: Object;
   projects: any[];
+  loading: boolean;
 }
 
 interface DispatchProps {
   loadProjectsByUsername: typeof loadProjectsByUsername;
+  deleteProjectById: typeof deleteProjectById;
 }
 
 type Props = RouteComponentProps & StateProps & DispatchProps;
 export const ListProjects = (props: Props) => {
-  const { loadProjectsByUsername, history, projects } = props;
+  const { loadProjectsByUsername, deleteProjectById, history, projects, loading } = props;
   const { user } = useAuth0();
   const classes = useStyles();
   const [hover, setHover] = useState(0);
-  const [isLoaded, setIsLoaded] = useState(false);
 
   const goToHome = () => {
     history.push("/home")
@@ -130,16 +133,13 @@ export const ListProjects = (props: Props) => {
   useEffect(() => {
     if (user?.email) {
       loadProjectsByUsername(user.email);
-      if (projects) {
-        setIsLoaded(true)
-      }
     }
-  }, [loadProjectsByUsername, user, projects])
+  }, [loadProjectsByUsername, user])
 
   return (
     <Fragment>
       {
-        !isLoaded &&
+        loading &&
         <FullPageOverlay />
       }
       <PageContainer background="black-model">
@@ -213,10 +213,12 @@ export const ListProjects = (props: Props) => {
                           }
                           <img alt="download-pdf" src={download_white} className={classes.imgIcon} />
                         </Typography>
-
                       </Link>
+                      <div className={classes.optionsProject} onClick={() => deleteProjectById(p.id, user.email)}>
+                        Delete
+                        <DeleteIcon className={classes.optionsIcon} />
+                      </div>
                     </Grid>
-
                   </Grid>
                   <Grid item xs={1}></Grid>
                 </Fragment>
@@ -233,10 +235,12 @@ const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
+      loading: state.domains.shapediver.loading,
       projects: state.domains.shapediver.projects,
     }),
     {
-      loadProjectsByUsername
+      loadProjectsByUsername,
+      deleteProjectById
     }
   )
 )(ListProjects);

@@ -3,7 +3,7 @@ import { AppThunk, RootState } from 'app/store';
 import { SearchParams } from 'domains/core/models';
 import { AdvancedOptions, ModelData, Project, ShapeDiverOptions } from 'domains/shapeDiver/models';
 import { Location } from 'domains/core/models';
-import { get, post } from 'app/api';
+import { get, post, deletes } from 'app/api';
 import { AxiosResponse } from 'axios';
 
 export interface ShapeDiverState {
@@ -23,6 +23,7 @@ export interface ShapeDiverState {
   currentProject: Project | undefined;
   saveSuccess: boolean;
   nameProject: string;
+  loading: boolean;
 }
 
 const initialState: ShapeDiverState = {
@@ -61,7 +62,8 @@ const initialState: ShapeDiverState = {
   projects: [],
   currentProject: undefined,
   saveSuccess: false,
-  nameProject: ''
+  nameProject: '',
+  loading: false,
 };
 
 export const shapeDiverSlice = createSlice({
@@ -136,6 +138,9 @@ export const shapeDiverSlice = createSlice({
     },
     setNameProject: (state, action: PayloadAction<string>) => {
       state.nameProject = action.payload;
+    },
+    setLoadingStatus: (state, action: PayloadAction<boolean>) => {
+      state.loading = action.payload;
     }
   },
 });
@@ -161,7 +166,8 @@ export const {
   setSaveSuccess,
   setLoadProjects,
   setCurrentProject,
-  setNameProject
+  setNameProject,
+  setLoadingStatus
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
@@ -184,8 +190,10 @@ export const saveProject = (project: Project): AppThunk => dispatch => {
 };
 
 export const loadProjectsByUsername = (username: string): AppThunk => dispatch => {
+  dispatch(setLoadingStatus(true));
   get(`/LoadProjectsByUserName?username=${username}`).then((data: AxiosResponse) => {
-    dispatch(setLoadProjects(data.data))
+    dispatch(setLoadingStatus(false));
+    dispatch(setLoadProjects(data.data));
   });
 };
 
@@ -193,4 +201,11 @@ export const loadProjectById = (id: string): AppThunk => dispatch => {
   get(`/LoadProjectById?id=${id}`).then((data: AxiosResponse) => {
     dispatch(setCurrentProject(data.data))
   });
+};
+
+export const deleteProjectById = (id: string, username: string): AppThunk => dispatch => {
+  deletes(`/DeleteProjectById?id=${id}&username=${username}`)
+    .then((data: AxiosResponse) => {
+      dispatch(setLoadProjects(data.data));
+    });
 };

@@ -7938,7 +7938,7 @@ node-releases@^1.1.61, node-releases@^1.1.70:
   resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-1.1.70.tgz#66e0ed0273aa65666d7fe78febe7634875426a08"
   integrity sha512-Slf2s69+2/uAD79pVVQo8uSiC34+g8GWY8UH2Qtqv34ZfhYrxpYpfzs9Js9d6O0mbDmALuxaTlplnBTnSELcrw==
 
-nominatim-browser@^2.1.0:
+nominatim-browser@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/nominatim-browser/-/nominatim-browser-2.1.0.tgz#5bdfd26e861ff389500c7d5bb4cd77ae65e38eda"
   integrity sha512-WIjCpg22pA6Id153CV3jgve7IQ1hK6LPNjdCARONofIOTJlGT6XL9bY37pNYiXzVPHERw9ffiOTnE9++302r4w==
@@ -9596,7 +9596,7 @@ react-number-format@4.6.3:
   dependencies:
     prop-types "^15.7.2"
 
-react-player@^2.9.0:
+react-player@2.9.0:
   version "2.9.0"
   resolved "https://registry.yarnpkg.com/react-player/-/react-player-2.9.0.tgz#ef7fe7073434087565f00ff219824e1e02c4b046"
   integrity sha512-jNUkTfMmUhwPPAktAdIqiBcVUKsFKrVGH6Ocutj6535CNfM91yrvWxHg6fvIX8Y/fjYUPoejddwh7qboNV9vGA==
