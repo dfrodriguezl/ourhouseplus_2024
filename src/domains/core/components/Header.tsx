@@ -210,9 +210,7 @@ const Header = (props: RouteComponentProps) => {
                     <Fragment>
                       {
                         isAbout || isRegister || isWaiting ?
-                          <Button className={clsx(classes.becomeMember, true && classes.blackButton, true)}>
-                            Become a member
-                          </Button> :
+                          null :
                           <Fragment>
                             <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
                               Sign in

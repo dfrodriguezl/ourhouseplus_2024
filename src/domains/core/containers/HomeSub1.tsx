@@ -128,7 +128,7 @@ const HomeSub1 = () => {
 
             <Grid item xs={10} className={classes.phrase} >
               <Box component="p">
-                Download floorplans, technical drawings, supply chain suggestions and 3d Model.
+                Generate and analyse an automated preliminary deisgn of collective housing project in three simple steps.
               </Box>
 
             </Grid>
@@ -139,7 +139,7 @@ const HomeSub1 = () => {
                 className={classes.buttonJoin}
                 onClick={() => goToWaiting()}
               >
-                Watch demo
+                Join us
               </Button>
             </Grid>
 
