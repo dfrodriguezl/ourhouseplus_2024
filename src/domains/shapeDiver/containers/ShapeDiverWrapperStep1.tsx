@@ -18,8 +18,6 @@ const styles = {
 };
 
 
-
-
 interface StateProps {
   terrain: number;
   area: number | undefined;
@@ -69,7 +67,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         { name: Parameters.Density, value: location.density },
         { name: Parameters.Area, value: area?.toString() },
         { name: Parameters.Regen, value: location.regen },
-        // { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
+        { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
         { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
         { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
         { name: Parameters.NumberStreetFloors, value: location.streetFloors },
@@ -80,6 +78,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         { name: Parameters.StreetDensity, value: location.streetDensity },
         { name: Parameters.IslandSpacings, value: location.islandSpacings },
       ];
+
+      console.log("PAYLOAD",payload);
 
       if (window.importFile) {
         payload.push({ name: Parameters.ImportModel, value: window.importFile })

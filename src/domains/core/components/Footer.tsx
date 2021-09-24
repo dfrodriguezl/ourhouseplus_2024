@@ -57,11 +57,6 @@ const useStyles = makeStyles((theme: Theme) =>
     itemInactive: {
       color: '#434343 !important',
       pointerEvents: 'none',
-      // [theme.breakpoints.down('sm')]: {
-      //   marginRight: 0,
-      //   display: 'block',
-      //   textAlign: 'center',
-      // }
     }
   })
 );

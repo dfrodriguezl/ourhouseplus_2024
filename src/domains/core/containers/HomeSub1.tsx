@@ -65,8 +65,20 @@ const HomeSub1 = () => {
 
   const isWaiting = history.location.pathname.indexOf('register') > -1;
 
+  const handleScroll = () => {
+    window.scroll({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+  }
+
   const goToWaiting = () => {
-    history.push('/register')
+    if(isWaiting){
+      handleScroll()
+    }else{
+      history.push('/register')
+    }   
   }
 
   return (

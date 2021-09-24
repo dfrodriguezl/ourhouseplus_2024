@@ -54,11 +54,11 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
-        { name: Parameters.Density, value: location.density },
+        { name: Parameters.Density2, value: location.density },
         { name: Parameters.Regen, value: location.regen },
-        { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-        { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-        { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+        { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
+        { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
+        { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
         { name: Parameters.WindowPercentage, value: location.windowPercentage },
         { name: Parameters.FacadeDirection, value: facadeDirection },
       ]);
@@ -70,6 +70,8 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
       if (response.data) {
         console.log(response.data)
       }
+
+      
     }
   }
 
@@ -111,12 +113,12 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
         await this.api.parameters.updateAsync([
-          { name: Parameters.Density, value: location.density },
+          { name: Parameters.Density2, value: location.density },
           { name: Parameters.Regen, value: location.regen },
           { name: Parameters.FacadeDirection, value: facadeDirection },
-          { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-          { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-          { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+          { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
+          { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
+          { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
           { name: Parameters.WindowPercentage, value: location.windowPercentage },
         ]);
 

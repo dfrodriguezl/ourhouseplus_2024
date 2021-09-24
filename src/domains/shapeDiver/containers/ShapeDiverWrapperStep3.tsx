@@ -57,11 +57,11 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
-        { name: Parameters.Density, value: location.density },
+        { name: Parameters.Density2, value: location.density },
         { name: Parameters.Regen, value: location.regen },
-        { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-        { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-        { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+        { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
+        { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
+        { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
         { name: Parameters.FlatSize, value: location.flatSize },
         { name: Parameters.RoomType, value: roomType },
         { name: Parameters.FloorSelection, value: floorSelection },
@@ -121,10 +121,10 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
 
         await this.api.parameters.updateAsync([
           { name: Parameters.Regen, value: location.regen },
-          { name: Parameters.Density, value: location.density },
-          { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-          { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-          { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+          { name: Parameters.Density2, value: location.density },
+          { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
+          { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
+          { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
           { name: Parameters.FlatSize, value: location.flatSize },
           { name: Parameters.RoomType, value: roomType },
           { name: Parameters.RoomType, value: roomType },
