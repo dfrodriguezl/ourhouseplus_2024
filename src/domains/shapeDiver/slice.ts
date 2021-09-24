@@ -209,3 +209,9 @@ export const deleteProjectById = (id: string, username: string): AppThunk => dis
       dispatch(setLoadProjects(data.data));
     });
 };
+
+export const editProject = (project: Project): AppThunk => dispatch => {
+  post('/EditProjectById', { data: project }).then((data: AxiosResponse) => {
+    dispatch(setCurrentProject(data.data))
+  });
+};
