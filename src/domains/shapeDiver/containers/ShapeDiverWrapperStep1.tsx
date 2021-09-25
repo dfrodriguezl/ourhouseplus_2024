@@ -18,8 +18,6 @@ const styles = {
 };
 
 
-
-
 interface StateProps {
   terrain: number;
   area: number | undefined;
@@ -73,6 +71,12 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
         { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
         { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+        { name: Parameters.Typologies, value: location.typologies },
+        { name: Parameters.EmptySpaceSelection, value: location.emptySpaceSelection },
+        { name: Parameters.UndefinedTower, value: location.undefinedTower },
+        { name: Parameters.AxisSelection, value: location.axisSelection },
+        { name: Parameters.StreetDensity, value: location.streetDensity },
+        { name: Parameters.IslandSpacings, value: location.islandSpacings },
       ];
 
       if (window.importFile) {
@@ -93,8 +97,6 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       }
 
       const modelData = this.api!.scene.getData().data;
-
-      console.log(modelData);
 
       setModelData({
         totalLandArea: _.find(modelData, x => x.name === DataParameters.GrossLandArea)?.data ?? 0,
@@ -181,6 +183,13 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
           { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
           { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
           { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+          { name: Parameters.Typologies, value: location.typologies },
+          { name: Parameters.EmptySpaceSelection, value: location.emptySpaceSelection },
+          { name: Parameters.UndefinedTower, value: location.undefinedTower },
+          { name: Parameters.AxisSelection, value: location.axisSelection },
+          { name: Parameters.StreetDensity, value: location.streetDensity },
+          { name: Parameters.IslandSpacings, value: location.islandSpacings },
+          // { name: Parameters.AxisSelection, value: location.axisSelection },
         ]);
 
         // // finally show the scene

@@ -5,6 +5,7 @@ import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import clsx from 'clsx';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     links: {
-      marginRight: 10
+      marginRight: 6
     },
     bottomLinks: {
       float: 'right',
@@ -52,6 +53,10 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'block',
         textAlign: 'center',
       }
+    },
+    itemInactive: {
+      color: '#434343 !important',
+      pointerEvents: 'none',
     }
   })
 );
@@ -73,9 +78,9 @@ const Footer = (props: Props) => {
           <Grid container>
             <Grid item xs={12} sm={6}>
               <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/about">About</Link></Box>
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/how-it-works">How it works</Link></Box>
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/news">News</Link></Box>
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/contact-us">Contact</Link></Box>
+              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/how-it-works">How it works</Link></Box>
+              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/news">News</Link></Box>
+              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/contact-us">Contact</Link></Box>
             </Grid>
             {smallScreen ?
               <Fragment>
@@ -116,10 +121,10 @@ const SocialNetwork = (propsClasses: propsClasses) => {
       <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
         <LinkedIn />
       </a>
-      <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
+      <a href="https://www.linkedin.com/company/rea-web/" className={clsx(classes.links, true && classes.itemInactive, true)}>
         <Facebook />
       </a>
-      <a href="https://www.linkedin.com/company/rea-web/">
+      <a href="https://www.linkedin.com/company/rea-web/" className={clsx(classes.links, true && classes.itemInactive, true)}>
         <Instagram />
       </a>
     </Grid>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Grid, Box, Slider, makeStyles, Accordion, AccordionSummary, AccordionDetails, Tabs, Tab, Theme } from '@material-ui/core';
+import { Grid, Box, makeStyles, Accordion, AccordionSummary, AccordionDetails, Tabs, Tab, Theme } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Location } from 'domains/core/models';
 import { connect } from 'react-redux';
 import { setAdvancedOptions, setExpandAdvanced } from 'domains/shapeDiver/slice';
 
 import { RootState } from 'app/store';
+import { TabPanel } from 'domains/common/components';
+import { ShapeDiverAdvancedOptions1, ShapeDiverAdvancedOptions2, ShapeDiverAdvancedOptions3, ShapeDiverAdvancedOptions4 } from '.';
 
 
 const styles = makeStyles((theme: Theme) => ({
@@ -13,9 +15,6 @@ const styles = makeStyles((theme: Theme) => ({
     width: '100%',
     background: 'transparent',
     padding: '0 0px'
-  },
-  labelContainer: {
-    padding: 0
   },
   root: {
     minWidth: 0,
@@ -35,14 +34,13 @@ const styles = makeStyles((theme: Theme) => ({
     marginBottom: '5px'
   },
   rootAccordionSummary: {
-    margin: 0,
-    minHeight: 0,
+    margin: '0 !important',
+    minHeight: '0 !important',
     '&$expanded': {
-      minHeight: 0,
-      margin: 0
+      minHeight: '0 !important',
+      margin: '0 !important'
     }
   }
-
 }));
 
 interface DispatchProps {
@@ -55,39 +53,14 @@ interface StateProps {
   expandAdvanced: Object;
 }
 
+
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions = (props: Props) => {
-  const { location, setAdvancedOptions, setExpandAdvanced } = props;
+  const { setExpandAdvanced } = props;
   const [value, setValue] = useState(0);
   const classes = styles();
 
 
-  const updateMaxPriFloors = (_: any, value: number | number[]) => {
-    if (!location) return;
-    setAdvancedOptions({
-      maxPriFloors: Number(value),
-      maxSecFloors: location!.maxSecFloors,
-      streetFloors: location!.streetFloors,
-    });
-  }
-
-  const updateMaxSecFloors = (_: any, value: number | number[]) => {
-    if (!location) return;
-    setAdvancedOptions({
-      maxPriFloors: location!.maxPriFloors,
-      maxSecFloors: Number(value),
-      streetFloors: location!.streetFloors,
-    });
-  }
-
-  const updateStreetFloors = (_: any, value: number | number[]) => {
-    if (!location) return;
-    setAdvancedOptions({
-      maxPriFloors: location!.maxPriFloors,
-      maxSecFloors: location!.maxSecFloors,
-      streetFloors: Number(value),
-    });
-  }
 
   const onChangeAccordion = (event: object, expanded: boolean) => {
 
@@ -114,7 +87,7 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
 
 
   return (
-    <Accordion className={classes.accordion} onChange={onChangeAccordion}>
+    <Accordion className={classes.accordion} onChange={onChangeAccordion} classes={{ root: classes.rootAccordionSummary, expanded: classes.rootAccordionSummary }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         className={classes.accordionSummary}
@@ -128,50 +101,25 @@ const ShapeDiverAdvancedOptions = (props: Props) => {
           <Grid item xs={12} >
             <Tabs variant="fullWidth" value={value} onChange={handleChange} className={classes.rootTabs}>
               <Tab label="Floors" wrapped classes={{ root: classes.root }} />
-              <Tab label="Density" wrapped classes={{ root: classes.root }} />
-              <Tab label="Program" wrapped classes={{ root: classes.root }} />
+              <Tab label="Housing" wrapped classes={{ root: classes.root }} />
+              <Tab label="Free space" wrapped classes={{ root: classes.root }} />
               <Tab label="Roads" wrapped classes={{ root: classes.root }} />
             </Tabs>
           </Grid>
           <Grid item container xs={12} className={classes.details}>
-            <Grid item xs={12} >
-              <Box fontSize={14} fontWeight='bold' textAlign="end">Max Primary Floors</Box>
-            </Grid>
-            <Slider
-              value={location ? location.maxPriFloors : 0}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="auto"
-              step={1}
-              min={1}
-              max={50}
-              onChange={updateMaxPriFloors}
-            />
-            <Grid item xs={12}>
-              <Box fontSize={14} fontWeight='bold' textAlign="end">Max Secondary Floors</Box>
-            </Grid>
-            <Slider
-              value={location ? location.maxSecFloors : 0}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="auto"
-              step={1}
-              min={1}
-              max={50}
-              onChange={updateMaxSecFloors}
-            />
-            <Grid item xs={12}>
-              <Box fontSize={14} fontWeight='bold' textAlign="end">Street Floors</Box>
-            </Grid>
-            <Slider
-              value={location ? location.streetFloors : 0}
-              aria-labelledby="discrete-slider"
-              valueLabelDisplay="auto"
-              step={1}
-              min={1}
-              max={10}
-              onChange={updateStreetFloors}
-            />
+            <TabPanel value={value} index={0} >
+              <ShapeDiverAdvancedOptions1 />
+            </TabPanel>
+            <TabPanel value={value} index={1} >
+              <ShapeDiverAdvancedOptions4 />
+            </TabPanel>
+            <TabPanel value={value} index={2} >
+              <ShapeDiverAdvancedOptions2 />
+            </TabPanel>
+            <TabPanel value={value} index={3} >
+              <ShapeDiverAdvancedOptions3 />
+            </TabPanel>
           </Grid>
-
         </Grid>
       </AccordionDetails>
     </Accordion>
@@ -182,7 +130,6 @@ const container = connect<StateProps, DispatchProps, {}, RootState>(
   (state: RootState) => ({
     location: state.domains.shapediver.location,
     expandAdvanced: state.domains.shapediver.expandAdvanced
-
   }),
   {
     setAdvancedOptions,
@@ -191,3 +138,6 @@ const container = connect<StateProps, DispatchProps, {}, RootState>(
 )(ShapeDiverAdvancedOptions);
 
 export default container;
+
+
+

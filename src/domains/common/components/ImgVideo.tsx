@@ -26,7 +26,7 @@ const ImgVideo = () => {
     <Grid item container sm={12} xs={12} style={{ textAlign: 'center', alignItems: 'center' }} >
       {play ?
         // Render a YouTube video player
-        <ReactPlayer url='https://www.youtube.com/watch?v=jfNNIshTWFo' playing={true} /> :
+        <ReactPlayer url='https://www.youtube.com/watch?v=m_QOz2xa0tY' playing={true} /> :
         <div className="img-landing" style={{ height: '100%', width: '100%', borderRadius: 20 }}>
           <IconButton style={{ height: '100%' }} onClick={handlePlay}>
             <PlayCircleOutlineIcon className={classes.icon_play}></PlayCircleOutlineIcon>
