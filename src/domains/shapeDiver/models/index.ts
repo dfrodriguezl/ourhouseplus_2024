@@ -2,20 +2,30 @@ import { Location } from 'domains/core/models';
 
 export enum Parameters {
   Area = 'AREA',
-  Terrain = 'LAND SHAPE',
+  Terrain = 'GENERAL-LAND SHAPE',
   Regen = 'REGEN',
-  Density = 'DENSITY',
-  NumberStreetFloors = 'NBR STREET FLOORS',
-  MaxPrimaryFloors = 'MAX NBR PRIMARY FLOORS',
-  MaxSecondaryFloors = 'MAX NBR SECONDARY FLOORS',
+  Density = 'GENERAL-DENSITY',
+  NumberStreetFloors = 'FLOORS-NBR STREET FLOORS',
+  MaxPrimaryFloors = 'FLOORS-MAX NBR PRIMARY FLOORS',
+  MaxSecondaryFloors = 'FLOORS-MAX NBR SECONDARY FLOORS',
   WindowPercentage = 'WINDOW PERCENTAGE',
   FacadeDirection = 'FACADE DIRECTION',
   Annotation = 'ANNOTATION',
   FlatSize = 'FLAT SIZE',
   FloorSelection = 'FLOOR SECTION SELECTION',
   RoomType = 'ROOM TYPE',
-  UnitsNumberType = 'UNITS NUMBER TYPE',
+  UnitsNumberType = 'HOUSING-UNITS ORGANISATION TYPE',
   ImportModel = 'IMPORT DWG',
+  AxisSelection = 'ROADS-AXIS SELECTION',
+  Typologies = 'GENERAL-TYPOLOGIES',
+  EmptySpaceSelection = 'FREE SPACE-NBR EMPTY SPACE SELECTION',
+  UndefinedTower = 'FREE SPACE-UNDEFINED TOWER ON/OFF',
+  StreetDensity = 'ROADS-BLOCKS SIZE',
+  IslandSpacings = 'ROADS-STREET SIZE',
+  Density2 = 'DENSITY',
+  NumberStreetFloors2 = 'NBR STREET FLOORS',
+  MaxPrimaryFloors2 = 'MAX NBR PRIMARY FLOORS',
+  MaxSecondaryFloors2 = 'MAX NBR SECONDARY FLOORS',
 }
 
 export enum DataParameters {
@@ -49,6 +59,12 @@ export interface AdvancedOptions {
   maxPriFloors: number;
   maxSecFloors: number;
   streetFloors: number;
+  axisSelection: number;
+  typologies: number;
+  emptySpaceSelection: number;
+  undefinedTower: number;
+  streetDensity: number;
+  islandSpacings: number;
 }
 
 export interface ModelData {

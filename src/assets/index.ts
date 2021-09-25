@@ -101,3 +101,14 @@ export { default as height_13 } from './height_13.png';
 
 export { default as marker } from './marker.png';
 export { default as marker_map } from './marker_map.png';
+
+export { default as singleInactive } from './single_inactive.png'
+export { default as singleSelected } from './single_selected.png'
+export { default as dobleInactive } from './doble_inactive.png'
+export { default as dobleSelected } from './doble_selected.png'
+export { default as nineInactive } from './9m_inactive.png'
+export { default as nineSelected } from './9m_selected.png'
+export { default as twelveInactive } from './12m_inactive.png'
+export { default as twelveSelected } from './12m_selected.png'
+export { default as fifteenInactive } from './15m_inactive.png'
+export { default as fifteenSelected } from './15m_selected.png'

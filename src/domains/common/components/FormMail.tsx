@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Typography, Grid, Input, InputAdornment, IconButton } from '@material-ui/core';
+import { Typography, Grid, Input, InputAdornment, IconButton, Button } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
@@ -44,7 +44,19 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 13,
     color: '#908F8C'
   },
-  })
+  button: {
+    cursor: 'pointer',
+    borderRadius: 20,
+    backgroundColor: '#FF6C6C',
+    color: 'white',
+    textTransform: 'none',
+    padding: '0 25px',
+    marginRight: '3px',
+    '&:hover': {
+      backgroundColor: '#FF6C6C'
+    },
+  }
+})
 );
 
 interface StateProps {
@@ -61,6 +73,7 @@ const FormMail = (props: Props) => {
   const [email, setEmail] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [hover, setHover] = useState(false);
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -98,8 +111,8 @@ const FormMail = (props: Props) => {
       <Grid item container sm={12} xs={10} className={classes.containerForm}>
         <Typography>
           <h2 style={{ lineHeight: 1.2, fontWeight: 'bold' }}>We help you build better cities <br /> for the future.</h2>
-          {smallScreen ? <p style={{ fontSize: 13, lineHeight: 1.2 }}>Generate a preliminary design study of multi-dwelling smart housing projects in three simple steps.</p> :
-            <h4 style={{ lineHeight: 1.0, fontWeight: 'normal' }}> Generate a preliminary design study of multi-dwelling <br /> smart housing projects in three simple steps.</h4>}
+          {smallScreen ? <p style={{ fontSize: 13, lineHeight: 1.2 }}>Generate and analyse an automated preliminary design of collective housing project in three simple steps.</p> :
+            <h4 style={{ lineHeight: 1.0, fontWeight: 'normal' }}> Generate and analyse an automated preliminary <br /> design of collective housing project in three simple steps.</h4>}
         </Typography>
       </Grid>
       {smallScreen ?
@@ -133,9 +146,18 @@ const FormMail = (props: Props) => {
             required
             endAdornment={
               <InputAdornment position="end">
-                <IconButton className={classes.iconButton} type="submit" name="subscribe">
+                <Button
+                  className={classes.button}
+                  onMouseEnter={() => setHover(true)}
+                  onMouseLeave={() => setHover(false)}
+                  type="submit"
+                  name="subscribe"
+                >
+                  Join us
+                </Button>
+                {/* <IconButton className={classes.iconButton} type="submit" name="subscribe">
                   <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon>
-                </IconButton>
+                </IconButton> */}
               </InputAdornment>
             }
           />

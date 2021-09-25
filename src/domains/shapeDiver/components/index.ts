@@ -7,3 +7,7 @@ export { default as ShapeDiverToolBarDetails } from './ShapeDiverToolBarDetails'
 export { default as ShapeDiverAdditionalParams } from './ShapeDiverAdditionalParams';
 export { default as ShapeDiverBottomSteps } from './ShapeDiverBottomSteps';
 export { default as ShapeDiverProject } from './ShapeDiverProject';
+export { default as ShapeDiverAdvancedOptions1 } from './ShapeDiverAdvancedOptions1';
+export { default as ShapeDiverAdvancedOptions2 } from './ShapeDiverAdvancedOptions2';
+export { default as ShapeDiverAdvancedOptions3 } from './ShapeDiverAdvancedOptions3';
+export { default as ShapeDiverAdvancedOptions4 } from './ShapeDiverAdvancedOptions4';

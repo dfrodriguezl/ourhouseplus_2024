@@ -22,6 +22,12 @@ export interface Location {
   lat: number;
   lon: number;
   p_vivs: number;
+  axisSelection: number;
+  typologies: number;
+  emptySpaceSelection: number;
+  undefinedTower: number;
+  streetDensity: number;
+  islandSpacings: number;
 }
 
 export interface Density {
