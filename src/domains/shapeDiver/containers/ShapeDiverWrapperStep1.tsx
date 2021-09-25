@@ -79,8 +79,6 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         { name: Parameters.IslandSpacings, value: location.islandSpacings },
       ];
 
-      console.log("PAYLOAD",payload);
-
       if (window.importFile) {
         payload.push({ name: Parameters.ImportModel, value: window.importFile })
       } else {
@@ -99,8 +97,6 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       }
 
       const modelData = this.api!.scene.getData().data;
-
-      console.log(modelData);
 
       setModelData({
         totalLandArea: _.find(modelData, x => x.name === DataParameters.GrossLandArea)?.data ?? 0,

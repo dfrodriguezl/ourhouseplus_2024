@@ -216,7 +216,7 @@ function ShapeDiverToolBarStep1(props: Props) {
                     />
                   </CustomTooltip>
                 </Grid>
-                <Grid item xs={4}>
+                {/* <Grid item xs={4}>
                   <CustomTooltip title="Four types" placement="top-end">
                     <Radio
                       checked={location.unitsNumberType === 2}
@@ -225,7 +225,7 @@ function ShapeDiverToolBarStep1(props: Props) {
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={four} alt="four" />}
                     />
                   </CustomTooltip>
-                </Grid>
+                </Grid> */}
               </Grid>
             </RadioGroup>
           </Grid>
