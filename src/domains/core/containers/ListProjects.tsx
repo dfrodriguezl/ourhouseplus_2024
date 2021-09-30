@@ -185,17 +185,21 @@ export const ListProjects = (props: Props) => {
             {projects.map((p, i) => {
               const densityProject = getDensityType(p.location.density)!.type;
               return (
+                p?.location[densityProject] ? 
                 <Fragment key={i}>
-                  <Grid item container xs={2}>
+                  
+                    <Grid item container xs={2}>
                     <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center">
                       <Box component="div" alignItems="center" justifyContent="center">
                         <IconButton onClick={() => goToProject(String(p.id))}>
                           {
+                            p?.location[densityProject] ? 
                             p?.location[densityProject].maxPriFloors <= 6 ?
                               <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
                               p?.location[densityProject].maxPriFloors <= 12 ?
                                 <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
                                 <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} />
+                            : null
                           }
 
                         </IconButton>
@@ -228,8 +232,11 @@ export const ListProjects = (props: Props) => {
                       </div>
                     </Grid>
                   </Grid>
+                
+                  
                   <Grid item xs={1}></Grid>
-                </Fragment>
+                </Fragment>: null
+              
               )
             })}
           </Grid>

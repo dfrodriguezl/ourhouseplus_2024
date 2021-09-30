@@ -189,7 +189,13 @@ const DetailsSummary = (props: Props) => {
           <Grid item container xs={12}>
             <Grid item xs={4} className={classes.imgContainer}>
               {
-                currentProject?.location[typeDensity]?.maxPriFloors! <= 6 ?
+                currentProject?.location[typeDensity] ? 
+                  currentProject?.location[typeDensity]?.maxPriFloors! <= 6 ?
+                    <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
+                    currentProject?.location[typeDensity]?.maxPriFloors! <= 12 ?
+                      <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
+                      <img alt="img-project" src={height_13} className={classes.imgProject}></img>:
+                  currentProject?.location[typeDensity]?.maxPriFloors! <= 6 ?
                   <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
                   currentProject?.location[typeDensity]?.maxPriFloors! <= 12 ?
                     <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
