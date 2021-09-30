@@ -23,6 +23,7 @@ interface StateProps {
   area: number | undefined;
   location: Location | undefined;
   importModel: string;
+  densityGeneral: string;
 }
 
 interface ComponentProps {
@@ -59,25 +60,43 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_props: Props) {
-    const { terrain, area, location, setModelData } = this.props;
+    const { terrain, area, location, setModelData, densityGeneral } = this.props;
+    const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
+
 
     if (this.state.isLoaded) {
-      const payload: { name: string, value: any }[] = [
-        { name: Parameters.Terrain, value: terrain },
-        { name: Parameters.Density, value: location.density },
-        { name: Parameters.Area, value: area?.toString() },
-        { name: Parameters.Regen, value: location.regen },
-        { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
-        { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-        { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-        { name: Parameters.NumberStreetFloors, value: location.streetFloors },
-        { name: Parameters.Typologies, value: location.typologies },
-        { name: Parameters.EmptySpaceSelection, value: location.emptySpaceSelection },
-        { name: Parameters.UndefinedTower, value: location.undefinedTower },
-        { name: Parameters.AxisSelection, value: location.axisSelection },
-        { name: Parameters.StreetDensity, value: location.streetDensity },
-        { name: Parameters.IslandSpacings, value: location.islandSpacings },
-      ];
+      const payload: { name: string, value: any }[] =
+        typeDensity === "urban" ?
+          [
+            { name: Parameters.Terrain, value: terrain },
+            { name: Parameters.Density, value: location[typeDensity].density },
+            { name: Parameters.Area, value: area?.toString() },
+            { name: Parameters.Regen, value: location[typeDensity].regen },
+            { name: Parameters.UnitsNumberType, value: location[typeDensity].unitsNumberType },
+            { name: Parameters.MaxPrimaryFloors, value: location[typeDensity].maxPriFloors },
+            { name: Parameters.MaxSecondaryFloors, value: location[typeDensity].maxSecFloors },
+            { name: Parameters.NumberStreetFloors, value: location[typeDensity].streetFloors },
+            { name: Parameters.Typologies, value: location[typeDensity].typologies },
+            { name: Parameters.EmptySpaceSelection, value: location[typeDensity].emptySpaceSelection },
+            { name: Parameters.UndefinedTower, value: location[typeDensity].undefinedTower },
+            { name: Parameters.AxisSelection, value: location[typeDensity].axisSelection },
+            { name: Parameters.StreetDensity, value: location[typeDensity].streetDensity },
+            { name: Parameters.IslandSpacings, value: location[typeDensity].islandSpacings },
+          ] :
+          [
+            { name: Parameters.Terrain, value: terrain },
+            { name: Parameters.Density, value: location[typeDensity].density },
+            { name: Parameters.Area, value: area?.toString() },
+            { name: Parameters.UnitsNumberType, value: location[typeDensity].unitsNumberType },
+            { name: Parameters.MaxPrimaryFloors, value: location[typeDensity].maxPriFloors },
+            { name: Parameters.MaxSecondaryFloors, value: location[typeDensity].maxSecFloors },
+            { name: Parameters.NumberStreetFloors, value: location[typeDensity].streetFloors },
+            { name: Parameters.Typologies, value: location[typeDensity].typologies },
+            { name: Parameters.AxisSelection, value: location[typeDensity].axisSelection },
+            { name: Parameters.StreetDensity, value: location[typeDensity].streetDensity },
+            { name: Parameters.IslandSpacings, value: location[typeDensity].islandSpacings },
+          ];
+
 
       if (window.importFile) {
         payload.push({ name: Parameters.ImportModel, value: window.importFile })
@@ -123,7 +142,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidMount() {
-    const { terrain, area, location, setOptions, setModelData } = this.props;
+    const { terrain, area, location, setOptions, setModelData, densityGeneral } = this.props;
+    const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
 
     // container for the viewer
@@ -145,7 +165,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       if (this.api) {
         // register a ShapeDiver CommPlugin
         await this.api.plugins.registerCommPluginAsync({
-          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_SUB!,
+          ticket: typeDensity === 'suburban' ? process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1!,
           // URL of the ShapeDiver backend system used
           // runtime id to use for this CommPlugin (you might register several)
           runtimeId: 'CommPlugin_1',
@@ -160,7 +180,9 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         console.log('Available model parameters', this.parameters);
 
         setOptions({
-          regen: _.find(this.parameters, x => x.name === Parameters.Regen).choices,
+          regen: typeDensity === "urban" ?
+            _.find(this.parameters, x => x.name === Parameters.Regen).choices :
+            [],
           terrain: _.find(this.parameters, x => x.name === Parameters.Terrain).choices
         });
 
@@ -174,23 +196,40 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         // // refresh (load geometry), because the initial parameter update might not have changed any values
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
-        await this.api.parameters.updateAsync([
-          { name: Parameters.Terrain, value: terrain },
-          { name: Parameters.Density, value: location.density },
-          { name: Parameters.Area, value: area?.toString() },
-          { name: Parameters.Regen, value: location.regen },
-          { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
-          { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-          { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
-          { name: Parameters.NumberStreetFloors, value: location.streetFloors },
-          { name: Parameters.Typologies, value: location.typologies },
-          { name: Parameters.EmptySpaceSelection, value: location.emptySpaceSelection },
-          { name: Parameters.UndefinedTower, value: location.undefinedTower },
-          { name: Parameters.AxisSelection, value: location.axisSelection },
-          { name: Parameters.StreetDensity, value: location.streetDensity },
-          { name: Parameters.IslandSpacings, value: location.islandSpacings },
-          // { name: Parameters.AxisSelection, value: location.axisSelection },
-        ]);
+        await this.api.parameters.updateAsync(
+          typeDensity === "urban" ?
+            [
+              { name: Parameters.Terrain, value: terrain },
+              { name: Parameters.Density, value: location[typeDensity].density },
+              { name: Parameters.Area, value: area?.toString() },
+              { name: Parameters.Regen, value: location[typeDensity].regen },
+              { name: Parameters.UnitsNumberType, value: location[typeDensity].unitsNumberType },
+              { name: Parameters.MaxPrimaryFloors, value: location[typeDensity].maxPriFloors },
+              { name: Parameters.MaxSecondaryFloors, value: location[typeDensity].maxSecFloors },
+              { name: Parameters.NumberStreetFloors, value: location[typeDensity].streetFloors },
+              { name: Parameters.Typologies, value: location[typeDensity].typologies },
+              { name: Parameters.EmptySpaceSelection, value: location[typeDensity].emptySpaceSelection },
+              { name: Parameters.UndefinedTower, value: location[typeDensity].undefinedTower },
+              { name: Parameters.AxisSelection, value: location[typeDensity].axisSelection },
+              { name: Parameters.StreetDensity, value: location[typeDensity].streetDensity },
+              { name: Parameters.IslandSpacings, value: location[typeDensity].islandSpacings },
+              // { name: Parameters.AxisSelection, value: location.axisSelection },
+            ] :
+            [
+              { name: Parameters.Terrain, value: terrain },
+              { name: Parameters.Density, value: location[typeDensity].density },
+              { name: Parameters.Area, value: area?.toString() },
+              { name: Parameters.UnitsNumberType, value: location[typeDensity].unitsNumberType },
+              { name: Parameters.MaxPrimaryFloors, value: location[typeDensity].maxPriFloors },
+              { name: Parameters.MaxSecondaryFloors, value: location[typeDensity].maxSecFloors },
+              { name: Parameters.NumberStreetFloors, value: location[typeDensity].streetFloors },
+              { name: Parameters.Typologies, value: location[typeDensity].typologies },
+              { name: Parameters.AxisSelection, value: location[typeDensity].axisSelection },
+              { name: Parameters.StreetDensity, value: location[typeDensity].streetDensity },
+              { name: Parameters.IslandSpacings, value: location[typeDensity].islandSpacings },
+              // { name: Parameters.AxisSelection, value: location.axisSelection },
+            ]
+        );
 
         // // finally show the scene
         await this.api.updateSettingAsync('scene.show', true);
@@ -228,6 +267,7 @@ const container = compose<Props, {}>(
       location: state.domains.shapediver.location,
       importModel: state.domains.shapediver.importModel,
       area: getArea(state),
+      densityGeneral: state.domains.shapediver.densityGeneral
     }),
     {
       setOptions,

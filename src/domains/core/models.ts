@@ -9,31 +9,57 @@ export interface SearchParams {
 export interface Location {
   id: number;
   city: string;
-  maxPriFloors: number;
-  maxSecFloors: number;
-  streetFloors: number;
-  windowPercentage: number;
-  unitsNumberType: number;
-  description: string;
   density: number;
-  flatSize: number;
-  flatType: number;
-  regen: number;
-  lat: number;
-  lon: number;
-  p_vivs: number;
-  axisSelection: number;
-  typologies: number;
-  emptySpaceSelection: number;
-  undefinedTower: number;
-  streetDensity: number;
-  islandSpacings: number;
+  description: string;
+  urban: {
+    maxPriFloors: number;
+    maxSecFloors: number;
+    streetFloors: number;
+    windowPercentage: number;
+    unitsNumberType: number;
+    description: string;
+    density: number;
+    flatSize: number;
+    flatType: number;
+    regen: number;
+    lat: number;
+    lon: number;
+    p_vivs: number;
+    axisSelection: number;
+    typologies: number;
+    emptySpaceSelection: number;
+    undefinedTower: number;
+    streetDensity: number;
+    islandSpacings: number;
+  },
+  suburban: {
+    maxPriFloors: number;
+    maxSecFloors: number;
+    streetFloors: number;
+    windowPercentage: number;
+    unitsNumberType: number;
+    description: string;
+    density: number;
+    flatSize: number;
+    flatType: number;
+    regen: number;
+    lat: number;
+    lon: number;
+    p_vivs: number;
+    axisSelection: number;
+    typologies: number;
+    emptySpaceSelection: number;
+    undefinedTower: number;
+    streetDensity: number;
+    islandSpacings: number;
+  }
 }
 
 export interface Density {
   label: string;
   subLabel: string;
   value: number;
+  type: string;
 }
 
 export const Densities = [

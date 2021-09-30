@@ -61,6 +61,7 @@ interface StateProps {
   roomType: number;
   floorSelectionOptions: string[];
   floorSelection: number;
+  densityGeneral: string;
 }
 
 interface DispatchProps {
@@ -71,12 +72,13 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep3(props: Props) {
-  const { location, setFlatSize, roomType, setRoomType, floorSelectionOptions, setFloorSelection, floorSelection } = props;
+  const { location, setFlatSize, roomType, setRoomType, floorSelectionOptions, setFloorSelection, floorSelection, densityGeneral } = props;
   const classes = styles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const bigFont = 15;
   const smallFont = 13;
+  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
 
   return (
@@ -93,7 +95,7 @@ function ShapeDiverToolBarStep3(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="Small" placement="top-end">
                     <Radio
-                      checked={location.flatSize === 0}
+                      checked={location[typeDensity].flatSize === 0}
                       onClick={() => setFlatSize(0)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={smallFlatSelected} alt="50" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={smallFlat} alt="50" />}
@@ -103,7 +105,7 @@ function ShapeDiverToolBarStep3(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="Medium" placement="top-end">
                     <Radio
-                      checked={location.flatSize === 1}
+                      checked={location[typeDensity].flatSize === 1}
                       onClick={() => setFlatSize(1)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={mediumFlatSelected} alt="60" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={mediumFlat} alt="60" />}
@@ -113,7 +115,7 @@ function ShapeDiverToolBarStep3(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="Large" placement="top-end">
                     <Radio
-                      checked={location.flatSize === 2}
+                      checked={location[typeDensity].flatSize === 2}
                       onClick={() => setFlatSize(2)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={largeFlatSelected} alt="70" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={largeFlat} alt="70" />}
@@ -193,6 +195,7 @@ const container = compose<Props, {}>(
       roomType: state.domains.shapediver.roomType,
       floorSelectionOptions: state.domains.shapediver.floorSelectionOptions,
       floorSelection: state.domains.shapediver.floorSelection,
+      densityGeneral: state.domains.shapediver.densityGeneral
     }),
     {
       setFlatSize,

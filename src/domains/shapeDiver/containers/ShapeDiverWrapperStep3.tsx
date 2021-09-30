@@ -21,6 +21,7 @@ interface StateProps {
   roomType: number;
   location: Location | undefined;
   floorSelection: number;
+  densityGeneral: string;
 }
 
 interface ComponentProps {
@@ -53,16 +54,17 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_: Props) {
-    const { location, roomType, floorSelection } = this.props;
+    const { location, roomType, floorSelection, densityGeneral } = this.props;
+    const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
-        { name: Parameters.Density2, value: location.density },
-        { name: Parameters.Regen, value: location.regen },
-        { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
-        { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
-        { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
-        { name: Parameters.FlatSize, value: location.flatSize },
+        { name: Parameters.Density2, value: location[typeDensity].density },
+        { name: Parameters.Regen, value: location[typeDensity].regen },
+        { name: Parameters.MaxPrimaryFloors2, value: location[typeDensity].maxPriFloors },
+        { name: Parameters.MaxSecondaryFloors2, value: location[typeDensity].maxSecFloors },
+        { name: Parameters.NumberStreetFloors2, value: location[typeDensity].streetFloors },
+        { name: Parameters.FlatSize, value: location[typeDensity].flatSize },
         { name: Parameters.RoomType, value: roomType },
         { name: Parameters.FloorSelection, value: floorSelection },
       ]);
@@ -79,7 +81,8 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
 
   public async componentDidMount() {
     const { location, roomType } = this.props;
-    const { setFloorSelectionOptions, setFloorSelection, floorSelection } = this.props;
+    const { setFloorSelectionOptions, setFloorSelection, floorSelection, densityGeneral } = this.props;
+    const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
     // container for the viewer
     // here the reference works and the container is loaded correctly
@@ -120,12 +123,12 @@ class ShapeDiverWrapperStep3 extends React.Component<Props, ComponentProps> {
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
         await this.api.parameters.updateAsync([
-          { name: Parameters.Regen, value: location.regen },
-          { name: Parameters.Density2, value: location.density },
-          { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
-          { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
-          { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
-          { name: Parameters.FlatSize, value: location.flatSize },
+          { name: Parameters.Regen, value: location[typeDensity].regen },
+          { name: Parameters.Density2, value: location[typeDensity].density },
+          { name: Parameters.MaxPrimaryFloors2, value: location[typeDensity].maxPriFloors },
+          { name: Parameters.MaxSecondaryFloors2, value: location[typeDensity].maxSecFloors },
+          { name: Parameters.NumberStreetFloors2, value: location[typeDensity].streetFloors },
+          { name: Parameters.FlatSize, value: location[typeDensity].flatSize },
           { name: Parameters.RoomType, value: roomType },
           { name: Parameters.RoomType, value: roomType },
           { name: Parameters.FloorSelection, value: floorSelection },
@@ -163,6 +166,7 @@ const container = compose<Props, {}>(
       location: state.domains.shapediver.location,
       roomType: state.domains.shapediver.roomType,
       floorSelection: state.domains.shapediver.floorSelection,
+      densityGeneral: state.domains.shapediver.densityGeneral
     }),
     {
       setFloorSelectionOptions,

@@ -98,6 +98,7 @@ interface RouteProps {
 
 interface StateProps {
   currentProject: Project | undefined;
+  densityGeneral: string;
 }
 
 interface DispatchProps {
@@ -106,7 +107,8 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps & RouteComponentProps<RouteProps>;
 export const DetailsProjects = (props: Props) => {
-  const { history, loadProjectById, currentProject, match: { params } } = props;
+  const { history, loadProjectById, currentProject, match: { params }, densityGeneral } = props;
+  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
   const classes = useStyles();
 
@@ -136,19 +138,19 @@ export const DetailsProjects = (props: Props) => {
     twoBedroom: currentProject?.modelData?.twoBedroom,
     threeBedroom: currentProject?.modelData?.threeBedroom,
     fourBedroom: currentProject?.modelData?.fourBedroom,
-    windowPercentage: currentProject?.location?.windowPercentage,
-    windowPc: currentProject?.location?.windowPercentage,
+    windowPercentage: currentProject?.location[typeDensity]?.windowPercentage,
+    windowPc: currentProject?.location[typeDensity]?.windowPercentage,
     facadeDirection: currentProject?.facadeDirection,
     facadeDir: currentProject?.facadeDirection,
-    maxPriFloors: currentProject?.location?.maxPriFloors,
-    maxSecFloors: currentProject?.location?.maxSecFloors,
-    streetFloors: currentProject?.location?.streetFloors,
-    flatSize: currentProject?.location?.flatSize,
-    flatS: currentProject?.location?.flatSize,
-    density: currentProject?.location?.density,
-    den: currentProject?.location?.density,
-    unitsNumberType: currentProject?.location?.unitsNumberType,
-    unitsNumberT: currentProject?.location?.unitsNumberType,
+    maxPriFloors: currentProject?.location[typeDensity]?.maxPriFloors,
+    maxSecFloors: currentProject?.location[typeDensity]?.maxSecFloors,
+    streetFloors: currentProject?.location[typeDensity]?.streetFloors,
+    flatSize: currentProject?.location[typeDensity]?.flatSize,
+    flatS: currentProject?.location[typeDensity]?.flatSize,
+    density: currentProject?.location[typeDensity]?.density,
+    den: currentProject?.location[typeDensity]?.density,
+    unitsNumberType: currentProject?.location[typeDensity]?.unitsNumberType,
+    unitsNumberT: currentProject?.location[typeDensity]?.unitsNumberType,
     roomType: currentProject?.roomType,
     roomT: currentProject?.roomType,
     totalGrossFloorArea: currentProject?.modelData?.totalGrossFloorArea,
@@ -187,7 +189,7 @@ export const DetailsProjects = (props: Props) => {
               </Button>
             </Grid>
           </Grid>
-          <GeneralParameters project={currentProject} />
+          <GeneralParameters project={currentProject} densityGeneral={densityGeneral} />
           <ContainerInfo img={img_basic_volume} vars={varsBasicVolume} title={"Basic volume"} project={projectObj} />
           <ContainerInfo img={img_facade} vars={varsFacade} title={"Facade"} project={projectObj} />
           <ContainerInfo img={img_interior} vars={varsInterior} title={"Interior"} project={projectObj} />
@@ -201,7 +203,8 @@ const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-      currentProject: state.domains.shapediver.currentProject
+      currentProject: state.domains.shapediver.currentProject,
+      densityGeneral: state.domains.shapediver.densityGeneral
     }),
     {
       loadProjectById

@@ -49,6 +49,7 @@ interface StateProps {
   options: ShapeDiverOptions | undefined;
   location: Location | undefined
   facadeDirection: number;
+  densityGeneral: string;
 }
 
 interface DispatchProps {
@@ -58,12 +59,13 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep2(props: Props) {
-  const { setWindow, setFacadeDirection, location, facadeDirection } = props;
+  const { setWindow, setFacadeDirection, location, facadeDirection, densityGeneral } = props;
   const classes = styles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const bigFont = 13;
   const smallFont = 13;
+  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
   return (
     <Paper className={`${classes.container} controls-background`} >
@@ -78,7 +80,7 @@ function ShapeDiverToolBarStep2(props: Props) {
               <Grid container justify="center">
                 <Grid item xs={4}>
                   <Radio
-                    checked={location.windowPercentage === 0}
+                    checked={location[typeDensity].windowPercentage === 0}
                     onClick={() => setWindow(0)}
                     checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={fiftySelected} alt="50" />}
                     icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={fifty} alt="50" />}
@@ -86,7 +88,7 @@ function ShapeDiverToolBarStep2(props: Props) {
                 </Grid>
                 <Grid item xs={4}>
                   <Radio
-                    checked={location.windowPercentage === 1}
+                    checked={location[typeDensity].windowPercentage === 1}
                     onClick={() => setWindow(1)}
                     checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={sixtySelected} alt="60" />}
                     icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={sixty} alt="60" />}
@@ -94,7 +96,7 @@ function ShapeDiverToolBarStep2(props: Props) {
                 </Grid>
                 <Grid item xs={4}>
                   <Radio
-                    checked={location.windowPercentage === 2}
+                    checked={location[typeDensity].windowPercentage === 2}
                     onClick={() => setWindow(2)}
                     checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={seventySelected} alt="70" />}
                     icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={seventy} alt="70" />}
@@ -147,6 +149,7 @@ const container = compose<Props, {}>(
       options: state.domains.shapediver.options,
       location: state.domains.shapediver.location,
       facadeDirection: state.domains.shapediver.facadeDirection,
+      densityGeneral: state.domains.shapediver.densityGeneral
     }),
     {
       setWindow,
