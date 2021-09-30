@@ -145,7 +145,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       if (this.api) {
         // register a ShapeDiver CommPlugin
         await this.api.plugins.registerCommPluginAsync({
-          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1!,
+          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_SUB!,
           // URL of the ShapeDiver backend system used
           // runtime id to use for this CommPlugin (you might register several)
           runtimeId: 'CommPlugin_1',

@@ -41,17 +41,20 @@ export const Densities = [
     value: 2,
     label: 'Center City',
     subLabel: 'High rise - High density',
+    type: 'center'
   },
   {
     value: 1,
     label: 'Urban City',
     subLabel: 'Low rise - High density',
+    type: 'urban'
 
   },
   {
     value: 0,
     label: 'Suburban',
     subLabel: 'Low rise - Low density',
+    type: 'suburban'
   }
 ]
 

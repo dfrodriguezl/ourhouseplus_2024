@@ -173,7 +173,7 @@ const SearchToolBar = (props: Props) => {
                 label="Next"
                 size="small"
                 onClick={next}
-                disabled={!area || !location}
+                disabled={!area || !location || !density}
               />
             </Grid>
           </Fragment> :
