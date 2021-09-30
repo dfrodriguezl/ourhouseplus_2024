@@ -32,14 +32,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface OwnProps {
   project: Project | undefined;
-  densityGeneral: string;
 }
 
 type Props = OwnProps;
 const GeneralParameters = (props: Props) => {
-  const { project, densityGeneral } = props;
+  const { project } = props;
   const classes = useStyles();
-  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
   const getDensity = (value: number) => {
     const den = _.find(Densities, (x: Density) => x.value === value);
@@ -60,7 +58,7 @@ const GeneralParameters = (props: Props) => {
       </Grid>
       <Grid item container xs={4} style={{ justifyContent: 'center' }}>
         <Typography variant="body2" className={classes.principalParameters}>
-          <span className={classes.summaryText}>Building Plan</span> {getDensity(project?.location[typeDensity]?.density!)?.label!}
+          <span className={classes.summaryText}>Building Plan</span> {getDensity(project?.location?.density!)?.label!}
         </Typography>
       </Grid>
 

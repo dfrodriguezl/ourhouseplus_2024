@@ -189,7 +189,7 @@ export const DetailsProjects = (props: Props) => {
               </Button>
             </Grid>
           </Grid>
-          <GeneralParameters project={currentProject} densityGeneral={densityGeneral} />
+          <GeneralParameters project={currentProject} />
           <ContainerInfo img={img_basic_volume} vars={varsBasicVolume} title={"Basic volume"} project={projectObj} />
           <ContainerInfo img={img_facade} vars={varsFacade} title={"Facade"} project={projectObj} />
           <ContainerInfo img={img_interior} vars={varsInterior} title={"Interior"} project={projectObj} />

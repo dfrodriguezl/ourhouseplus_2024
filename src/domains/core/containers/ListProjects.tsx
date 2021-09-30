@@ -13,6 +13,8 @@ import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { TopPanel } from 'domains/core/components';
 import { useAuth0 } from '@auth0/auth0-react';
+import _ from 'lodash';
+import { Densities, Density } from 'domains/core/models';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -130,6 +132,11 @@ export const ListProjects = (props: Props) => {
     history.push("/details/" + id)
   }
 
+  const getDensityType = (value: number) => {
+    const den = _.find(Densities, (x: Density) => x.value === value);
+    return den;
+  }
+
   useEffect(() => {
     if (user?.email) {
       loadProjectsByUsername(user.email);
@@ -176,6 +183,7 @@ export const ListProjects = (props: Props) => {
             </Grid>
             <Grid item xs={1}></Grid>
             {projects.map((p, i) => {
+              const densityProject = getDensityType(p.location.density)!.type;
               return (
                 <Fragment key={i}>
                   <Grid item container xs={2}>
@@ -183,9 +191,9 @@ export const ListProjects = (props: Props) => {
                       <Box component="div" alignItems="center" justifyContent="center">
                         <IconButton onClick={() => goToProject(String(p.id))}>
                           {
-                            p?.location?.maxPriFloors <= 6 ?
+                            p?.location[densityProject].maxPriFloors <= 6 ?
                               <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
-                              p?.location?.maxPriFloors <= 12 ?
+                              p?.location[densityProject].maxPriFloors <= 12 ?
                                 <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
                                 <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} />
                           }
@@ -236,7 +244,7 @@ const container = compose<Props, {}>(
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
       loading: state.domains.shapediver.loading,
-      projects: state.domains.shapediver.projects,
+      projects: state.domains.shapediver.projects
     }),
     {
       loadProjectsByUsername,

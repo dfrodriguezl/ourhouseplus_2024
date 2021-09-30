@@ -150,7 +150,10 @@ export const shapeDiverSlice = createSlice({
     },
     setLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
-    }
+    },
+    setDensityGeneral: (state, action: PayloadAction<number>) => {
+      state.location!.density = action.payload;
+    },
   },
 });
 
@@ -176,7 +179,8 @@ export const {
   setLoadProjects,
   setCurrentProject,
   setNameProject,
-  setLoadingStatus
+  setLoadingStatus,
+  setDensityGeneral
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;

@@ -125,21 +125,29 @@ const DetailsSummary = (props: Props) => {
   const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject, densityGeneral } = props;
   const classes = useStyles();
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
-  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
+  
 
   useEffect(() => {
     loadProjectById(params.id);
   }, [loadProjectById, params])
+
+  const getDensityType = (value: number) => {
+    const den = _.find(Densities, (x: Density) => x.value === value);
+    return den;
+  }
+  
+  const typeDensity = getDensityType(currentProject?.location.density!)!.type === "suburban" ? "suburban" : "urban";
 
   const gotTo3DView = () => {
     if (isAuthenticated && user) {
 
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
 
+
         setInitialParams({
           location: currentProject?.location,
           area: currentProject?.area!,
-          density: getDensity(currentProject?.location[typeDensity]?.density!)!
+          density: getDensityType(currentProject?.location?.density!)!
         });
 
         setSaveSuccess(true)
@@ -149,11 +157,6 @@ const DetailsSummary = (props: Props) => {
     } else {
       loginWithRedirect();
     }
-  }
-
-  const getDensity = (value: number) => {
-    const den = _.find(Densities, (x: Density) => x.value === value);
-    return den;
   }
 
   return (
@@ -182,7 +185,7 @@ const DetailsSummary = (props: Props) => {
               </Button>
             </Grid>
           </Grid>
-          <GeneralParameters project={currentProject} densityGeneral={densityGeneral} />
+          <GeneralParameters project={currentProject} />
           <Grid item container xs={12}>
             <Grid item xs={4} className={classes.imgContainer}>
               {
