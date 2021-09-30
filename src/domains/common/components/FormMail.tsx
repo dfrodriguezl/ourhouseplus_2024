@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { Typography, Grid, Input, InputAdornment, IconButton, Button } from '@material-ui/core';
+import { Typography, Grid, Input, InputAdornment, Button } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
 import { RegisterContainer } from 'domains/core/containers';
 import { ImgVideo } from '.';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const useStyles = makeStyles((theme) => ({
   containerForm: {

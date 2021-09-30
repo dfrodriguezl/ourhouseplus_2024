@@ -21,6 +21,7 @@ const styles = makeStyles((theme: Theme) => ({
 
 interface StateProps {
   location: Location | undefined;
+  densityGeneral: string;
 }
 
 interface DispatchProps {
@@ -30,51 +31,52 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions1 = (props: Props) => {
-  const { location, setAdvancedOptions } = props;
+  const { location, setAdvancedOptions, densityGeneral } = props;
   const classes = styles();
+  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
   const updateMaxPriFloors = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
       maxPriFloors: Number(value),
-      maxSecFloors: location!.maxSecFloors,
-      streetFloors: location!.streetFloors,
-      typologies: location!.typologies,
-      emptySpaceSelection: location!.emptySpaceSelection,
-      undefinedTower: location!.undefinedTower,
-      streetDensity: location!.streetDensity,
-      islandSpacings: location!.islandSpacings,
-      axisSelection: location!.axisSelection,
+      maxSecFloors: location[typeDensity]!.maxSecFloors,
+      streetFloors: location[typeDensity]!.streetFloors,
+      typologies: location[typeDensity]!.typologies,
+      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
+      undefinedTower: location[typeDensity]!.undefinedTower,
+      streetDensity: location[typeDensity]!.streetDensity,
+      islandSpacings: location[typeDensity]!.islandSpacings,
+      axisSelection: location[typeDensity]!.axisSelection,
     });
   }
 
   const updateMaxSecFloors = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location!.maxPriFloors,
+      maxPriFloors: location[typeDensity]!.maxPriFloors,
       maxSecFloors: Number(value),
-      streetFloors: location!.streetFloors,
-      typologies: location!.typologies,
-      emptySpaceSelection: location!.emptySpaceSelection,
-      undefinedTower: location!.undefinedTower,
-      streetDensity: location!.streetDensity,
-      islandSpacings: location!.islandSpacings,
-      axisSelection: location!.axisSelection,
+      streetFloors: location[typeDensity]!.streetFloors,
+      typologies: location[typeDensity]!.typologies,
+      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
+      undefinedTower: location[typeDensity]!.undefinedTower,
+      streetDensity: location[typeDensity]!.streetDensity,
+      islandSpacings: location[typeDensity]!.islandSpacings,
+      axisSelection: location[typeDensity]!.axisSelection,
     });
   }
 
   const updateStreetFloors = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location!.maxPriFloors,
-      maxSecFloors: location!.maxSecFloors,
+      maxPriFloors: location[typeDensity]!.maxPriFloors,
+      maxSecFloors: location[typeDensity]!.maxSecFloors,
       streetFloors: Number(value),
-      typologies: location!.typologies,
-      emptySpaceSelection: location!.emptySpaceSelection,
-      undefinedTower: location!.undefinedTower,
-      streetDensity: location!.streetDensity,
-      islandSpacings: location!.islandSpacings,
-      axisSelection: location!.axisSelection,
+      typologies: location[typeDensity]!.typologies,
+      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
+      undefinedTower: location[typeDensity]!.undefinedTower,
+      streetDensity: location[typeDensity]!.streetDensity,
+      islandSpacings: location[typeDensity]!.islandSpacings,
+      axisSelection: location[typeDensity]!.axisSelection,
     });
   }
 
@@ -89,7 +91,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
           <Slider
-            value={location ? location.maxPriFloors : 0}
+            value={location ? location[typeDensity].maxPriFloors : 0}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={1}
@@ -100,7 +102,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
         <Grid xs={1} />
         <Grid xs={2}>
-          <input type="text" value={location ? location.maxPriFloors : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location ? location[typeDensity].maxPriFloors : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
       <Grid item xs={12}>
@@ -109,7 +111,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
           <Slider
-            value={location ? location.maxSecFloors : 0}
+            value={location ? location[typeDensity].maxSecFloors : 0}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={1}
@@ -120,7 +122,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
         <Grid xs={1} />
         <Grid xs={2}>
-          <input type="text" value={location ? location.maxSecFloors : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location ? location[typeDensity].maxSecFloors : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
       <Grid item xs={12}>
@@ -129,7 +131,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
           <Slider
-            value={location ? location.streetFloors : 0}
+            value={location ? location[typeDensity].streetFloors : 0}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={1}
@@ -140,7 +142,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
         <Grid xs={1} />
         <Grid xs={2}>
-          <input type="text" value={location ? location.streetFloors : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location ? location[typeDensity].streetFloors : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
     </Fragment>
@@ -149,7 +151,8 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
 
 const container = connect<StateProps, DispatchProps, {}, RootState>(
   (state: RootState) => ({
-    location: state.domains.shapediver.location
+    location: state.domains.shapediver.location,
+    densityGeneral: state.domains.shapediver.densityGeneral
   }),
   {
     setAdvancedOptions

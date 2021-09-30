@@ -58,6 +58,7 @@ interface StateProps {
   options: ShapeDiverOptions | undefined;
   location: Location | undefined;
   expandAdvanced: Object;
+  densityGeneral: string;
 }
 
 interface DispatchProps {
@@ -71,12 +72,13 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps & RouteComponentProps;
 function ShapeDiverToolBarStep1(props: Props) {
   const fileInput = useRef<HTMLInputElement>(null);
-  const { setTerrain, setDensity, location, setUnitsNumberType, terrain, setImportModel } = props;
+  const { setTerrain, setDensity, location, setUnitsNumberType, terrain, setImportModel, densityGeneral } = props;
   const classes = styles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const bigFont = 13;
   const smallFont = 13;
+  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
   const uploadImage = (event: any) => {
     const selectedFile = event.target.files[0];
@@ -160,7 +162,7 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="Low" placement="top-end">
                     <Radio
-                      checked={location.density === 0}
+                      checked={location[typeDensity].density === 0}
                       onClick={() => setDensity(0)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={lowSelected} alt="low" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={low} alt="low" />}
@@ -170,7 +172,7 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="Medium" placement="top-end">
                     <Radio
-                      checked={location.density === 1}
+                      checked={location[typeDensity].density === 1}
                       onClick={() => setDensity(1)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={mediumSelected} alt="medium" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={medium} alt="medium" />}
@@ -180,7 +182,7 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="High" placement="top-end">
                     <Radio
-                      checked={location.density === 2}
+                      checked={location[typeDensity].density === 2}
                       onClick={() => setDensity(2)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={highSelected} alt="high" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={high} alt="high" />}
@@ -199,7 +201,7 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="Two types" placement="top-end">
                     <Radio
-                      checked={location.unitsNumberType === 0}
+                      checked={location[typeDensity].unitsNumberType === 0}
                       onClick={() => setUnitsNumberType(0)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={twoSelected} alt="two" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={two} alt="two" />}
@@ -209,7 +211,7 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="Three types" placement="top-end">
                     <Radio
-                      checked={location.unitsNumberType === 1}
+                      checked={location[typeDensity].unitsNumberType === 1}
                       onClick={() => setUnitsNumberType(1)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={threeSelected} alt="three" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={three} alt="three" />}
@@ -246,7 +248,8 @@ const container = compose<Props, {}>(
       options: state.domains.shapediver.options,
       location: state.domains.shapediver.location,
       terrain: state.domains.shapediver.terrain,
-      expandAdvanced: state.domains.shapediver.expandAdvanced
+      expandAdvanced: state.domains.shapediver.expandAdvanced,
+      densityGeneral: state.domains.shapediver.densityGeneral,
     }),
     {
       setTerrain,

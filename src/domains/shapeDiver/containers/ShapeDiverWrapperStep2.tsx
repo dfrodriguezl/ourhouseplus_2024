@@ -19,6 +19,7 @@ const styles = {
 interface StateProps {
   location: Location | undefined;
   facadeDirection: number;
+  densityGeneral: string;
 }
 
 interface ComponentProps {
@@ -50,16 +51,17 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_: Props) {
-    const { location, facadeDirection } = this.props;
+    const { location, facadeDirection, densityGeneral } = this.props;
+    const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
     if (this.state.isLoaded) {
       const response = await this.api!.parameters.updateAsync([
-        { name: Parameters.Density2, value: location.density },
-        { name: Parameters.Regen, value: location.regen },
-        { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
-        { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
-        { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
-        { name: Parameters.WindowPercentage, value: location.windowPercentage },
+        { name: Parameters.Density2, value: location[typeDensity].density },
+        { name: Parameters.Regen, value: location[typeDensity].regen },
+        { name: Parameters.MaxPrimaryFloors2, value: location[typeDensity].maxPriFloors },
+        { name: Parameters.MaxSecondaryFloors2, value: location[typeDensity].maxSecFloors },
+        { name: Parameters.NumberStreetFloors2, value: location[typeDensity].streetFloors },
+        { name: Parameters.WindowPercentage, value: location[typeDensity].windowPercentage },
         { name: Parameters.FacadeDirection, value: facadeDirection },
       ]);
 
@@ -71,12 +73,13 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
         console.log(response.data)
       }
 
-      
+
     }
   }
 
   public async componentDidMount() {
-    const { location, facadeDirection } = this.props;
+    const { location, facadeDirection, densityGeneral } = this.props;
+    const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
@@ -113,13 +116,13 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
         await this.api.parameters.updateAsync([
-          { name: Parameters.Density2, value: location.density },
-          { name: Parameters.Regen, value: location.regen },
+          { name: Parameters.Density2, value: location[typeDensity].density },
+          { name: Parameters.Regen, value: location[typeDensity].regen },
           { name: Parameters.FacadeDirection, value: facadeDirection },
-          { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
-          { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
-          { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
-          { name: Parameters.WindowPercentage, value: location.windowPercentage },
+          { name: Parameters.MaxPrimaryFloors2, value: location[typeDensity].maxPriFloors },
+          { name: Parameters.MaxSecondaryFloors2, value: location[typeDensity].maxSecFloors },
+          { name: Parameters.NumberStreetFloors2, value: location[typeDensity].streetFloors },
+          { name: Parameters.WindowPercentage, value: location[typeDensity].windowPercentage },
         ]);
 
         // // finally show the scene
@@ -153,6 +156,7 @@ const container = compose<Props, {}>(
     (state: RootState) => ({
       location: state.domains.shapediver.location,
       facadeDirection: state.domains.shapediver.facadeDirection,
+      densityGeneral: state.domains.shapediver.densityGeneral
     }),
     {
       setOptions

@@ -105,6 +105,7 @@ const useStyles = makeStyles(() =>
 
 interface StateProps {
   currentProject: Project | undefined;
+  densityGeneral: string;
 }
 
 interface RouteProps {
@@ -121,23 +122,32 @@ interface DispatchProps {
 
 type Props = DispatchProps & StateProps & RouteComponentProps<RouteProps>;
 const DetailsSummary = (props: Props) => {
-  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject } = props;
+  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject, densityGeneral } = props;
   const classes = useStyles();
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
+  
 
   useEffect(() => {
     loadProjectById(params.id);
   }, [loadProjectById, params])
+
+  const getDensityType = (value: number) => {
+    const den = _.find(Densities, (x: Density) => x.value === value);
+    return den;
+  }
+  
+  const typeDensity = getDensityType(currentProject?.location.density!)!.type === "suburban" ? "suburban" : "urban";
 
   const gotTo3DView = () => {
     if (isAuthenticated && user) {
 
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
 
+
         setInitialParams({
           location: currentProject?.location,
           area: currentProject?.area!,
-          density: getDensity(currentProject?.location?.density!)!
+          density: getDensityType(currentProject?.location?.density!)!
         });
 
         setSaveSuccess(true)
@@ -147,11 +157,6 @@ const DetailsSummary = (props: Props) => {
     } else {
       loginWithRedirect();
     }
-  }
-
-  const getDensity = (value: number) => {
-    const den = _.find(Densities, (x: Density) => x.value === value);
-    return den;
   }
 
   return (
@@ -184,9 +189,9 @@ const DetailsSummary = (props: Props) => {
           <Grid item container xs={12}>
             <Grid item xs={4} className={classes.imgContainer}>
               {
-                currentProject?.location?.maxPriFloors! <= 6 ?
+                currentProject?.location[typeDensity]?.maxPriFloors! <= 6 ?
                   <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
-                  currentProject?.location?.maxPriFloors! <= 12 ?
+                  currentProject?.location[typeDensity]?.maxPriFloors! <= 12 ?
                     <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
                     <img alt="img-project" src={height_13} className={classes.imgProject}></img>
               }
@@ -219,7 +224,7 @@ const DetailsSummary = (props: Props) => {
                 <Divider className={classes.divider} />
                 <Typography variant="body2">
                   Max floors <span className={classes.numberResult}> {
-                    Math.max(currentProject?.location?.maxPriFloors!, currentProject?.location?.maxSecFloors!)
+                    Math.max(currentProject?.location[typeDensity]?.maxPriFloors!, currentProject?.location[typeDensity]?.maxSecFloors!)
                   } </span>
                 </Typography>
               </Box>
@@ -377,7 +382,8 @@ const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-      currentProject: state.domains.shapediver.currentProject
+      currentProject: state.domains.shapediver.currentProject,
+      densityGeneral: state.domains.shapediver.densityGeneral
     }),
     {
       loadProjectById,

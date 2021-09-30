@@ -15,6 +15,7 @@ export interface ShapeDiverState {
   roomType: number;
   floorSelectionOptions: string[];
   floorSelection: number;
+  densityGeneral: string;
   modelData: ModelData;
   importModel: string;
   expandAdvanced: Object;
@@ -35,6 +36,7 @@ const initialState: ShapeDiverState = {
   roomType: 2,
   floorSelectionOptions: [],
   floorSelection: 0,
+  densityGeneral: 'urban',
   modelData: {
     floorAreaRatio: 0,
     landUserRatio: 0,
@@ -73,44 +75,45 @@ export const shapeDiverSlice = createSlice({
     setInitialParams: (state, action: PayloadAction<SearchParams>) => {
       state.area = action.payload.area;
       state.location = action.payload.location;
+      state.densityGeneral = action.payload.density.type;
     },
     setTerrain: (state, action: PayloadAction<number>) => {
       state.terrain = action.payload;
     },
     setDensity: (state, action: PayloadAction<number>) => {
-      state.location!.density = action.payload;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].density = action.payload;
     },
     setLocation: (state, action: PayloadAction<Location>) => {
       state.location = action.payload;
     },
     setUnitsNumberType: (state, action: PayloadAction<number>) => {
-      state.location!.unitsNumberType = action.payload;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].unitsNumberType = action.payload;
     },
     setAdvancedOptions: (state, action: PayloadAction<AdvancedOptions>) => {
-      state.location!.maxPriFloors = action.payload.maxPriFloors;
-      state.location!.maxSecFloors = action.payload.maxSecFloors;
-      state.location!.streetFloors = action.payload.streetFloors;
-      state.location!.typologies = action.payload.typologies;
-      state.location!.emptySpaceSelection = action.payload.emptySpaceSelection;
-      state.location!.undefinedTower = action.payload.undefinedTower;
-      state.location!.streetDensity = action.payload.streetDensity;
-      state.location!.islandSpacings = action.payload.islandSpacings;
-      state.location!.axisSelection = action.payload.axisSelection;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].maxPriFloors = action.payload.maxPriFloors;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].maxSecFloors = action.payload.maxSecFloors;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].streetFloors = action.payload.streetFloors;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].typologies = action.payload.typologies;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].emptySpaceSelection = action.payload.emptySpaceSelection;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].undefinedTower = action.payload.undefinedTower;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].streetDensity = action.payload.streetDensity;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].islandSpacings = action.payload.islandSpacings;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].axisSelection = action.payload.axisSelection;
     },
     setWindow: (state, action: PayloadAction<number>) => {
-      state.location!.windowPercentage = action.payload;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].windowPercentage = action.payload;
     },
     setFacadeDirection: (state, action: PayloadAction<number>) => {
       state.facadeDirection = action.payload;
     },
     setFlatSize: (state, action: PayloadAction<number>) => {
-      state.location!.flatSize = action.payload;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].flatSize = action.payload;
     },
     setOptions: (state, action: PayloadAction<ShapeDiverOptions>) => {
       state.options = action.payload;
     },
     setRegen: (state) => {
-      state.location!.regen = (state.location!.regen + 1) % state.options!.regen.length;
+      state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].regen = (state.location![state.densityGeneral === 'suburban' ? 'suburban':'urban'].regen + 1) % state.options!.regen.length;
     },
     setRoomType: (state, action: PayloadAction<number>) => {
       state.roomType = action.payload;
@@ -147,7 +150,10 @@ export const shapeDiverSlice = createSlice({
     },
     setLoadingStatus: (state, action: PayloadAction<boolean>) => {
       state.loading = action.payload;
-    }
+    },
+    setDensityGeneral: (state, action: PayloadAction<number>) => {
+      state.location!.density = action.payload;
+    },
   },
 });
 
@@ -173,7 +179,8 @@ export const {
   setLoadProjects,
   setCurrentProject,
   setNameProject,
-  setLoadingStatus
+  setLoadingStatus,
+  setDensityGeneral
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
