@@ -55,6 +55,31 @@ export interface Location {
   }
 }
 
+export interface LocationSimple {
+  id: number;
+  city: string;
+  densityGeneral: number;
+  description: string;
+  maxPriFloors: number;
+  maxSecFloors: number;
+  streetFloors: number;
+  windowPercentage: number;
+  unitsNumberType: number;
+  density: number;
+  flatSize: number;
+  flatType: number;
+  regen: number;
+  lat: number;
+  lon: number;
+  p_vivs: number;
+  axisSelection: number;
+  typologies: number;
+  emptySpaceSelection: number;
+  undefinedTower: number;
+  streetDensity: number;
+  islandSpacings: number;
+}
+
 export interface Density {
   label: string;
   subLabel: string;
