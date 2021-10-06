@@ -101,7 +101,8 @@ const SearchToolBar = (props: Props) => {
       emptySpaceSelection: loc![densityLocal].emptySpaceSelection,
       undefinedTower: loc![densityLocal].undefinedTower,
       streetDensity: loc![densityLocal].streetDensity,
-      islandSpacings: loc![densityLocal].islandSpacings
+      islandSpacings: loc![densityLocal].islandSpacings,
+      floorsAlignment: 0
     });
   }
 

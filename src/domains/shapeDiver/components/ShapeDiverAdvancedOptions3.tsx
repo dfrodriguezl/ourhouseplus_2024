@@ -64,6 +64,7 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: Number(value),
+      floorsAlignment: 0
     });
   }
 
@@ -82,7 +83,8 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
       undefinedTower: location!.undefinedTower,
       streetDensity: Number(value),
       islandSpacings: location!.islandSpacings,
-      axisSelection: location!.axisSelection
+      axisSelection: location!.axisSelection,
+      floorsAlignment: 0
     });
   }
 
@@ -97,7 +99,8 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
       undefinedTower: location!.undefinedTower,
       streetDensity: location!.streetDensity,
       islandSpacings: Number(value),
-      axisSelection: location!.axisSelection
+      axisSelection: location!.axisSelection,
+      floorsAlignment: 0
     });
   }
 

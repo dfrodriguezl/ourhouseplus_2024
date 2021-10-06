@@ -82,6 +82,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.AxisSelection, value: location.axisSelection },
             { name: Parameters.StreetDensity, value: location.streetDensity },
             { name: Parameters.IslandSpacings, value: location.islandSpacings },
+            { name: Parameters.FloorsAlignment, value: location.floorsAlignment },   
           ] :
           [
             { name: Parameters.Terrain, value: terrain },
@@ -95,6 +96,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.AxisSelection, value: location.axisSelection },
             { name: Parameters.StreetDensity, value: location.streetDensity },
             { name: Parameters.IslandSpacings, value: location.islandSpacings },
+            { name: Parameters.FloorsAlignment, value: location.floorsAlignment },
           ];
 
 

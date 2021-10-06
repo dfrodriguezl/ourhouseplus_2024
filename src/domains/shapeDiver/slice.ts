@@ -86,7 +86,8 @@ export const shapeDiverSlice = createSlice({
       state.location = action.payload;
     },
     setUnitsNumberType: (state, action: PayloadAction<number>) => {
-      state.location!.unitsNumberType = action.payload;
+      // state.location!.unitsNumberType = action.payload;
+      state.location!.typologies = action.payload;
     },
     setAdvancedOptions: (state, action: PayloadAction<AdvancedOptions>) => {
       state.location!.maxPriFloors = action.payload.maxPriFloors;
@@ -98,6 +99,7 @@ export const shapeDiverSlice = createSlice({
       state.location!.streetDensity = action.payload.streetDensity;
       state.location!.islandSpacings = action.payload.islandSpacings;
       state.location!.axisSelection = action.payload.axisSelection;
+      state.location!.floorsAlignment = action.payload.floorsAlignment;
     },
     setWindow: (state, action: PayloadAction<number>) => {
       state.location!.windowPercentage = action.payload;

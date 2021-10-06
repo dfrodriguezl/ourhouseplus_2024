@@ -171,7 +171,8 @@ const DetailsSummary = (props: Props) => {
               emptySpaceSelection: locationSaved![densityLocal].emptySpaceSelection,
               undefinedTower: locationSaved![densityLocal].undefinedTower,
               streetDensity: locationSaved![densityLocal].streetDensity,
-              islandSpacings: locationSaved![densityLocal].islandSpacings
+              islandSpacings: locationSaved![densityLocal].islandSpacings,
+              floorsAlignment: 0
             } :
             currentProject?.location,
           area: currentProject?.area!,

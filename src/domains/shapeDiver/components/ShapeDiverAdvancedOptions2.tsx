@@ -56,6 +56,7 @@ const ShapeDiverAdvancedOptions2 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: location!.axisSelection,
+      floorsAlignment: 0
     });
   }
 
@@ -75,6 +76,7 @@ const ShapeDiverAdvancedOptions2 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: location!.axisSelection,
+      floorsAlignment: 0
     });
   }
 
@@ -106,7 +108,7 @@ const ShapeDiverAdvancedOptions2 = (props: Props) => {
               valueLabelDisplay="auto"
               step={1}
               min={0}
-              max={9}
+              max={10}
               onChange={updateGroundFloorFreeSpace}
             />
           </Grid>

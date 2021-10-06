@@ -1,4 +1,4 @@
-import { Box, Grid, makeStyles, Slider, Theme } from '@material-ui/core';
+import { Box, Grid, makeStyles, Slider, Switch, Theme } from '@material-ui/core';
 import { RootState } from 'app/store';
 import { LocationSimple } from 'domains/core/models';
 import { Fragment } from 'react';
@@ -16,7 +16,24 @@ const styles = makeStyles((theme: Theme) => ({
     background: theme.palette.common.white,
     color: '#49494F',
     textAlign: 'center'
-  }
+  },
+  fontSub: {
+    fontSize: 10
+  },
+  track: {
+    background: '#5D5D5D',
+  },
+  checked: {
+    color: '#E33650',
+  },
+  toggle: {
+    '& .Mui-checked': {
+      color: '#E33650'
+    },
+    '& .Mui-checked + .MuiSwitch-track': {
+      backgroundColor: '#FF647B'
+    }
+  },
 }));
 
 interface StateProps {
@@ -46,6 +63,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: location!.axisSelection,
+      floorsAlignment: 0
     });
   }
 
@@ -61,6 +79,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: location!.axisSelection,
+      floorsAlignment: 0
     });
   }
 
@@ -76,6 +95,23 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: location!.axisSelection,
+      floorsAlignment: 0
+    });
+  }
+
+  const updateFloorsAlignment = (value: boolean) => {
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+      floorsAlignment: value ? 1 : 0
     });
   }
 
@@ -85,7 +121,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         <Box fontSize={18} fontWeight='bold' textAlign="start">Maximum height</Box>
       </Grid>
       <Grid item xs={12} >
-        <Box fontSize={12} textAlign="start">Max primary floors</Box>
+        <Box fontSize={12} textAlign="start">Choose max. number of floors A</Box>
       </Grid>
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
@@ -105,7 +141,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Box fontSize={12} textAlign="start">Max secondary floors</Box>
+        <Box fontSize={12} textAlign="start">Choose max. number of floors B</Box>
       </Grid>
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
@@ -125,7 +161,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Box fontSize={12} textAlign="start">Street floors</Box>
+        <Box fontSize={12} textAlign="start">Choose number of street floors</Box>
       </Grid>
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
@@ -142,6 +178,17 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         <Grid xs={1} />
         <Grid xs={2}>
           <input type="text" value={location ? location.streetFloors : 0} className={classes.inputNumber} disabled />
+        </Grid>
+      </Grid>
+      <Grid item container xs={12}>
+        <Grid xs={10}>
+          <Box fontSize={12} textAlign="start">Floors alignment <br /> <span className={classes.fontSub}>(random/regular)</span> </Box>
+        </Grid>
+        <Grid xs={2}>
+          <Switch checked={ location?.floorsAlignment === 0 ? false : true }
+            onChange={(e) => updateFloorsAlignment(e.target.checked)}
+            size="small"
+            className={classes.toggle} />
         </Grid>
       </Grid>
     </Fragment>

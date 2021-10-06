@@ -26,6 +26,7 @@ export enum Parameters {
   NumberStreetFloors2 = 'NBR STREET FLOORS',
   MaxPrimaryFloors2 = 'MAX NBR PRIMARY FLOORS',
   MaxSecondaryFloors2 = 'MAX NBR SECONDARY FLOORS',
+  FloorsAlignment = 'FLOORS-MAX FLOORS ALIGNEMENT'
 }
 
 export enum DataParameters {
@@ -65,6 +66,7 @@ export interface AdvancedOptions {
   undefinedTower: number;
   streetDensity: number;
   islandSpacings: number;
+  floorsAlignment: number;
 }
 
 export interface ModelData {

@@ -200,7 +200,7 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="Two types" placement="top-end">
                     <Radio
-                      checked={location.unitsNumberType === 0}
+                      checked={location.typologies === 0}
                       onClick={() => setUnitsNumberType(0)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={twoSelected} alt="two" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={two} alt="two" />}
@@ -210,23 +210,23 @@ function ShapeDiverToolBarStep1(props: Props) {
                 <Grid item xs={4}>
                   <CustomTooltip title="Three types" placement="top-end">
                     <Radio
-                      checked={location.unitsNumberType === 1}
+                      checked={location.typologies === 1}
                       onClick={() => setUnitsNumberType(1)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={threeSelected} alt="three" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={three} alt="three" />}
                     />
                   </CustomTooltip>
                 </Grid>
-                {/* <Grid item xs={4}>
+                <Grid item xs={4}>
                   <CustomTooltip title="Four types" placement="top-end">
                     <Radio
-                      checked={location.unitsNumberType === 2}
+                      checked={location.typologies === 2}
                       onClick={() => setUnitsNumberType(2)}
                       checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={fourSelected} alt="four" />}
                       icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={four} alt="four" />}
                     />
                   </CustomTooltip>
-                </Grid> */}
+                </Grid>
               </Grid>
             </RadioGroup>
           </Grid>

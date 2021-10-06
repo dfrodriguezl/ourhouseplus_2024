@@ -1,4 +1,4 @@
-import { Avatar, Box, Divider, Grid, makeStyles, Radio, RadioGroup, Theme } from '@material-ui/core';
+import { Avatar, Box, Divider, Grid, makeStyles, Radio, RadioGroup, Theme, Switch } from '@material-ui/core';
 import { RootState } from 'app/store';
 import { LocationSimple } from 'domains/core/models';
 import { connect } from 'react-redux';
@@ -38,7 +38,18 @@ const styles = makeStyles((theme: Theme) => ({
   avatarSelected: {
     color: "#000000",
     backgroundColor: "#FFFFFF",
-  }
+  },
+  fontSub: {
+    fontSize: 10
+  },
+  toggle: {
+    '& .Mui-checked': {
+      color: '#E33650'
+    },
+    '& .Mui-checked + .MuiSwitch-track': {
+      backgroundColor: '#FF647B'
+    }
+  },
 }));
 
 interface StateProps {
@@ -68,6 +79,7 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: location!.axisSelection,
+      floorsAlignment: 0
     });
   }
 
@@ -99,6 +111,9 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
       <Divider />
       <Grid item xs={12} className={classes.titlePanel}>
         <Box fontSize={18} fontWeight='bold' textAlign="start">Housing mix</Box>
+      </Grid>
+      <Grid item xs={12}>
+        <Box fontSize={12} textAlign="start">Choose units percentage mix</Box>
       </Grid>
       <Grid item container xs={12} >
         <RadioGroup className={classes.radioStyle}>
@@ -146,52 +161,24 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
           </Grid>
         </RadioGroup>
       </Grid>
-      {/* <Grid item container xs={12} >
-        <RadioGroup className={classes.radioStyle}>
-          <Grid container spacing={6}>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 5}
-                onClick={() => updateTypology(5)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>6</Avatar>}
-                icon={<Avatar className={classes.avatar}>6</Avatar>}
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 6}
-                onClick={() => updateTypology(6)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>7</Avatar>}
-                icon={<Avatar className={classes.avatar}>7</Avatar>}
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 7}
-                onClick={() => updateTypology(7)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>8</Avatar>}
-                icon={<Avatar className={classes.avatar}>8</Avatar>}
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 8}
-                onClick={() => updateTypology(8)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>9</Avatar>}
-                icon={<Avatar className={classes.avatar}>9</Avatar>}
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 9}
-                onClick={() => updateTypology(9)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>10</Avatar>}
-                icon={<Avatar className={classes.avatar}>10</Avatar>}
-              />
-            </Grid>
-          </Grid>
-        </RadioGroup>
-      </Grid> */}
+      <br/>
+      <Grid item container xs={12}>
+        <Grid xs={10}>
+          <Box fontSize={12} textAlign="start">Units alignment <br /> <span className={classes.fontSub}>(random/regular)</span> </Box>
+        </Grid>
+        <Grid xs={2}>
+          <Switch size="small" className={classes.toggle} />
+        </Grid>
+      </Grid>
+      <br/>
+      <Grid item container xs={12}>
+        <Grid xs={10}>
+          <Box fontSize={12} textAlign="start">Lofts last floors <br /> <span className={classes.fontSub}>(on/off)</span> </Box>
+        </Grid>
+        <Grid xs={2}>
+          <Switch size="small" className={classes.toggle} />
+        </Grid>
+      </Grid>
     </Fragment>
   )
 }
