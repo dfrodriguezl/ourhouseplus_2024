@@ -6,13 +6,13 @@ import { ShapeDiverAdditionalParams, ShapeDiverBottomSteps, ShapeDiverSteps, Sha
 import { ShapeDiverWrapperStep1 } from 'domains/shapeDiver/containers';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { RootState } from 'app/store';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { Fragment } from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
 }
 
 type Props = StateProps & RouteComponentProps;

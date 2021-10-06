@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, makeStyles, Divider, IconButton, Theme, Snackbar, SnackbarContent } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getProjectData, saveProject, setAdvancedOptions, setNameProject, setDensityGeneral } from 'domains/shapeDiver/slice';
+import { getProjectData, saveProject, setAdvancedOptions, setNameProject } from 'domains/shapeDiver/slice';
 import { save } from 'assets'
 import CloseIcon from '@material-ui/icons/Close';
 

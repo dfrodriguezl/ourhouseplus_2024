@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Divider, Grid, makeStyles, Theme, Dialog, List, ListItem } from '@material-ui/core';
 import { getLocations } from 'domains/core/coreSlice';
-import { Densities, Density, Location } from 'domains/core/models';
+import { Densities, Density, Location, LocationSimple } from 'domains/core/models';
 import { ButtonWrapper, LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
-import { setInitialParams, setSearchClick, setSaveSuccess, setDensityGeneral } from 'domains/shapeDiver/slice';
+import { setInitialParams, setSaveSuccess, setDensityGeneral } from 'domains/shapeDiver/slice';
+import { setSearchClick } from 'domains/core/coreSlice';
 import { RootState } from 'app/store';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -61,12 +62,15 @@ const SearchToolBar = (props: Props) => {
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
+  const [locationSimple, setLocationSimple] = useState<LocationSimple>();
   const [area, setArea] = useState<number>();
   const [density, setDensity] = useState<Density>();
   const [searchBoxSelected, setSearchBoxSelected] = useState(1);
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const densityLocal = density?.value === 0 ? "suburban" : "urban";
 
   useEffect(() => {
     getLocations();
@@ -75,6 +79,30 @@ const SearchToolBar = (props: Props) => {
   const updateLocation = (value: string) => {
     const loc = _.find(locations, x => x.city === value);
     setLocation(loc);
+    setLocationSimple({
+      id: loc?.id!,
+      city: loc?.city!,
+      densityGeneral: loc?.density!,
+      description: loc?.description!,
+      maxPriFloors: loc![densityLocal].maxPriFloors,
+      maxSecFloors: loc![densityLocal].maxSecFloors,
+      streetFloors: loc![densityLocal].streetFloors,
+      windowPercentage: loc![densityLocal].windowPercentage,
+      unitsNumberType: loc![densityLocal].unitsNumberType,
+      density: loc![densityLocal].density,
+      flatSize: loc![densityLocal].flatSize,
+      flatType: loc![densityLocal].flatType,
+      regen: loc![densityLocal].regen,
+      lat: loc![densityLocal].lat,
+      lon: loc![densityLocal].lon,
+      p_vivs: loc![densityLocal].p_vivs,
+      axisSelection: loc![densityLocal].axisSelection,
+      typologies: loc![densityLocal].typologies,
+      emptySpaceSelection: loc![densityLocal].emptySpaceSelection,
+      undefinedTower: loc![densityLocal].undefinedTower,
+      streetDensity: loc![densityLocal].streetDensity,
+      islandSpacings: loc![densityLocal].islandSpacings
+    });
   }
 
   const updateStep = (step: number) => {
@@ -99,12 +127,13 @@ const SearchToolBar = (props: Props) => {
   const next = () => {
     if (isAuthenticated && user) {
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
+
         setInitialParams({
-          location,
+          location: locationSimple,
           area: area!,
           density: density!
         });
-        setDensityGeneral(density?.value!);
+        setDensityGeneral(density!.value);
         setSaveSuccess(false)
         history.push('/shapediver/step1');
       }
@@ -144,7 +173,7 @@ const SearchToolBar = (props: Props) => {
             <Grid item container direction="column" xs={12} sm={3} justify="center" >
               <LocationMenu
                 updateLocation={updateLocation}
-                location={location}
+                location={locationSimple}
                 updateStep={updateStep}
               />
             </Grid>
@@ -184,7 +213,7 @@ const SearchToolBar = (props: Props) => {
               <Grid container direction="column" xs={12} justify="center" >
                 <LocationMenu
                   updateLocation={updateLocation}
-                  location={location}
+                  location={locationSimple}
                   updateStep={updateStep}
                 />
               </Grid>
@@ -270,10 +299,10 @@ const SearchToolBar = (props: Props) => {
 
 const container = compose<Props, {}>(
   withRouter,
-  connect<StateProps, DispatchProps, Props, RootState>(
+  connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
       locations: state.domains.core.locations,
-      searchClick: state.domains.shapediver.searchClick
+      searchClick: state.domains.core.searchClick
     }),
     {
       getLocations,

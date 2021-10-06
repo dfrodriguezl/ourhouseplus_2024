@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Grid, Box, makeStyles, Accordion, AccordionSummary, AccordionDetails, Tabs, Tab, Theme } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { connect } from 'react-redux';
 import { setAdvancedOptions, setExpandAdvanced } from 'domains/shapeDiver/slice';
 
@@ -49,7 +49,7 @@ interface DispatchProps {
 }
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   expandAdvanced: Object;
 }
 

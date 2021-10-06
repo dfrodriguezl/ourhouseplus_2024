@@ -7,7 +7,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Api } from 'shapediver-types';
 import { DataParameters, Parameters } from 'domains/shapeDiver/models';
 import { getArea, setModelData, setOptions } from 'domains/shapeDiver/slice';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { FullPageOverlay } from 'domains/core/containers';
 
 const styles = {
@@ -21,7 +21,7 @@ const styles = {
 interface StateProps {
   terrain: number;
   area: number | undefined;
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   importModel: string;
   densityGeneral: string;
 }
@@ -69,32 +69,32 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         typeDensity === "urban" ?
           [
             { name: Parameters.Terrain, value: terrain },
-            { name: Parameters.Density, value: location[typeDensity].density },
+            { name: Parameters.Density, value: location.density },
             { name: Parameters.Area, value: area?.toString() },
-            { name: Parameters.Regen, value: location[typeDensity].regen },
-            { name: Parameters.UnitsNumberType, value: location[typeDensity].unitsNumberType },
-            { name: Parameters.MaxPrimaryFloors, value: location[typeDensity].maxPriFloors },
-            { name: Parameters.MaxSecondaryFloors, value: location[typeDensity].maxSecFloors },
-            { name: Parameters.NumberStreetFloors, value: location[typeDensity].streetFloors },
-            { name: Parameters.Typologies, value: location[typeDensity].typologies },
-            { name: Parameters.EmptySpaceSelection, value: location[typeDensity].emptySpaceSelection },
-            { name: Parameters.UndefinedTower, value: location[typeDensity].undefinedTower },
-            { name: Parameters.AxisSelection, value: location[typeDensity].axisSelection },
-            { name: Parameters.StreetDensity, value: location[typeDensity].streetDensity },
-            { name: Parameters.IslandSpacings, value: location[typeDensity].islandSpacings },
+            { name: Parameters.Regen, value: location.regen },
+            { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
+            { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+            { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+            { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+            { name: Parameters.Typologies, value: location.typologies },
+            { name: Parameters.EmptySpaceSelection, value: location.emptySpaceSelection },
+            { name: Parameters.UndefinedTower, value: location.undefinedTower },
+            { name: Parameters.AxisSelection, value: location.axisSelection },
+            { name: Parameters.StreetDensity, value: location.streetDensity },
+            { name: Parameters.IslandSpacings, value: location.islandSpacings },
           ] :
           [
             { name: Parameters.Terrain, value: terrain },
-            { name: Parameters.Density, value: location[typeDensity].density },
+            { name: Parameters.Density, value: location.density },
             { name: Parameters.Area, value: area?.toString() },
-            { name: Parameters.UnitsNumberType, value: location[typeDensity].unitsNumberType },
-            { name: Parameters.MaxPrimaryFloors, value: location[typeDensity].maxPriFloors },
-            { name: Parameters.MaxSecondaryFloors, value: location[typeDensity].maxSecFloors },
-            { name: Parameters.NumberStreetFloors, value: location[typeDensity].streetFloors },
-            { name: Parameters.Typologies, value: location[typeDensity].typologies },
-            { name: Parameters.AxisSelection, value: location[typeDensity].axisSelection },
-            { name: Parameters.StreetDensity, value: location[typeDensity].streetDensity },
-            { name: Parameters.IslandSpacings, value: location[typeDensity].islandSpacings },
+            { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
+            { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+            { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+            { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+            { name: Parameters.Typologies, value: location.typologies },
+            { name: Parameters.AxisSelection, value: location.axisSelection },
+            { name: Parameters.StreetDensity, value: location.streetDensity },
+            { name: Parameters.IslandSpacings, value: location.islandSpacings },
           ];
 
 
@@ -200,34 +200,32 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
           typeDensity === "urban" ?
             [
               { name: Parameters.Terrain, value: terrain },
-              { name: Parameters.Density, value: location[typeDensity].density },
+              { name: Parameters.Density, value: location.density },
               { name: Parameters.Area, value: area?.toString() },
-              { name: Parameters.Regen, value: location[typeDensity].regen },
-              { name: Parameters.UnitsNumberType, value: location[typeDensity].unitsNumberType },
-              { name: Parameters.MaxPrimaryFloors, value: location[typeDensity].maxPriFloors },
-              { name: Parameters.MaxSecondaryFloors, value: location[typeDensity].maxSecFloors },
-              { name: Parameters.NumberStreetFloors, value: location[typeDensity].streetFloors },
-              { name: Parameters.Typologies, value: location[typeDensity].typologies },
-              { name: Parameters.EmptySpaceSelection, value: location[typeDensity].emptySpaceSelection },
-              { name: Parameters.UndefinedTower, value: location[typeDensity].undefinedTower },
-              { name: Parameters.AxisSelection, value: location[typeDensity].axisSelection },
-              { name: Parameters.StreetDensity, value: location[typeDensity].streetDensity },
-              { name: Parameters.IslandSpacings, value: location[typeDensity].islandSpacings },
-              // { name: Parameters.AxisSelection, value: location.axisSelection },
+              { name: Parameters.Regen, value: location.regen },
+              { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
+              { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+              { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+              { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+              { name: Parameters.Typologies, value: location.typologies },
+              { name: Parameters.EmptySpaceSelection, value: location.emptySpaceSelection },
+              { name: Parameters.UndefinedTower, value: location.undefinedTower },
+              { name: Parameters.AxisSelection, value: location.axisSelection },
+              { name: Parameters.StreetDensity, value: location.streetDensity },
+              { name: Parameters.IslandSpacings, value: location.islandSpacings },
             ] :
             [
               { name: Parameters.Terrain, value: terrain },
-              { name: Parameters.Density, value: location[typeDensity].density },
+              { name: Parameters.Density, value: location.density },
               { name: Parameters.Area, value: area?.toString() },
-              { name: Parameters.UnitsNumberType, value: location[typeDensity].unitsNumberType },
-              { name: Parameters.MaxPrimaryFloors, value: location[typeDensity].maxPriFloors },
-              { name: Parameters.MaxSecondaryFloors, value: location[typeDensity].maxSecFloors },
-              { name: Parameters.NumberStreetFloors, value: location[typeDensity].streetFloors },
-              { name: Parameters.Typologies, value: location[typeDensity].typologies },
-              { name: Parameters.AxisSelection, value: location[typeDensity].axisSelection },
-              { name: Parameters.StreetDensity, value: location[typeDensity].streetDensity },
-              { name: Parameters.IslandSpacings, value: location[typeDensity].islandSpacings },
-              // { name: Parameters.AxisSelection, value: location.axisSelection },
+              { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
+              { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+              { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+              { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+              { name: Parameters.Typologies, value: location.typologies },
+              { name: Parameters.AxisSelection, value: location.axisSelection },
+              { name: Parameters.StreetDensity, value: location.streetDensity },
+              { name: Parameters.IslandSpacings, value: location.islandSpacings },
             ]
         );
 

@@ -1,12 +1,12 @@
 import React from 'react';
 import { FormControl, FormControlLabel, makeStyles, Radio, RadioGroup, Theme, Dialog, List, ListItem } from '@material-ui/core';
 import { SearchPill, StyledMenu, StyledMenuItem } from '.';
-import { Location } from 'domains/core/models';
+import { Location, LocationSimple } from 'domains/core/models';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { useState } from 'react';
-import { setSearchClick } from 'domains/shapeDiver/slice';
+import { setSearchClick } from 'domains/core/coreSlice';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
@@ -57,20 +57,19 @@ interface DispatchProps {
 
 interface StateProps {
   locations: Location[];
-  searchClick: Boolean;
 }
 
 interface OwnProps {
   updateLocation(value: string): void;
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   updateStep(step: number): void;
 }
 
 
 
-type Props = OwnProps & StateProps & DispatchProps;
+type Props = & OwnProps & StateProps & DispatchProps;
 function LocationMenu(props: Props) {
-  const { location, updateLocation, updateStep, setSearchClick } = props;
+  const { location, updateLocation, updateStep, setSearchClick, locations } = props;
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [visible, setVisible] = useState<Boolean>(false);
   const [openDialog, setOpenDialog] = useState(false)
@@ -144,7 +143,7 @@ function LocationMenu(props: Props) {
               </ListItem>
 
               {openList ?
-                props.locations.map(x => {
+                locations.map(x => {
 
                   return <ListItem button key={x.id} className={classes.itemList} onClick={() => {
                     updateLocation(x.city);
@@ -172,7 +171,7 @@ function LocationMenu(props: Props) {
               onClose={handleClose}
             >
               {
-                props.locations.map(x =>
+                locations.map(x =>
                   <StyledMenuItem key={x.id} onClick={() => {
                     updateLocation(x.city);
                     setVisible(false);
@@ -203,8 +202,7 @@ function LocationMenu(props: Props) {
 const container = compose<Props, OwnProps>(
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-      locations: state.domains.core.locations,
-      searchClick: state.domains.shapediver.searchClick
+      locations: state.domains.core.locations
     }),
     {
       setSearchClick

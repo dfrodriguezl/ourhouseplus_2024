@@ -7,12 +7,12 @@ import { PageContainer } from 'domains/core/containers';
 import { ShapeDiverToolBarStep3, ShapeDiverSteps, ShapeDiverAdditionalParams, ShapeDiverBottomSteps } from 'domains/shapeDiver/components';
 import { ShapeDiverWrapperStep3 } from 'domains/shapeDiver/containers';
 import { RootState } from 'app/store';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
 }
 
 type Props = StateProps & RouteComponentProps;

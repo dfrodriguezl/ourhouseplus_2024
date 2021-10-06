@@ -1,6 +1,6 @@
 import { Box, Grid, makeStyles, Slider, Theme } from '@material-ui/core';
 import { RootState } from 'app/store';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { setAdvancedOptions } from '../slice';
@@ -20,7 +20,7 @@ const styles = makeStyles((theme: Theme) => ({
 }));
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   densityGeneral: string;
 }
 
@@ -31,52 +31,51 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions1 = (props: Props) => {
-  const { location, setAdvancedOptions, densityGeneral } = props;
+  const { location, setAdvancedOptions } = props;
   const classes = styles();
-  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
   const updateMaxPriFloors = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
       maxPriFloors: Number(value),
-      maxSecFloors: location[typeDensity]!.maxSecFloors,
-      streetFloors: location[typeDensity]!.streetFloors,
-      typologies: location[typeDensity]!.typologies,
-      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
-      undefinedTower: location[typeDensity]!.undefinedTower,
-      streetDensity: location[typeDensity]!.streetDensity,
-      islandSpacings: location[typeDensity]!.islandSpacings,
-      axisSelection: location[typeDensity]!.axisSelection,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
     });
   }
 
   const updateMaxSecFloors = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location[typeDensity]!.maxPriFloors,
+      maxPriFloors: location!.maxPriFloors,
       maxSecFloors: Number(value),
-      streetFloors: location[typeDensity]!.streetFloors,
-      typologies: location[typeDensity]!.typologies,
-      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
-      undefinedTower: location[typeDensity]!.undefinedTower,
-      streetDensity: location[typeDensity]!.streetDensity,
-      islandSpacings: location[typeDensity]!.islandSpacings,
-      axisSelection: location[typeDensity]!.axisSelection,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
     });
   }
 
   const updateStreetFloors = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location[typeDensity]!.maxPriFloors,
-      maxSecFloors: location[typeDensity]!.maxSecFloors,
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
       streetFloors: Number(value),
-      typologies: location[typeDensity]!.typologies,
-      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
-      undefinedTower: location[typeDensity]!.undefinedTower,
-      streetDensity: location[typeDensity]!.streetDensity,
-      islandSpacings: location[typeDensity]!.islandSpacings,
-      axisSelection: location[typeDensity]!.axisSelection,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
     });
   }
 
@@ -91,7 +90,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
           <Slider
-            value={location ? location[typeDensity].maxPriFloors : 0}
+            value={location ? location.maxPriFloors : 0}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={1}
@@ -102,7 +101,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
         <Grid xs={1} />
         <Grid xs={2}>
-          <input type="text" value={location ? location[typeDensity].maxPriFloors : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location ? location.maxPriFloors : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
       <Grid item xs={12}>
@@ -111,7 +110,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
           <Slider
-            value={location ? location[typeDensity].maxSecFloors : 0}
+            value={location ? location.maxSecFloors : 0}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={1}
@@ -122,7 +121,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
         <Grid xs={1} />
         <Grid xs={2}>
-          <input type="text" value={location ? location[typeDensity].maxSecFloors : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location ? location.maxSecFloors : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
       <Grid item xs={12}>
@@ -131,7 +130,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
           <Slider
-            value={location ? location[typeDensity].streetFloors : 0}
+            value={location ? location.streetFloors : 0}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={1}
@@ -142,7 +141,7 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
         <Grid xs={1} />
         <Grid xs={2}>
-          <input type="text" value={location ? location[typeDensity].streetFloors : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location ? location.streetFloors : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
     </Fragment>

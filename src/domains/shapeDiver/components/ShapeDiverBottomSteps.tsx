@@ -3,7 +3,7 @@ import { Button, Grid, makeStyles } from '@material-ui/core';
 import { RootState } from 'app/store';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { oneCircle, twoCircle, threeCircle, oneNoCircle, twoNoCircle, threeNoCircle, back, forward } from 'assets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -39,7 +39,7 @@ const styles = makeStyles((theme) => ({
 }));
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
 }
 
 type Props = StateProps & RouteComponentProps;

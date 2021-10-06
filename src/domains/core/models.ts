@@ -1,7 +1,7 @@
 import { juan, felix, alex, sebastien, lucas, ula, diego, radhi } from 'assets';
 
 export interface SearchParams {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   area: number;
   density: Density;
 }
