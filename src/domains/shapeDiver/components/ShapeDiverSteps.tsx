@@ -60,15 +60,15 @@ const ShapeDiverSteps = (props: Props) => {
 
   const goToNextStep = () => {
     if (isStep1) {
-      history.push('/shapediver/step2');
+      history.push('/models/step2');
     }
 
     if (isStep2) {
-      history.push('/shapediver/step3');
+      history.push('/models/step3');
     }
 
     if (isStep3) {
-      history.push('/shapediver/step1');
+      history.push('/models/step1');
     }
   }
 

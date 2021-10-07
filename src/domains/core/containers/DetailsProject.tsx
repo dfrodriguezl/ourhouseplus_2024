@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useState } from 'react';
 import { Grid, makeStyles, createStyles, Typography, Button } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
@@ -108,6 +108,9 @@ type Props = StateProps & DispatchProps & RouteComponentProps<RouteProps>;
 export const DetailsProjects = (props: Props) => {
   const { history, loadProjectById, currentProject, match: { params } } = props;
   const classes = useStyles();
+  const locationSaved: any = currentProject?.location;
+  const densityGeneral = currentProject?.location?.densityGeneral! ? currentProject?.location?.densityGeneral! : currentProject?.location?.density!;
+  const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
 
   const goToSummary = (id: string) => {
     history.push("/detailsSum/" + id)
@@ -135,19 +138,19 @@ export const DetailsProjects = (props: Props) => {
     twoBedroom: currentProject?.modelData?.twoBedroom,
     threeBedroom: currentProject?.modelData?.threeBedroom,
     fourBedroom: currentProject?.modelData?.fourBedroom,
-    windowPercentage: currentProject?.location?.windowPercentage,
-    windowPc: currentProject?.location?.windowPercentage,
+    windowPercentage: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].windowPercentage : currentProject?.location.windowPercentage : null,
+    windowPc: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].windowPercentage : currentProject?.location.windowPercentage : null,
     facadeDirection: currentProject?.facadeDirection,
     facadeDir: currentProject?.facadeDirection,
-    maxPriFloors: currentProject?.location?.maxPriFloors,
-    maxSecFloors: currentProject?.location?.maxSecFloors,
-    streetFloors: currentProject?.location?.streetFloors,
-    flatSize: currentProject?.location?.flatSize,
-    flatS: currentProject?.location?.flatSize,
-    density: currentProject?.location?.density,
-    den: currentProject?.location?.density,
-    unitsNumberType: currentProject?.location?.unitsNumberType,
-    unitsNumberT: currentProject?.location?.unitsNumberType,
+    maxPriFloors: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].maxPriFloors : currentProject?.location.maxPriFloors : null,
+    maxSecFloors: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].maxSecFloors : currentProject?.location.maxSecFloors : null,
+    streetFloors: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].streetFloors : currentProject?.location.streetFloors : null,
+    flatSize: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].flatSize : currentProject?.location.flatSize : null,
+    flatS: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].flatSize : currentProject?.location.flatSize : null,
+    density: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].density : currentProject?.location.density : null,
+    den: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].density : currentProject?.location.density : null,
+    unitsNumberType: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].unitsNumberType : currentProject?.location.unitsNumberType : null,
+    unitsNumberT: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].unitsNumberType : currentProject?.location.unitsNumberType : null,
     roomType: currentProject?.roomType,
     roomT: currentProject?.roomType,
     totalGrossFloorArea: currentProject?.modelData?.totalGrossFloorArea,

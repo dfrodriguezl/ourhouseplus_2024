@@ -67,6 +67,7 @@ export interface AdvancedOptions {
   streetDensity: number;
   islandSpacings: number;
   floorsAlignment: number;
+  unitsOrganization: number;
 }
 
 export interface ModelData {

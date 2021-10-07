@@ -82,7 +82,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.AxisSelection, value: location.axisSelection },
             { name: Parameters.StreetDensity, value: location.streetDensity },
             { name: Parameters.IslandSpacings, value: location.islandSpacings },
-            { name: Parameters.FloorsAlignment, value: location.floorsAlignment },   
+            { name: Parameters.FloorsAlignment, value: location.floorsAlignment === undefined ? 0 : location.floorsAlignment },
+            { name: Parameters.UnitsNumberType, value: location.unitsOrganization === undefined ? 0 : location.unitsOrganization },
           ] :
           [
             { name: Parameters.Terrain, value: terrain },
@@ -96,7 +97,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.AxisSelection, value: location.axisSelection },
             { name: Parameters.StreetDensity, value: location.streetDensity },
             { name: Parameters.IslandSpacings, value: location.islandSpacings },
-            { name: Parameters.FloorsAlignment, value: location.floorsAlignment },
+            { name: Parameters.FloorsAlignment, value: location.floorsAlignment === undefined ? 0 : location.floorsAlignment },
+            { name: Parameters.UnitsNumberType, value: location.unitsOrganization === undefined ? 0 : location.unitsOrganization },
           ];
 
 
@@ -105,6 +107,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       } else {
         payload.push({ name: Parameters.ImportModel, value: '' })
       }
+
+      console.log("PAYLOAD", payload)
 
       const response = await this.api!.parameters.updateAsync(payload);
 
@@ -214,7 +218,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
               { name: Parameters.UndefinedTower, value: location.undefinedTower },
               { name: Parameters.AxisSelection, value: location.axisSelection },
               { name: Parameters.StreetDensity, value: location.streetDensity },
-              { name: Parameters.IslandSpacings, value: location.islandSpacings },
+              { name: Parameters.FloorsAlignment, value: location.floorsAlignment === undefined ? 0 : location.floorsAlignment },
+              { name: Parameters.UnitsNumberType, value: location.unitsOrganization === undefined ? 0 : location.unitsOrganization },
             ] :
             [
               { name: Parameters.Terrain, value: terrain },
@@ -227,7 +232,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
               { name: Parameters.Typologies, value: location.typologies },
               { name: Parameters.AxisSelection, value: location.axisSelection },
               { name: Parameters.StreetDensity, value: location.streetDensity },
-              { name: Parameters.IslandSpacings, value: location.islandSpacings },
+              { name: Parameters.FloorsAlignment, value: location.floorsAlignment === undefined ? 0 : location.floorsAlignment },
+              { name: Parameters.UnitsNumberType, value: location.unitsOrganization === undefined ? 0 : location.unitsOrganization },
             ]
         );
 

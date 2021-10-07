@@ -176,6 +176,10 @@ export const ListProjects = (props: Props) => {
             </Grid>
             <Grid item xs={1}></Grid>
             {projects.map((p, i) => {
+              const locationSaved: any = p?.location;
+              const densityGeneral = p?.location?.densityGeneral! ? p?.location?.densityGeneral! : p?.location?.density!;
+              const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
+
               return (
                 <Fragment key={i}>
                   <Grid item container xs={2}>
@@ -183,11 +187,17 @@ export const ListProjects = (props: Props) => {
                       <Box component="div" alignItems="center" justifyContent="center">
                         <IconButton onClick={() => goToProject(String(p.id))}>
                           {
-                            p?.location.maxPriFloors <= 6 ?
-                              <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
-                              p?.location.maxPriFloors <= 12 ?
-                                <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} />
+                            locationSaved[densityLocal] ?
+                              locationSaved[densityLocal].maxPriFloors <= 6 ?
+                                <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                locationSaved[densityLocal].maxPriFloors <= 12 ?
+                                  <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                  <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} /> :
+                              p?.location.maxPriFloors <= 6 ?
+                                <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                p?.location.maxPriFloors <= 12 ?
+                                  <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                  <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} />
                           }
 
                         </IconButton>

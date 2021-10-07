@@ -56,7 +56,8 @@ const ShapeDiverAdvancedOptions2 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: location!.axisSelection,
-      floorsAlignment: 0
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
     });
   }
 
@@ -76,7 +77,8 @@ const ShapeDiverAdvancedOptions2 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: location!.axisSelection,
-      floorsAlignment: 0
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
     });
   }
 

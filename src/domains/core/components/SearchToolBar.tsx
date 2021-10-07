@@ -70,7 +70,7 @@ const SearchToolBar = (props: Props) => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  const densityLocal = density?.value === 0 ? "suburban" : "urban";
+  
 
   useEffect(() => {
     getLocations();
@@ -78,32 +78,7 @@ const SearchToolBar = (props: Props) => {
 
   const updateLocation = (value: string) => {
     const loc = _.find(locations, x => x.city === value);
-    setLocation(loc);
-    setLocationSimple({
-      id: loc?.id!,
-      city: loc?.city!,
-      densityGeneral: loc?.density!,
-      description: loc?.description!,
-      maxPriFloors: loc![densityLocal].maxPriFloors,
-      maxSecFloors: loc![densityLocal].maxSecFloors,
-      streetFloors: loc![densityLocal].streetFloors,
-      windowPercentage: loc![densityLocal].windowPercentage,
-      unitsNumberType: loc![densityLocal].unitsNumberType,
-      density: loc![densityLocal].density,
-      flatSize: loc![densityLocal].flatSize,
-      flatType: loc![densityLocal].flatType,
-      regen: loc![densityLocal].regen,
-      lat: loc![densityLocal].lat,
-      lon: loc![densityLocal].lon,
-      p_vivs: loc![densityLocal].p_vivs,
-      axisSelection: loc![densityLocal].axisSelection,
-      typologies: loc![densityLocal].typologies,
-      emptySpaceSelection: loc![densityLocal].emptySpaceSelection,
-      undefinedTower: loc![densityLocal].undefinedTower,
-      streetDensity: loc![densityLocal].streetDensity,
-      islandSpacings: loc![densityLocal].islandSpacings,
-      floorsAlignment: 0
-    });
+    setLocation(loc); 
   }
 
   const updateStep = (step: number) => {
@@ -122,13 +97,43 @@ const SearchToolBar = (props: Props) => {
   const updateDensity = (value: string) => {
     const den = _.find(Densities, x => x.label === value);
     setDensity(den);
+    console.log("DENS",den)
+    
+    const densityLocal = den?.value === 0 ? "suburban" : "urban";
+    console.log("DENS LOCAL",densityLocal)
+    setLocationSimple({
+      id: location?.id!,
+      city: location?.city!,
+      densityGeneral: location?.density!,
+      description: location?.description!,
+      maxPriFloors: location![densityLocal].maxPriFloors,
+      maxSecFloors: location![densityLocal].maxSecFloors,
+      streetFloors: location![densityLocal].streetFloors,
+      windowPercentage: location![densityLocal].windowPercentage,
+      unitsNumberType: location![densityLocal].unitsNumberType,
+      density: location![densityLocal].density,
+      flatSize: location![densityLocal].flatSize,
+      flatType: location![densityLocal].flatType,
+      regen: location![densityLocal].regen,
+      lat: location![densityLocal].lat,
+      lon: location![densityLocal].lon,
+      p_vivs: location![densityLocal].p_vivs,
+      axisSelection: location![densityLocal].axisSelection,
+      typologies: location![densityLocal].typologies,
+      emptySpaceSelection: location![densityLocal].emptySpaceSelection,
+      undefinedTower: location![densityLocal].undefinedTower,
+      streetDensity: location![densityLocal].streetDensity,
+      islandSpacings: location![densityLocal].islandSpacings,
+      floorsAlignment: location![densityLocal].floorsAlignment,
+      unitsOrganization: location![densityLocal].unitsOrganization
+    });
   }
 
 
   const next = () => {
     if (isAuthenticated && user) {
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
-
+        
         setInitialParams({
           location: locationSimple,
           area: area!,
@@ -136,7 +141,7 @@ const SearchToolBar = (props: Props) => {
         });
         setDensityGeneral(density!.value);
         setSaveSuccess(false)
-        history.push('/shapediver/step1');
+        history.push('/models/step1');
       }
     } else {
       loginWithRedirect();
@@ -174,7 +179,7 @@ const SearchToolBar = (props: Props) => {
             <Grid item container direction="column" xs={12} sm={3} justify="center" >
               <LocationMenu
                 updateLocation={updateLocation}
-                location={locationSimple}
+                location={location!}
                 updateStep={updateStep}
               />
             </Grid>
@@ -214,7 +219,7 @@ const SearchToolBar = (props: Props) => {
               <Grid container direction="column" xs={12} justify="center" >
                 <LocationMenu
                   updateLocation={updateLocation}
-                  location={locationSimple}
+                  location={location!}
                   updateStep={updateStep}
                 />
               </Grid>

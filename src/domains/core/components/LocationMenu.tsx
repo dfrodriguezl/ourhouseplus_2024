@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormControl, FormControlLabel, makeStyles, Radio, RadioGroup, Theme, Dialog, List, ListItem } from '@material-ui/core';
 import { SearchPill, StyledMenu, StyledMenuItem } from '.';
-import { Location, LocationSimple } from 'domains/core/models';
+import { Location } from 'domains/core/models';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -61,7 +61,7 @@ interface StateProps {
 
 interface OwnProps {
   updateLocation(value: string): void;
-  location: LocationSimple | undefined;
+  location: Location | undefined;
   updateStep(step: number): void;
 }
 

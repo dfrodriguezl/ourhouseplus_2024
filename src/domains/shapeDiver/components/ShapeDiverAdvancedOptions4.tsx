@@ -79,7 +79,25 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
       streetDensity: location!.streetDensity,
       islandSpacings: location!.islandSpacings,
       axisSelection: location!.axisSelection,
-      floorsAlignment: 0
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
+    });
+  }
+
+  const updateUnitsOrganization = (value: boolean) => {
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: value ? 1 : 0,
     });
   }
 
@@ -167,7 +185,9 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
           <Box fontSize={12} textAlign="start">Units alignment <br /> <span className={classes.fontSub}>(random/regular)</span> </Box>
         </Grid>
         <Grid xs={2}>
-          <Switch size="small" className={classes.toggle} />
+          <Switch checked={ location?.unitsOrganization === 0 ? false : true }
+            onChange={(e) => updateUnitsOrganization(e.target.checked)}
+            size="small" className={classes.toggle} />
         </Grid>
       </Grid>
       <br/>

@@ -100,6 +100,7 @@ export const shapeDiverSlice = createSlice({
       state.location!.islandSpacings = action.payload.islandSpacings;
       state.location!.axisSelection = action.payload.axisSelection;
       state.location!.floorsAlignment = action.payload.floorsAlignment;
+      state.location!.unitsOrganization = action.payload.unitsOrganization;
     },
     setWindow: (state, action: PayloadAction<number>) => {
       state.location!.windowPercentage = action.payload;

@@ -32,6 +32,7 @@ export interface Location {
     streetDensity: number;
     islandSpacings: number;
     floorsAlignment: number;
+    unitsOrganization: number;
   },
   suburban: {
     maxPriFloors: number;
@@ -54,6 +55,7 @@ export interface Location {
     streetDensity: number;
     islandSpacings: number;
     floorsAlignment: number;
+    unitsOrganization: number;
   }
 }
 
@@ -81,6 +83,7 @@ export interface LocationSimple {
   streetDensity: number;
   islandSpacings: number;
   floorsAlignment: number;
+  unitsOrganization: number;
 }
 
 export interface Density {

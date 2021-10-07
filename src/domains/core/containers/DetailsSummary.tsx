@@ -135,8 +135,6 @@ const DetailsSummary = (props: Props) => {
 
   const getDensityType = (value: number) => {
     const den = _.find(Densities, (x: Density) => x.value === value);
-    console.log("VALUE", value)
-    console.log("DENSITY", den?.label)
     return den;
   }
 
@@ -146,7 +144,6 @@ const DetailsSummary = (props: Props) => {
 
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
 
-        console.log("CURR PROJ", currentProject?.location)
         setInitialParams({
           location: locationSaved![densityLocal] ?
             {
@@ -172,7 +169,8 @@ const DetailsSummary = (props: Props) => {
               undefinedTower: locationSaved![densityLocal].undefinedTower,
               streetDensity: locationSaved![densityLocal].streetDensity,
               islandSpacings: locationSaved![densityLocal].islandSpacings,
-              floorsAlignment: 0
+              floorsAlignment: locationSaved![densityLocal].floorsAlignment,
+              unitsOrganization: locationSaved![densityLocal].unitsOrganization,
             } :
             currentProject?.location,
           area: currentProject?.area!,
@@ -181,7 +179,7 @@ const DetailsSummary = (props: Props) => {
 
         setSaveSuccess(true)
         setNameProject(currentProject?.projectName!)
-        history.push('/shapediver/step1');
+        history.push('/models/step1');
       }
     } else {
       loginWithRedirect();
@@ -218,11 +216,17 @@ const DetailsSummary = (props: Props) => {
           <Grid item container xs={12}>
             <Grid item xs={4} className={classes.imgContainer}>
               {
-                currentProject?.location?.maxPriFloors! <= 6 ?
-                  <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
-                  currentProject?.location?.maxPriFloors! <= 12 ?
-                    <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
-                    <img alt="img-project" src={height_13} className={classes.imgProject}></img>
+                locationSaved[densityLocal] ?
+                  locationSaved[densityLocal].maxPriFloors! <= 6 ?
+                    <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
+                    locationSaved[densityLocal].maxPriFloors! <= 12 ?
+                      <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
+                      <img alt="img-project" src={height_13} className={classes.imgProject}></img>
+                  : currentProject?.location?.maxPriFloors! <= 6 ?
+                    <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
+                    currentProject?.location?.maxPriFloors! <= 12 ?
+                      <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
+                      <img alt="img-project" src={height_13} className={classes.imgProject}></img>
               }
             </Grid>
             <Grid item xs={4} style={{ padding: '0px 75px' }}>
@@ -253,7 +257,9 @@ const DetailsSummary = (props: Props) => {
                 <Divider className={classes.divider} />
                 <Typography variant="body2">
                   Max floors <span className={classes.numberResult}> {
-                    Math.max(currentProject?.location?.maxPriFloors!, currentProject?.location?.maxSecFloors!)
+                    locationSaved[densityLocal] ?
+                      Math.max(locationSaved[densityLocal].maxPriFloors!, locationSaved[densityLocal].maxSecFloors!) :
+                      Math.max(currentProject?.location?.maxPriFloors!, currentProject?.location?.maxSecFloors!)
                   } </span>
                 </Typography>
               </Box>

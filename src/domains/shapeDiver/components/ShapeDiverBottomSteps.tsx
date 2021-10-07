@@ -55,15 +55,15 @@ const ShapeDiverSteps = (props: Props) => {
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const goToStep1 = () => {
-    history.push('/shapediver/step1');
+    history.push('/models/step1');
   }
 
   const goToStep2 = () => {
-    history.push('/shapediver/step2');
+    history.push('/models/step2');
   }
 
   const goToStep3 = () => {
-    history.push('/shapediver/step3');
+    history.push('/models/step3');
   }
 
   return (
