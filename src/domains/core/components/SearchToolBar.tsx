@@ -97,10 +97,8 @@ const SearchToolBar = (props: Props) => {
   const updateDensity = (value: string) => {
     const den = _.find(Densities, x => x.label === value);
     setDensity(den);
-    console.log("DENS",den)
     
     const densityLocal = den?.value === 0 ? "suburban" : "urban";
-    console.log("DENS LOCAL",densityLocal)
     setLocationSimple({
       id: location?.id!,
       city: location?.city!,
