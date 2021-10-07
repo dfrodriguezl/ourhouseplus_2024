@@ -58,7 +58,7 @@ const GeneralParameters = (props: Props) => {
       </Grid>
       <Grid item container xs={4} style={{ justifyContent: 'center' }}>
         <Typography variant="body2" className={classes.principalParameters}>
-          <span className={classes.summaryText}>Building Plan</span> {getDensity(project?.location?.density!)?.label!}
+          <span className={classes.summaryText}>Building Plan</span> {getDensity(project?.location?.densityGeneral ? project?.location?.densityGeneral! : project?.location?.density!)?.label!}
         </Typography>
       </Grid>
 

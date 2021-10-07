@@ -1,6 +1,6 @@
-import { Avatar, Box, Divider, Grid, makeStyles, Radio, RadioGroup, Theme } from '@material-ui/core';
+import { Avatar, Box, Divider, Grid, makeStyles, Radio, RadioGroup, Theme, Switch } from '@material-ui/core';
 import { RootState } from 'app/store';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { connect } from 'react-redux';
 import { setAdvancedOptions } from '../slice';
 import { Fragment } from 'react';
@@ -38,11 +38,22 @@ const styles = makeStyles((theme: Theme) => ({
   avatarSelected: {
     color: "#000000",
     backgroundColor: "#FFFFFF",
-  }
+  },
+  fontSub: {
+    fontSize: 10
+  },
+  toggle: {
+    '& .Mui-checked': {
+      color: '#E33650'
+    },
+    '& .Mui-checked + .MuiSwitch-track': {
+      backgroundColor: '#FF647B'
+    }
+  },
 }));
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   densityGeneral: string;
 }
 
@@ -53,22 +64,40 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions4 = (props: Props) => {
-  const { location, setAdvancedOptions, densityGeneral } = props;
+  const { location, setAdvancedOptions } = props;
   const classes = styles();
-  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
   const updateTypology = (value: number) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location![typeDensity].maxPriFloors,
-      maxSecFloors: location![typeDensity].maxSecFloors,
-      streetFloors: location![typeDensity].streetFloors,
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
       typologies: Number(value),
-      emptySpaceSelection: location![typeDensity].emptySpaceSelection,
-      undefinedTower: location![typeDensity].undefinedTower,
-      streetDensity: location![typeDensity].streetDensity,
-      islandSpacings: location![typeDensity].islandSpacings,
-      axisSelection: location![typeDensity].axisSelection,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
+    });
+  }
+
+  const updateUnitsOrganization = (value: boolean) => {
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: value ? 1 : 0,
     });
   }
 
@@ -89,11 +118,11 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
           <span className={classes.bold}> 2b-</span><span className={classes.gray}>20%</span>
           <span className={classes.bold}> 3b-</span><span className={classes.gray}>20%</span>
           <span className={classes.bold}> 4b-</span><span className={classes.gray}>20%</span> */}
-          {location![typeDensity].typologies === 0 ?
+          {location!.typologies === 0 ?
             "Students" :
-            location![typeDensity].typologies === 1 ?
+            location!.typologies === 1 ?
               "Nuclear family" :
-              location![typeDensity].typologies === 2 ?
+              location!.typologies === 2 ?
                 "Senior family" : null}
         </Box>
       </Grid>
@@ -101,12 +130,15 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
       <Grid item xs={12} className={classes.titlePanel}>
         <Box fontSize={18} fontWeight='bold' textAlign="start">Housing mix</Box>
       </Grid>
+      <Grid item xs={12}>
+        <Box fontSize={12} textAlign="start">Choose units percentage mix</Box>
+      </Grid>
       <Grid item container xs={12} >
         <RadioGroup className={classes.radioStyle}>
           <Grid container spacing={6}>
             <Grid item xs={2}>
               <Radio
-                checked={location![typeDensity].typologies === 0}
+                checked={location!.typologies === 0}
                 onClick={() => updateTypology(0)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>1</Avatar>}
                 icon={<Avatar className={classes.avatar}>1</Avatar>}
@@ -114,7 +146,7 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
             </Grid>
             <Grid item xs={2}>
               <Radio
-                checked={location![typeDensity].typologies === 1}
+                checked={location!.typologies === 1}
                 onClick={() => updateTypology(1)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>2</Avatar>}
                 icon={<Avatar className={classes.avatar}>2</Avatar>}
@@ -122,7 +154,7 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
             </Grid>
             <Grid item xs={2}>
               <Radio
-                checked={location![typeDensity].typologies === 2}
+                checked={location!.typologies === 2}
                 onClick={() => updateTypology(2)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>3</Avatar>}
                 icon={<Avatar className={classes.avatar}>3</Avatar>}
@@ -130,7 +162,7 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
             </Grid>
             <Grid item xs={2}>
               <Radio
-                checked={location![typeDensity].typologies === 3}
+                checked={location!.typologies === 3}
                 onClick={() => updateTypology(3)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>4</Avatar>}
                 icon={<Avatar className={classes.avatar}>4</Avatar>}
@@ -138,7 +170,7 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
             </Grid>
             <Grid item xs={2}>
               <Radio
-                checked={location![typeDensity].typologies === 4}
+                checked={location!.typologies === 4}
                 onClick={() => updateTypology(4)}
                 checkedIcon={<Avatar className={classes.avatarSelected}>5</Avatar>}
                 icon={<Avatar className={classes.avatar}>5</Avatar>}
@@ -147,52 +179,26 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
           </Grid>
         </RadioGroup>
       </Grid>
-      {/* <Grid item container xs={12} >
-        <RadioGroup className={classes.radioStyle}>
-          <Grid container spacing={6}>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 5}
-                onClick={() => updateTypology(5)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>6</Avatar>}
-                icon={<Avatar className={classes.avatar}>6</Avatar>}
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 6}
-                onClick={() => updateTypology(6)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>7</Avatar>}
-                icon={<Avatar className={classes.avatar}>7</Avatar>}
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 7}
-                onClick={() => updateTypology(7)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>8</Avatar>}
-                icon={<Avatar className={classes.avatar}>8</Avatar>}
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 8}
-                onClick={() => updateTypology(8)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>9</Avatar>}
-                icon={<Avatar className={classes.avatar}>9</Avatar>}
-              />
-            </Grid>
-            <Grid item xs={2}>
-              <Radio
-                checked={location!.typologies === 9}
-                onClick={() => updateTypology(9)}
-                checkedIcon={<Avatar className={classes.avatarSelected}>10</Avatar>}
-                icon={<Avatar className={classes.avatar}>10</Avatar>}
-              />
-            </Grid>
-          </Grid>
-        </RadioGroup>
-      </Grid> */}
+      <br/>
+      <Grid item container xs={12}>
+        <Grid xs={10}>
+          <Box fontSize={12} textAlign="start">Units alignment <br /> <span className={classes.fontSub}>(random/regular)</span> </Box>
+        </Grid>
+        <Grid xs={2}>
+          <Switch checked={ location?.unitsOrganization === 0 ? false : true }
+            onChange={(e) => updateUnitsOrganization(e.target.checked)}
+            size="small" className={classes.toggle} />
+        </Grid>
+      </Grid>
+      <br/>
+      <Grid item container xs={12}>
+        <Grid xs={10}>
+          <Box fontSize={12} textAlign="start">Lofts last floors <br /> <span className={classes.fontSub}>(on/off)</span> </Box>
+        </Grid>
+        <Grid xs={2}>
+          <Switch size="small" className={classes.toggle} />
+        </Grid>
+      </Grid>
     </Fragment>
   )
 }

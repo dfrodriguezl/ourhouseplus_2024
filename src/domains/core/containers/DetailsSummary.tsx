@@ -105,7 +105,6 @@ const useStyles = makeStyles(() =>
 
 interface StateProps {
   currentProject: Project | undefined;
-  densityGeneral: string;
 }
 
 interface RouteProps {
@@ -122,10 +121,13 @@ interface DispatchProps {
 
 type Props = DispatchProps & StateProps & RouteComponentProps<RouteProps>;
 const DetailsSummary = (props: Props) => {
-  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject, densityGeneral } = props;
+  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject } = props;
   const classes = useStyles();
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
-  
+  const locationSaved: any = currentProject?.location;
+  const densityGeneral = currentProject?.location?.densityGeneral! ? currentProject?.location?.densityGeneral! : currentProject?.location?.density!;
+  const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
+
 
   useEffect(() => {
     loadProjectById(params.id);
@@ -135,24 +137,49 @@ const DetailsSummary = (props: Props) => {
     const den = _.find(Densities, (x: Density) => x.value === value);
     return den;
   }
-  
-  const typeDensity = getDensityType(currentProject?.location.density!)!.type === "suburban" ? "suburban" : "urban";
+
 
   const gotTo3DView = () => {
     if (isAuthenticated && user) {
 
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
 
-
         setInitialParams({
-          location: currentProject?.location,
+          location: locationSaved![densityLocal] ?
+            {
+              id: locationSaved?.id!,
+              city: locationSaved?.city!,
+              densityGeneral: locationSaved?.density!,
+              description: locationSaved?.description!,
+              maxPriFloors: locationSaved![densityLocal].maxPriFloors,
+              maxSecFloors: locationSaved![densityLocal].maxSecFloors,
+              streetFloors: locationSaved![densityLocal].streetFloors,
+              windowPercentage: locationSaved![densityLocal].windowPercentage,
+              unitsNumberType: locationSaved![densityLocal].unitsNumberType,
+              density: locationSaved![densityLocal].density,
+              flatSize: locationSaved![densityLocal].flatSize,
+              flatType: locationSaved![densityLocal].flatType,
+              regen: locationSaved![densityLocal].regen,
+              lat: locationSaved![densityLocal].lat,
+              lon: locationSaved![densityLocal].lon,
+              p_vivs: locationSaved![densityLocal].p_vivs,
+              axisSelection: locationSaved![densityLocal].axisSelection,
+              typologies: locationSaved![densityLocal].typologies,
+              emptySpaceSelection: locationSaved![densityLocal].emptySpaceSelection,
+              undefinedTower: locationSaved![densityLocal].undefinedTower,
+              streetDensity: locationSaved![densityLocal].streetDensity,
+              islandSpacings: locationSaved![densityLocal].islandSpacings,
+              floorsAlignment: locationSaved![densityLocal].floorsAlignment,
+              unitsOrganization: locationSaved![densityLocal].unitsOrganization,
+            } :
+            currentProject?.location,
           area: currentProject?.area!,
-          density: getDensityType(currentProject?.location?.density!)!
+          density: getDensityType(densityGeneral)!
         });
 
         setSaveSuccess(true)
         setNameProject(currentProject?.projectName!)
-        history.push('/shapediver/step1');
+        history.push('/models/step1');
       }
     } else {
       loginWithRedirect();
@@ -189,17 +216,17 @@ const DetailsSummary = (props: Props) => {
           <Grid item container xs={12}>
             <Grid item xs={4} className={classes.imgContainer}>
               {
-                currentProject?.location[typeDensity] ? 
-                  currentProject?.location[typeDensity]?.maxPriFloors! <= 6 ?
+                locationSaved[densityLocal] ?
+                  locationSaved[densityLocal].maxPriFloors! <= 6 ?
                     <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
-                    currentProject?.location[typeDensity]?.maxPriFloors! <= 12 ?
+                    locationSaved[densityLocal].maxPriFloors! <= 12 ?
                       <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
-                      <img alt="img-project" src={height_13} className={classes.imgProject}></img>:
-                  currentProject?.location[typeDensity]?.maxPriFloors! <= 6 ?
-                  <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
-                  currentProject?.location[typeDensity]?.maxPriFloors! <= 12 ?
-                    <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
-                    <img alt="img-project" src={height_13} className={classes.imgProject}></img>
+                      <img alt="img-project" src={height_13} className={classes.imgProject}></img>
+                  : currentProject?.location?.maxPriFloors! <= 6 ?
+                    <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
+                    currentProject?.location?.maxPriFloors! <= 12 ?
+                      <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
+                      <img alt="img-project" src={height_13} className={classes.imgProject}></img>
               }
             </Grid>
             <Grid item xs={4} style={{ padding: '0px 75px' }}>
@@ -230,7 +257,9 @@ const DetailsSummary = (props: Props) => {
                 <Divider className={classes.divider} />
                 <Typography variant="body2">
                   Max floors <span className={classes.numberResult}> {
-                    Math.max(currentProject?.location[typeDensity]?.maxPriFloors!, currentProject?.location[typeDensity]?.maxSecFloors!)
+                    locationSaved[densityLocal] ?
+                      Math.max(locationSaved[densityLocal].maxPriFloors!, locationSaved[densityLocal].maxSecFloors!) :
+                      Math.max(currentProject?.location?.maxPriFloors!, currentProject?.location?.maxSecFloors!)
                   } </span>
                 </Typography>
               </Box>

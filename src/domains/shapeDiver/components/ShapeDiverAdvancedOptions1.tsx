@@ -1,6 +1,6 @@
-import { Box, Grid, makeStyles, Slider, Theme } from '@material-ui/core';
+import { Box, Grid, makeStyles, Slider, Switch, Theme } from '@material-ui/core';
 import { RootState } from 'app/store';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { setAdvancedOptions } from '../slice';
@@ -16,11 +16,28 @@ const styles = makeStyles((theme: Theme) => ({
     background: theme.palette.common.white,
     color: '#49494F',
     textAlign: 'center'
-  }
+  },
+  fontSub: {
+    fontSize: 10
+  },
+  track: {
+    background: '#5D5D5D',
+  },
+  checked: {
+    color: '#E33650',
+  },
+  toggle: {
+    '& .Mui-checked': {
+      color: '#E33650'
+    },
+    '& .Mui-checked + .MuiSwitch-track': {
+      backgroundColor: '#FF647B'
+    }
+  },
 }));
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   densityGeneral: string;
 }
 
@@ -31,52 +48,74 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions1 = (props: Props) => {
-  const { location, setAdvancedOptions, densityGeneral } = props;
+  const { location, setAdvancedOptions } = props;
   const classes = styles();
-  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
   const updateMaxPriFloors = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
       maxPriFloors: Number(value),
-      maxSecFloors: location[typeDensity]!.maxSecFloors,
-      streetFloors: location[typeDensity]!.streetFloors,
-      typologies: location[typeDensity]!.typologies,
-      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
-      undefinedTower: location[typeDensity]!.undefinedTower,
-      streetDensity: location[typeDensity]!.streetDensity,
-      islandSpacings: location[typeDensity]!.islandSpacings,
-      axisSelection: location[typeDensity]!.axisSelection,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
     });
   }
 
   const updateMaxSecFloors = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location[typeDensity]!.maxPriFloors,
+      maxPriFloors: location!.maxPriFloors,
       maxSecFloors: Number(value),
-      streetFloors: location[typeDensity]!.streetFloors,
-      typologies: location[typeDensity]!.typologies,
-      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
-      undefinedTower: location[typeDensity]!.undefinedTower,
-      streetDensity: location[typeDensity]!.streetDensity,
-      islandSpacings: location[typeDensity]!.islandSpacings,
-      axisSelection: location[typeDensity]!.axisSelection,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
     });
   }
 
   const updateStreetFloors = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location[typeDensity]!.maxPriFloors,
-      maxSecFloors: location[typeDensity]!.maxSecFloors,
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
       streetFloors: Number(value),
-      typologies: location[typeDensity]!.typologies,
-      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
-      undefinedTower: location[typeDensity]!.undefinedTower,
-      streetDensity: location[typeDensity]!.streetDensity,
-      islandSpacings: location[typeDensity]!.islandSpacings,
-      axisSelection: location[typeDensity]!.axisSelection,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
+    });
+  }
+
+  const updateFloorsAlignment = (value: boolean) => {
+    if (!location) return;
+    setAdvancedOptions({
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+      floorsAlignment: value ? 1 : 0,
+      unitsOrganization: location!.unitsOrganization,
     });
   }
 
@@ -86,12 +125,12 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         <Box fontSize={18} fontWeight='bold' textAlign="start">Maximum height</Box>
       </Grid>
       <Grid item xs={12} >
-        <Box fontSize={12} textAlign="start">Max primary floors</Box>
+        <Box fontSize={12} textAlign="start">Choose max. number of floors A</Box>
       </Grid>
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
           <Slider
-            value={location ? location[typeDensity].maxPriFloors : 0}
+            value={location ? location.maxPriFloors : 0}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={1}
@@ -102,16 +141,16 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
         <Grid xs={1} />
         <Grid xs={2}>
-          <input type="text" value={location ? location[typeDensity].maxPriFloors : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location ? location.maxPriFloors : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Box fontSize={12} textAlign="start">Max secondary floors</Box>
+        <Box fontSize={12} textAlign="start">Choose max. number of floors B</Box>
       </Grid>
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
           <Slider
-            value={location ? location[typeDensity].maxSecFloors : 0}
+            value={location ? location.maxSecFloors : 0}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={1}
@@ -122,16 +161,16 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
         <Grid xs={1} />
         <Grid xs={2}>
-          <input type="text" value={location ? location[typeDensity].maxSecFloors : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location ? location.maxSecFloors : 0} className={classes.inputNumber} disabled />
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Box fontSize={12} textAlign="start">Street floors</Box>
+        <Box fontSize={12} textAlign="start">Choose number of street floors</Box>
       </Grid>
       <Grid item container direction="row" xs={12}>
         <Grid xs={9}>
           <Slider
-            value={location ? location[typeDensity].streetFloors : 0}
+            value={location ? location.streetFloors : 0}
             aria-labelledby="discrete-slider"
             valueLabelDisplay="auto"
             step={1}
@@ -142,7 +181,18 @@ const ShapeDiverAdvancedOptions1 = (props: Props) => {
         </Grid>
         <Grid xs={1} />
         <Grid xs={2}>
-          <input type="text" value={location ? location[typeDensity].streetFloors : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location ? location.streetFloors : 0} className={classes.inputNumber} disabled />
+        </Grid>
+      </Grid>
+      <Grid item container xs={12}>
+        <Grid xs={10}>
+          <Box fontSize={12} textAlign="start">Floors alignment <br /> <span className={classes.fontSub}>(random/regular)</span> </Box>
+        </Grid>
+        <Grid xs={2}>
+          <Switch checked={ location?.floorsAlignment === 0 ? false : true }
+            onChange={(e) => updateFloorsAlignment(e.target.checked)}
+            size="small"
+            className={classes.toggle} />
         </Grid>
       </Grid>
     </Fragment>

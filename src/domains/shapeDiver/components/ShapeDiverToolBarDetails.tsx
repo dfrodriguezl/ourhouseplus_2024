@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box, Divider, Grid, makeStyles, Accordion, AccordionSummary, AccordionDetails } from '@material-ui/core';
 import { RootState } from 'app/store';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { ModelData } from '../models';
@@ -37,7 +37,7 @@ const styles = makeStyles((theme) => ({
 }));
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   modelData: ModelData;
 }
 

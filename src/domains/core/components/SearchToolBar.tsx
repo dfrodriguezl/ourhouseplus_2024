@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Divider, Grid, makeStyles, Theme, Dialog, List, ListItem } from '@material-ui/core';
 import { getLocations } from 'domains/core/coreSlice';
-import { Densities, Density, Location } from 'domains/core/models';
+import { Densities, Density, Location, LocationSimple } from 'domains/core/models';
 import { ButtonWrapper, LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
-import { setInitialParams, setSearchClick, setSaveSuccess, setDensityGeneral } from 'domains/shapeDiver/slice';
+import { setInitialParams, setSaveSuccess, setDensityGeneral } from 'domains/shapeDiver/slice';
+import { setSearchClick } from 'domains/core/coreSlice';
 import { RootState } from 'app/store';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
@@ -61,6 +62,7 @@ const SearchToolBar = (props: Props) => {
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
+  const [locationSimple, setLocationSimple] = useState<LocationSimple>();
   const [area, setArea] = useState<number>();
   const [density, setDensity] = useState<Density>();
   const [searchBoxSelected, setSearchBoxSelected] = useState(1);
@@ -68,13 +70,15 @@ const SearchToolBar = (props: Props) => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  
+
   useEffect(() => {
     getLocations();
   }, [getLocations])
 
   const updateLocation = (value: string) => {
     const loc = _.find(locations, x => x.city === value);
-    setLocation(loc);
+    setLocation(loc); 
   }
 
   const updateStep = (step: number) => {
@@ -93,20 +97,49 @@ const SearchToolBar = (props: Props) => {
   const updateDensity = (value: string) => {
     const den = _.find(Densities, x => x.label === value);
     setDensity(den);
+    
+    const densityLocal = den?.value === 0 ? "suburban" : "urban";
+    setLocationSimple({
+      id: location?.id!,
+      city: location?.city!,
+      densityGeneral: location?.density!,
+      description: location?.description!,
+      maxPriFloors: location![densityLocal].maxPriFloors,
+      maxSecFloors: location![densityLocal].maxSecFloors,
+      streetFloors: location![densityLocal].streetFloors,
+      windowPercentage: location![densityLocal].windowPercentage,
+      unitsNumberType: location![densityLocal].unitsNumberType,
+      density: location![densityLocal].density,
+      flatSize: location![densityLocal].flatSize,
+      flatType: location![densityLocal].flatType,
+      regen: location![densityLocal].regen,
+      lat: location![densityLocal].lat,
+      lon: location![densityLocal].lon,
+      p_vivs: location![densityLocal].p_vivs,
+      axisSelection: location![densityLocal].axisSelection,
+      typologies: location![densityLocal].typologies,
+      emptySpaceSelection: location![densityLocal].emptySpaceSelection,
+      undefinedTower: location![densityLocal].undefinedTower,
+      streetDensity: location![densityLocal].streetDensity,
+      islandSpacings: location![densityLocal].islandSpacings,
+      floorsAlignment: location![densityLocal].floorsAlignment,
+      unitsOrganization: location![densityLocal].unitsOrganization
+    });
   }
 
 
   const next = () => {
     if (isAuthenticated && user) {
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
+        
         setInitialParams({
-          location,
+          location: locationSimple,
           area: area!,
           density: density!
         });
-        setDensityGeneral(density?.value!);
+        setDensityGeneral(density!.value);
         setSaveSuccess(false)
-        history.push('/shapediver/step1');
+        history.push('/models/step1');
       }
     } else {
       loginWithRedirect();
@@ -144,7 +177,7 @@ const SearchToolBar = (props: Props) => {
             <Grid item container direction="column" xs={12} sm={3} justify="center" >
               <LocationMenu
                 updateLocation={updateLocation}
-                location={location}
+                location={location!}
                 updateStep={updateStep}
               />
             </Grid>
@@ -184,7 +217,7 @@ const SearchToolBar = (props: Props) => {
               <Grid container direction="column" xs={12} justify="center" >
                 <LocationMenu
                   updateLocation={updateLocation}
-                  location={location}
+                  location={location!}
                   updateStep={updateStep}
                 />
               </Grid>
@@ -270,10 +303,10 @@ const SearchToolBar = (props: Props) => {
 
 const container = compose<Props, {}>(
   withRouter,
-  connect<StateProps, DispatchProps, Props, RootState>(
+  connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
       locations: state.domains.core.locations,
-      searchClick: state.domains.shapediver.searchClick
+      searchClick: state.domains.core.searchClick
     }),
     {
       getLocations,

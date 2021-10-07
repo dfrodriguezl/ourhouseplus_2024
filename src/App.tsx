@@ -25,9 +25,9 @@ function App() {
         <Route path="/projects" component={ListProjects} />
         <Route path="/details/:id" component={DetailsProjects} />
         <Route path="/detailsSum/:id" component={DetailsSummary} />
-        <Route path="/shapediver/step1" component={ShapeDiverContainerStep1} />
-        <Route path="/shapediver/step2" component={ShapeDiverContainerStep2} />
-        <Route path="/shapediver/step3" component={ShapeDiverContainerStep3} />
+        <Route path="/models/step1" component={ShapeDiverContainerStep1} />
+        <Route path="/models/step2" component={ShapeDiverContainerStep2} />
+        <Route path="/models/step3" component={ShapeDiverContainerStep3} />
         <Route path="/home" component={Home} />
         <Redirect from="/" to="/register" />
       </Switch>

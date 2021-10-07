@@ -4,7 +4,7 @@ import { RootState } from 'app/store';
 import { setRegen } from '../slice';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { useState } from 'react';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
 import { ArrowForward } from '@material-ui/icons';
@@ -40,7 +40,7 @@ const styles = makeStyles(() => ({
 }));
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
 }
 
 interface DispatchProps {
@@ -60,15 +60,15 @@ const ShapeDiverSteps = (props: Props) => {
 
   const goToNextStep = () => {
     if (isStep1) {
-      history.push('/shapediver/step2');
+      history.push('/models/step2');
     }
 
     if (isStep2) {
-      history.push('/shapediver/step3');
+      history.push('/models/step3');
     }
 
     if (isStep3) {
-      history.push('/shapediver/step1');
+      history.push('/models/step1');
     }
   }
 

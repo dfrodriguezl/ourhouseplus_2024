@@ -1,7 +1,7 @@
 import { juan, felix, alex, sebastien, lucas, ula, diego, radhi } from 'assets';
 
 export interface SearchParams {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   area: number;
   density: Density;
 }
@@ -31,6 +31,8 @@ export interface Location {
     undefinedTower: number;
     streetDensity: number;
     islandSpacings: number;
+    floorsAlignment: number;
+    unitsOrganization: number;
   },
   suburban: {
     maxPriFloors: number;
@@ -52,7 +54,36 @@ export interface Location {
     undefinedTower: number;
     streetDensity: number;
     islandSpacings: number;
+    floorsAlignment: number;
+    unitsOrganization: number;
   }
+}
+
+export interface LocationSimple {
+  id: number;
+  city: string;
+  densityGeneral: number;
+  description: string;
+  maxPriFloors: number;
+  maxSecFloors: number;
+  streetFloors: number;
+  windowPercentage: number;
+  unitsNumberType: number;
+  density: number;
+  flatSize: number;
+  flatType: number;
+  regen: number;
+  lat: number;
+  lon: number;
+  p_vivs: number;
+  axisSelection: number;
+  typologies: number;
+  emptySpaceSelection: number;
+  undefinedTower: number;
+  streetDensity: number;
+  islandSpacings: number;
+  floorsAlignment: number;
+  unitsOrganization: number;
 }
 
 export interface Density {

@@ -1,4 +1,4 @@
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 
 export enum Parameters {
   Area = 'AREA',
@@ -26,6 +26,7 @@ export enum Parameters {
   NumberStreetFloors2 = 'NBR STREET FLOORS',
   MaxPrimaryFloors2 = 'MAX NBR PRIMARY FLOORS',
   MaxSecondaryFloors2 = 'MAX NBR SECONDARY FLOORS',
+  FloorsAlignment = 'FLOORS-MAX FLOORS ALIGNEMENT'
 }
 
 export enum DataParameters {
@@ -65,6 +66,8 @@ export interface AdvancedOptions {
   undefinedTower: number;
   streetDensity: number;
   islandSpacings: number;
+  floorsAlignment: number;
+  unitsOrganization: number;
 }
 
 export interface ModelData {
@@ -96,7 +99,7 @@ export interface Project extends ProjectData {
 
 export interface ProjectData {
   area: number;
-  location: Location;
+  location: LocationSimple;
   terrain: number;
   facadeDirection: number;
   roomType: number;

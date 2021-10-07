@@ -1,6 +1,6 @@
 import { Box, Grid, makeStyles, Radio, RadioGroup, Slider, Theme } from '@material-ui/core';
 import { RootState } from 'app/store';
-import { Location } from 'domains/core/models';
+import { LocationSimple } from 'domains/core/models';
 import { connect } from 'react-redux';
 import { setAdvancedOptions } from '../slice';
 import RemoveIcon from '@material-ui/icons/Remove';
@@ -38,7 +38,7 @@ const styles = makeStyles((theme: Theme) => ({
 }));
 
 interface StateProps {
-  location: Location | undefined;
+  location: LocationSimple | undefined;
   densityGeneral: string;
 }
 
@@ -49,22 +49,23 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions3 = (props: Props) => {
-  const { location, setAdvancedOptions, densityGeneral } = props;
+  const { location, setAdvancedOptions } = props;
   const classes = styles();
-  const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
   const updateMainAxisDirection = (_: any, value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location[typeDensity]!.maxPriFloors,
-      maxSecFloors: location[typeDensity]!.maxSecFloors,
-      streetFloors: location[typeDensity]!.streetFloors,
-      typologies: location[typeDensity]!.typologies,
-      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
-      undefinedTower: location[typeDensity]!.undefinedTower,
-      streetDensity: location[typeDensity]!.streetDensity,
-      islandSpacings: location[typeDensity]!.islandSpacings,
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
+      islandSpacings: location!.islandSpacings,
       axisSelection: Number(value),
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
     });
   }
 
@@ -75,30 +76,34 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
   const updateBlockSize = (value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location[typeDensity]!.maxPriFloors,
-      maxSecFloors: location[typeDensity]!.maxSecFloors,
-      streetFloors: location[typeDensity]!.streetFloors,
-      typologies: location[typeDensity]!.typologies,
-      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
-      undefinedTower: location[typeDensity]!.undefinedTower,
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
       streetDensity: Number(value),
-      islandSpacings: location[typeDensity]!.islandSpacings,
-      axisSelection: location[typeDensity]!.axisSelection
+      islandSpacings: location!.islandSpacings,
+      axisSelection: location!.axisSelection,
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
     });
   }
 
   const updateRoadsWidth = (value: number | number[]) => {
     if (!location) return;
     setAdvancedOptions({
-      maxPriFloors: location[typeDensity]!.maxPriFloors,
-      maxSecFloors: location[typeDensity]!.maxSecFloors,
-      streetFloors: location[typeDensity]!.streetFloors,
-      typologies: location[typeDensity]!.typologies,
-      emptySpaceSelection: location[typeDensity]!.emptySpaceSelection,
-      undefinedTower: location[typeDensity]!.undefinedTower,
-      streetDensity: location[typeDensity]!.streetDensity,
+      maxPriFloors: location!.maxPriFloors,
+      maxSecFloors: location!.maxSecFloors,
+      streetFloors: location!.streetFloors,
+      typologies: location!.typologies,
+      emptySpaceSelection: location!.emptySpaceSelection,
+      undefinedTower: location!.undefinedTower,
+      streetDensity: location!.streetDensity,
       islandSpacings: Number(value),
-      axisSelection: location[typeDensity]!.axisSelection
+      axisSelection: location!.axisSelection,
+      floorsAlignment: location!.floorsAlignment,
+      unitsOrganization: location!.unitsOrganization,
     });
   }
 
@@ -114,11 +119,11 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
       <Grid item container direction="row" xs={12}>
         <Grid xs={9} container spacing={2}>
           <Grid item>
-            <RemoveIcon onClick={() => updateMainAxisDirectionLocal(location![typeDensity].axisSelection - 1)} className={classes.hover} />
+            <RemoveIcon onClick={() => updateMainAxisDirectionLocal(location!.axisSelection - 1)} className={classes.hover} />
           </Grid>
           <Grid item xs >
             <Slider
-              value={location![typeDensity].axisSelection ? location![typeDensity].axisSelection : 0}
+              value={location!.axisSelection ? location!.axisSelection : 0}
               aria-labelledby="discrete-slider"
               valueLabelDisplay="auto"
               step={1}
@@ -128,13 +133,13 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
             />
           </Grid>
           <Grid item>
-            <AddIcon onClick={() => updateMainAxisDirectionLocal(location![typeDensity].axisSelection + 1)} className={classes.hover} />
+            <AddIcon onClick={() => updateMainAxisDirectionLocal(location!.axisSelection + 1)} className={classes.hover} />
           </Grid>
 
         </Grid>
         <Grid xs={1} />
         <Grid item container xs={2} justify="flex-end">
-          <input type="text" value={location![typeDensity].axisSelection ? location![typeDensity].axisSelection : 0} className={classes.inputNumber} disabled />
+          <input type="text" value={location!.axisSelection ? location!.axisSelection : 0} className={classes.inputNumber} disabled />
         </Grid>
 
       </Grid>
@@ -146,7 +151,7 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
         <Grid container justify="center">
           <Grid item xs={4}>
             <Radio
-              checked={location![typeDensity]?.streetDensity === 0}
+              checked={location?.streetDensity === 0}
               onClick={() => updateBlockSize(0)}
               checkedIcon={<img className={classes.buttons} src={singleSelected} alt="1:1" />}
               icon={<img className={classes.buttons} src={singleInactive} alt="1:1" />}
@@ -154,7 +159,7 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
           </Grid>
           <Grid item xs={4}>
             <Radio
-              checked={location![typeDensity]?.streetDensity === 1}
+              checked={location?.streetDensity === 1}
               onClick={() => updateBlockSize(1)}
               checkedIcon={<img className={classes.buttons} src={dobleSelected} alt="1:1" />}
               icon={<img className={classes.buttons} src={dobleInactive} alt="1:1" />}
@@ -170,7 +175,7 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
         <Grid container justify="center">
           <Grid item xs={4}>
             <Radio
-              checked={location![typeDensity]?.islandSpacings === 2}
+              checked={location?.islandSpacings === 2}
               onClick={() => updateRoadsWidth(2)}
               checkedIcon={<img className={classes.buttons} src={nineSelected} alt="1:1" />}
               icon={<img className={classes.buttons} src={nineInactive} alt="1:1" />}
@@ -178,7 +183,7 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
           </Grid>
           <Grid item xs={4}>
             <Radio
-              checked={location![typeDensity]?.islandSpacings === 1}
+              checked={location?.islandSpacings === 1}
               onClick={() => updateRoadsWidth(1)}
               checkedIcon={<img className={classes.buttons} src={twelveSelected} alt="1:1" />}
               icon={<img className={classes.buttons} src={twelveInactive} alt="1:1" />}
@@ -186,7 +191,7 @@ const ShapeDiverAdvancedOptions3 = (props: Props) => {
           </Grid>
           <Grid item xs={4}>
             <Radio
-              checked={location![typeDensity]?.islandSpacings === 0}
+              checked={location?.islandSpacings === 0}
               onClick={() => updateRoadsWidth(0)}
               checkedIcon={<img className={classes.buttons} src={fifteenSelected} alt="1:1" />}
               icon={<img className={classes.buttons} src={fifteenInactive} alt="1:1" />}
