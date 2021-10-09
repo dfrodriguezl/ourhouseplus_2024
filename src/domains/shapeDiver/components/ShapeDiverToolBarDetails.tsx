@@ -33,6 +33,9 @@ const styles = makeStyles((theme) => ({
     '&:hover': {
       cursor: 'pointer'
     },
+  },
+  paddingText: {
+    paddingLeft: 15
   }
 }));
 
@@ -147,59 +150,38 @@ const LabelDetails: React.FC<LblProps> = ({ step, propsDetail }) => {
   const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
   const bigFont = 14;
   const smallFont = 12;
+  const classes = styles();
 
   return (
     <Fragment>
-      <Box fontSize={smallScreen ? 18 : 16} fontWeight='bold'>Location</Box>
-      {propsDetail.location?.p_vivs ?
-        <Box fontSize={smallScreen ? bigFont : smallFont}>Avg. people per dwelling</Box> : null}
-      {step === "step1" ?
-        <Fragment>
-          <Box fontSize={14}>Gross land area</Box>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>Total gross floor area</Box>
-        </Fragment> : <Box fontSize={14}>Gross land area</Box>}
+      {step === 'step1' ?
+        <Box fontSize={16} fontWeight='bold'>Project Volume</Box> :
+        step === 'step2' ?
+          <Box fontSize={16} fontWeight='bold'>Facade</Box> :
+          <Box fontSize={16} fontWeight='bold'>Interior</Box>}
       <br />
-      {step !== "step1" ?
-        <Fragment>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>Gross floor area (GFA)</Box>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>Gross leasable area (GLA)</Box>
-          <br />
-          <Box fontSize={smallScreen ? bigFont : smallFont}>Land user ratio (LUR)</Box>
-        </Fragment> :
-        <Fragment>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>Land user ratio (LUR)</Box>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>Floor area ratio (FAR)</Box>
-        </Fragment>}
+      <Box fontSize={12}>Location</Box>
       <br />
-      {step === "step1" ?
-        <Fragment>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>Plot ratio</Box>
-          <br />
-        </Fragment> :
-        <Box fontSize={smallScreen ? bigFont : smallFont}>Plot ratio</Box>
-      }
-      {
-        step !== "step1" ?
-          <Fragment>
-            <br />
-            <Box fontSize={smallScreen ? bigFont : smallFont}>Total units (nbr)</Box>
-            <Box fontSize={smallScreen ? bigFont : smallFont}>Dwellings density (du/ha)</Box>
-            <Box fontSize={smallScreen ? bigFont : smallFont}>Avg. inhabitant per dwelling</Box>
-          </Fragment> :
-          <Fragment>
-            <Box fontSize={smallScreen ? bigFont : smallFont}>Total units (nbr)</Box>
-            <Box fontSize={smallScreen ? bigFont : smallFont}>Dwellings density (du/ha)</Box>
-          </Fragment>
-      }
-      {
-        step === "step1" ?
-          <Fragment>
-            <br />
-            <Box fontSize={12}>Avg. inhabitant by location</Box>
-            <Box fontSize={12}>Avg. age inhabitant by location</Box>
-            <Box fontSize={12}>Housing deficit in 400 m (circ.)</Box>
-          </Fragment> : null
-      }
+      <Box fontSize={12} fontWeight='bold'>Model Data</Box>
+      <Box fontSize={12}>Gross land area</Box>
+      <Box fontSize={12}>Gross floor area (GFA)</Box>
+      <Box fontSize={12}>Building height max.</Box>
+      <br />
+      <Box fontSize={12}>Land used ratio (LUR)</Box>
+      <Box fontSize={12} className={classes.paddingText}>Net</Box>
+      <Box fontSize={12} className={classes.paddingText}>Gross</Box>
+      <Box fontSize={12}>Floor area ratio (FAR)</Box>
+      <Box fontSize={12} className={classes.paddingText}>Net</Box>
+      <Box fontSize={12} className={classes.paddingText}>Gross</Box>
+      <br />
+      <Box fontSize={12}>Total units (nbr)</Box>
+      <Box fontSize={12}>Dwellings density (du/ha)</Box>
+      <Box fontSize={12}>Population density (r/ha)</Box>
+      <br />
+      <Box fontSize={12} fontWeight='bold'>Geo Data</Box>
+      <Box fontSize={12}>Avg. inhabitant by location</Box>
+      <Box fontSize={12}>Avg. age inhabitant by location</Box>
+      <Box fontSize={12}>Housing deficit in 400 m (circ.)</Box>
     </Fragment>
   )
 }
@@ -224,170 +206,107 @@ const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData }) => {
   return (
     <Fragment>
       <GeoContainer open={open} location={propsDetail.location?.city} closeFunction={closeGeoDialog} />
-      <Box fontSize={smallScreen ? 18 : 16}>{propsDetail.location?.city} <img src={marker} alt="geolocation-icon" width="15%" className={classes.iconLocation} onClick={() => openGeoDialog()} /></Box>
-      {propsDetail.location?.p_vivs ?
+      <Box fontSize={16} fontWeight='bold' style={{ opacity: 0 }}>Project Volume</Box>
+      <Box fontSize={12}>{propsDetail.location?.city} <img src={marker} alt="geolocation-icon" width="15%" className={classes.iconLocation} onClick={() => openGeoDialog()} /></Box>
+      <br />
+      <Box fontSize={12} fontWeight='bold' style={{ opacity: 0 }}>Model Data</Box>
+      <Box fontSize={12}>
         <NumberFormat
-          value={propsDetail.location?.p_vivs}
+          value={modelData.totalLandArea}
           displayType="text"
-        /> : null
-      }
-      {step === "step1" ?
-        <Fragment>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>
-            <NumberFormat
-              value={modelData.totalLandArea}
-              displayType="text"
-              thousandSeparator
-            />
-          </Box>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>
-            <NumberFormat
-              value={modelData.totalGrossFloorArea}
-              displayType="text"
-              thousandSeparator
-            />
-          </Box>
-        </Fragment>
-        : <Box fontSize={smallScreen ? bigFont : smallFont}>
-          <NumberFormat
-            value={modelData.totalLandArea}
-            displayType="text"
-            thousandSeparator
-          />
-        </Box>}
+          thousandSeparator
+        />
+      </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={modelData.totalGrossFloorArea}
+          displayType="text"
+          thousandSeparator
+        />
+      </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={modelData.mostHeightBuilding}
+          displayType="text"
+          thousandSeparator
+        />
+      </Box>
       <br />
-      {step !== "step1" ?
-        <Fragment>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>
-            <NumberFormat
-              value={modelData.totalGrossFloorArea}
-              displayType="text"
-              thousandSeparator
-            />
-          </Box>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>
-            <NumberFormat
-              value={modelData.totalGrossLeasableArea}
-              displayType="text"
-              thousandSeparator
-            />
-          </Box>
-          <br />
-          <Box fontSize={smallScreen ? bigFont : smallFont}>
-            <NumberFormat
-              value={modelData.landUserRatio}
-              displayType="text"
-              decimalScale={2}
-            />
-          </Box>
-        </Fragment> :
-        <Fragment>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>
-            <NumberFormat
-              value={modelData.landUserRatio}
-              displayType="text"
-              decimalScale={2}
-            />
-          </Box>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>
-            <NumberFormat
-              value={modelData.floorAreaRatio}
-              displayType="text"
-              decimalScale={2}
-            />
-          </Box>
-        </Fragment>}
+      <Box fontSize={12} fontWeight='bold' style={{ opacity: 0 }}>LUR</Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={modelData.landUserRatioNet}
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={modelData.landUserRatioGross}
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
+      <Box fontSize={12} fontWeight='bold' style={{ opacity: 0 }}>FAR</Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={modelData.floorAreaRatioNet}
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={modelData.floorAreaRatioGross}
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
       <br />
-      {step === "step1" ?
-        <Fragment>
-          <Box fontSize={smallScreen ? bigFont : smallFont}>
-            <NumberFormat
-              value={modelData.plotRatio}
-              displayType="text"
-              decimalScale={2}
-            />
-          </Box>
-          <br />
-        </Fragment> :
-        <Box fontSize={smallScreen ? bigFont : smallFont}>
-          <NumberFormat
-            value={modelData.plotRatio}
-            displayType="text"
-            decimalScale={2}
-          />
-        </Box>
-      }
-      {
-        step !== "step1" ?
-          <Fragment>
-            <br />
-            <Box fontSize={smallScreen ? bigFont : smallFont}>
-              <NumberFormat
-                value={modelData.totalHousingUnits}
-                displayType="text"
-                thousandSeparator
-              />
-            </Box>
-            <Box fontSize={smallScreen ? bigFont : smallFont}>
-              <NumberFormat
-                value={modelData.dwellingsDensity}
-                displayType="text"
-                decimalScale={2}
-              />
-            </Box>
-            <Box fontSize={smallScreen ? bigFont : smallFont}>
-              <NumberFormat
-                value={modelData.averageInhabitantPerDwelling}
-                displayType="text"
-                decimalScale={2}
-              />
-            </Box>
-          </Fragment> :
-          <Fragment>
-            <Box fontSize={smallScreen ? bigFont : smallFont}>
-              <NumberFormat
-                value={modelData.totalHousingUnits}
-                displayType="text"
-                thousandSeparator
-              />
-            </Box>
-            <Box fontSize={smallScreen ? bigFont : smallFont}>
-              <NumberFormat
-                value={modelData.dwellingsDensity}
-                displayType="text"
-                decimalScale={2}
-              />
-            </Box>
-          </Fragment>
-      }
-      {
-        step === "step1" ?
-          <Fragment>
-            <br />
-            <Box fontSize={12}>
-              <NumberFormat
-                value="0.2"
-                displayType="text"
-                decimalScale={2}
-              />
-            </Box>
-            <Box fontSize={12}>
-              <NumberFormat
-                value="0.2"
-                displayType="text"
-                decimalScale={2}
-              />
-            </Box>
-            <Box fontSize={12}>
-              <NumberFormat
-                value="0.2"
-                displayType="text"
-                decimalScale={2}
-              />
-            </Box>
-          </Fragment> : null
-      }
-
+      <Box fontSize={12}>
+        <NumberFormat
+          value={modelData.totalHousingUnits}
+          displayType="text"
+          thousandSeparator
+        />
+      </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={modelData.dwellingsDensity}
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={modelData.populationDensity}
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
+      <br />
+      <Box fontSize={12} fontWeight='bold' style={{ opacity: 0 }}>Geo Data</Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value="0.2"
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value="0.2"
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value="0.2"
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
     </Fragment>
   )
 }

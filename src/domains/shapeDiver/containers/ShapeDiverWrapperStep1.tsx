@@ -121,6 +121,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       }
 
       const modelData = this.api!.scene.getData().data;
+      console.log("MODEL DATA", modelData)
 
       setModelData({
         totalLandArea: _.find(modelData, x => x.name === DataParameters.GrossLandArea)?.data ?? 0,
@@ -142,6 +143,28 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         twoBedroom: _.find(modelData, x => x.name === DataParameters.TwoBedroom)?.data ?? 0,
         threeBedroom: _.find(modelData, x => x.name === DataParameters.ThreeBedroom)?.data ?? 0,
         fourBedroom: _.find(modelData, x => x.name === DataParameters.FourBedroom)?.data ?? 0,
+        groundFloorFreeSpace: _.find(modelData, x => x.name === DataParameters.GroundFloorFreeSpace)?.data ?? 0,
+        multipleFloorFreeSpace: _.find(modelData, x => x.name === DataParameters.MultipleFloorFreeSpace)?.data ?? 0,
+        mostHeightBuilding: _.find(modelData, x => x.name === DataParameters.MostHeightBuilding)?.data ?? 0,
+        landUserRatioNet: _.find(modelData, x => x.name === DataParameters.LandUserRatioNet)?.data ?? 0,
+        landUserRatioGross: _.find(modelData, x => x.name === DataParameters.LandUserRatioGross)?.data ?? 0,
+        floorAreaRatioNet: _.find(modelData, x => x.name === DataParameters.FloorAreaRatioNet)?.data ?? 0,
+        floorAreaRatioGross: _.find(modelData, x => x.name === DataParameters.FloorAreaRatioGross)?.data ?? 0,
+        populationDensity: _.find(modelData, x => x.name === DataParameters.PopulationDensity)?.data ?? 0,
+        roadDensitym2: _.find(modelData, x => x.name === DataParameters.RoadDensitym2)?.data ?? 0,
+        greenSpaceDensitym2: _.find(modelData, x => x.name === DataParameters.GreenSpaceDensitym2)?.data ?? 0,
+        studiosm2: _.find(modelData, x => x.name === DataParameters.Studiosm2)?.data ?? 0,
+        studiosPorc: _.find(modelData, x => x.name === DataParameters.StudiosPorc)?.data ?? 0,
+        largeStudiosm2: _.find(modelData, x => x.name === DataParameters.LargeStudiosm2)?.data ?? 0,
+        largeStudiosPorc: _.find(modelData, x => x.name === DataParameters.LargeStudiosPorc)?.data ?? 0,
+        oneBedroomm2: _.find(modelData, x => x.name === DataParameters.OneBedroomm2)?.data ?? 0,
+        oneBedroomPorc: _.find(modelData, x => x.name === DataParameters.OneBedroomPorc)?.data ?? 0,
+        twoBedroomm2: _.find(modelData, x => x.name === DataParameters.TwoBedroomm2)?.data ?? 0,
+        twoBedroomPorc: _.find(modelData, x => x.name === DataParameters.TwoBedroomPorc)?.data ?? 0,
+        threeBedroomm2: _.find(modelData, x => x.name === DataParameters.ThreeBedroomm2)?.data ?? 0,
+        threeBedroomPorc: _.find(modelData, x => x.name === DataParameters.ThreeBedroomPorc)?.data ?? 0,
+        fourBedroomm2: _.find(modelData, x => x.name === DataParameters.FourBedroomm2)?.data ?? 0,
+        fourBedroomPorc: _.find(modelData, x => x.name === DataParameters.FourBedroomPorc)?.data ?? 0,
       });
     }
   }
@@ -195,7 +218,11 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
           floorAreaRatio: 0, landUserRatio: 0, totalGrossFloorArea: 0, totalHousingUnits: 0, averageBedroomPerDwelling: 0,
           averageInhabitantPerDwelling: 0, dwellingsDensity: 0, greenSpaceDensity: 0, greenSpacePerInhabitant: 0,
           plotRatio: 0, roadDensity: 0, totalGrossLeasableArea: 0, totalLandArea: 0,
-          studios: 0, largeStudios: 0, oneBedroom: 0, twoBedroom: 0, threeBedroom: 0, fourBedroom: 0
+          studios: 0, largeStudios: 0, oneBedroom: 0, twoBedroom: 0, threeBedroom: 0, fourBedroom: 0,
+          groundFloorFreeSpace: 0, multipleFloorFreeSpace: 0, mostHeightBuilding: 0, landUserRatioNet: 0, landUserRatioGross: 0,
+          floorAreaRatioNet: 0, floorAreaRatioGross: 0, populationDensity: 0, roadDensitym2: 0, greenSpaceDensitym2: 0,
+          studiosm2: 0, studiosPorc: 0, largeStudiosm2: 0, largeStudiosPorc: 0, oneBedroomm2: 0, oneBedroomPorc: 0,
+          twoBedroomm2: 0, twoBedroomPorc: 0, threeBedroomm2: 0, threeBedroomPorc: 0, fourBedroomm2: 0, fourBedroomPorc: 0,
         });
 
         // // refresh (load geometry), because the initial parameter update might not have changed any values
