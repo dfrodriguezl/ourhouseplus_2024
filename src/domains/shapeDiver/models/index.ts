@@ -49,6 +49,28 @@ export enum DataParameters {
   TwoBedroom = 'DATA- (nbr) - T3',
   ThreeBedroom = 'DATA- (nbr) - T4',
   FourBedroom = 'DATA- (nbr) - T5',
+  GroundFloorFreeSpace = 'DATA-TOTAL (m2)-Empty Spaces',
+  MultipleFloorFreeSpace = 'DATA-TOTAL (m2)-Undefined Tower Space',
+  MostHeightBuilding = 'DATA-(m)- Most Height Building',
+  LandUserRatioNet = 'DATA- (LUR) (Net) Land User Ratio',
+  LandUserRatioGross = 'DATA- (LUR)(Gross) Land User Ratio',
+  FloorAreaRatioNet = 'DATA- (FAR) (Net) Floor Area Ratio',
+  FloorAreaRatioGross = 'DATA- (FAR)(Gross) Floor Area Ratio',
+  PopulationDensity = 'DATA-(r/ha)- Population Density per Hectare',
+  RoadDensitym2 = 'DATA-(m2)- Road Density',
+  GreenSpaceDensitym2 = 'DATA-(m2)- Green Space Density',
+  Studiosm2 = 'DATA- (m2) - Studio',
+  StudiosPorc = 'DATA- (%) - Studio',
+  LargeStudiosm2 = 'DATA- (m2) - T1',
+  LargeStudiosPorc = 'DATA- (%) - T1',
+  OneBedroomm2 = 'DATA- (m2) - T2',
+  OneBedroomPorc = 'DATA- (%) - T2',
+  TwoBedroomm2 = 'DATA- (m2) - T3',
+  TwoBedroomPorc = 'DATA- (%) - T3',
+  ThreeBedroomm2 = 'DATA- (m2) - T4',
+  ThreeBedroomPorc = 'DATA- (%) - T4',
+  FourBedroomm2 = 'DATA- (m2) - T5',
+  FourBedroomPorc = 'DATA- (%) - T5',
 }
 
 export interface ShapeDiverOptions {
@@ -90,6 +112,28 @@ export interface ModelData {
   twoBedroom: number;
   threeBedroom: number;
   fourBedroom: number;
+  groundFloorFreeSpace: number;
+  multipleFloorFreeSpace: number;
+  mostHeightBuilding: number;
+  landUserRatioNet: number;
+  landUserRatioGross: number;
+  floorAreaRatioNet: number;
+  floorAreaRatioGross: number;
+  populationDensity: number;
+  roadDensitym2: number;
+  greenSpaceDensitym2: number;
+  studiosm2: number;
+  studiosPorc: number;
+  largeStudiosm2: number;
+  largeStudiosPorc: number;
+  oneBedroomm2: number;
+  oneBedroomPorc: number;
+  twoBedroomm2: number;
+  twoBedroomPorc: number;
+  threeBedroomm2: number;
+  threeBedroomPorc: number;
+  fourBedroomm2: number;
+  fourBedroomPorc: number;
 }
 
 export interface Project extends ProjectData {
