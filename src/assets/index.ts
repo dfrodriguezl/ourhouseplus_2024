@@ -98,6 +98,7 @@ export { default as img_interior } from './img_interior.png';
 export { default as height_6 } from './height_6.png';
 export { default as height_12 } from './height_12.png';
 export { default as height_13 } from './height_13.png';
+export { default as suburban } from './suburban.png';
 
 export { default as marker } from './marker.png';
 export { default as marker_map } from './marker_map.png';
