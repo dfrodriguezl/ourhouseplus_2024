@@ -26,7 +26,8 @@ export enum Parameters {
   NumberStreetFloors2 = 'NBR STREET FLOORS',
   MaxPrimaryFloors2 = 'MAX NBR PRIMARY FLOORS',
   MaxSecondaryFloors2 = 'MAX NBR SECONDARY FLOORS',
-  FloorsAlignment = 'FLOORS-MAX FLOORS ALIGNEMENT'
+  FloorsAlignment = 'FLOORS-MAX FLOORS ALIGNEMENT',
+  WindowPercentage2 = 'FACADE TYPE',
 }
 
 export enum DataParameters {

@@ -19,6 +19,7 @@ const styles = {
 interface StateProps {
   location: LocationSimple | undefined;
   facadeDirection: number;
+  densityGeneral: string;
 }
 
 interface ComponentProps {
@@ -50,18 +51,33 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_: Props) {
-    const { location, facadeDirection } = this.props;
+    const { location, facadeDirection, densityGeneral } = this.props;
+    const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
+
 
     if (this.state.isLoaded) {
-      const response = await this.api!.parameters.updateAsync([
-        { name: Parameters.Density2, value: location.density },
-        { name: Parameters.Regen, value: location.regen },
-        { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
-        { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
-        { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
-        { name: Parameters.WindowPercentage, value: location.windowPercentage },
-        { name: Parameters.FacadeDirection, value: facadeDirection },
-      ]);
+
+      const response =
+        typeDensity === "urban" ?
+          await this.api!.parameters.updateAsync([
+            { name: Parameters.Density2, value: location.density },
+            { name: Parameters.Regen, value: location.regen },
+            { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
+            { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
+            { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
+            { name: Parameters.WindowPercentage, value: location.windowPercentage },
+            { name: Parameters.FacadeDirection, value: facadeDirection },
+          ]) :
+          await this.api!.parameters.updateAsync([
+            { name: Parameters.Density, value: location.density },
+            // { name: Parameters.Regen, value: location.regen },
+            { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+            { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+            { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+            // { name: Parameters.WindowPercentage, value: location.windowPercentage },
+            { name: Parameters.WindowPercentage2, value: location.windowPercentage },
+          ])
+
 
       if (response.err) {
         console.log(response.err);
@@ -76,10 +92,11 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidMount() {
-    const { location, facadeDirection } = this.props;
+    const { location, facadeDirection, densityGeneral } = this.props;
     // container for the viewer
     // here the reference works and the container is loaded correctly
     const container = this.containerSD.current;
+    const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
     // ShapeDiver Viewer constructor settings
     // Refer to https://app.shapediver.com/api for details
@@ -95,7 +112,7 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
       if (this.api) {
         // register a ShapeDiver CommPlugin
         await this.api.plugins.registerCommPluginAsync({
-          ticket: process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_2!,
+          ticket: typeDensity === 'suburban' ? process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_2_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_2! ,
           // URL of the ShapeDiver backend system used
           // runtime id to use for this CommPlugin (you might register several)
           runtimeId: 'CommPlugin_1',
@@ -112,15 +129,26 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
         // // refresh (load geometry), because the initial parameter update might not have changed any values
         await this.api.plugins.refreshPluginAsync('CommPlugin_1');
 
-        await this.api.parameters.updateAsync([
-          { name: Parameters.Density2, value: location.density },
-          { name: Parameters.Regen, value: location.regen },
-          { name: Parameters.FacadeDirection, value: facadeDirection },
-          { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
-          { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
-          { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
-          { name: Parameters.WindowPercentage, value: location.windowPercentage },
-        ]);
+        typeDensity === "urban" ?
+          await this.api.parameters.updateAsync([
+            { name: Parameters.Density2, value: location.density },
+            { name: Parameters.Regen, value: location.regen },
+            { name: Parameters.FacadeDirection, value: facadeDirection },
+            { name: Parameters.MaxPrimaryFloors2, value: location.maxPriFloors },
+            { name: Parameters.MaxSecondaryFloors2, value: location.maxSecFloors },
+            { name: Parameters.NumberStreetFloors2, value: location.streetFloors },
+            { name: Parameters.WindowPercentage, value: location.windowPercentage },
+          ]) :
+          await this.api!.parameters.updateAsync([
+            { name: Parameters.Density, value: location.density },
+            { name: Parameters.Regen, value: location.regen },
+            { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
+            { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+            { name: Parameters.NumberStreetFloors, value: location.streetFloors },
+            { name: Parameters.WindowPercentage, value: location.windowPercentage },
+            { name: Parameters.FacadeDirection, value: facadeDirection },
+          ])
+
 
         // // finally show the scene
         await this.api.updateSettingAsync('scene.show', true);
