@@ -3,7 +3,7 @@ import { Grid, makeStyles, createStyles, Typography, Button, Box, Divider } from
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
 import { MapGeo, TopPanel } from 'domains/core/components';
-import { download, height_6, height_12, height_13 } from 'assets';
+import { download, height_6, height_12, height_13, suburban } from 'assets';
 import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
@@ -216,17 +216,19 @@ const DetailsSummary = (props: Props) => {
           <Grid item container xs={12}>
             <Grid item xs={4} className={classes.imgContainer}>
               {
-                locationSaved[densityLocal] ?
-                  locationSaved[densityLocal].maxPriFloors! <= 6 ?
-                    <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
-                    locationSaved[densityLocal].maxPriFloors! <= 12 ?
-                      <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
-                      <img alt="img-project" src={height_13} className={classes.imgProject}></img>
-                  : currentProject?.location?.maxPriFloors! <= 6 ?
-                    <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
-                    currentProject?.location?.maxPriFloors! <= 12 ?
-                      <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
-                      <img alt="img-project" src={height_13} className={classes.imgProject}></img>
+                locationSaved.densityGeneral === 0 ?
+                  <img alt="img-project" src={suburban} className={classes.imgProject}></img> :
+                  locationSaved[densityLocal] ?
+                    locationSaved[densityLocal].maxPriFloors! <= 6 ?
+                      <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
+                      locationSaved[densityLocal].maxPriFloors! <= 12 ?
+                        <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
+                        <img alt="img-project" src={height_13} className={classes.imgProject}></img>
+                    : currentProject?.location?.maxPriFloors! <= 6 ?
+                      <img alt="img-project" src={height_6} className={classes.imgProject}></img> :
+                      currentProject?.location?.maxPriFloors! <= 12 ?
+                        <img alt="img-project" src={height_12} className={classes.imgProject}></img> :
+                        <img alt="img-project" src={height_13} className={classes.imgProject}></img>
               }
             </Grid>
             <Grid item xs={4} style={{ padding: '0px 75px' }}>

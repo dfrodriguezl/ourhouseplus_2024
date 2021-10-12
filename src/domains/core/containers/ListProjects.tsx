@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { Grid, makeStyles, createStyles, IconButton, Typography, Button, Box, Link } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer, FullPageOverlay } from 'domains/core/containers';
-import { height_6, download_white, height_12, height_13 } from 'assets';
+import { height_6, download_white, height_12, height_13, suburban } from 'assets';
 import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 import EditIcon from '@material-ui/icons/Edit';
@@ -187,7 +187,9 @@ export const ListProjects = (props: Props) => {
                       <Box component="div" alignItems="center" justifyContent="center">
                         <IconButton onClick={() => goToProject(String(p.id))}>
                           {
-                            locationSaved[densityLocal] ?
+                            locationSaved.densityGeneral === 0 ?
+                            <img alt={p.name} src={suburban} style={{ width: '90%', borderRadius: '50%' }} /> 
+                            :locationSaved[densityLocal] ?
                               locationSaved[densityLocal].maxPriFloors <= 6 ?
                                 <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
                                 locationSaved[densityLocal].maxPriFloors <= 12 ?
