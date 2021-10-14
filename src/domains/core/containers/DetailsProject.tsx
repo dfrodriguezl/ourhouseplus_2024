@@ -12,7 +12,8 @@ import { RootState } from 'app/store';
 import { compose } from 'recompose';
 import { Project } from 'domains/shapeDiver/models';
 import { useEffect } from 'react';
-import { ContainerInfo, GeneralParameters } from 'domains/common/components';
+import { CommercialContainer, ContainerInfo, ContainerWhite, FacadeContainer, GeneralParameters, GeolocatedContainer } from 'domains/common/components';
+import DwellingsContainer from 'domains/common/components/DwellingsContainer';
 
 
 const varsBasicVolume = [
@@ -190,6 +191,11 @@ export const DetailsProjects = (props: Props) => {
             </Grid>
           </Grid>
           <GeneralParameters project={currentProject} />
+          <ContainerWhite img={img_basic_volume}></ContainerWhite>
+          <DwellingsContainer img={img_facade}></DwellingsContainer>
+          <CommercialContainer img={img_facade}></CommercialContainer>
+          <FacadeContainer img={img_interior}></FacadeContainer>
+          <GeolocatedContainer img={img_interior}></GeolocatedContainer>
           <ContainerInfo img={img_basic_volume} vars={varsBasicVolume} title={"Basic volume"} project={projectObj} />
           <ContainerInfo img={img_facade} vars={varsFacade} title={"Facade"} project={projectObj} />
           <ContainerInfo img={img_interior} vars={varsInterior} title={"Interior"} project={projectObj} />
