@@ -1,4 +1,5 @@
 import { Grid, makeStyles, createStyles, Box, Divider } from "@material-ui/core";
+import { ModelData } from "domains/shapeDiver/models";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -33,11 +34,12 @@ const useStyles = makeStyles(() =>
 
 interface ownProps {
   img?: any;
+  modelData?: ModelData;
 }
 
 type Props = ownProps;
 const DwellingsContainer = (props: Props) => {
-  const { img } = props;
+  const { img, modelData } = props;
   const classes = useStyles();
 
   return (
@@ -56,9 +58,9 @@ const DwellingsContainer = (props: Props) => {
               <Box fontSize={12} className={classes.textStyle}>Population density (r/ha)</Box>
             </Grid>
             <Grid xs={6}>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.totalHousingUnits}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.dwellingsDensity}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.populationDensity}</Box>
             </Grid>
           </Grid>
           <Grid item container xs={12} direction="row">
@@ -69,8 +71,8 @@ const DwellingsContainer = (props: Props) => {
             </Grid>
             <Grid xs={6}>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.averageBedroomPerDwelling}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.greenSpacePerInhabitant}</Box>
             </Grid>
           </Grid>
           <Grid item container xs={12} direction="row">
@@ -103,30 +105,30 @@ const DwellingsContainer = (props: Props) => {
             </Grid>
             <Grid xs={2}>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.studiosm2}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.largeStudiosm2}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.oneBedroomm2}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.twoBedroomm2}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.threeBedroomm2}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.fourBedroomm2}</Box>
             </Grid>
             <Grid xs={2}>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.studiosPorc}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.largeStudiosPorc}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.oneBedroomPorc}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.twoBedroomPorc}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.threeBedroomPorc}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.fourBedroomPorc}</Box>
             </Grid>
             <Grid xs={2}>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxx</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.studios}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.largeStudios}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.oneBedroom}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.twoBedroom}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.threeBedroom}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.fourBedroom}</Box>
             </Grid>
           </Grid>
         </Grid>

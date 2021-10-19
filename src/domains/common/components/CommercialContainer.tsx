@@ -54,8 +54,8 @@ const CommercialContainer = (props: Props) => {
               <Box fontSize={12} className={classes.textStyle}>Multiple floor free space (m2)</Box>
             </Grid>
             <Grid xs={6}>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
+              <Box fontSize={12} className={classes.textStyle}>0</Box>
+              <Box fontSize={12} className={classes.textStyle}>0</Box>
             </Grid>
           </Grid>
         </Grid>

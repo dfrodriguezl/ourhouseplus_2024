@@ -191,14 +191,14 @@ export const DetailsProjects = (props: Props) => {
             </Grid>
           </Grid>
           <GeneralParameters project={currentProject} />
-          <ContainerWhite img={img_basic_volume}></ContainerWhite>
-          <DwellingsContainer img={img_facade}></DwellingsContainer>
+          <ContainerWhite img={img_basic_volume} modelData={currentProject?.modelData}></ContainerWhite>
+          <DwellingsContainer img={img_facade} modelData={currentProject?.modelData}></DwellingsContainer>
           <CommercialContainer img={img_facade}></CommercialContainer>
-          <FacadeContainer img={img_interior}></FacadeContainer>
+          <FacadeContainer img={img_interior} modelData={currentProject}></FacadeContainer>
           <GeolocatedContainer img={img_interior}></GeolocatedContainer>
-          <ContainerInfo img={img_basic_volume} vars={varsBasicVolume} title={"Basic volume"} project={projectObj} />
+          {/* <ContainerInfo img={img_basic_volume} vars={varsBasicVolume} title={"Basic volume"} project={projectObj} />
           <ContainerInfo img={img_facade} vars={varsFacade} title={"Facade"} project={projectObj} />
-          <ContainerInfo img={img_interior} vars={varsInterior} title={"Interior"} project={projectObj} />
+          <ContainerInfo img={img_interior} vars={varsInterior} title={"Interior"} project={projectObj} /> */}
         </Grid>
       </PageContainer>
     </Fragment>

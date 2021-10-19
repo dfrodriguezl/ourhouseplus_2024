@@ -1,4 +1,5 @@
-import { Grid, makeStyles, createStyles, Box, Divider, Typography } from "@material-ui/core";
+import { Grid, makeStyles, createStyles, Box, Typography } from "@material-ui/core";
+import { ModelData, Project } from "domains/shapeDiver/models";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -13,15 +14,6 @@ const useStyles = makeStyles(() =>
         backgroundColor: '#FFFFFF33'
       },
       borderRadius: '20px',
-    },
-    subtitleStyle: {
-      fontWeight: 'bolder',
-      color: 'white'
-    },
-    dividerStyle: {
-      background: '#707070',
-      width: '100%',
-      margin: '5px 0px'
     },
     textStyle: {
       color: 'white',
@@ -47,11 +39,12 @@ const useStyles = makeStyles(() =>
 
 interface ownProps {
   img?: any;
+  modelData?: Project;
 }
 
 type Props = ownProps;
 const FacadeContainer = (props: Props) => {
-  const { img } = props;
+  const { img, modelData } = props;
   const classes = useStyles();
 
   return (
@@ -74,14 +67,14 @@ const FacadeContainer = (props: Props) => {
               <Box fontSize={12} className={classes.textStyleMargin}>Bricks</Box>
             </Grid>
             <Grid xs={6}>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyleMarginResult}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyleMarginResult}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyleMarginResult}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyleMarginResult}>xxxxxxxxxxx</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.location.windowPercentage === 0 ? '50%' : modelData?.location.windowPercentage === 1 ? '60%' : '70%' }</Box>
+              <Box fontSize={12} className={classes.textStyle}>0</Box>
+              <Box fontSize={12} className={classes.textStyle}>0</Box>
+              <Box fontSize={12} className={classes.textStyle}>0</Box>
+              <Box fontSize={12} className={classes.textStyleMarginResult}>0</Box>
+              <Box fontSize={12} className={classes.textStyleMarginResult}>0</Box>
+              <Box fontSize={12} className={classes.textStyleMarginResult}>0</Box>
+              <Box fontSize={12} className={classes.textStyleMarginResult}>0</Box>
             </Grid>
           </Grid>
         </Grid>
@@ -100,14 +93,14 @@ const FacadeContainer = (props: Props) => {
               <Box fontSize={12} className={classes.textStyleMargin}>Walls</Box>
             </Grid>
             <Grid xs={6}>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyle}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyleMarginResult}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyleMarginResult}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyleMarginResult}>xxxxxxxxxxx</Box>
-              <Box fontSize={12} className={classes.textStyleMarginResult}>xxxxxxxxxxx</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.location.flatSize === 0 ? 'Small' : modelData?.location.flatSize === 1 ? 'Medium' : 'Large'}</Box>
+              <Box fontSize={12} className={classes.textStyle}>{modelData?.roomType === 0 ? 'Close' : modelData?.roomType === 1 ? 'Open' : 'Work'}</Box>
+              <Box fontSize={12} className={classes.textStyle}>0</Box>
+              <Box fontSize={12} className={classes.textStyle}>0</Box>
+              <Box fontSize={12} className={classes.textStyleMarginResult}>0</Box>
+              <Box fontSize={12} className={classes.textStyleMarginResult}>0</Box>
+              <Box fontSize={12} className={classes.textStyleMarginResult}>0</Box>
+              <Box fontSize={12} className={classes.textStyleMarginResult}>0</Box>
             </Grid>
           </Grid>
         </Grid>
