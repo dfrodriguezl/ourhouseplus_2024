@@ -111,6 +111,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
 
       const response = await this.api!.parameters.updateAsync(payload);
 
+
       if (response.err) {
         console.log(response.err);
         return;
@@ -121,6 +122,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       }
 
       const modelData = this.api!.scene.getData().data;
+
       console.log("MODEL DATA", modelData)
 
       setModelData({

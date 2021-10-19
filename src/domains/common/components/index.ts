@@ -8,3 +8,7 @@ export { default as ImgVideo } from './ImgVideo';
 export { default as FormMail } from './FormMail';
 export { default as CustomTooltip } from './CustomTooltip';
 export { default as TabPanel } from './TabPanel';
+export { default as ContainerWhite } from './ContainerWhite';
+export { default as CommercialContainer } from './CommercialContainer';
+export { default as FacadeContainer } from './FacadeContainer';
+export { default as GeolocatedContainer } from './GeolocatedContainer';
