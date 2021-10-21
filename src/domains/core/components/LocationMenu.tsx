@@ -61,7 +61,7 @@ interface StateProps {
 
 interface OwnProps {
   updateLocation(value: string): void;
-  location: Location | undefined;
+  location?: Location | undefined;
   updateStep(step: number): void;
 }
 

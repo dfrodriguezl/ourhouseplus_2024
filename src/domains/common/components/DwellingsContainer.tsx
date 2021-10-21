@@ -1,5 +1,6 @@
 import { Grid, makeStyles, createStyles, Box, Divider } from "@material-ui/core";
 import { ModelData } from "domains/shapeDiver/models";
+import NumberFormat from "react-number-format";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -71,8 +72,22 @@ const DwellingsContainer = (props: Props) => {
             </Grid>
             <Grid xs={6}>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>{modelData?.averageBedroomPerDwelling}</Box>
-              <Box fontSize={12} className={classes.textStyle}>{modelData?.greenSpacePerInhabitant}</Box>
+              <Box fontSize={12} className={classes.textStyle}>
+              <NumberFormat
+                  value={modelData?.averageBedroomPerDwelling}
+                  displayType="text"
+                  thousandSeparator
+                  decimalScale={2}
+                />
+                </Box>
+              <Box fontSize={12} className={classes.textStyle}>
+              <NumberFormat
+                  value={modelData?.greenSpacePerInhabitant}
+                  displayType="text"
+                  thousandSeparator
+                  decimalScale={2}
+                />
+                </Box>
             </Grid>
           </Grid>
           <Grid item container xs={12} direction="row">

@@ -63,17 +63,38 @@ const ContainerWhite = (props: Props) => {
             <Grid xs={3}>
               <Box fontSize={12} className={classes.textStyle}>Gross land area</Box>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>{modelData?.totalLandArea}</Box>
+              <Box fontSize={12} className={classes.textStyle}>
+                <NumberFormat
+                  value={modelData?.totalLandArea}
+                  displayType="text"
+                  thousandSeparator
+                  decimalScale={2}
+                />
+              </Box>
             </Grid>
             <Grid xs={2}>
               <Box fontSize={12} className={classes.textStyle}>LUR net</Box>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>{modelData?.landUserRatioNet}</Box>
+              <Box fontSize={12} className={classes.textStyle}>
+                <NumberFormat
+                  value={modelData?.landUserRatioNet}
+                  displayType="text"
+                  thousandSeparator
+                  decimalScale={2}
+                />
+              </Box>
             </Grid>
             <Grid xs={2}>
               <Box fontSize={12} className={classes.textStyle}>FAR net</Box>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>{modelData?.floorAreaRatioNet}</Box>
+              <Box fontSize={12} className={classes.textStyle}>
+                <NumberFormat
+                  value={modelData?.floorAreaRatioNet}
+                  displayType="text"
+                  thousandSeparator
+                  decimalScale={2}
+                />
+              </Box>
             </Grid>
             <Grid xs={2}>
               <Box fontSize={12} className={classes.textStyle}>OSR net</Box>
@@ -82,7 +103,7 @@ const ContainerWhite = (props: Props) => {
                 <NumberFormat
                   value={(1 - modelData?.landUserRatioNet!) / modelData?.floorAreaRatioNet!}
                   displayType="text"
-                  decimalScale={6}
+                  decimalScale={2}
                 />
               </Box>
             </Grid>
@@ -93,7 +114,7 @@ const ContainerWhite = (props: Props) => {
                 <NumberFormat
                   value={modelData?.floorAreaRatioNet! / modelData?.landUserRatioNet!}
                   displayType="text"
-                  decimalScale={6}
+                  decimalScale={2}
                 />
               </Box>
             </Grid>
@@ -105,17 +126,38 @@ const ContainerWhite = (props: Props) => {
             <Grid xs={3}>
               <Box fontSize={12} className={classes.textStyle}>Gross land area</Box>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>{modelData?.totalLandArea}</Box>
+              <Box fontSize={12} className={classes.textStyle}>
+                <NumberFormat
+                  value={modelData?.totalLandArea}
+                  displayType="text"
+                  thousandSeparator
+                  decimalScale={2}
+                />
+              </Box>
             </Grid>
             <Grid xs={2}>
               <Box fontSize={12} className={classes.textStyle}>LUR gross</Box>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>{modelData?.landUserRatioGross}</Box>
+              <Box fontSize={12} className={classes.textStyle}>
+                <NumberFormat
+                  value={modelData?.landUserRatioGross}
+                  displayType="text"
+                  thousandSeparator
+                  decimalScale={2}
+                />
+              </Box>
             </Grid>
             <Grid xs={2}>
               <Box fontSize={12} className={classes.textStyle}>FAR gross</Box>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>{modelData?.floorAreaRatioGross}</Box>
+              <Box fontSize={12} className={classes.textStyle}>
+                <NumberFormat
+                  value={modelData?.floorAreaRatioGross}
+                  displayType="text"
+                  thousandSeparator
+                  decimalScale={2}
+                />
+              </Box>
             </Grid>
             <Grid xs={2}>
               <Box fontSize={12} className={classes.textStyle}>OSR gross</Box>
@@ -124,7 +166,7 @@ const ContainerWhite = (props: Props) => {
                 <NumberFormat
                   value={(1 - modelData?.landUserRatioGross!) / modelData?.floorAreaRatioGross!}
                   displayType="text"
-                  decimalScale={6}
+                  decimalScale={2}
                 />
               </Box>
             </Grid>
@@ -135,7 +177,7 @@ const ContainerWhite = (props: Props) => {
                 <NumberFormat
                   value={modelData?.floorAreaRatioGross! / modelData?.landUserRatioGross!}
                   displayType="text"
-                  decimalScale={6}
+                  decimalScale={2}
                 />
               </Box>
             </Grid>
@@ -146,7 +188,14 @@ const ContainerWhite = (props: Props) => {
               <br />
               <Box fontSize={12} className={classes.textStyle}>Building height (m)</Box>
               <br />
-              <Box fontSize={12} className={classes.textStyle}>{modelData?.mostHeightBuilding}</Box>
+              <Box fontSize={12} className={classes.textStyle}>
+                <NumberFormat
+                  value={modelData?.mostHeightBuilding}
+                  displayType="text"
+                  thousandSeparator
+                  decimalScale={2}
+                />
+              </Box>
             </Grid>
             <Grid xs={2}>
               <br />

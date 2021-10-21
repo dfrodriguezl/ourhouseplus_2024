@@ -9,3 +9,4 @@ export { default as ListProjects } from './ListProjects';
 export { default as DetailsProjects } from './DetailsProject';
 export { default as DetailsSummary } from './DetailsSummary';
 export { default as GeoContainer } from './GeoContainer';
+export { default as TerrainContainer } from './TerrainContainer';
