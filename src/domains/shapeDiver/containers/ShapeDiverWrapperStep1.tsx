@@ -108,6 +108,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         payload.push({ name: Parameters.ImportModel, value: '' })
       }
 
+      console.log("PAYLOAD", payload)
+
 
       const response = await this.api!.parameters.updateAsync(payload);
 
