@@ -8,7 +8,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 import clsx from 'clsx';
 import { GeneralParameters } from 'domains/common/components';
-import { loadProjectById, setInitialParams, setSaveSuccess, setNameProject } from 'domains/shapeDiver/slice';
+import { loadProjectById, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { Project } from 'domains/shapeDiver/models';
@@ -117,17 +117,18 @@ interface DispatchProps {
   setInitialParams: typeof setInitialParams;
   setSaveSuccess: typeof setSaveSuccess;
   setNameProject: typeof setNameProject;
+  setDensityGeneral: typeof setDensityGeneral;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps<RouteProps>;
 const DetailsSummary = (props: Props) => {
-  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject } = props;
+  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject, setDensityGeneral } = props;
   const classes = useStyles();
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
   const locationSaved: any = currentProject?.location;
-  const densityGeneral = currentProject?.location?.densityGeneral! ? currentProject?.location?.densityGeneral! : currentProject?.location?.density!;
+  const densityGeneral = currentProject?.location?.densityGeneral !== undefined ? currentProject?.location?.densityGeneral! : currentProject?.location?.density!;
   const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
-
+  console.log("DENSITY LOCAL", densityLocal)
 
   useEffect(() => {
     loadProjectById(params.id);
@@ -176,7 +177,7 @@ const DetailsSummary = (props: Props) => {
           area: currentProject?.area!,
           density: getDensityType(densityGeneral)!
         });
-
+        setDensityGeneral(densityGeneral);
         setSaveSuccess(true)
         setNameProject(currentProject?.projectName!)
         history.push('/models/step1');
@@ -426,7 +427,8 @@ const container = compose<Props, {}>(
       loadProjectById,
       setInitialParams,
       setSaveSuccess,
-      setNameProject
+      setNameProject,
+      setDensityGeneral
     }
   )
 )(DetailsSummary)

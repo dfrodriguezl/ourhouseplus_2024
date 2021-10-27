@@ -91,7 +91,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.Area, value: area?.toString() },
             { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
             { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-            { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+            // { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
             { name: Parameters.NumberStreetFloors, value: location.streetFloors },
             { name: Parameters.Typologies, value: location.typologies },
             { name: Parameters.AxisSelection, value: location.axisSelection },
