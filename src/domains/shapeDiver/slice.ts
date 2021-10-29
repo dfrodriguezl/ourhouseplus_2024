@@ -78,6 +78,8 @@ const initialState: ShapeDiverState = {
     threeBedroomPorc: 0,
     fourBedroomm2: 0,
     fourBedroomPorc: 0,
+    oneToTwoPorc: 0, 
+    threeToFourPorc: 0
   },
   importModel: '',
   expandAdvanced: { height: '100vh' },

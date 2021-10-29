@@ -57,6 +57,9 @@ const ShapeDiverAdditionalParams = (props: Props) => {
                 <Box fontSize={12}>Two bedroom</Box>
                 <Box fontSize={12}>Three bedroom</Box>
                 <Box fontSize={12}>Four bedroom</Box>
+                <br />
+                <Box fontSize={12}>One to two bedroom loft</Box>
+                <Box fontSize={12}>Three to four bedroom loft</Box>
               </Grid>
               <Grid item xs={6} sm={4}>
                 <Box fontSize={12}>
@@ -185,6 +188,23 @@ const ShapeDiverAdditionalParams = (props: Props) => {
                         decimalScale={2}
                       />
                     </Box>
+                    <br />
+                    <Box fontSize={12}>
+                      <NumberFormat
+                        value={0}
+                        displayType="text"
+                        thousandSeparator
+                        decimalScale={2}
+                      />
+                    </Box>
+                    <Box fontSize={12}>
+                      <NumberFormat
+                        value={0}
+                        displayType="text"
+                        thousandSeparator
+                        decimalScale={2}
+                      />
+                    </Box>
                   </Grid>
                   <Grid xs={4}>
                     <Box fontSize={12}>%</Box>
@@ -236,6 +256,23 @@ const ShapeDiverAdditionalParams = (props: Props) => {
                         decimalScale={2}
                       />
                     </Box>
+                    <br />
+                    <Box fontSize={12}>
+                      <NumberFormat
+                        value={modelData.oneToTwoPorc}
+                        displayType="text"
+                        thousandSeparator
+                        decimalScale={2}
+                      />
+                    </Box>
+                    <Box fontSize={12}>
+                      <NumberFormat
+                        value={modelData.threeToFourPorc}
+                        displayType="text"
+                        thousandSeparator
+                        decimalScale={2}
+                      />
+                    </Box>
                   </Grid>
                   <Grid xs={4}>
                     <Box fontSize={12}>nbr</Box>
@@ -282,6 +319,23 @@ const ShapeDiverAdditionalParams = (props: Props) => {
                     <Box fontSize={12}>
                       <NumberFormat
                         value={modelData.fourBedroom}
+                        displayType="text"
+                        thousandSeparator
+                        decimalScale={2}
+                      />
+                    </Box>
+                    <br />
+                    <Box fontSize={12}>
+                      <NumberFormat
+                        value={0}
+                        displayType="text"
+                        thousandSeparator
+                        decimalScale={2}
+                      />
+                    </Box>
+                    <Box fontSize={12}>
+                      <NumberFormat
+                        value={0}
                         displayType="text"
                         thousandSeparator
                         decimalScale={2}

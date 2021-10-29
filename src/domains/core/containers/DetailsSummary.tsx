@@ -128,7 +128,6 @@ const DetailsSummary = (props: Props) => {
   const locationSaved: any = currentProject?.location;
   const densityGeneral = currentProject?.location?.densityGeneral !== undefined ? currentProject?.location?.densityGeneral! : currentProject?.location?.density!;
   const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
-  console.log("DENSITY LOCAL", densityLocal)
 
   useEffect(() => {
     loadProjectById(params.id);

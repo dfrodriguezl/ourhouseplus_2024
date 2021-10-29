@@ -167,6 +167,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         threeBedroomPorc: _.find(modelData, x => x.name === DataParameters.ThreeBedroomPorc)?.data ?? 0,
         fourBedroomm2: _.find(modelData, x => x.name === DataParameters.FourBedroomm2)?.data ?? 0,
         fourBedroomPorc: _.find(modelData, x => x.name === DataParameters.FourBedroomPorc)?.data ?? 0,
+        oneToTwoPorc: _.find(modelData, x => x.name === DataParameters.OneToTwoPorc)?.data ?? 0,
+        threeToFourPorc: _.find(modelData, x => x.name === DataParameters.ThreeToFourPorc)?.data ?? 0,
       });
     }
   }
@@ -225,6 +227,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
           floorAreaRatioNet: 0, floorAreaRatioGross: 0, populationDensity: 0, roadDensitym2: 0, greenSpaceDensitym2: 0,
           studiosm2: 0, studiosPorc: 0, largeStudiosm2: 0, largeStudiosPorc: 0, oneBedroomm2: 0, oneBedroomPorc: 0,
           twoBedroomm2: 0, twoBedroomPorc: 0, threeBedroomm2: 0, threeBedroomPorc: 0, fourBedroomm2: 0, fourBedroomPorc: 0,
+          oneToTwoPorc: 0, threeToFourPorc: 0
         });
 
         // // refresh (load geometry), because the initial parameter update might not have changed any values
