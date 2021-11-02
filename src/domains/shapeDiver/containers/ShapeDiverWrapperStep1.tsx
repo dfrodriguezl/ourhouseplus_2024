@@ -123,6 +123,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
 
       const modelData = this.api!.scene.getData().data;
 
+
       setModelData({
         totalLandArea: _.find(modelData, x => x.name === DataParameters.GrossLandArea)?.data ?? 0,
         totalGrossFloorArea: _.find(modelData, x => x.name === DataParameters.GrossFloorArea)?.data ?? 0,
