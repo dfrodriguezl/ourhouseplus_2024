@@ -93,6 +93,14 @@ export interface Density {
   type: string;
 }
 
+export interface Terrain {
+  name?: string;
+  owner?: string;
+  path?: string;
+  location?: LocationSimple;
+  densityGeneral?: number;
+}
+
 export const Densities = [
   {
     value: 2,
@@ -180,3 +188,5 @@ export const teamMembers = [
     picture: radhi
   }
 ]
+
+

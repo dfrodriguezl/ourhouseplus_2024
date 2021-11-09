@@ -2,13 +2,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { get } from 'app/api';
 import { AppThunk } from 'app/store';
 import { AxiosResponse } from 'axios';
-import { LocationSimple, Density, Location } from './models';
+import { LocationSimple, Density, Location, Terrain } from './models';
 
 interface CoreState {
   location: LocationSimple | undefined;
   density: Density | undefined;
   locations: Location[];
-  searchClick: Boolean,
+  searchClick: Boolean;
+  terrain: Terrain | undefined;
 }
 
 const initialState: CoreState = {
@@ -16,6 +17,7 @@ const initialState: CoreState = {
   density: undefined,
   locations: [],
   searchClick: false,
+  terrain: undefined
 };
 
 export const coreSlice = createSlice({
@@ -33,13 +35,18 @@ export const coreSlice = createSlice({
     setSearchClick: (state, action: PayloadAction<Boolean>) => {
       state.searchClick = action.payload;
     },
+    saveTerrain: (state, action: PayloadAction<Terrain>) => {
+      console.log("ACTION", action)
+      state.terrain = action.payload;
+    }
   },
 });
 
 export const {
   setLocations,
   // doSearch,
-  setSearchClick
+  setSearchClick,
+  saveTerrain
 } = coreSlice.actions;
 
 export const getLocations = (): AppThunk => dispatch => {

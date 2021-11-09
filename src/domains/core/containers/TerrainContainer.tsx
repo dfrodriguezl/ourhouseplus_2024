@@ -2,8 +2,8 @@ import { Grid, makeStyles, createStyles, Typography, IconButton, Divider, Input,
 import { ArrowBackIos, CloudUpload, Add, Close } from "@material-ui/icons";
 import { PageContainer } from ".";
 import { LocationMenu, UrbanismMenu } from "../components";
-import { Densities, Density, Location } from "../models";
-import { getLocations } from 'domains/core/coreSlice';
+import { Densities, Density, Location, LocationSimple, Terrain } from "../models";
+import { getLocations, saveTerrain } from 'domains/core/coreSlice';
 import { Fragment, useEffect, useRef, useState } from "react";
 import { withRouter } from "react-router";
 import { compose } from 'recompose';
@@ -113,16 +113,19 @@ interface StateProps {
 
 interface DispatchProps {
   getLocations: typeof getLocations;
+  saveTerrain: typeof saveTerrain;
 }
 
 type Props = StateProps & DispatchProps;
 const TerrainContainer = (props: Props) => {
   const classes = useStyles();
-  const { getLocations, locations } = props;
+  const { getLocations, locations, saveTerrain } = props;
   const [location, setLocation] = useState<Location>();
   const [density, setDensity] = useState<Density>();
   const fileInput = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<any>(null);
+  const [terrain, setTerrain] = useState<Terrain>();
+  const [locationSimple, setLocationSimple] = useState<LocationSimple>();
 
   useEffect(() => {
     getLocations();
@@ -140,6 +143,40 @@ const TerrainContainer = (props: Props) => {
   const updateDensity = (value: string) => {
     const den = _.find(Densities, x => x.label === value);
     setDensity(den);
+
+    const densityLocal = den?.value === 0 ? "suburban" : "urban";
+
+    setTerrain({
+      ...terrain,
+      location: {
+        id: location?.id!,
+        city: location?.city!,
+        densityGeneral: location?.density!,
+        description: location?.description!,
+        maxPriFloors: location![densityLocal].maxPriFloors,
+        maxSecFloors: location![densityLocal].maxSecFloors,
+        streetFloors: location![densityLocal].streetFloors,
+        windowPercentage: location![densityLocal].windowPercentage,
+        unitsNumberType: location![densityLocal].unitsNumberType,
+        density: location![densityLocal].density,
+        flatSize: location![densityLocal].flatSize,
+        flatType: location![densityLocal].flatType,
+        regen: location![densityLocal].regen,
+        lat: location![densityLocal].lat,
+        lon: location![densityLocal].lon,
+        p_vivs: location![densityLocal].p_vivs,
+        axisSelection: location![densityLocal].axisSelection,
+        typologies: location![densityLocal].typologies,
+        emptySpaceSelection: location![densityLocal].emptySpaceSelection,
+        undefinedTower: location![densityLocal].undefinedTower,
+        streetDensity: location![densityLocal].streetDensity,
+        islandSpacings: location![densityLocal].islandSpacings,
+        floorsAlignment: location![densityLocal].floorsAlignment,
+        unitsOrganization: location![densityLocal].unitsOrganization
+      },
+      densityGeneral: den?.value
+    })
+
   }
 
   const handleFileUpload = () => {
@@ -148,10 +185,20 @@ const TerrainContainer = (props: Props) => {
 
   const uploadDXF = (event: any) => {
     setSelectedFile(event.target.files[0]);
+    setTerrain(
+      {
+        ...terrain,
+        path: event.target.files[0].name
+      }
+    )
   }
 
   const handleClose = () => {
     setSelectedFile(null);
+  }
+
+  const saveTerrainForm = () => {
+    saveTerrain(terrain!)
   }
 
   return (
@@ -225,13 +272,13 @@ const TerrainContainer = (props: Props) => {
               <Typography className={classes.containerWhiteTextSmall}>Terrain name</Typography>
             </Grid>
             <Grid xs={12}>
-              <Input style={{ height: '60px', width: '100%' }} />
+              <Input style={{ height: '60px', width: '100%' }} onChange={(e) => {setTerrain({...terrain, name: e.target.value})}}/>
             </Grid>
             <Grid xs={12}>
               <Typography className={classes.containerWhiteTextSmall}>Terrain owner</Typography>
             </Grid>
             <Grid xs={12}>
-              <Input style={{ height: '60px', width: '100%' }} />
+              <Input style={{ height: '60px', width: '100%' }} onChange={(e) => {setTerrain({...terrain, owner: e.target.value})}}/>
             </Grid>
             <Grid xs={12} container justify="center" className={classes.searchBox}>
               <Grid item container direction="column" xs={5} justify="center" >
@@ -257,6 +304,8 @@ const TerrainContainer = (props: Props) => {
               <Button
                 size="large"
                 className={classes.button}
+                onClick={() => saveTerrainForm()}
+                disabled={!terrain?.name || !terrain.owner || !selectedFile || !terrain.location || !density} 
               >
                 Save
               </Button>
@@ -275,7 +324,8 @@ const container = compose<Props, {}>(
       locations: state.domains.core.locations
     }),
     {
-      getLocations
+      getLocations,
+      saveTerrain
     }
   )
 )(TerrainContainer);
