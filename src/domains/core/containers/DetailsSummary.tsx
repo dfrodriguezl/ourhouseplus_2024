@@ -2,10 +2,8 @@ import { Fragment } from 'react';
 import { Grid, makeStyles, createStyles, Typography, Button, Box, Divider } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
-import { MapGeo, TopPanel } from 'domains/core/components';
-import { download, height_6, height_12, height_13, suburban } from 'assets';
-import EditIcon from '@material-ui/icons/Edit';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
+import { MapGeo, ToolbarDetailsProject, TopPanel } from 'domains/core/components';
+import { height_6, height_12, height_13, suburban } from 'assets';
 import clsx from 'clsx';
 import { GeneralParameters } from 'domains/common/components';
 import { loadProjectById, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral } from 'domains/shapeDiver/slice';
@@ -191,27 +189,7 @@ const DetailsSummary = (props: Props) => {
       <PageContainer background="black-model">
         <Grid container xs={12} className={classes.topPanel} >
           <TopPanel />
-          <Grid item container xs={12} direction="row">
-            <Grid item container xs={5}>
-              <Typography variant="h6" className={classes.nameProject}>
-                {currentProject?.projectName} <span className={classes.summaryText}>Summary</span>
-              </Typography>
-            </Grid>
-            <Grid item container xs={7} style={{ justifyContent: 'flex-end' }}>
-              <Button className={classes.compareButton}
-                endIcon={<VisibilityOffIcon />}>
-                Publish
-              </Button>
-              <Button className={classes.compareButton}
-                endIcon={<EditIcon />}>
-                Edit
-              </Button>
-              <Button className={classes.compareButton}
-                endIcon={<img alt="icon-download" src={download} width={15} />}>
-                Download pdf
-              </Button>
-            </Grid>
-          </Grid>
+          <ToolbarDetailsProject currentProject={currentProject!} id={params.id}/>
           <GeneralParameters project={currentProject} />
           <Grid item container xs={12}>
             <Grid item xs={4} className={classes.imgContainer}>

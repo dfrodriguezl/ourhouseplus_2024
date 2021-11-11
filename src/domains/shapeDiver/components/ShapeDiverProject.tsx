@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, makeStyles, Divider, IconButton, Theme, Snackbar, SnackbarContent } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getProjectData, saveProject, setAdvancedOptions, setNameProject } from 'domains/shapeDiver/slice';
+import { editProject, getProjectData, saveProject, setAdvancedOptions, setNameProject } from 'domains/shapeDiver/slice';
 import { save } from 'assets'
 import CloseIcon from '@material-ui/icons/Close';
 
@@ -40,17 +40,19 @@ interface DispatchProps {
   setAdvancedOptions: typeof setAdvancedOptions;
   saveProject: typeof saveProject;
   setNameProject: typeof setNameProject;
+  editProject: typeof editProject;
 }
 
 interface StateProps {
   projectData: any;
   saveSuccess: boolean;
   nameProject: string;
+  idProject?: string;
 }
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverProject = (props: Props) => {
-  const { saveProject, projectData, saveSuccess, setNameProject, nameProject } = props;
+  const { saveProject, projectData, saveSuccess, setNameProject, nameProject, editProject, idProject } = props;
   const { user } = useAuth0();
   const [projectName, setProjectName] = useState('');
   const [open, setOpen] = useState(false);
@@ -65,6 +67,15 @@ const ShapeDiverProject = (props: Props) => {
 
     setOpen(true)
     setNameProject(projectName)
+  }
+
+  const editModelHandler = () => {
+    editProject(idProject!, {
+      projectName,
+      email: user.email,
+      ...projectData
+    });
+    setOpen(true)
   }
 
   const handleClose = () => {
@@ -85,21 +96,34 @@ const ShapeDiverProject = (props: Props) => {
               onChange={(e) => setProjectName(e.target.value)}
               disabled
             /> :
-            <input
-              type="text"
-              placeholder="Project 1"
-              className={classes.fieldInput}
-              value={projectName}
-              onChange={(e) => setProjectName(e.target.value)}
-            />
+            nameProject ?
+              <input
+                type="text"
+                placeholder="Project 1"
+                className={classes.fieldInput}
+                defaultValue={nameProject}
+                onChange={(e) => setProjectName(e.target.value)}
+              />
+              :
+              <input
+                type="text"
+                placeholder="Project 1"
+                className={classes.fieldInput}
+                value={projectName}
+                onChange={(e) => setProjectName(e.target.value)}
+              />
           }
 
         </Grid>
         <Grid item xs={2}>
           {!saveSuccess ?
-            <IconButton onClick={saveModelHandler} disabled={projectName === ''}>
-              <img className={classes.buttons} src={save} alt="50" />
-            </IconButton> :
+            nameProject ?
+              <IconButton onClick={editModelHandler} >
+                <img className={classes.buttons} src={save} alt="50" />
+              </IconButton> :
+              <IconButton onClick={saveModelHandler} disabled={projectName === ''}>
+                <img className={classes.buttons} src={save} alt="50" />
+              </IconButton> :
             null
           }
 
@@ -116,7 +140,7 @@ const ShapeDiverProject = (props: Props) => {
         onClose={() => setOpen(false)}
       >
         <SnackbarContent
-          message="Your project has been saved"
+          message={!saveSuccess ? nameProject ? "Your project has been updated" : "Your project has been saved" : null}
           className={classes.root}
           action={
             <Fragment>
@@ -136,12 +160,14 @@ const container = compose<Props, {}>(
     (state: RootState) => ({
       projectData: getProjectData(state),
       saveSuccess: state.domains.shapediver.saveSuccess,
-      nameProject: state.domains.shapediver.nameProject
+      nameProject: state.domains.shapediver.nameProject,
+      idProject: state.domains.shapediver.idProject
     }),
     {
       setAdvancedOptions,
       saveProject,
-      setNameProject
+      setNameProject,
+      editProject
     }
   )
 )(ShapeDiverProject);

@@ -7,12 +7,15 @@ import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteProjectById, loadProjectsByUsername } from 'domains/shapeDiver/slice';
+import { deleteProjectById, loadProjectsByUsername, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import { TopPanel } from 'domains/core/components';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Project } from 'domains/shapeDiver/models';
+import { Densities, Density } from 'domains/core/models';
+import _ from 'lodash';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -113,12 +116,17 @@ interface StateProps {
 interface DispatchProps {
   loadProjectsByUsername: typeof loadProjectsByUsername;
   deleteProjectById: typeof deleteProjectById;
+  setInitialParams: typeof setInitialParams;
+  setSaveSuccess: typeof setSaveSuccess;
+  setNameProject: typeof setNameProject;
+  setDensityGeneral: typeof setDensityGeneral;
+  setIdProject: typeof setIdProject;
 }
 
 type Props = RouteComponentProps & StateProps & DispatchProps;
 export const ListProjects = (props: Props) => {
-  const { loadProjectsByUsername, deleteProjectById, history, projects, loading } = props;
-  const { user } = useAuth0();
+  const { loadProjectsByUsername, deleteProjectById, history, projects, loading, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject } = props;
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const classes = useStyles();
   const [hover, setHover] = useState(0);
 
@@ -128,6 +136,63 @@ export const ListProjects = (props: Props) => {
 
   const goToProject = (id: string) => {
     history.push("/details/" + id)
+  }
+
+  const getDensityType = (value: number) => {
+    const den = _.find(Densities, (x: Density) => x.value === value);
+    return den;
+  }
+
+  const gotTo3DView = (id:string, project: Project) => {
+    const locationSaved: any = project?.location;
+    const densityGeneral = project?.location?.densityGeneral !== undefined ? project?.location?.densityGeneral! : project?.location?.density!;
+    const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
+    
+    if (isAuthenticated && user) {
+
+      if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
+
+        setInitialParams({
+          location: locationSaved![densityLocal] ?
+            {
+              id: locationSaved?.id!,
+              city: locationSaved?.city!,
+              densityGeneral: locationSaved?.density!,
+              description: locationSaved?.description!,
+              maxPriFloors: locationSaved![densityLocal].maxPriFloors,
+              maxSecFloors: locationSaved![densityLocal].maxSecFloors,
+              streetFloors: locationSaved![densityLocal].streetFloors,
+              windowPercentage: locationSaved![densityLocal].windowPercentage,
+              unitsNumberType: locationSaved![densityLocal].unitsNumberType,
+              density: locationSaved![densityLocal].density,
+              flatSize: locationSaved![densityLocal].flatSize,
+              flatType: locationSaved![densityLocal].flatType,
+              regen: locationSaved![densityLocal].regen,
+              lat: locationSaved![densityLocal].lat,
+              lon: locationSaved![densityLocal].lon,
+              p_vivs: locationSaved![densityLocal].p_vivs,
+              axisSelection: locationSaved![densityLocal].axisSelection,
+              typologies: locationSaved![densityLocal].typologies,
+              emptySpaceSelection: locationSaved![densityLocal].emptySpaceSelection,
+              undefinedTower: locationSaved![densityLocal].undefinedTower,
+              streetDensity: locationSaved![densityLocal].streetDensity,
+              islandSpacings: locationSaved![densityLocal].islandSpacings,
+              floorsAlignment: locationSaved![densityLocal].floorsAlignment,
+              unitsOrganization: locationSaved![densityLocal].unitsOrganization,
+            } :
+            project?.location,
+          area: project?.area!,
+          density: getDensityType(densityGeneral)!
+        });
+        setDensityGeneral(densityGeneral);
+        setSaveSuccess(false)
+        setNameProject(project?.projectName!)
+        setIdProject(id);
+        history.push('/models/step1');
+      }
+    } else {
+      loginWithRedirect();
+    }
   }
 
   useEffect(() => {
@@ -188,18 +253,18 @@ export const ListProjects = (props: Props) => {
                         <IconButton onClick={() => goToProject(String(p.id))}>
                           {
                             locationSaved.densityGeneral === 0 ?
-                            <img alt={p.name} src={suburban} style={{ width: '90%', borderRadius: '50%' }} /> 
-                            :locationSaved[densityLocal] ?
-                              locationSaved[densityLocal].maxPriFloors <= 6 ?
-                                <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                locationSaved[densityLocal].maxPriFloors <= 12 ?
-                                  <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                  <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} /> :
-                              p?.location.maxPriFloors <= 6 ?
-                                <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                p?.location.maxPriFloors <= 12 ?
-                                  <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                  <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} />
+                              <img alt={p.name} src={suburban} style={{ width: '90%', borderRadius: '50%' }} />
+                              : locationSaved[densityLocal] ?
+                                locationSaved[densityLocal].maxPriFloors <= 6 ?
+                                  <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                  locationSaved[densityLocal].maxPriFloors <= 12 ?
+                                    <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                    <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                p?.location.maxPriFloors <= 6 ?
+                                  <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                  p?.location.maxPriFloors <= 12 ?
+                                    <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
+                                    <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} />
                           }
 
                         </IconButton>
@@ -209,7 +274,7 @@ export const ListProjects = (props: Props) => {
                       </Typography>
                     </Grid>
                     <Grid item className={classes.containerOptions}>
-                      <Link href="#">
+                      <Link onClick={() => gotTo3DView(p.id,p)}>
                         <Typography className={classes.optionsProject}>
                           Edit
                           <EditIcon className={classes.optionsIcon} />
@@ -255,7 +320,12 @@ const container = compose<Props, {}>(
     }),
     {
       loadProjectsByUsername,
-      deleteProjectById
+      deleteProjectById,
+      setInitialParams,
+      setSaveSuccess,
+      setNameProject,
+      setDensityGeneral,
+      setIdProject
     }
   )
 )(ListProjects);
