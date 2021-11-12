@@ -8,7 +8,8 @@ interface CoreState {
   location: LocationSimple | undefined;
   density: Density | undefined;
   locations: Location[];
-  searchClick: Boolean,
+  searchClick: Boolean;
+  option: string;
 }
 
 const initialState: CoreState = {
@@ -16,6 +17,7 @@ const initialState: CoreState = {
   density: undefined,
   locations: [],
   searchClick: false,
+  option: ''
 };
 
 export const coreSlice = createSlice({
@@ -33,13 +35,17 @@ export const coreSlice = createSlice({
     setSearchClick: (state, action: PayloadAction<Boolean>) => {
       state.searchClick = action.payload;
     },
+    setOption: (state, action: PayloadAction<string>) => {
+      state.option = action.payload;
+    },
   },
 });
 
 export const {
   setLocations,
   // doSearch,
-  setSearchClick
+  setSearchClick,
+  setOption
 } = coreSlice.actions;
 
 export const getLocations = (): AppThunk => dispatch => {

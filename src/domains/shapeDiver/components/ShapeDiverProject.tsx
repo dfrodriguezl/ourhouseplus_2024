@@ -48,13 +48,14 @@ interface StateProps {
   saveSuccess: boolean;
   nameProject: string;
   idProject?: string;
+  option?: string;
 }
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverProject = (props: Props) => {
-  const { saveProject, projectData, saveSuccess, setNameProject, nameProject, editProject, idProject } = props;
+  const { saveProject, projectData, saveSuccess, setNameProject, nameProject, editProject, idProject, option } = props;
   const { user } = useAuth0();
-  const [projectName, setProjectName] = useState('');
+  const [projectName, setProjectName] = useState(nameProject);
   const [open, setOpen] = useState(false);
   const classes = styles();
 
@@ -71,7 +72,7 @@ const ShapeDiverProject = (props: Props) => {
 
   const editModelHandler = () => {
     editProject(idProject!, {
-      projectName,
+      projectName: projectName,
       email: user.email,
       ...projectData
     });
@@ -85,7 +86,7 @@ const ShapeDiverProject = (props: Props) => {
 
   return (
     <Fragment>
-      {console.log("PROJECT DATA",projectData)}
+
       <Grid container xs={12} direction="row" className={classes.container}>
         <Grid item xs={8}>
           <div>Project name</div>
@@ -118,17 +119,14 @@ const ShapeDiverProject = (props: Props) => {
 
         </Grid>
         <Grid item xs={2}>
-          {!saveSuccess ?
-            nameProject ?
-              <IconButton onClick={editModelHandler} >
-                <img className={classes.buttons} src={save} alt="50" />
-              </IconButton> :
-              <IconButton onClick={saveModelHandler} disabled={projectName === ''}>
-                <img className={classes.buttons} src={save} alt="50" />
-              </IconButton> :
-            null
+          {option === "edit" ?
+            <IconButton onClick={editModelHandler} disabled={projectName === ''}>
+              <img className={classes.buttons} src={save} alt="50" />
+            </IconButton> :
+            <IconButton onClick={saveModelHandler} >
+              <img className={classes.buttons} src={save} alt="50" />
+            </IconButton>
           }
-
         </Grid>
       </Grid>
       <Divider orientation="horizontal" variant="middle" ></Divider>
@@ -142,7 +140,7 @@ const ShapeDiverProject = (props: Props) => {
         onClose={() => setOpen(false)}
       >
         <SnackbarContent
-          message={!saveSuccess ? nameProject ? "Your project has been updated" : "Your project has been saved" : null}
+          message={!saveSuccess ? "Your project has been updated" : "Your project has been saved"}
           className={classes.root}
           action={
             <Fragment>
@@ -163,7 +161,8 @@ const container = compose<Props, {}>(
       projectData: getProjectData(state),
       saveSuccess: state.domains.shapediver.saveSuccess,
       nameProject: state.domains.shapediver.nameProject,
-      idProject: state.domains.shapediver.idProject
+      idProject: state.domains.shapediver.idProject,
+      option: state.domains.core.option
     }),
     {
       setAdvancedOptions,

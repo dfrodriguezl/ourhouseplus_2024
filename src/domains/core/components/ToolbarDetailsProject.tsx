@@ -12,6 +12,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
+import { setOption } from '../coreSlice';
 
 const styles = makeStyles(() => ({
   nameProject: {
@@ -55,12 +56,13 @@ interface DispatchProps {
   setNameProject: typeof setNameProject;
   setDensityGeneral: typeof setDensityGeneral;
   setIdProject: typeof setIdProject;
+  setOption: typeof setOption;
 }
 
 
 type Props = OwnProps & DispatchProps;
 const ToolbarDetailsProject = (props: Props) => {
-  const { id, currentProject, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject } = props;
+  const { id, currentProject, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setOption } = props;
   const classes = styles();
   const history = useHistory();
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
@@ -119,6 +121,7 @@ const ToolbarDetailsProject = (props: Props) => {
         setSaveSuccess(false)
         setNameProject(project?.projectName!)
         setIdProject(id);
+        setOption("edit");
         history.push('/models/step1');
       }
     } else {
@@ -161,7 +164,8 @@ const container = compose<Props, OwnProps>(
       setSaveSuccess,
       setNameProject,
       setDensityGeneral,
-      setIdProject
+      setIdProject,
+      setOption
     }
   )
 )(ToolbarDetailsProject);

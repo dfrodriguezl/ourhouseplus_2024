@@ -16,6 +16,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Project } from 'domains/shapeDiver/models';
 import { Densities, Density } from 'domains/core/models';
 import _ from 'lodash';
+import { setOption } from '../coreSlice';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -121,11 +122,13 @@ interface DispatchProps {
   setNameProject: typeof setNameProject;
   setDensityGeneral: typeof setDensityGeneral;
   setIdProject: typeof setIdProject;
+  setOption: typeof setOption;
 }
 
 type Props = RouteComponentProps & StateProps & DispatchProps;
 export const ListProjects = (props: Props) => {
-  const { loadProjectsByUsername, deleteProjectById, history, projects, loading, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject } = props;
+  const { loadProjectsByUsername, deleteProjectById, history, projects, loading, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject,
+    setOption } = props;
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const classes = useStyles();
   const [hover, setHover] = useState(0);
@@ -188,6 +191,7 @@ export const ListProjects = (props: Props) => {
         setSaveSuccess(false)
         setNameProject(project?.projectName!)
         setIdProject(id);
+        setOption("edit");
         history.push('/models/step1');
       }
     } else {
@@ -325,7 +329,8 @@ const container = compose<Props, {}>(
       setSaveSuccess,
       setNameProject,
       setDensityGeneral,
-      setIdProject
+      setIdProject,
+      setOption
     }
   )
 )(ListProjects);
