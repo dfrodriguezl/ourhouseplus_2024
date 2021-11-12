@@ -60,7 +60,7 @@ interface DispatchProps {
 
 type Props = OwnProps & DispatchProps;
 const ToolbarDetailsProject = (props: Props) => {
-  const { id, currentProject } = props;
+  const { id, currentProject, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject } = props;
   const classes = styles();
   const history = useHistory();
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
@@ -74,11 +74,11 @@ const ToolbarDetailsProject = (props: Props) => {
     return den;
   }
 
-  const gotTo3DView = (id:string, project: Project) => {
+  const gotTo3DView = (id: string, project: Project) => {
     const locationSaved: any = project?.location;
     const densityGeneral = project?.location?.densityGeneral !== undefined ? project?.location?.densityGeneral! : project?.location?.density!;
     const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
-    
+
     if (isAuthenticated && user) {
 
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
@@ -155,7 +155,7 @@ const ToolbarDetailsProject = (props: Props) => {
 
 const container = compose<Props, OwnProps>(
   connect<{}, DispatchProps, {}, RootState>(
-    (state: RootState) => ({}),
+    null,
     {
       setInitialParams,
       setSaveSuccess,

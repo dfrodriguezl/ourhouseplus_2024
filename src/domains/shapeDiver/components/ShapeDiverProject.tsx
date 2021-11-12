@@ -76,6 +76,7 @@ const ShapeDiverProject = (props: Props) => {
       ...projectData
     });
     setOpen(true)
+    setNameProject(projectName)
   }
 
   const handleClose = () => {
@@ -84,6 +85,7 @@ const ShapeDiverProject = (props: Props) => {
 
   return (
     <Fragment>
+      {console.log("PROJECT DATA",projectData)}
       <Grid container xs={12} direction="row" className={classes.container}>
         <Grid item xs={8}>
           <div>Project name</div>
