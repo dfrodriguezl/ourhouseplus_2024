@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Divider, Grid, makeStyles, Theme, Dialog, List, ListItem } from '@material-ui/core';
-import { getLocations } from 'domains/core/coreSlice';
+import { getLocations, setOption } from 'domains/core/coreSlice';
 import { Densities, Density, Location, LocationSimple } from 'domains/core/models';
 import { ButtonWrapper, LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
 import { setInitialParams, setSaveSuccess, setDensityGeneral } from 'domains/shapeDiver/slice';
@@ -53,12 +53,13 @@ interface DispatchProps {
   setSearchClick: typeof setSearchClick;
   setSaveSuccess: typeof setSaveSuccess;
   setDensityGeneral: typeof setDensityGeneral;
+  setOption: typeof setOption;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
-  const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick, setSaveSuccess, setDensityGeneral } = props;
+  const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick, setSaveSuccess, setDensityGeneral, setOption } = props;
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
@@ -139,6 +140,7 @@ const SearchToolBar = (props: Props) => {
         });
         setDensityGeneral(density!.value);
         setSaveSuccess(false)
+        setOption("save");
         history.push('/models/step1');
       }
     } else {
@@ -313,7 +315,8 @@ const container = compose<Props, {}>(
       setInitialParams,
       setSearchClick,
       setSaveSuccess,
-      setDensityGeneral
+      setDensityGeneral,
+      setOption
     }
   )
 )(SearchToolBar);

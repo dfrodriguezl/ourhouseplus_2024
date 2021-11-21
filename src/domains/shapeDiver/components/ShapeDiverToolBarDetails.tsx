@@ -167,7 +167,7 @@ const LabelDetails: React.FC<LblProps> = ({ step, propsDetail }) => {
       <Box fontSize={12}>Gross floor area (GFA)</Box>
       <Box fontSize={12}>Building height max.</Box>
       <br />
-      <Box fontSize={12}>Land used ratio (LUR)</Box>
+      <Box fontSize={12}>Land use ratio (LUR)</Box>
       <Box fontSize={12} className={classes.paddingText}>Net</Box>
       <Box fontSize={12} className={classes.paddingText}>Gross</Box>
       <Box fontSize={12}>Floor area ratio (FAR)</Box>

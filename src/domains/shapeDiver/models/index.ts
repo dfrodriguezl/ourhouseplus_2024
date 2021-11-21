@@ -72,6 +72,8 @@ export enum DataParameters {
   ThreeBedroomPorc = 'DATA- (%) - T4',
   FourBedroomm2 = 'DATA- (m2) - T5',
   FourBedroomPorc = 'DATA- (%) - T5',
+  OneToTwoPorc = 'DATA- (%) - T2T3 LOFT',
+  ThreeToFourPorc = 'DATA- (%) - T4T5 LOFT',
 }
 
 export interface ShapeDiverOptions {
@@ -135,6 +137,8 @@ export interface ModelData {
   threeBedroomPorc: number;
   fourBedroomm2: number;
   fourBedroomPorc: number;
+  oneToTwoPorc: number;
+  threeToFourPorc: number;
 }
 
 export interface Project extends ProjectData {

@@ -10,6 +10,7 @@ interface CoreState {
   locations: Location[];
   searchClick: Boolean;
   terrain: Terrain | undefined;
+  option: string;
 }
 
 const initialState: CoreState = {
@@ -17,7 +18,8 @@ const initialState: CoreState = {
   density: undefined,
   locations: [],
   searchClick: false,
-  terrain: undefined
+  terrain: undefined,
+  option: ''
 };
 
 export const coreSlice = createSlice({
@@ -38,7 +40,10 @@ export const coreSlice = createSlice({
     saveTerrain: (state, action: PayloadAction<Terrain>) => {
       console.log("ACTION", action)
       state.terrain = action.payload;
-    }
+    },
+    setOption: (state, action: PayloadAction<string>) => {
+      state.option = action.payload;
+    },
   },
 });
 
@@ -46,7 +51,8 @@ export const {
   setLocations,
   // doSearch,
   setSearchClick,
-  saveTerrain
+  saveTerrain,
+  setOption
 } = coreSlice.actions;
 
 export const getLocations = (): AppThunk => dispatch => {

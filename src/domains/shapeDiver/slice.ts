@@ -24,6 +24,7 @@ export interface ShapeDiverState {
   saveSuccess: boolean;
   nameProject: string;
   loading: boolean;
+  idProject: string | undefined;
 }
 
 const initialState: ShapeDiverState = {
@@ -78,6 +79,8 @@ const initialState: ShapeDiverState = {
     threeBedroomPorc: 0,
     fourBedroomm2: 0,
     fourBedroomPorc: 0,
+    oneToTwoPorc: 0,
+    threeToFourPorc: 0
   },
   importModel: '',
   expandAdvanced: { height: '100vh' },
@@ -87,6 +90,7 @@ const initialState: ShapeDiverState = {
   saveSuccess: false,
   nameProject: '',
   loading: false,
+  idProject: undefined
 };
 
 export const shapeDiverSlice = createSlice({
@@ -178,6 +182,9 @@ export const shapeDiverSlice = createSlice({
     setDensityGeneral: (state, action: PayloadAction<number>) => {
       state.location!.densityGeneral = action.payload;
     },
+    setIdProject: (state, action: PayloadAction<string>) => {
+      state.idProject = action.payload;
+    },
   },
 });
 
@@ -204,7 +211,8 @@ export const {
   setCurrentProject,
   setNameProject,
   setLoadingStatus,
-  setDensityGeneral
+  setDensityGeneral,
+  setIdProject
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
@@ -247,8 +255,8 @@ export const deleteProjectById = (id: string, username: string): AppThunk => dis
     });
 };
 
-export const editProject = (project: Project): AppThunk => dispatch => {
-  post('/EditProjectById', { data: project }).then((data: AxiosResponse) => {
+export const editProject = (id: string, project: Project): AppThunk => dispatch => {
+  post(`/EditProjectById?id=${id}`, { data: project }).then((data: AxiosResponse) => {
     dispatch(setCurrentProject(data.data))
   });
 };
