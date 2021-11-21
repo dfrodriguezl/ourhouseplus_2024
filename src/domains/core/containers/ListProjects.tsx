@@ -1,5 +1,5 @@
 import { Fragment, useState, useEffect } from 'react';
-import { Grid, makeStyles, createStyles, IconButton, Typography, Button, Box, Link } from '@material-ui/core';
+import { Grid, makeStyles, createStyles, IconButton, Typography, Button, Box, Link, LinearProgress } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer, FullPageOverlay } from 'domains/core/containers';
 import { height_6, download_white, height_12, height_13, suburban } from 'assets';
@@ -111,6 +111,16 @@ const useStyles = makeStyles(() =>
     imgIcon: {
       height: '15px',
       marginLeft: 10,
+    },
+    linearProgress: {
+      height: '2px',
+      color: "#FFFDFD",
+      backgroundColor: '#707070'
+    },
+    textStatus: {
+      fontSize: 10,
+      color: 'white',
+      textAlign: 'center'
     }
   })
 );
@@ -151,151 +161,163 @@ export const ListProjects = (props: Props) => {
     }
   }
 
-    useEffect(() => {
-      if (user?.email) {
-        loadProjectsByUsername(user.email);
-      }
-    }, [loadProjectsByUsername, user])
+  useEffect(() => {
+    if (user?.email) {
+      loadProjectsByUsername(user.email);
+    }
+  }, [loadProjectsByUsername, user])
 
-    return (
-      <Fragment>
-        {
-          loading &&
-          <FullPageOverlay />
-        }
-        <PageContainer background="black-model">
-          <Grid container xs={12} className={classes.topPanel} >
-            <TopPanel />
-            <Grid item xs={12}>
-              <Typography className={classes.textProfile}>
-                Finish setting up your profile to create sharable links and pdf documents
-              </Typography>
-            </Grid>
-            <Grid item container xs={3} direction="column">
-              <Button
-                className={classes.becomeMember}
-                startIcon={<AddIcon />}>
-                Finish your profile
-              </Button>
-              <Button className={classes.compareButton}>
-                Compare your projects
-              </Button>
-              <Typography variant="h6" className={classes.subtitleProjects}>
-                Your projects
-              </Typography>
-            </Grid>
-            <Grid item container xs={12}>
-              <Grid item container xs={2} justify="center" alignItems="center">
-                <Grid item container xs={12} className={classes.backgroundNew} direction="column" justify="center" alignItems="center">
-                  <Box component="div" className={classes.AddBox} alignItems="center" justifyContent="center">
-                    <IconButton onClick={() => goToHome()}>
-                      <AddSharpIcon style={{ fontSize: 40 }} />
-                    </IconButton>
-                  </Box>
-                  <Typography variant="body2" className={classes.text}>
-                    Create new
-                  </Typography>
-                </Grid>
-                <Grid item container xs={12} className={classes.backgroundNew} direction="column" justify="center" alignItems="center">
-                  <Box component="div" className={classes.AddBoxRound} alignItems="center" justifyContent="center">
-                    <IconButton onClick={() => goToUploadShape()}>
-                      <CloudUpload style={{ fontSize: 40 }} />
-                    </IconButton>
-                  </Box>
-                  <Typography variant="body2" className={classes.text}>
-                    Upload your terrain shape
-                  </Typography>
-                  <br />
-                </Grid>
-              </Grid>
-
-              <Grid item xs={1}></Grid>
-              {projects.map((p, i) => {
-                const locationSaved: any = p?.location;
-                const densityGeneral = p?.location?.densityGeneral! ? p?.location?.densityGeneral! : p?.location?.density!;
-                const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
-
-                return (
-                  <Fragment key={i}>
-                    <Grid item container xs={2}>
-                      <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center">
-                        <Box component="div" alignItems="center" justifyContent="center">
-                          <IconButton onClick={() => goToProject(String(p.id))}>
-                            {
-                              locationSaved.densityGeneral === 0 ?
-                                <img alt={p.name} src={suburban} style={{ width: '90%', borderRadius: '50%' }} />
-                                : locationSaved[densityLocal] ?
-                                  locationSaved[densityLocal].maxPriFloors <= 6 ?
-                                    <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                    locationSaved[densityLocal].maxPriFloors <= 12 ?
-                                      <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                      <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                  p?.location.maxPriFloors <= 6 ?
-                                    <img alt={p.name} src={height_6} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                    p?.location.maxPriFloors <= 12 ?
-                                      <img alt={p.name} src={height_12} style={{ width: '90%', borderRadius: '50%' }} /> :
-                                      <img alt={p.name} src={height_13} style={{ width: '90%', borderRadius: '50%' }} />
-                            }
-
-                          </IconButton>
-                        </Box>
-                        <Typography variant="body2" className={classes.text}>
-                          {p.projectName}
-                        </Typography>
-                      </Grid>
-                      <Grid item className={classes.containerOptions}>
-                        <Link href="#">
-                          <Typography className={classes.optionsProject}>
-                            Edit
-                            <EditIcon className={classes.optionsIcon} />
-                          </Typography>
-
-                        </Link>
-                        <Link href="#" onMouseEnter={() => setHover(p.id)} onMouseLeave={() => setHover(0)}>
-                          <Typography className={classes.optionsProject}>
-                            {
-                              hover === p.id ?
-                                "Create and download pdf" :
-                                "Download pdf"
-                            }
-                            <img alt="download-pdf" src={download_white} className={classes.imgIcon} />
-                          </Typography>
-                        </Link>
-                        <div className={classes.optionsProject} onClick={() => deleteProjectById(p.id, user.email)}>
-                          Delete
-                          <DeleteIcon className={classes.optionsIcon} />
-                        </div>
-                      </Grid>
-                    </Grid>
-
-
-                    <Grid item xs={1}></Grid>
-                  </Fragment>
-
-                )
-              })}
-            </Grid>
-          </Grid>
-        </PageContainer>
-      </Fragment>
-    )
-  }
-
-  const container = compose<Props, {}>(
-    withRouter,
-    connect<StateProps, DispatchProps, {}, RootState>(
-      (state: RootState) => ({
-        loading: state.domains.shapediver.loading,
-        projects: state.domains.shapediver.projects
-      }),
+  return (
+    <Fragment>
       {
-        loadProjectsByUsername,
-        deleteProjectById
+        loading &&
+        <FullPageOverlay />
       }
-    )
-  )(ListProjects);
+      <PageContainer background="black-model">
+        <Grid container xs={12} className={classes.topPanel} >
+          <TopPanel />
+          <Grid item xs={12}>
+            <Typography className={classes.textProfile}>
+              Finish setting up your profile to create sharable links and pdf documents
+            </Typography>
+          </Grid>
+          <Grid item container xs={3} direction="column">
+            <Button
+              className={classes.becomeMember}
+              startIcon={<AddIcon />}>
+              Finish your profile
+            </Button>
+            <Button className={classes.compareButton}>
+              Compare your projects
+            </Button>
+            <Typography variant="h6" className={classes.subtitleProjects}>
+              Your projects
+            </Typography>
+          </Grid>
+          <Grid item container xs={12}>
+            <Grid item container xs={2} justify="center" alignItems="center">
+              <Grid item container xs={12} className={classes.backgroundNew} direction="column" justify="center" alignItems="center">
+                <Box component="div" className={classes.AddBox} alignItems="center" justifyContent="center">
+                  <IconButton onClick={() => goToHome()}>
+                    <AddSharpIcon style={{ fontSize: 40 }} />
+                  </IconButton>
+                </Box>
+                <Typography variant="body2" className={classes.text}>
+                  Create new
+                </Typography>
+              </Grid>
+              <Grid item container xs={12} className={classes.backgroundNew} direction="column" justify="center" alignItems="center">
+                <Box component="div" className={classes.AddBoxRound} alignItems="center" justifyContent="center">
+                  <IconButton onClick={() => goToUploadShape()}>
+                    <CloudUpload style={{ fontSize: 40 }} />
+                  </IconButton>
+                </Box>
+                <Typography variant="body2" className={classes.text}>
+                  Upload your terrain shape
+                </Typography>
+                <br />
+              </Grid>
+            </Grid>
 
-  export default container;
+            <Grid item xs={1}></Grid>
+            {projects.map((p, i) => {
+              const locationSaved: any = p?.location;
+              const densityGeneral = p?.location?.densityGeneral! ? p?.location?.densityGeneral! : p?.location?.density!;
+              const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
+
+              return (
+                <Fragment key={i}>
+                  <Grid item container xs={2}>
+                    <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center">
+                      <Box component="div" alignItems="center" justifyContent="center">
+                        <IconButton onClick={() => goToProject(String(p.id))}>
+                          {
+                            locationSaved.densityGeneral === 0 ?
+                              <img alt={p.name} src={suburban} style={{ width: '70%', borderRadius: '50%' }} />
+                              : locationSaved[densityLocal] ?
+                                locationSaved[densityLocal].maxPriFloors <= 6 ?
+                                  <img alt={p.name} src={height_6} style={{ width: '70%', borderRadius: '50%' }} /> :
+                                  locationSaved[densityLocal].maxPriFloors <= 12 ?
+                                    <img alt={p.name} src={height_12} style={{ width: '70%', borderRadius: '50%' }} /> :
+                                    <img alt={p.name} src={height_13} style={{ width: '70%', borderRadius: '50%' }} /> :
+                                p?.location.maxPriFloors <= 6 ?
+                                  <img alt={p.name} src={height_6} style={{ width: '70%', borderRadius: '50%' }} /> :
+                                  p?.location.maxPriFloors <= 12 ?
+                                    <img alt={p.name} src={height_12} style={{ width: '70%', borderRadius: '50%' }} /> :
+                                    <img alt={p.name} src={height_13} style={{ width: '70%', borderRadius: '50%' }} />
+                          }
+
+                        </IconButton>
+                      </Box>
+                      <Typography variant="body2" className={classes.text}>
+                        {p.projectName}
+                      </Typography>
+                      <br />
+                      <Box style={{ width: '60%' }}>
+                        <Typography variant="body2" className={classes.textStatus}>
+                          {!p.area && p.pathTerrain ?
+                            "terrain" :
+                            !p.pathTerrain && p.area ?
+                              "project" :
+                              "published"
+                          }
+                        </Typography>
+                        <LinearProgress variant="determinate" value={!p.area && p.pathTerrain ? 33 : !p.pathTerrain && p.area ? 67 : 100} className={classes.linearProgress} />
+                      </Box>
+                    </Grid>
+                    <Grid item className={classes.containerOptions}>
+                      <Link href="#">
+                        <Typography className={classes.optionsProject}>
+                          Edit
+                          <EditIcon className={classes.optionsIcon} />
+                        </Typography>
+
+                      </Link>
+                      <Link href="#" onMouseEnter={() => setHover(p.id)} onMouseLeave={() => setHover(0)}>
+                        <Typography className={classes.optionsProject}>
+                          {
+                            hover === p.id ?
+                              "Create and download pdf" :
+                              "Download pdf"
+                          }
+                          <img alt="download-pdf" src={download_white} className={classes.imgIcon} />
+                        </Typography>
+                      </Link>
+                      <div className={classes.optionsProject} onClick={() => deleteProjectById(p.id, user.email)}>
+                        Delete
+                        <DeleteIcon className={classes.optionsIcon} />
+                      </div>
+                    </Grid>
+                  </Grid>
+
+
+                  <Grid item xs={1}></Grid>
+                </Fragment>
+
+              )
+            })}
+          </Grid>
+        </Grid>
+      </PageContainer>
+    </Fragment>
+  )
+}
+
+const container = compose<Props, {}>(
+  withRouter,
+  connect<StateProps, DispatchProps, {}, RootState>(
+    (state: RootState) => ({
+      loading: state.domains.shapediver.loading,
+      projects: state.domains.shapediver.projects
+    }),
+    {
+      loadProjectsByUsername,
+      deleteProjectById
+    }
+  )
+)(ListProjects);
+
+export default container;
 
 
 
