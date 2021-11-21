@@ -1,17 +1,21 @@
-import { Grid, makeStyles, createStyles, Typography, IconButton, Divider, Input, Button } from "@material-ui/core";
+import { Grid, makeStyles, createStyles, Typography, IconButton, Divider, Input, Button, Snackbar, SnackbarContent, Theme } from "@material-ui/core";
 import { ArrowBackIos, CloudUpload, Add, Close } from "@material-ui/icons";
 import { PageContainer } from ".";
 import { LocationMenu, UrbanismMenu } from "../components";
 import { Densities, Density, Location, LocationSimple, Terrain } from "../models";
 import { getLocations, saveTerrain } from 'domains/core/coreSlice';
 import { Fragment, useEffect, useRef, useState } from "react";
-import { withRouter } from "react-router";
+import { RouteComponentProps, withRouter } from "react-router";
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RootState } from "app/store";
 import _ from 'lodash';
+import { useAuth0 } from '@auth0/auth0-react';
+import { saveProject } from "domains/shapeDiver/slice";
+import { Project } from "domains/shapeDiver/models";
+import JSZip from "jszip";
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     title: {
       color: 'white',
@@ -103,6 +107,10 @@ const useStyles = makeStyles(() =>
       borderLeft: '0.5px solid #ffffff33',
       paddingLeft: 30,
       paddingRight: 30
+    },
+    root: {
+      background: theme.palette.common.white,
+      color: theme.palette.common.black,
     }
   })
 );
@@ -114,22 +122,34 @@ interface StateProps {
 interface DispatchProps {
   getLocations: typeof getLocations;
   saveTerrain: typeof saveTerrain;
+  saveProject: typeof saveProject;
 }
 
-type Props = StateProps & DispatchProps;
+type Props = StateProps & DispatchProps & RouteComponentProps;
 const TerrainContainer = (props: Props) => {
   const classes = useStyles();
-  const { getLocations, locations, saveTerrain } = props;
+  const { getLocations, locations, saveTerrain, history, saveProject } = props;
   const [location, setLocation] = useState<Location>();
   const [density, setDensity] = useState<Density>();
   const fileInput = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<any>(null);
   const [terrain, setTerrain] = useState<Terrain>();
   const [locationSimple, setLocationSimple] = useState<LocationSimple>();
+  const { user } = useAuth0();
+  const [nameProject, setNameProject] = useState<string>("");
+  const [userName, setUserName] = useState<string>(user ? user.name : "");
+  const [project, setProject] = useState<Project>();
+  const [open, setOpen] = useState(false);
+  const [selectedFileCompress, setSelectedFileCompress] = useState<any>(null);
 
   useEffect(() => {
     getLocations();
   }, [getLocations])
+
+  if (!user) {
+    history.push('/home');
+    return (<Fragment />);
+  }
 
   const updateLocation = (value: string) => {
     const loc = _.find(locations, x => x.city === value);
@@ -143,15 +163,18 @@ const TerrainContainer = (props: Props) => {
   const updateDensity = (value: string) => {
     const den = _.find(Densities, x => x.label === value);
     setDensity(den);
-
+    
     const densityLocal = den?.value === 0 ? "suburban" : "urban";
 
-    setTerrain({
-      ...terrain,
+    setProject({
+      projectName: nameProject,
+      email: user.email,
+      pathTerrain: selectedFileCompress,
+      area: undefined,
       location: {
         id: location?.id!,
         city: location?.city!,
-        densityGeneral: location?.density!,
+        densityGeneral: den?.value!,
         description: location?.description!,
         maxPriFloors: location![densityLocal].maxPriFloors,
         maxSecFloors: location![densityLocal].maxSecFloors,
@@ -174,8 +197,44 @@ const TerrainContainer = (props: Props) => {
         floorsAlignment: location![densityLocal].floorsAlignment,
         unitsOrganization: location![densityLocal].unitsOrganization
       },
-      densityGeneral: den?.value
-    })
+      terrain: undefined,
+      facadeDirection: undefined,
+      roomType: undefined,
+      floorSelection: undefined,
+      modelData: undefined
+    }
+    )
+
+    // setTerrain({
+    //   ...terrain,
+    //   location: {
+    //     id: location?.id!,
+    //     city: location?.city!,
+    //     densityGeneral: location?.density!,
+    //     description: location?.description!,
+    //     maxPriFloors: location![densityLocal].maxPriFloors,
+    //     maxSecFloors: location![densityLocal].maxSecFloors,
+    //     streetFloors: location![densityLocal].streetFloors,
+    //     windowPercentage: location![densityLocal].windowPercentage,
+    //     unitsNumberType: location![densityLocal].unitsNumberType,
+    //     density: location![densityLocal].density,
+    //     flatSize: location![densityLocal].flatSize,
+    //     flatType: location![densityLocal].flatType,
+    //     regen: location![densityLocal].regen,
+    //     lat: location![densityLocal].lat,
+    //     lon: location![densityLocal].lon,
+    //     p_vivs: location![densityLocal].p_vivs,
+    //     axisSelection: location![densityLocal].axisSelection,
+    //     typologies: location![densityLocal].typologies,
+    //     emptySpaceSelection: location![densityLocal].emptySpaceSelection,
+    //     undefinedTower: location![densityLocal].undefinedTower,
+    //     streetDensity: location![densityLocal].streetDensity,
+    //     islandSpacings: location![densityLocal].islandSpacings,
+    //     floorsAlignment: location![densityLocal].floorsAlignment,
+    //     unitsOrganization: location![densityLocal].unitsOrganization
+    //   },
+    //   densityGeneral: den?.value
+    // })
 
   }
 
@@ -184,13 +243,37 @@ const TerrainContainer = (props: Props) => {
   }
 
   const uploadDXF = (event: any) => {
-    setSelectedFile(event.target.files[0]);
-    setTerrain(
-      {
-        ...terrain,
-        path: event.target.files[0].name
+    
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    setSelectedFile(file);
+
+    reader.onload = async function (evt: any){
+      if(evt.target.readyState !== 2) return;
+
+      if(evt.target.error){
+        alert("Error while reading file");
+        return;
       }
-    )
+
+      const jsZip = new JSZip();
+      const fileContent = evt.target.result;
+      const zip = await jsZip.file(fileContent.path,fileContent).generateAsync({
+        type: 'string',
+        compression: 'DEFLATE'
+      })
+
+      setSelectedFileCompress(zip);
+      
+    }
+
+    reader.readAsArrayBuffer(file);
+    // setProject(
+    //   {
+    //     ...project,
+    //     pathTerrain: event.target.files[0].name
+    //   }
+    // )
   }
 
   const handleClose = () => {
@@ -198,7 +281,12 @@ const TerrainContainer = (props: Props) => {
   }
 
   const saveTerrainForm = () => {
-    saveTerrain(terrain!)
+    saveProject(project!)
+    setOpen(true)
+  }
+
+  const handleCloseSnackbar = () => {
+    setOpen(false)
   }
 
   return (
@@ -272,13 +360,13 @@ const TerrainContainer = (props: Props) => {
               <Typography className={classes.containerWhiteTextSmall}>Terrain name</Typography>
             </Grid>
             <Grid xs={12}>
-              <Input style={{ height: '60px', width: '100%' }} onChange={(e) => {setTerrain({...terrain, name: e.target.value})}}/>
+              <Input style={{ height: '60px', width: '100%' }} onChange={(e) => { setNameProject(e.target.value) }} />
             </Grid>
             <Grid xs={12}>
               <Typography className={classes.containerWhiteTextSmall}>Terrain owner</Typography>
             </Grid>
             <Grid xs={12}>
-              <Input style={{ height: '60px', width: '100%' }} onChange={(e) => {setTerrain({...terrain, owner: e.target.value})}}/>
+              <Input style={{ height: '60px', width: '100%' }} value={userName} />
             </Grid>
             <Grid xs={12} container justify="center" className={classes.searchBox}>
               <Grid item container direction="column" xs={5} justify="center" >
@@ -305,7 +393,7 @@ const TerrainContainer = (props: Props) => {
                 size="large"
                 className={classes.button}
                 onClick={() => saveTerrainForm()}
-                disabled={!terrain?.name || !terrain.owner || !selectedFile || !terrain.location || !density} 
+                disabled={!nameProject || !userName || !selectedFile || !project?.location || !density}
               >
                 Save
               </Button>
@@ -314,6 +402,27 @@ const TerrainContainer = (props: Props) => {
           </Grid>
         </Grid>
       </Grid>
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+      >
+        <SnackbarContent
+          message="Your terrain has been saved"
+          className={classes.root}
+          action={
+            <Fragment>
+              <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar} style={{ color: 'black' }}>
+                <Close fontSize="small" />
+              </IconButton>
+            </Fragment>
+          } />
+
+      </Snackbar>
     </PageContainer>)
 }
 
@@ -325,7 +434,8 @@ const container = compose<Props, {}>(
     }),
     {
       getLocations,
-      saveTerrain
+      saveTerrain,
+      saveProject
     }
   )
 )(TerrainContainer);

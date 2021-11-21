@@ -140,14 +140,15 @@ export interface ModelData {
 export interface Project extends ProjectData {
   projectName: string;
   email: string;
+  pathTerrain: any | undefined;
 }
 
 export interface ProjectData {
-  area: number;
+  area: number | undefined;
   location: LocationSimple;
-  terrain: number;
-  facadeDirection: number;
-  roomType: number;
-  floorSelection: number;
-  modelData: ModelData;
+  terrain: number | undefined;
+  facadeDirection: number | undefined;
+  roomType: number | undefined;
+  floorSelection: number | undefined;
+  modelData: ModelData | undefined;
 }
