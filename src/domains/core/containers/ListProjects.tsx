@@ -92,7 +92,6 @@ const useStyles = makeStyles(() =>
     },
     backgroundProject: {
       background: '#FFFFFF1A 0% 0% no-repeat padding-box',
-      height: '30vh',
       width: '100%',
       marginTop: 10,
       display: 'flex',
@@ -119,7 +118,8 @@ const useStyles = makeStyles(() =>
     linearProgress: {
       height: '2px',
       color: "#FFFDFD",
-      backgroundColor: '#707070'
+      backgroundColor: '#707070',
+      marginBottom: 30
     },
     textStatus: {
       fontSize: 10,
@@ -178,11 +178,11 @@ export const ListProjects = (props: Props) => {
     return den;
   }
 
-  const gotTo3DView = (id:string, project: Project) => {
+  const gotTo3DView = (id: string, project: Project) => {
     const locationSaved: any = project?.location;
     const densityGeneral = project?.location?.densityGeneral !== undefined ? project?.location?.densityGeneral! : project?.location?.density!;
     const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
-    
+
     if (isAuthenticated && user) {
 
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
@@ -336,12 +336,11 @@ export const ListProjects = (props: Props) => {
                       </Box>
                     </Grid>
                     <Grid item className={classes.containerOptions}>
-                      <Link onClick={() => gotTo3DView(p.id,p)}>
+                      <Link onClick={() => gotTo3DView(p.id, p)}>
                         <Typography className={classes.optionsProject}>
                           Edit
                           <EditIcon className={classes.optionsIcon} />
                         </Typography>
-
                       </Link>
                       <Link href="#" onMouseEnter={() => setHover(p.id)} onMouseLeave={() => setHover(0)}>
                         <Typography className={classes.optionsProject}>
@@ -359,11 +358,8 @@ export const ListProjects = (props: Props) => {
                       </div>
                     </Grid>
                   </Grid>
-
-
                   <Grid item xs={1}></Grid>
                 </Fragment>
-
               )
             })}
           </Grid>
