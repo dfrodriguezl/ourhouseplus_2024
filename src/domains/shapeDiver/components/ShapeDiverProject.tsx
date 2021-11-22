@@ -123,9 +123,10 @@ const ShapeDiverProject = (props: Props) => {
             <IconButton onClick={editModelHandler} disabled={projectName === ''}>
               <img className={classes.buttons} src={save} alt="50" />
             </IconButton> :
-            <IconButton onClick={saveModelHandler} >
-              <img className={classes.buttons} src={save} alt="50" />
-            </IconButton>
+            option === "save" ?
+              <IconButton onClick={saveModelHandler} >
+                <img className={classes.buttons} src={save} alt="50" />
+              </IconButton> : null
           }
         </Grid>
       </Grid>

@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteProjectById, loadProjectsByUsername, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject } from 'domains/shapeDiver/slice';
+import { deleteProjectById, loadProjectsByUsername, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setImportModel, setTerrain } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -18,6 +18,7 @@ import { Project } from 'domains/shapeDiver/models';
 import { Densities, Density } from 'domains/core/models';
 import _ from 'lodash';
 import { setOption } from '../coreSlice';
+import JSZip from 'jszip';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -96,7 +97,8 @@ const useStyles = makeStyles(() =>
       marginTop: 10,
       display: 'flex',
       '&:hover': {
-        backgroundColor: '#FFFFFF33'
+        backgroundColor: '#FFFFFF33',
+        cursor: 'pointer'
       }
     },
     optionsProject: {
@@ -144,12 +146,14 @@ interface DispatchProps {
   setDensityGeneral: typeof setDensityGeneral;
   setIdProject: typeof setIdProject;
   setOption: typeof setOption;
+  setImportModel: typeof setImportModel;
+  setTerrain: typeof setTerrain;
 }
 
 type Props = RouteComponentProps & StateProps & DispatchProps;
 export const ListProjects = (props: Props) => {
   const { loadProjectsByUsername, deleteProjectById, history, projects, loading, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject,
-    setOption } = props;
+    setOption, setImportModel, setTerrain } = props;
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const classes = useStyles();
   const [hover, setHover] = useState(0);
@@ -216,7 +220,7 @@ export const ListProjects = (props: Props) => {
               unitsOrganization: locationSaved![densityLocal].unitsOrganization,
             } :
             project?.location,
-          area: project?.area!,
+          area: !project.area && project.pathTerrain ? 5 : !project.pathTerrain && project.area ? project?.area! : 0,
           density: getDensityType(densityGeneral)!
         });
         setDensityGeneral(densityGeneral);
@@ -224,6 +228,13 @@ export const ListProjects = (props: Props) => {
         setNameProject(project?.projectName!)
         setIdProject(id);
         setOption("edit");
+        console.log("PROJECT", project)
+        if (!project.area && project.pathTerrain) {
+          unzipFile(project.pathTerrain, id);
+        } else {
+          window.importFile = undefined;
+          setImportModel('')
+        }
         history.push('/models/step1');
       }
     } else {
@@ -231,11 +242,23 @@ export const ListProjects = (props: Props) => {
     }
   }
 
+  async function unzipFile(zip: any,id: string) {
+    const jsDecodeZip = new JSZip();
+    const unzipped = await jsDecodeZip.loadAsync(zip);
+    const content = await unzipped.file(unzipped.files['undefined'].name)?.async("blob").then(function (fileData) {
+      return new File([fileData], id + '.dxf')
+    })
+    window.importFile = content;
+    setImportModel(id + '.dxf');
+    setTerrain(2);
+  }
+
   useEffect(() => {
     if (user?.email) {
       loadProjectsByUsername(user.email);
+      setTerrain(1)
     }
-  }, [loadProjectsByUsername, user])
+  }, [loadProjectsByUsername, user, setTerrain])
 
   return (
     <Fragment>
@@ -298,9 +321,15 @@ export const ListProjects = (props: Props) => {
               return (
                 <Fragment key={i}>
                   <Grid item container xs={2}>
-                    <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center">
+                    <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center"
+                      onClick={() =>
+                        !p.area && p.pathTerrain ?
+                          gotTo3DView(p.id, p) :
+                          !p.pathTerrain && p.area ?
+                            goToProject(String(p.id)) : null
+                      }>
                       <Box component="div" alignItems="center" justifyContent="center">
-                        <IconButton onClick={() => goToProject(String(p.id))}>
+                        <IconButton>
                           {
                             locationSaved.densityGeneral === 0 ?
                               <img alt={p.name} src={suburban} style={{ width: '70%', borderRadius: '50%' }} />
@@ -384,7 +413,9 @@ const container = compose<Props, {}>(
       setNameProject,
       setDensityGeneral,
       setIdProject,
-      setOption
+      setOption,
+      setImportModel,
+      setTerrain
     }
   )
 )(ListProjects);

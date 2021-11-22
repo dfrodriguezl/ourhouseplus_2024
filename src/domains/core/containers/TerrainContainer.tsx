@@ -2,8 +2,8 @@ import { Grid, makeStyles, createStyles, Typography, IconButton, Divider, Input,
 import { ArrowBackIos, CloudUpload, Add, Close } from "@material-ui/icons";
 import { PageContainer } from ".";
 import { LocationMenu, UrbanismMenu } from "../components";
-import { Densities, Density, Location, LocationSimple, Terrain } from "../models";
-import { getLocations, saveTerrain } from 'domains/core/coreSlice';
+import { Densities, Density, Location } from "../models";
+import { getLocations } from 'domains/core/coreSlice';
 import { Fragment, useEffect, useRef, useState } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { compose } from 'recompose';
@@ -121,20 +121,17 @@ interface StateProps {
 
 interface DispatchProps {
   getLocations: typeof getLocations;
-  saveTerrain: typeof saveTerrain;
   saveProject: typeof saveProject;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 const TerrainContainer = (props: Props) => {
   const classes = useStyles();
-  const { getLocations, locations, saveTerrain, history, saveProject } = props;
+  const { getLocations, locations, history, saveProject } = props;
   const [location, setLocation] = useState<Location>();
   const [density, setDensity] = useState<Density>();
   const fileInput = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<any>(null);
-  const [terrain, setTerrain] = useState<Terrain>();
-  const [locationSimple, setLocationSimple] = useState<LocationSimple>();
   const { user } = useAuth0();
   const [nameProject, setNameProject] = useState<string>("");
   const [userName, setUserName] = useState<string>(user ? user.name : "");
@@ -204,37 +201,6 @@ const TerrainContainer = (props: Props) => {
       modelData: undefined
     }
     )
-
-    // setTerrain({
-    //   ...terrain,
-    //   location: {
-    //     id: location?.id!,
-    //     city: location?.city!,
-    //     densityGeneral: location?.density!,
-    //     description: location?.description!,
-    //     maxPriFloors: location![densityLocal].maxPriFloors,
-    //     maxSecFloors: location![densityLocal].maxSecFloors,
-    //     streetFloors: location![densityLocal].streetFloors,
-    //     windowPercentage: location![densityLocal].windowPercentage,
-    //     unitsNumberType: location![densityLocal].unitsNumberType,
-    //     density: location![densityLocal].density,
-    //     flatSize: location![densityLocal].flatSize,
-    //     flatType: location![densityLocal].flatType,
-    //     regen: location![densityLocal].regen,
-    //     lat: location![densityLocal].lat,
-    //     lon: location![densityLocal].lon,
-    //     p_vivs: location![densityLocal].p_vivs,
-    //     axisSelection: location![densityLocal].axisSelection,
-    //     typologies: location![densityLocal].typologies,
-    //     emptySpaceSelection: location![densityLocal].emptySpaceSelection,
-    //     undefinedTower: location![densityLocal].undefinedTower,
-    //     streetDensity: location![densityLocal].streetDensity,
-    //     islandSpacings: location![densityLocal].islandSpacings,
-    //     floorsAlignment: location![densityLocal].floorsAlignment,
-    //     unitsOrganization: location![densityLocal].unitsOrganization
-    //   },
-    //   densityGeneral: den?.value
-    // })
 
   }
 
@@ -434,7 +400,6 @@ const container = compose<Props, {}>(
     }),
     {
       getLocations,
-      saveTerrain,
       saveProject
     }
   )

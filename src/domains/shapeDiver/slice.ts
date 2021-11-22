@@ -8,7 +8,7 @@ import { AxiosResponse } from 'axios';
 export interface ShapeDiverState {
   area: number;
   location: LocationSimple | undefined;
-  terrain: number;
+  terrain: number | undefined;
   options: ShapeDiverOptions | undefined;
   facadeDirection: number;
   roomType: number;
@@ -102,7 +102,7 @@ export const shapeDiverSlice = createSlice({
       state.location = action.payload.location;
       state.densityGeneral = action.payload.density.type;
     },
-    setTerrain: (state, action: PayloadAction<number>) => {
+    setTerrain: (state, action: PayloadAction<number | undefined>) => {
       state.terrain = action.payload;
     },
     setDensity: (state, action: PayloadAction<number>) => {

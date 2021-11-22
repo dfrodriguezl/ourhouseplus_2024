@@ -54,7 +54,7 @@ const styles = makeStyles((theme) => ({
 
 interface StateProps {
   area: number;
-  terrain: number;
+  terrain: number | undefined;
   options: ShapeDiverOptions | undefined;
   location: LocationSimple | undefined;
   expandAdvanced: Object;

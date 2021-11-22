@@ -19,7 +19,7 @@ const styles = {
 
 
 interface StateProps {
-  terrain: number;
+  terrain: number | undefined;
   area: number | undefined;
   location: LocationSimple | undefined;
   importModel: string;
@@ -309,7 +309,7 @@ const container = compose<Props, {}>(
     }),
     {
       setOptions,
-      setModelData,
+      setModelData
     }
   )
 )(ShapeDiverWrapperStep1)

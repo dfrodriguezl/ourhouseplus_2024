@@ -16,6 +16,7 @@ import { Densities, Density } from 'domains/core/models';
 import { useAuth0 } from '@auth0/auth0-react';
 import _ from 'lodash';
 import WhitePill from 'domains/common/components/WhitePill';
+import { setOption } from '../coreSlice';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -116,11 +117,12 @@ interface DispatchProps {
   setSaveSuccess: typeof setSaveSuccess;
   setNameProject: typeof setNameProject;
   setDensityGeneral: typeof setDensityGeneral;
+  setOption: typeof setOption;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps<RouteProps>;
 const DetailsSummary = (props: Props) => {
-  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject, setDensityGeneral } = props;
+  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject, setDensityGeneral, setOption } = props;
   const classes = useStyles();
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
   const locationSaved: any = currentProject?.location;
@@ -177,6 +179,7 @@ const DetailsSummary = (props: Props) => {
         setDensityGeneral(densityGeneral);
         setSaveSuccess(true)
         setNameProject(currentProject?.projectName!)
+        setOption("");
         history.push('/models/step1');
       }
     } else {
@@ -405,7 +408,8 @@ const container = compose<Props, {}>(
       setInitialParams,
       setSaveSuccess,
       setNameProject,
-      setDensityGeneral
+      setDensityGeneral,
+      setOption
     }
   )
 )(DetailsSummary)
