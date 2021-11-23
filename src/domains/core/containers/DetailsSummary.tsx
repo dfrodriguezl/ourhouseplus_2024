@@ -6,7 +6,7 @@ import { MapGeo, ToolbarDetailsProject, TopPanel } from 'domains/core/components
 import { height_6, height_12, height_13, suburban } from 'assets';
 import clsx from 'clsx';
 import { GeneralParameters } from 'domains/common/components';
-import { loadProjectById, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral } from 'domains/shapeDiver/slice';
+import { loadProjectById, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setImportModel, setTerrain } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { Project } from 'domains/shapeDiver/models';
@@ -17,6 +17,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import _ from 'lodash';
 import WhitePill from 'domains/common/components/WhitePill';
 import { setOption } from '../coreSlice';
+import JSZip from 'jszip';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -118,6 +119,8 @@ interface DispatchProps {
   setNameProject: typeof setNameProject;
   setDensityGeneral: typeof setDensityGeneral;
   setOption: typeof setOption;
+  setImportModel: typeof setImportModel;
+  setTerrain: typeof setTerrain;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps<RouteProps>;
@@ -131,7 +134,7 @@ const DetailsSummary = (props: Props) => {
 
   useEffect(() => {
     loadProjectById(params.id);
-  }, [loadProjectById, params])
+  }, [loadProjectById, params ])
 
   const getDensityType = (value: number) => {
     const den = _.find(Densities, (x: Density) => x.value === value);
@@ -180,11 +183,30 @@ const DetailsSummary = (props: Props) => {
         setSaveSuccess(true)
         setNameProject(currentProject?.projectName!)
         setOption("");
+        setTerrain(currentProject?.terrain);
+
+        if (currentProject?.pathTerrain) {
+          unzipFile(currentProject?.pathTerrain, params.id);
+        } else {
+          window.importFile = undefined;
+          setImportModel('')
+        }
+
         history.push('/models/step1');
       }
     } else {
       loginWithRedirect();
     }
+  }
+
+  async function unzipFile(zip: any,id: string) {
+    const jsDecodeZip = new JSZip();
+    const unzipped = await jsDecodeZip.loadAsync(zip);
+    const content = await unzipped.file(unzipped.files['undefined'].name)?.async("blob").then(function (fileData) {
+      return new File([fileData], id + '.dxf')
+    })
+    window.importFile = content;
+    setImportModel(id + '.dxf');
   }
 
   return (
@@ -221,7 +243,7 @@ const DetailsSummary = (props: Props) => {
               </Typography>
               <Box className={clsx(classes.whiteText, true && classes.containerMiddle, true)}>
                 <Typography variant="body2">
-                  Site area (ha) <span className={classes.numberResult}> {currentProject?.area} </span>
+                  Site area (ha) <span className={classes.numberResult}> {currentProject?.area === 0 ? currentProject?.modelData?.totalLandArea!/10000 : currentProject?.area} </span>
                 </Typography>
                 <Divider className={classes.divider} />
                 <Typography variant="body2">
@@ -409,7 +431,9 @@ const container = compose<Props, {}>(
       setSaveSuccess,
       setNameProject,
       setDensityGeneral,
-      setOption
+      setOption,
+      setImportModel,
+      setTerrain
     }
   )
 )(DetailsSummary)

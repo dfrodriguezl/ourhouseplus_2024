@@ -76,7 +76,7 @@ export const DetailsProjects = (props: Props) => {
       <PageContainer background="black-model">
         <Grid container xs={12} className={classes.topPanel} >
           <TopPanel />
-          <ToolbarDetailsProject currentProject={currentProject!} id={params.id}/>
+          <ToolbarDetailsProject currentProject={currentProject!} id={params.id} />
           <GeneralParameters project={currentProject} />
           <ContainerWhite img={img_basic_volume} modelData={currentProject?.modelData}></ContainerWhite>
           <DwellingsContainer img={img_facade} modelData={currentProject?.modelData}></DwellingsContainer>

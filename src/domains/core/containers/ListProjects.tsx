@@ -220,7 +220,7 @@ export const ListProjects = (props: Props) => {
               unitsOrganization: locationSaved![densityLocal].unitsOrganization,
             } :
             project?.location,
-          area: !project.area && project.pathTerrain ? 5 : !project.pathTerrain && project.area ? project?.area! : 0,
+          area: project.area === 0 && project.pathTerrain && !project.modelData ? 1 : !project.area && project.modelData?.totalLandArea ? project.modelData?.totalLandArea : project?.area!,
           density: getDensityType(densityGeneral)!
         });
         setDensityGeneral(densityGeneral);
@@ -228,7 +228,8 @@ export const ListProjects = (props: Props) => {
         setNameProject(project?.projectName!)
         setIdProject(id);
         setOption("edit");
-        console.log("PROJECT", project)
+        setTerrain(project?.terrain);
+        
         if (!project.area && project.pathTerrain) {
           unzipFile(project.pathTerrain, id);
         } else {
@@ -250,15 +251,13 @@ export const ListProjects = (props: Props) => {
     })
     window.importFile = content;
     setImportModel(id + '.dxf');
-    setTerrain(2);
   }
 
   useEffect(() => {
     if (user?.email) {
       loadProjectsByUsername(user.email);
-      setTerrain(1)
     }
-  }, [loadProjectsByUsername, user, setTerrain])
+  }, [loadProjectsByUsername, user])
 
   return (
     <Fragment>
@@ -323,9 +322,9 @@ export const ListProjects = (props: Props) => {
                   <Grid item container xs={2}>
                     <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center"
                       onClick={() =>
-                        !p.area && p.pathTerrain ?
+                        p.area === 0 && p.pathTerrain && !p.modelData?
                           gotTo3DView(p.id, p) :
-                          !p.pathTerrain && p.area ?
+                          p.modelData ?
                             goToProject(String(p.id)) : null
                       }>
                       <Box component="div" alignItems="center" justifyContent="center">
@@ -354,14 +353,14 @@ export const ListProjects = (props: Props) => {
                       <br />
                       <Box style={{ width: '60%' }}>
                         <Typography variant="body2" className={classes.textStatus}>
-                          {!p.area && p.pathTerrain ?
+                          {p.area === 0 && p.pathTerrain && !p.modelData ?
                             "terrain" :
-                            !p.pathTerrain && p.area ?
+                            p.modelData ?
                               "project" :
                               "published"
                           }
                         </Typography>
-                        <LinearProgress variant="determinate" value={!p.area && p.pathTerrain ? 33 : !p.pathTerrain && p.area ? 67 : 100} className={classes.linearProgress} />
+                        <LinearProgress variant="determinate" value={p.area === 0 && p.pathTerrain && !p.modelData ? 33 : p.modelData ? 67 : 100} className={classes.linearProgress} />
                       </Box>
                     </Grid>
                     <Grid item className={classes.containerOptions}>

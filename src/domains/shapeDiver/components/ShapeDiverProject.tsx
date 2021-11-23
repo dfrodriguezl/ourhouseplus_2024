@@ -74,86 +74,87 @@ const ShapeDiverProject = (props: Props) => {
     editProject(idProject!, {
       projectName: projectName,
       email: user.email,
-      ...projectData
+      ...projectData! 
     });
-    setOpen(true)
-    setNameProject(projectName)
-  }
 
-  const handleClose = () => {
-    setOpen(false)
-  }
+  setOpen(true)
+  setNameProject(projectName)
+}
 
-  return (
-    <Fragment>
+const handleClose = () => {
+  setOpen(false)
+}
 
-      <Grid container xs={12} direction="row" className={classes.container}>
-        <Grid item xs={8}>
-          <div>Project name</div>
-          {saveSuccess ?
+return (
+  <Fragment>
+
+    <Grid container xs={12} direction="row" className={classes.container}>
+      <Grid item xs={8}>
+        <div>Project name</div>
+        {saveSuccess ?
+          <input
+            type="text"
+            placeholder="Project 1"
+            className={classes.fieldInput}
+            defaultValue={nameProject}
+            onChange={(e) => setProjectName(e.target.value)}
+            disabled
+          /> :
+          nameProject ?
             <input
               type="text"
               placeholder="Project 1"
               className={classes.fieldInput}
               defaultValue={nameProject}
               onChange={(e) => setProjectName(e.target.value)}
-              disabled
-            /> :
-            nameProject ?
-              <input
-                type="text"
-                placeholder="Project 1"
-                className={classes.fieldInput}
-                defaultValue={nameProject}
-                onChange={(e) => setProjectName(e.target.value)}
-              />
-              :
-              <input
-                type="text"
-                placeholder="Project 1"
-                className={classes.fieldInput}
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
-              />
-          }
+            />
+            :
+            <input
+              type="text"
+              placeholder="Project 1"
+              className={classes.fieldInput}
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+            />
+        }
 
-        </Grid>
-        <Grid item xs={2}>
-          {option === "edit" ?
-            <IconButton onClick={editModelHandler} disabled={projectName === ''}>
-              <img className={classes.buttons} src={save} alt="50" />
-            </IconButton> :
-            option === "save" ?
-              <IconButton onClick={saveModelHandler} >
-                <img className={classes.buttons} src={save} alt="50" />
-              </IconButton> : null
-          }
-        </Grid>
       </Grid>
-      <Divider orientation="horizontal" variant="middle" ></Divider>
-      <Snackbar
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'center',
-        }}
-        open={open}
-        autoHideDuration={3000}
-        onClose={() => setOpen(false)}
-      >
-        <SnackbarContent
-          message={!saveSuccess ? "Your project has been updated" : "Your project has been saved"}
-          className={classes.root}
-          action={
-            <Fragment>
-              <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose} style={{ color: 'black' }}>
-                <CloseIcon fontSize="small" />
-              </IconButton>
-            </Fragment>
-          } />
+      <Grid item xs={2}>
+        {option === "edit" ?
+          <IconButton onClick={editModelHandler} disabled={projectName === ''}>
+            <img className={classes.buttons} src={save} alt="50" />
+          </IconButton> :
+          option === "save" ?
+            <IconButton onClick={saveModelHandler} >
+              <img className={classes.buttons} src={save} alt="50" />
+            </IconButton> : null
+        }
+      </Grid>
+    </Grid>
+    <Divider orientation="horizontal" variant="middle" ></Divider>
+    <Snackbar
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      open={open}
+      autoHideDuration={3000}
+      onClose={() => setOpen(false)}
+    >
+      <SnackbarContent
+        message={!saveSuccess ? "Your project has been updated" : "Your project has been saved"}
+        className={classes.root}
+        action={
+          <Fragment>
+            <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose} style={{ color: 'black' }}>
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </Fragment>
+        } />
 
-      </Snackbar>
-    </Fragment>
-  );
+    </Snackbar>
+  </Fragment>
+);
 }
 
 const container = compose<Props, {}>(

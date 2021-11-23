@@ -9,10 +9,11 @@ import { compose } from 'recompose';
 import _ from 'lodash';
 import { Densities, Density } from 'domains/core/models';
 import { useAuth0 } from '@auth0/auth0-react';
-import { setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setImportModel } from 'domains/shapeDiver/slice';
+import { setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setImportModel, setTerrain } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { setOption } from '../coreSlice';
+import JSZip from 'jszip';
 
 const styles = makeStyles(() => ({
   nameProject: {
@@ -58,12 +59,13 @@ interface DispatchProps {
   setIdProject: typeof setIdProject;
   setOption: typeof setOption;
   setImportModel: typeof setImportModel;
+  setTerrain: typeof setTerrain;
 }
 
 
 type Props = OwnProps & DispatchProps;
 const ToolbarDetailsProject = (props: Props) => {
-  const { id, currentProject, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setOption, setImportModel } = props;
+  const { id, currentProject, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setOption, setImportModel, setTerrain } = props;
   const classes = styles();
   const history = useHistory();
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
@@ -123,13 +125,30 @@ const ToolbarDetailsProject = (props: Props) => {
         setNameProject(project?.projectName!)
         setIdProject(id);
         setOption("edit");
-        window.importFile = undefined;
-        setImportModel('')
+        setTerrain(project?.terrain);
+
+        if (project.pathTerrain) {
+          unzipFile(project.pathTerrain, id);
+        } else {
+          window.importFile = undefined;
+          setImportModel('')
+        }
+
         history.push('/models/step1');
       }
     } else {
       loginWithRedirect();
     }
+  }
+
+  async function unzipFile(zip: any,id: string) {
+    const jsDecodeZip = new JSZip();
+    const unzipped = await jsDecodeZip.loadAsync(zip);
+    const content = await unzipped.file(unzipped.files['undefined'].name)?.async("blob").then(function (fileData) {
+      return new File([fileData], id + '.dxf')
+    })
+    window.importFile = content;
+    setImportModel(id + '.dxf');
   }
 
   return (
@@ -169,7 +188,8 @@ const container = compose<Props, OwnProps>(
       setDensityGeneral,
       setIdProject,
       setOption,
-      setImportModel
+      setImportModel,
+      setTerrain
     }
   )
 )(ToolbarDetailsProject);

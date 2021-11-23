@@ -167,7 +167,7 @@ const TerrainContainer = (props: Props) => {
       projectName: nameProject,
       email: user.email,
       pathTerrain: selectedFileCompress,
-      area: undefined,
+      area: 0,
       location: {
         id: location?.id!,
         city: location?.city!,
@@ -194,7 +194,7 @@ const TerrainContainer = (props: Props) => {
         floorsAlignment: location![densityLocal].floorsAlignment,
         unitsOrganization: location![densityLocal].unitsOrganization
       },
-      terrain: undefined,
+      terrain: 2,
       facadeDirection: undefined,
       roomType: undefined,
       floorSelection: undefined,

@@ -38,7 +38,6 @@ export const coreSlice = createSlice({
       state.searchClick = action.payload;
     },
     saveTerrain: (state, action: PayloadAction<Terrain>) => {
-      console.log("ACTION", action)
       state.terrain = action.payload;
     },
     setOption: (state, action: PayloadAction<string>) => {
