@@ -3,7 +3,7 @@ import { ArrowBackIos, CloudUpload, Add, Close } from "@material-ui/icons";
 import { PageContainer } from ".";
 import { LocationMenu, UrbanismMenu } from "../components";
 import { Densities, Density, Location } from "../models";
-import { getLocations } from 'domains/core/coreSlice';
+import { getLocations, setOption } from 'domains/core/coreSlice';
 import { Fragment, useEffect, useRef, useState } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { compose } from 'recompose';
@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { RootState } from "app/store";
 import _ from 'lodash';
 import { useAuth0 } from '@auth0/auth0-react';
-import { saveProject } from "domains/shapeDiver/slice";
+import { loadProjectsByUsername, saveProject, setDensityGeneral, setIdProject, setImportModel, setInitialParams, setSaveSuccess, setTerrain } from "domains/shapeDiver/slice";
 import { Project } from "domains/shapeDiver/models";
 import JSZip from "jszip";
 
@@ -111,28 +111,46 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       background: theme.palette.common.white,
       color: theme.palette.common.black,
+    },
+    link:{
+      textAlign: 'center', 
+      width: '100%', 
+      textDecoration: 'underline',
+      '&:hover': {
+        cursor: 'pointer'
+      }
     }
   })
 );
 
 interface StateProps {
   locations: Location[];
+  projects: any[];
 }
 
 interface DispatchProps {
   getLocations: typeof getLocations;
   saveProject: typeof saveProject;
+  setInitialParams: typeof setInitialParams;
+  setDensityGeneral: typeof setDensityGeneral;
+  setSaveSuccess: typeof setSaveSuccess;
+  setIdProject: typeof setIdProject;
+  setOption: typeof setOption;
+  setImportModel: typeof setImportModel;
+  setTerrain: typeof setTerrain;
+  loadProjectsByUsername: typeof loadProjectsByUsername;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps;
 const TerrainContainer = (props: Props) => {
   const classes = useStyles();
-  const { getLocations, locations, history, saveProject } = props;
+  const { getLocations, locations, history, saveProject, setInitialParams, setDensityGeneral, setSaveSuccess, setIdProject, setOption, setImportModel, setTerrain,
+    loadProjectsByUsername, projects } = props;
   const [location, setLocation] = useState<Location>();
   const [density, setDensity] = useState<Density>();
   const fileInput = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<any>(null);
-  const { user } = useAuth0();
+  const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const [nameProject, setNameProject] = useState<string>("");
   const [userName, setUserName] = useState<string>(user ? user.name : "");
   const [project, setProject] = useState<Project>();
@@ -141,7 +159,8 @@ const TerrainContainer = (props: Props) => {
 
   useEffect(() => {
     getLocations();
-  }, [getLocations])
+    setTerrain(1);
+  }, [getLocations, setTerrain])
 
   if (!user) {
     history.push('/home');
@@ -160,7 +179,7 @@ const TerrainContainer = (props: Props) => {
   const updateDensity = (value: string) => {
     const den = _.find(Densities, x => x.label === value);
     setDensity(den);
-    
+
     const densityLocal = den?.value === 0 ? "suburban" : "urban";
 
     setProject({
@@ -209,37 +228,31 @@ const TerrainContainer = (props: Props) => {
   }
 
   const uploadDXF = (event: any) => {
-    
+
     const file = event.target.files[0];
     const reader = new FileReader();
     setSelectedFile(file);
 
-    reader.onload = async function (evt: any){
-      if(evt.target.readyState !== 2) return;
+    reader.onload = async function (evt: any) {
+      if (evt.target.readyState !== 2) return;
 
-      if(evt.target.error){
+      if (evt.target.error) {
         alert("Error while reading file");
         return;
       }
 
       const jsZip = new JSZip();
       const fileContent = evt.target.result;
-      const zip = await jsZip.file(fileContent.path,fileContent).generateAsync({
+      const zip = await jsZip.file(fileContent.path, fileContent).generateAsync({
         type: 'string',
         compression: 'DEFLATE'
       })
 
       setSelectedFileCompress(zip);
-      
+
     }
 
     reader.readAsArrayBuffer(file);
-    // setProject(
-    //   {
-    //     ...project,
-    //     pathTerrain: event.target.files[0].name
-    //   }
-    // )
   }
 
   const handleClose = () => {
@@ -253,6 +266,87 @@ const TerrainContainer = (props: Props) => {
 
   const handleCloseSnackbar = () => {
     setOpen(false)
+  }
+
+  const getDensityType = (value: number) => {
+    const den = _.find(Densities, (x: Density) => x.value === value);
+    return den;
+  }
+
+  const gotTo3DView = () => {
+
+
+    if (isAuthenticated && user) {
+
+      if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
+
+        loadProjectsByUsername(user.email);
+        const project = projects[projects.length - 1];
+        const locationSaved: any = project?.location;
+        const densityGeneral = project?.location?.densityGeneral !== undefined ? project?.location?.densityGeneral! : project?.location?.density!;
+        const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
+
+        setInitialParams({
+          location: locationSaved![densityLocal] ?
+            {
+              id: locationSaved?.id!,
+              city: locationSaved?.city!,
+              densityGeneral: locationSaved?.density!,
+              description: locationSaved?.description!,
+              maxPriFloors: locationSaved![densityLocal].maxPriFloors,
+              maxSecFloors: locationSaved![densityLocal].maxSecFloors,
+              streetFloors: locationSaved![densityLocal].streetFloors,
+              windowPercentage: locationSaved![densityLocal].windowPercentage,
+              unitsNumberType: locationSaved![densityLocal].unitsNumberType,
+              density: locationSaved![densityLocal].density,
+              flatSize: locationSaved![densityLocal].flatSize,
+              flatType: locationSaved![densityLocal].flatType,
+              regen: locationSaved![densityLocal].regen,
+              lat: locationSaved![densityLocal].lat,
+              lon: locationSaved![densityLocal].lon,
+              p_vivs: locationSaved![densityLocal].p_vivs,
+              axisSelection: locationSaved![densityLocal].axisSelection,
+              typologies: locationSaved![densityLocal].typologies,
+              emptySpaceSelection: locationSaved![densityLocal].emptySpaceSelection,
+              undefinedTower: locationSaved![densityLocal].undefinedTower,
+              streetDensity: locationSaved![densityLocal].streetDensity,
+              islandSpacings: locationSaved![densityLocal].islandSpacings,
+              floorsAlignment: locationSaved![densityLocal].floorsAlignment,
+              unitsOrganization: locationSaved![densityLocal].unitsOrganization,
+            } :
+            project?.location,
+          area: project.area === 0 && project.pathTerrain && !project.modelData ? 1 : project.area === 0 && project.modelData?.totalLandArea ? project.modelData?.totalLandArea / 10000 : project?.area!,
+          density: getDensityType(densityGeneral)!
+        });
+        setDensityGeneral(densityGeneral);
+        setSaveSuccess(false)
+        setNameProject(project?.projectName!)
+        setIdProject(project?.id);
+        setOption("edit");
+
+
+        if (!project.area && project.pathTerrain) {
+          unzipFile(project.pathTerrain, project?.id, project.terrain);
+        } else {
+          window.importFile = undefined;
+          setImportModel('')
+        }
+        history.push('/models/step1');
+      }
+    } else {
+      loginWithRedirect();
+    }
+  }
+
+  async function unzipFile(zip: any, id: string, terrain: number | undefined) {
+    const jsDecodeZip = new JSZip();
+    const unzipped = await jsDecodeZip.loadAsync(zip);
+    const content = await unzipped.file(unzipped.files['undefined'].name)?.async("blob").then(function (fileData) {
+      return new File([fileData], id + '.dxf')
+    })
+    window.importFile = content;
+    setTerrain(terrain);
+    setImportModel(id + '.dxf');
   }
 
   return (
@@ -364,7 +458,9 @@ const TerrainContainer = (props: Props) => {
                 Save
               </Button>
             </Grid>
-            <a href="#" style={{ textAlign: 'center', width: '100%', textDecoration: 'underline' }}>Continue to building a project</a>
+            <a className={classes.link}>
+              Continue to building a project
+            </a>
           </Grid>
         </Grid>
       </Grid>
@@ -396,11 +492,20 @@ const container = compose<Props, {}>(
   withRouter,
   connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-      locations: state.domains.core.locations
+      locations: state.domains.core.locations,
+      projects: state.domains.shapediver.projects
     }),
     {
       getLocations,
-      saveProject
+      saveProject,
+      setInitialParams,
+      setDensityGeneral,
+      setSaveSuccess,
+      setIdProject,
+      setOption,
+      setImportModel,
+      setTerrain,
+      loadProjectsByUsername
     }
   )
 )(TerrainContainer);

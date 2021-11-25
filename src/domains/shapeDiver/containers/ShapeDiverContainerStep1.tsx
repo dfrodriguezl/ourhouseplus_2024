@@ -22,7 +22,6 @@ const ShapeDiverContainerStep1 = (props: Props) => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-
   if (!location) {
     history.push('/home');
     return (<Fragment />);

@@ -177,6 +177,7 @@ export const ListProjects = (props: Props) => {
     }
 
   }
+  
   const getDensityType = (value: number) => {
     const den = _.find(Densities, (x: Density) => x.value === value);
     return den;
