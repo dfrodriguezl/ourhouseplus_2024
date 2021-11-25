@@ -125,7 +125,7 @@ interface DispatchProps {
 
 type Props = DispatchProps & StateProps & RouteComponentProps<RouteProps>;
 const DetailsSummary = (props: Props) => {
-  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject, setDensityGeneral, setOption } = props;
+  const { currentProject, loadProjectById, setInitialParams, match: { params }, history, setSaveSuccess, setNameProject, setDensityGeneral, setOption, setImportModel, setTerrain } = props;
   const classes = useStyles();
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
   const locationSaved: any = currentProject?.location;
@@ -134,7 +134,8 @@ const DetailsSummary = (props: Props) => {
 
   useEffect(() => {
     loadProjectById(params.id);
-  }, [loadProjectById, params ])
+    setTerrain(1)
+  }, [loadProjectById, params, setTerrain])
 
   const getDensityType = (value: number) => {
     const den = _.find(Densities, (x: Density) => x.value === value);
@@ -176,14 +177,14 @@ const DetailsSummary = (props: Props) => {
               unitsOrganization: locationSaved![densityLocal].unitsOrganization,
             } :
             currentProject?.location,
-          area: currentProject?.area!,
+          area: currentProject?.area === 0 && currentProject?.pathTerrain && !currentProject?.modelData ? 1 : currentProject?.area === 0 && currentProject?.modelData?.totalLandArea ? currentProject?.modelData?.totalLandArea / 10000 : currentProject?.area!,
           density: getDensityType(densityGeneral)!
         });
         setDensityGeneral(densityGeneral);
         setSaveSuccess(true)
         setNameProject(currentProject?.projectName!)
         setOption("");
-        setTerrain(currentProject?.terrain);
+        // setTerrain(currentProject?.terrain);
 
         if (currentProject?.pathTerrain) {
           unzipFile(currentProject?.pathTerrain, params.id);
@@ -199,13 +200,14 @@ const DetailsSummary = (props: Props) => {
     }
   }
 
-  async function unzipFile(zip: any,id: string) {
+  async function unzipFile(zip: any, id: string) {
     const jsDecodeZip = new JSZip();
     const unzipped = await jsDecodeZip.loadAsync(zip);
     const content = await unzipped.file(unzipped.files['undefined'].name)?.async("blob").then(function (fileData) {
       return new File([fileData], id + '.dxf')
     })
     window.importFile = content;
+    setTerrain(2)
     setImportModel(id + '.dxf');
   }
 
@@ -214,7 +216,7 @@ const DetailsSummary = (props: Props) => {
       <PageContainer background="black-model">
         <Grid container xs={12} className={classes.topPanel} >
           <TopPanel />
-          <ToolbarDetailsProject currentProject={currentProject!} id={params.id}/>
+          <ToolbarDetailsProject currentProject={currentProject!} id={params.id} />
           <GeneralParameters project={currentProject} />
           <Grid item container xs={12}>
             <Grid item xs={4} className={classes.imgContainer}>
@@ -243,7 +245,7 @@ const DetailsSummary = (props: Props) => {
               </Typography>
               <Box className={clsx(classes.whiteText, true && classes.containerMiddle, true)}>
                 <Typography variant="body2">
-                  Site area (ha) <span className={classes.numberResult}> {currentProject?.area === 0 ? currentProject?.modelData?.totalLandArea!/10000 : currentProject?.area} </span>
+                  Site area (ha) <span className={classes.numberResult}> {currentProject?.area === 0 ? currentProject?.modelData?.totalLandArea! / 10000 : currentProject?.area} </span>
                 </Typography>
                 <Divider className={classes.divider} />
                 <Typography variant="body2">

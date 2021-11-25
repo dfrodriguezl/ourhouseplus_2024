@@ -4,7 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
 import { img_basic_volume, img_facade, img_interior } from 'assets';
 import { ToolbarDetailsProject, TopPanel } from '../components';
-import { loadProjectById } from 'domains/shapeDiver/slice';
+import { loadProjectById, setTerrain } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { compose } from 'recompose';
@@ -59,16 +59,18 @@ interface StateProps {
 
 interface DispatchProps {
   loadProjectById: typeof loadProjectById;
+  setTerrain: typeof setTerrain;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps<RouteProps>;
 export const DetailsProjects = (props: Props) => {
-  const { loadProjectById, currentProject, match: { params } } = props;
+  const { loadProjectById, currentProject, match: { params }, setTerrain } = props;
   const classes = useStyles();
 
   useEffect(() => {
     loadProjectById(params.id);
-  }, [loadProjectById, params])
+    setTerrain(1)
+  }, [loadProjectById, params, setTerrain])
 
 
   return (
@@ -96,7 +98,8 @@ const container = compose<Props, {}>(
       currentProject: state.domains.shapediver.currentProject
     }),
     {
-      loadProjectById
+      loadProjectById,
+      setTerrain
     }
   ))
   (DetailsProjects);

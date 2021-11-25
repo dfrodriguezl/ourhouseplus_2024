@@ -117,7 +117,7 @@ const ToolbarDetailsProject = (props: Props) => {
               unitsOrganization: locationSaved![densityLocal].unitsOrganization,
             } :
             project?.location,
-          area: project?.area!,
+          area: project.area === 0 && project.pathTerrain && !project.modelData ? 1 : project.area === 0 && project.modelData?.totalLandArea ? project.modelData?.totalLandArea/10000 : project?.area!,
           density: getDensityType(densityGeneral)!
         });
         setDensityGeneral(densityGeneral);
@@ -125,7 +125,7 @@ const ToolbarDetailsProject = (props: Props) => {
         setNameProject(project?.projectName!)
         setIdProject(id);
         setOption("edit");
-        setTerrain(project?.terrain);
+        // setTerrain(project?.terrain);
 
         if (project.pathTerrain) {
           unzipFile(project.pathTerrain, id);
@@ -148,6 +148,7 @@ const ToolbarDetailsProject = (props: Props) => {
       return new File([fileData], id + '.dxf')
     })
     window.importFile = content;
+    setTerrain(2)
     setImportModel(id + '.dxf');
   }
 

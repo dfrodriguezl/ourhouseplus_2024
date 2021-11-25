@@ -220,7 +220,7 @@ export const ListProjects = (props: Props) => {
               unitsOrganization: locationSaved![densityLocal].unitsOrganization,
             } :
             project?.location,
-          area: project.area === 0 && project.pathTerrain && !project.modelData ? 1 : !project.area && project.modelData?.totalLandArea ? project.modelData?.totalLandArea : project?.area!,
+          area: project.area === 0 && project.pathTerrain && !project.modelData ? 1 : project.area === 0 && project.modelData?.totalLandArea ? project.modelData?.totalLandArea/10000 : project?.area!,
           density: getDensityType(densityGeneral)!
         });
         setDensityGeneral(densityGeneral);
@@ -228,10 +228,10 @@ export const ListProjects = (props: Props) => {
         setNameProject(project?.projectName!)
         setIdProject(id);
         setOption("edit");
-        setTerrain(project?.terrain);
+        
         
         if (!project.area && project.pathTerrain) {
-          unzipFile(project.pathTerrain, id);
+          unzipFile(project.pathTerrain, id, project.terrain);
         } else {
           window.importFile = undefined;
           setImportModel('')
@@ -243,21 +243,23 @@ export const ListProjects = (props: Props) => {
     }
   }
 
-  async function unzipFile(zip: any,id: string) {
+  async function unzipFile(zip: any,id: string, terrain: number | undefined) {
     const jsDecodeZip = new JSZip();
     const unzipped = await jsDecodeZip.loadAsync(zip);
     const content = await unzipped.file(unzipped.files['undefined'].name)?.async("blob").then(function (fileData) {
       return new File([fileData], id + '.dxf')
     })
     window.importFile = content;
+    setTerrain(terrain);
     setImportModel(id + '.dxf');
   }
 
   useEffect(() => {
     if (user?.email) {
       loadProjectsByUsername(user.email);
+      setTerrain(1)
     }
-  }, [loadProjectsByUsername, user])
+  }, [loadProjectsByUsername, user, setTerrain])
 
   return (
     <Fragment>
