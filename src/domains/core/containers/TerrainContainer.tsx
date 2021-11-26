@@ -146,7 +146,7 @@ const TerrainContainer = (props: Props) => {
   const classes = useStyles();
   const { getLocations, locations, history, saveProject, setInitialParams, setDensityGeneral, setSaveSuccess, setIdProject, setOption, setImportModel, setTerrain,
     loadProjectsByUsername, projects } = props;
-  const [location, setLocation] = useState<Location>();
+  const [location, setLocation] = useState<any>();
   const [density, setDensity] = useState<Density>();
   const fileInput = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<any>(null);
@@ -156,6 +156,7 @@ const TerrainContainer = (props: Props) => {
   const [project, setProject] = useState<Project>();
   const [open, setOpen] = useState(false);
   const [selectedFileCompress, setSelectedFileCompress] = useState<any>(null);
+  const [densityLocal, setDensityLocal] = useState<string>("");
 
   useEffect(() => {
     getLocations();
@@ -179,48 +180,7 @@ const TerrainContainer = (props: Props) => {
   const updateDensity = (value: string) => {
     const den = _.find(Densities, x => x.label === value);
     setDensity(den);
-
-    const densityLocal = den?.value === 0 ? "suburban" : "urban";
-
-    setProject({
-      projectName: nameProject,
-      email: user.email,
-      pathTerrain: selectedFileCompress,
-      area: 0,
-      location: {
-        id: location?.id!,
-        city: location?.city!,
-        densityGeneral: den?.value!,
-        description: location?.description!,
-        maxPriFloors: location![densityLocal].maxPriFloors,
-        maxSecFloors: location![densityLocal].maxSecFloors,
-        streetFloors: location![densityLocal].streetFloors,
-        windowPercentage: location![densityLocal].windowPercentage,
-        unitsNumberType: location![densityLocal].unitsNumberType,
-        density: location![densityLocal].density,
-        flatSize: location![densityLocal].flatSize,
-        flatType: location![densityLocal].flatType,
-        regen: location![densityLocal].regen,
-        lat: location![densityLocal].lat,
-        lon: location![densityLocal].lon,
-        p_vivs: location![densityLocal].p_vivs,
-        axisSelection: location![densityLocal].axisSelection,
-        typologies: location![densityLocal].typologies,
-        emptySpaceSelection: location![densityLocal].emptySpaceSelection,
-        undefinedTower: location![densityLocal].undefinedTower,
-        streetDensity: location![densityLocal].streetDensity,
-        islandSpacings: location![densityLocal].islandSpacings,
-        floorsAlignment: location![densityLocal].floorsAlignment,
-        unitsOrganization: location![densityLocal].unitsOrganization
-      },
-      terrain: 2,
-      facadeDirection: undefined,
-      roomType: undefined,
-      floorSelection: undefined,
-      modelData: undefined
-    }
-    )
-
+    setDensityLocal(den?.value === 0 ? "suburban" : "urban");
   }
 
   const handleFileUpload = () => {
@@ -260,7 +220,43 @@ const TerrainContainer = (props: Props) => {
   }
 
   const saveTerrainForm = () => {
-    saveProject(project!)
+    saveProject({
+      projectName: nameProject,
+      email: user.email,
+      pathTerrain: selectedFileCompress,
+      area: 0,
+      location: {
+        id: location?.id!,
+        city: location?.city!,
+        densityGeneral: density?.value!,
+        description: location?.description!,
+        maxPriFloors: location![densityLocal].maxPriFloors,
+        maxSecFloors: location![densityLocal].maxSecFloors,
+        streetFloors: location![densityLocal].streetFloors,
+        windowPercentage: location![densityLocal].windowPercentage,
+        unitsNumberType: location![densityLocal].unitsNumberType,
+        density: location![densityLocal].density,
+        flatSize: location![densityLocal].flatSize,
+        flatType: location![densityLocal].flatType,
+        regen: location![densityLocal].regen,
+        lat: location![densityLocal].lat,
+        lon: location![densityLocal].lon,
+        p_vivs: location![densityLocal].p_vivs,
+        axisSelection: location![densityLocal].axisSelection,
+        typologies: location![densityLocal].typologies,
+        emptySpaceSelection: location![densityLocal].emptySpaceSelection,
+        undefinedTower: location![densityLocal].undefinedTower,
+        streetDensity: location![densityLocal].streetDensity,
+        islandSpacings: location![densityLocal].islandSpacings,
+        floorsAlignment: location![densityLocal].floorsAlignment,
+        unitsOrganization: location![densityLocal].unitsOrganization
+      },
+      terrain: 2,
+      facadeDirection: undefined,
+      roomType: undefined,
+      floorSelection: undefined,
+      modelData: undefined
+    })
     setOpen(true)
   }
 
@@ -453,7 +449,7 @@ const TerrainContainer = (props: Props) => {
                 size="large"
                 className={classes.button}
                 onClick={() => saveTerrainForm()}
-                disabled={!nameProject || !userName || !selectedFile || !project?.location || !density}
+                disabled={!nameProject || !userName || !selectedFile || !location || !density}
               >
                 Save
               </Button>
