@@ -71,7 +71,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.Terrain, value: terrain },
             { name: Parameters.Density, value: location.density },
             { name: Parameters.Area, value: area?.toString() },
-            { name: Parameters.Regen, value: location.regen },
+            { name: Parameters.Regen, value: Math.floor(Math.random() * 10) },
             { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
             { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
             { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
