@@ -288,21 +288,21 @@ const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData }) => {
       <Box fontSize={12} fontWeight='bold' style={{ opacity: 0 }}>Geo Data</Box>
       <Box fontSize={12}>
         <NumberFormat
-          value="0.2"
+          value={String(Math.floor(Math.random() * (150 - 50) + 50))}
           displayType="text"
           decimalScale={2}
         />
       </Box>
       <Box fontSize={12}>
         <NumberFormat
-          value="0.2"
+          value={String(Math.floor(Math.random() * (60 - 30) + 30))}
           displayType="text"
           decimalScale={2}
         />
       </Box>
       <Box fontSize={12}>
         <NumberFormat
-          value="0.2"
+          value={Math.random()}
           displayType="text"
           decimalScale={2}
         />
