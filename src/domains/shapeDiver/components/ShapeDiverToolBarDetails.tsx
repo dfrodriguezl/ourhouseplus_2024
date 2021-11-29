@@ -317,6 +317,7 @@ const container = compose<Props, {}>(
     (state: RootState) => ({
       location: state.domains.shapediver.location,
       modelData: state.domains.shapediver.modelData,
+      densityGeneral: state.domains.shapediver.densityGeneral
     }), {
     setExpandAdvanced
   }

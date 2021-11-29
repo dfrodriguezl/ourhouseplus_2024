@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -15,7 +16,7 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 
 
-import { useRef } from 'react';
+
 
 const styles = makeStyles((theme) => ({
   container: {
@@ -58,7 +59,6 @@ interface StateProps {
   options: ShapeDiverOptions | undefined;
   location: LocationSimple | undefined;
   expandAdvanced: Object;
-  densityGeneral: string;
 }
 
 interface DispatchProps {
@@ -247,8 +247,7 @@ const container = compose<Props, {}>(
       options: state.domains.shapediver.options,
       location: state.domains.shapediver.location,
       terrain: state.domains.shapediver.terrain,
-      expandAdvanced: state.domains.shapediver.expandAdvanced,
-      densityGeneral: state.domains.shapediver.densityGeneral,
+      expandAdvanced: state.domains.shapediver.expandAdvanced
     }),
     {
       setTerrain,

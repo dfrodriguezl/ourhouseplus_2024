@@ -72,10 +72,12 @@ class ShapeDiverWrapperStep2 extends React.Component<Props, ComponentProps> {
             { name: Parameters.Density, value: location.density },
             // { name: Parameters.Regen, value: location.regen },
             { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-            { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+            // { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
             { name: Parameters.NumberStreetFloors, value: location.streetFloors },
             // { name: Parameters.WindowPercentage, value: location.windowPercentage },
             { name: Parameters.WindowPercentage2, value: location.windowPercentage },
+            { name: Parameters.BalconyType, value: location.balconyType ?? 0 },
+            { name: Parameters.UndefinedTower, value: location.undefinedTower ?? 0 },
           ])
 
 

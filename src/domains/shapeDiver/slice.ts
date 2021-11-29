@@ -185,6 +185,12 @@ export const shapeDiverSlice = createSlice({
     setIdProject: (state, action: PayloadAction<string>) => {
       state.idProject = action.payload;
     },
+    setBalconyType: (state, action: PayloadAction<number>) => {
+      state.location!.balconyType = action.payload;
+    },
+    setUndefinedTower: (state, action: PayloadAction<number>) => {
+      state.location!.undefinedTower = action.payload;
+    }
   },
 });
 
@@ -212,7 +218,9 @@ export const {
   setNameProject,
   setLoadingStatus,
   setDensityGeneral,
-  setIdProject
+  setIdProject,
+  setBalconyType,
+  setUndefinedTower
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;

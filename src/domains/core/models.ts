@@ -84,6 +84,7 @@ export interface LocationSimple {
   islandSpacings: number;
   floorsAlignment: number;
   unitsOrganization: number;
+  balconyType?: number;
 }
 
 export interface Density {

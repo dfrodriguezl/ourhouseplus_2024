@@ -28,6 +28,7 @@ export enum Parameters {
   MaxSecondaryFloors2 = 'MAX NBR SECONDARY FLOORS',
   FloorsAlignment = 'FLOORS-MAX FLOORS ALIGNEMENT',
   WindowPercentage2 = 'FACADE TYPE',
+  BalconyType = 'BALCONY TYPE'
 }
 
 export enum DataParameters {
