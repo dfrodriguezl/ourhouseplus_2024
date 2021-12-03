@@ -146,10 +146,6 @@ const ToolbarData: React.FC<DataProps> = ({ classes, modelData, isStep1, isStep2
 }
 
 const LabelDetails: React.FC<LblProps> = ({ step, propsDetail }) => {
-  const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
-  const bigFont = 14;
-  const smallFont = 12;
   const classes = styles();
 
   return (
@@ -190,10 +186,6 @@ const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData }) => {
 
   const [open, setOpen] = useState(false);
   const classes = styles();
-  const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.up("xl"));
-  const bigFont = 14;
-  const smallFont = 12;
 
   const openGeoDialog = () => {
     setOpen(true);
