@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { Box, Grid, makeStyles, Paper, Radio, RadioGroup, Container } from '@material-ui/core'
+import { Box, Grid, makeStyles, Paper, Radio, RadioGroup, Container, Avatar } from '@material-ui/core'
 import { getArea, setWindow, setFacadeDirection, setBalconyType, setUndefinedTower } from 'domains/shapeDiver/slice';
 
-import { fifty, sixty, seventy, horizontal, vertical, opaInactive, opaSelected, opbSelected, opbInactive, opcSelected, opcInactive, offSelected, offInactive, smallSelected, smallInactive, largeSelected, largeInactive, onSelected, onInactive } from 'assets'
+import { fifty, sixty, seventy, horizontal, vertical } from 'assets'
 import { fiftySelected, sixtySelected, seventySelected, verticalSelected, horizontalSelected } from 'assets'
 import { ShapeDiverOptions } from '../models';
 import { compose } from 'recompose';
@@ -43,7 +43,23 @@ const styles = makeStyles((theme) => ({
   },
   radioStyle: {
     width: '100%'
-  }
+  },
+  avatar: {
+    backgroundColor: "#FFFFFF",
+    color: "#707070",
+    fontWeight: "bold",
+    fontSize: 13,
+    width: 46,
+    height: 46
+  },
+  avatarSelected: {
+    color: "#000000",
+    backgroundColor: "#FFFFFF",
+    fontWeight: "bold",
+    fontSize: 13,
+    width: 46,
+    height: 46
+  },
 }));
 
 interface StateProps {
@@ -151,24 +167,24 @@ function ShapeDiverToolBarStep2(props: Props) {
                       <Radio
                         checked={location.windowPercentage === 0}
                         onClick={() => setWindow(0)}
-                        checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={opaSelected} alt="50" />}
-                        icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={opaInactive} alt="50" />}
+                        checkedIcon={<Avatar className={classes.avatarSelected}>Op.A</Avatar>}
+                        icon={<Avatar className={classes.avatar}>Op.A</Avatar>}
                       />
                     </Grid>
                     <Grid item xs={4}>
                       <Radio
                         checked={location.windowPercentage === 1}
                         onClick={() => setWindow(1)}
-                        checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={opbSelected} alt="60" />}
-                        icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={opbInactive} alt="60" />}
+                        checkedIcon={<Avatar className={classes.avatarSelected}>Op.B</Avatar>}
+                        icon={<Avatar className={classes.avatar}>Op.B</Avatar>}
                       />
                     </Grid>
                     <Grid item xs={4}>
                       <Radio
                         checked={location.windowPercentage === 2}
                         onClick={() => setWindow(2)}
-                        checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={opcSelected} alt="70" />}
-                        icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={opcInactive} alt="70" />}
+                        checkedIcon={<Avatar className={classes.avatarSelected}>Op.C</Avatar>}
+                        icon={<Avatar className={classes.avatar}>Op.C</Avatar>}
                       />
                     </Grid>
                   </Grid>
@@ -184,24 +200,24 @@ function ShapeDiverToolBarStep2(props: Props) {
                       <Radio
                         checked={location.balconyType === 0}
                         onClick={() => setBalconyType(0)}
-                        checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={offSelected} alt="50" />}
-                        icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={offInactive} alt="50" />}
+                        checkedIcon={<Avatar className={classes.avatarSelected}>Off</Avatar>}
+                        icon={<Avatar className={classes.avatar}>Off</Avatar>}
                       />
                     </Grid>
                     <Grid item xs={4}>
                       <Radio
                         checked={location.balconyType === 1}
                         onClick={() => setBalconyType(1)}
-                        checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={smallSelected} alt="60" />}
-                        icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={smallInactive} alt="60" />}
+                        checkedIcon={<Avatar className={classes.avatarSelected}>Small</Avatar>}
+                        icon={<Avatar className={classes.avatar}>Small</Avatar>}
                       />
                     </Grid>
                     <Grid item xs={4}>
                       <Radio
                         checked={location.balconyType === 2}
                         onClick={() => setBalconyType(2)}
-                        checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={largeSelected} alt="70" />}
-                        icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={largeInactive} alt="70" />}
+                        checkedIcon={<Avatar className={classes.avatarSelected}>Large</Avatar>}
+                        icon={<Avatar className={classes.avatar}>Large</Avatar>}
                       />
                     </Grid>
                   </Grid>
@@ -218,8 +234,8 @@ function ShapeDiverToolBarStep2(props: Props) {
                         <Radio
                           checked={location.undefinedTower === 0}
                           onClick={() => setUndefinedTower(0)}
-                          checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={offSelected} alt="horizontal" />}
-                          icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={offInactive} alt="horizontal" />}
+                          checkedIcon={<Avatar className={classes.avatarSelected}>Off</Avatar>}
+                          icon={<Avatar className={classes.avatar}>Off</Avatar>}
                         />
                       </CustomTooltip>
                     </Grid>
@@ -228,8 +244,8 @@ function ShapeDiverToolBarStep2(props: Props) {
                         <Radio
                           checked={location.undefinedTower === 1}
                           onClick={() => setUndefinedTower(1)}
-                          checkedIcon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={onSelected} alt="vertical" />}
-                          icon={<img className={smallScreen ? classes.buttons : classes.buttons_md} src={onInactive} alt="vertical" />}
+                          checkedIcon={<Avatar className={classes.avatarSelected}>On</Avatar>}
+                          icon={<Avatar className={classes.avatar}>On</Avatar>}
                         />
                       </CustomTooltip>
                     </Grid>
