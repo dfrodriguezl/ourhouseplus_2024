@@ -4,6 +4,7 @@ import { LocationSimple } from 'domains/core/models';
 import { connect } from 'react-redux';
 import { setAdvancedOptions } from '../slice';
 import { Fragment } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const styles = makeStyles((theme: Theme) => ({
   titlePanel: {
@@ -65,6 +66,7 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions4 = (props: Props) => {
   const { location, setAdvancedOptions } = props;
+  const history = useHistory();
   const classes = styles();
 
   const updateTypology = (value: number) => {
@@ -82,6 +84,7 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
       floorsAlignment: location!.floorsAlignment,
       unitsOrganization: location!.unitsOrganization,
     });
+
   }
 
   const updateUnitsOrganization = (value: boolean) => {
@@ -108,16 +111,10 @@ const ShapeDiverAdvancedOptions4 = (props: Props) => {
     <Fragment>
       <Grid item xs={12} style={{ margin: '10px 0' }}>
         <Box fontSize={12} fontWeight="bold" textAlign="start">Housing type
-          {/* <span className={classes.right}>Senior</span> */}
         </Box>
       </Grid>
       <Grid item xs={12} style={{ margin: '10px 0' }}>
         <Box fontSize={12} textAlign="start">
-          {/* <span className={classes.bold}>s-</span><span className={classes.gray}>20%</span>
-          <span className={classes.bold}> 1b-</span><span className={classes.gray}>20%</span>
-          <span className={classes.bold}> 2b-</span><span className={classes.gray}>20%</span>
-          <span className={classes.bold}> 3b-</span><span className={classes.gray}>20%</span>
-          <span className={classes.bold}> 4b-</span><span className={classes.gray}>20%</span> */}
           {location!.typologies === 0 ?
             "Students" :
             location!.typologies === 1 ?

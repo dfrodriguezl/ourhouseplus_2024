@@ -76,7 +76,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
             { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
             { name: Parameters.NumberStreetFloors, value: location.streetFloors },
-            { name: Parameters.Typologies, value: location.typologies },
+            { name: Parameters.Typologies, value: location.typologies},
             { name: Parameters.EmptySpaceSelection, value: location.emptySpaceSelection },
             { name: Parameters.UndefinedTower, value: location.undefinedTower },
             { name: Parameters.AxisSelection, value: location.axisSelection },
@@ -196,7 +196,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       if (this.api) {
         // register a ShapeDiver CommPlugin
         await this.api.plugins.registerCommPluginAsync({
-          ticket: typeDensity === 'suburban' ? process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1!,
+          // ticket: typeDensity === 'suburban' ? process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1!,
+          ticket: typeDensity === 'suburban' ? location.city === "Medellin" ? process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_2_4_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1!,
           // URL of the ShapeDiver backend system used
           // runtime id to use for this CommPlugin (you might register several)
           runtimeId: 'CommPlugin_1',
