@@ -255,7 +255,8 @@ const TerrainContainer = (props: Props) => {
       facadeDirection: undefined,
       roomType: undefined,
       floorSelection: undefined,
-      modelData: undefined
+      modelData: undefined,
+      coordinates: undefined
     })
     setOpen(true)
   }

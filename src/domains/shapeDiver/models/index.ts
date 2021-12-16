@@ -156,4 +156,9 @@ export interface ProjectData {
   roomType: number | undefined;
   floorSelection: number | undefined;
   modelData: ModelData | undefined;
+  coordinates: Coordinates | undefined;
+}
+export interface Coordinates {
+  lat: number | undefined;
+  long: number | undefined;
 }

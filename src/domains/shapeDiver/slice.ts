@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from 'app/store';
 import { LocationSimple, SearchParams } from 'domains/core/models';
-import { AdvancedOptions, ModelData, Project, ShapeDiverOptions } from 'domains/shapeDiver/models';
+import { AdvancedOptions, Coordinates, ModelData, Project, ShapeDiverOptions } from 'domains/shapeDiver/models';
 import { get, post, deletes } from 'app/api';
 import { AxiosResponse } from 'axios';
 
@@ -25,6 +25,7 @@ export interface ShapeDiverState {
   nameProject: string;
   loading: boolean;
   idProject: string | undefined;
+  coordinates: Coordinates;
 }
 
 const initialState: ShapeDiverState = {
@@ -90,7 +91,11 @@ const initialState: ShapeDiverState = {
   saveSuccess: false,
   nameProject: '',
   loading: false,
-  idProject: undefined
+  idProject: undefined,
+  coordinates: {
+    long: 0,
+    lat: 0
+  }
 };
 
 export const shapeDiverSlice = createSlice({
@@ -190,6 +195,9 @@ export const shapeDiverSlice = createSlice({
     },
     setUndefinedTower: (state, action: PayloadAction<number>) => {
       state.location!.undefinedTower = action.payload;
+    },
+    setCoordinates: (state, action: PayloadAction<Coordinates>) => {
+      state.coordinates = action.payload;
     }
   },
 });
@@ -220,7 +228,8 @@ export const {
   setDensityGeneral,
   setIdProject,
   setBalconyType,
-  setUndefinedTower
+  setUndefinedTower,
+  setCoordinates
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
@@ -231,7 +240,8 @@ export const getProjectData = (state: RootState) => ({
   facadeDirection: state.domains.shapediver.facadeDirection,
   roomType: state.domains.shapediver.roomType,
   floorSelection: state.domains.shapediver.floorSelection,
-  modelData: state.domains.shapediver.modelData
+  modelData: state.domains.shapediver.modelData,
+  coordinates: state.domains.shapediver.coordinates
 });
 
 export default shapeDiverSlice.reducer;

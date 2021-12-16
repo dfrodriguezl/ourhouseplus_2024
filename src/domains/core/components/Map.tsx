@@ -15,20 +15,28 @@ import { geocode, NominatimResponse, reverseGeocode } from "nominatim-browser";
 import { boundingExtent } from 'ol/extent';
 import { Translate, defaults as defaultInteractions } from 'ol/interaction';
 import { Collection } from 'ol';
+import { compose } from 'recompose';
+import { connect } from 'react-redux';
+import { RootState } from "app/store";
+import { setCoordinates } from 'domains/shapeDiver/slice';
 
-interface mapProps {
+interface OwnProps {
   markerDrop?: boolean;
   location?: string;
   changeLocation?: any;
 }
 
-type Props = mapProps;
+interface DispatchProps{
+  setCoordinates: typeof setCoordinates
+}
+
+type Props = OwnProps & DispatchProps;
 const MapGeo = (props: Props) => {
 
   const [map, setMap] = useState<Map>();
   const [layer, setLayer] = useState<any>();
 
-  const { markerDrop, location, changeLocation } = props;
+  const { markerDrop, location, changeLocation, setCoordinates } = props;
 
   useEffect(() => {
 
@@ -45,6 +53,10 @@ const MapGeo = (props: Props) => {
       })
         .then((results: NominatimResponse) => {
           changeLocation(results.display_name);
+          setCoordinates({
+            lat: lat,
+            long: lon
+          })
         })
         .catch((error: any) => {
           console.error(error);
@@ -118,6 +130,8 @@ const MapGeo = (props: Props) => {
       setLayer(flayer)
     }
 
+    console.log("LOCATION MAP", location);
+
     geocode({
       city: location
     })
@@ -145,4 +159,15 @@ const MapGeo = (props: Props) => {
   )
 }
 
-export default MapGeo;
+const container = compose<Props, OwnProps>(
+  connect<{}, DispatchProps, {}, RootState>(
+    (state: RootState) => ({
+
+    }),
+    {
+      setCoordinates
+    }
+  )
+)(MapGeo);
+
+export default container;
