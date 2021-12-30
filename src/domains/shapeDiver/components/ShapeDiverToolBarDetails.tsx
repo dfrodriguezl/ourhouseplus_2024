@@ -4,7 +4,7 @@ import { RootState } from 'app/store';
 import { LocationSimple } from 'domains/core/models';
 import { Fragment } from 'react';
 import { connect } from 'react-redux';
-import { ModelData } from '../models';
+import { ModelData, UrbanPolicyParams } from '../models';
 import NumberFormat from 'react-number-format';
 import { useHistory } from 'react-router-dom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -42,6 +42,7 @@ const styles = makeStyles((theme) => ({
 interface StateProps {
   location: LocationSimple | undefined;
   modelData: ModelData;
+  urbanPolicy: UrbanPolicyParams | undefined;
 }
 
 interface dispatchProps {
@@ -52,6 +53,7 @@ interface LblProps {
   step?: string | null;
   propsDetail?: any;
   modelData?: any;
+  urbanPolicy: UrbanPolicyParams | undefined;
 }
 
 interface DataProps {
@@ -61,13 +63,14 @@ interface DataProps {
   isStep2?: Boolean;
   isStep3?: Boolean;
   propsDetail?: any;
+  urbanPolicy?: UrbanPolicyParams | undefined;
 }
 
 
 type Props = StateProps & dispatchProps;
 const ShapeDiverToolBarDetails = (props: Props) => {
   const classes = styles();
-  const { modelData, setExpandAdvanced } = props;
+  const { modelData, setExpandAdvanced, urbanPolicy } = props;
   const history = useHistory();
   const isStep1 = history.location.pathname.indexOf('step1') > -1;
   const isStep2 = history.location.pathname.indexOf('step2') > -1;
@@ -118,25 +121,25 @@ const ShapeDiverToolBarDetails = (props: Props) => {
           </AccordionSummary>
 
           <AccordionDetails>
-            <ToolbarData classes={classes} modelData={modelData} isStep1={isStep1} isStep2={isStep2} isStep3={isStep3} propsDetail={props}></ToolbarData>
+            <ToolbarData classes={classes} modelData={modelData} isStep1={isStep1} isStep2={isStep2} isStep3={isStep3} propsDetail={props} urbanPolicy={urbanPolicy}></ToolbarData>
           </AccordionDetails>
         </Accordion> :
-        <ToolbarData classes={classes} modelData={modelData} isStep1={isStep1} isStep2={isStep2} isStep3={isStep3} propsDetail={props}></ToolbarData>
+        <ToolbarData classes={classes} modelData={modelData} isStep1={isStep1} isStep2={isStep2} isStep3={isStep3} propsDetail={props} urbanPolicy={urbanPolicy}></ToolbarData>
       }
 
     </Fragment>
   );
 }
 
-const ToolbarData: React.FC<DataProps> = ({ classes, modelData, isStep1, isStep2, isStep3, propsDetail }) => {
+const ToolbarData: React.FC<DataProps> = ({ classes, modelData, isStep1, isStep2, isStep3, propsDetail, urbanPolicy }) => {
   return (
     <Fragment>
       <Grid item container direction="row" className={classes.container}>
         <Grid item xs={8}>
-          <LabelDetails step={isStep1 ? "step1" : isStep2 ? "step2" : isStep3 ? "step3" : null} propsDetail={propsDetail} />
+          <LabelDetails step={isStep1 ? "step1" : isStep2 ? "step2" : isStep3 ? "step3" : null} propsDetail={propsDetail} urbanPolicy={urbanPolicy} />
         </Grid>
         <Grid item xs={4}>
-          <ValueDetails step={isStep1 ? "step1" : isStep2 ? "step2" : isStep3 ? "step3" : null} propsDetail={propsDetail} modelData={modelData} />
+          <ValueDetails step={isStep1 ? "step1" : isStep2 ? "step2" : isStep3 ? "step3" : null} propsDetail={propsDetail} modelData={modelData} urbanPolicy={urbanPolicy} />
         </Grid>
       </Grid>
       <Divider />
@@ -178,11 +181,13 @@ const LabelDetails: React.FC<LblProps> = ({ step, propsDetail }) => {
       <Box fontSize={12}>Avg. inhabitant by location</Box>
       <Box fontSize={12}>Avg. age inhabitant by location</Box>
       <Box fontSize={12}>Housing deficit in 400 m (circ.)</Box>
+      <Box fontSize={12}>Max. Height</Box>
+      <Box fontSize={12}>Max. FAR</Box>
     </Fragment>
   )
 }
 
-const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData }) => {
+const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData, urbanPolicy }) => {
 
   const [open, setOpen] = useState(false);
   const classes = styles();
@@ -299,6 +304,20 @@ const ValueDetails: React.FC<LblProps> = ({ step, propsDetail, modelData }) => {
           decimalScale={2}
         />
       </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={urbanPolicy ? urbanPolicy.maxHeight?.includes(",") ? urbanPolicy.maxHeight?.replace(",", ".") : urbanPolicy.maxHeight : ""}
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
+      <Box fontSize={12}>
+        <NumberFormat
+          value={urbanPolicy ? urbanPolicy.far?.includes(",") ? urbanPolicy.far?.replace(",", ".") : urbanPolicy.far : ""}
+          displayType="text"
+          decimalScale={2}
+        />
+      </Box>
     </Fragment>
   )
 }
@@ -309,7 +328,8 @@ const container = compose<Props, {}>(
     (state: RootState) => ({
       location: state.domains.shapediver.location,
       modelData: state.domains.shapediver.modelData,
-      densityGeneral: state.domains.shapediver.densityGeneral
+      densityGeneral: state.domains.shapediver.densityGeneral,
+      urbanPolicy: state.domains.shapediver.urbanPolicyParams
     }), {
     setExpandAdvanced
   }

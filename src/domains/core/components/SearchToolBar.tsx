@@ -7,7 +7,7 @@ import { Box, Divider, Grid, makeStyles, Theme, Dialog, List, ListItem } from '@
 import { getLocations, setOption } from 'domains/core/coreSlice';
 import { Densities, Density, Location, LocationSimple } from 'domains/core/models';
 import { ButtonWrapper, LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
-import { setInitialParams, setSaveSuccess, setDensityGeneral, setNameProject, setImportModel, setTerrain } from 'domains/shapeDiver/slice';
+import { setInitialParams, setSaveSuccess, setDensityGeneral, setNameProject, setImportModel, setTerrain, setCoordinates } from 'domains/shapeDiver/slice';
 import { setSearchClick } from 'domains/core/coreSlice';
 import { RootState } from 'app/store';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -56,12 +56,13 @@ interface DispatchProps {
   setOption: typeof setOption;
   setNameProject: typeof setNameProject;
   setTerrain: typeof setTerrain;
+  setCoordinates: typeof setCoordinates;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
-  const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick, setSaveSuccess, setDensityGeneral, setOption, setNameProject, setTerrain } = props;
+  const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick, setSaveSuccess, setDensityGeneral, setOption, setNameProject, setTerrain, setCoordinates } = props;
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
@@ -147,6 +148,7 @@ const SearchToolBar = (props: Props) => {
         window.importFile = undefined;
         setImportModel('')
         setTerrain(1)
+        setCoordinates(undefined)
 
         history.push('/models/step1');
       }
@@ -325,7 +327,8 @@ const container = compose<Props, {}>(
       setDensityGeneral,
       setOption,
       setNameProject,
-      setTerrain
+      setTerrain,
+      setCoordinates
     }
   )
 )(SearchToolBar);

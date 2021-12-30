@@ -18,7 +18,8 @@ import { Collection } from 'ol';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RootState } from "app/store";
-import { setCoordinates } from 'domains/shapeDiver/slice';
+import { getUrbanPolicyData, setCoordinates } from 'domains/shapeDiver/slice';
+import { Coordinates } from 'domains/shapeDiver/models';
 
 interface OwnProps {
   markerDrop?: boolean;
@@ -26,17 +27,22 @@ interface OwnProps {
   changeLocation?: any;
 }
 
-interface DispatchProps{
-  setCoordinates: typeof setCoordinates
+interface DispatchProps {
+  setCoordinates: typeof setCoordinates;
+  getUrbanPolicyData: typeof getUrbanPolicyData;
 }
 
-type Props = OwnProps & DispatchProps;
+interface StateProps {
+  coordinates: Coordinates | undefined;
+}
+
+type Props = OwnProps & DispatchProps & StateProps;
 const MapGeo = (props: Props) => {
 
   const [map, setMap] = useState<Map>();
   const [layer, setLayer] = useState<any>();
 
-  const { markerDrop, location, changeLocation, setCoordinates } = props;
+  const { markerDrop, location, changeLocation, setCoordinates, coordinates, getUrbanPolicyData } = props;
 
   useEffect(() => {
 
@@ -57,6 +63,10 @@ const MapGeo = (props: Props) => {
             lat: lat,
             long: lon
           })
+          getUrbanPolicyData({
+            lat: lat,
+            long: lon
+          });
         })
         .catch((error: any) => {
           console.error(error);
@@ -64,7 +74,7 @@ const MapGeo = (props: Props) => {
     }
 
 
-    const initializeMap = (lon: number, lat: number, boundingBox: string[]) => {
+    const initializeMap = (lon: number, lat: number, boundingBox: string[] | undefined) => {
       const flayer = new VectorLayer({
         source: new VectorSource({
           features: []
@@ -78,12 +88,6 @@ const MapGeo = (props: Props) => {
         }
       })
 
-      let bb = boundingExtent([
-        [parseFloat(boundingBox[3]), parseFloat(boundingBox[1])],
-        [parseFloat(boundingBox[2]), parseFloat(boundingBox[0])]
-      ])
-
-      bb = transformExtent(bb, get('EPSG:4326'), get('EPSG:3857'));
 
       const pointFeature = new Feature({
         geometry: new Point(transform([lon, lat], 'EPSG:4326', 'EPSG:3857'))
@@ -119,7 +123,16 @@ const MapGeo = (props: Props) => {
         controls: []
       })
 
-      initialMap.getView().fit(bb);
+      if(boundingBox){
+        let bb = boundingExtent([
+          [parseFloat(boundingBox![3]), parseFloat(boundingBox![1])],
+          [parseFloat(boundingBox![2]), parseFloat(boundingBox![0])]
+        ])
+        
+        bb = transformExtent(bb, get('EPSG:4326'), get('EPSG:3857'));
+        initialMap.getView().fit(bb);
+      }
+      
 
       translate.on('translateend', (e) => {
         const coordinates = toLonLat(e.coordinate);
@@ -130,24 +143,28 @@ const MapGeo = (props: Props) => {
       setLayer(flayer)
     }
 
-    console.log("LOCATION MAP", location);
-
-    geocode({
-      city: location
-    })
-      .then((results: NominatimResponse[]) => {
-        var result = results[0];
-
-        const lat = parseFloat(result.lon);
-        const lon = parseFloat(result.lat);
-        const boundingBox = result.boundingbox;
-
-        initializeMap(lat, lon, boundingBox);
-
+    if (coordinates) {
+      initializeMap(coordinates.long!, coordinates.lat!, undefined);
+      getUrbanPolicyData(coordinates);
+    } else {
+      geocode({
+        city: location
       })
-      .catch((error: any) => {
-        console.error(error);
-      });
+        .then((results: NominatimResponse[]) => {
+          var result = results[0];
+
+          const lon = parseFloat(result.lon);
+          const lat = parseFloat(result.lat);
+          const boundingBox = result.boundingbox;
+
+          initializeMap(lon, lat, boundingBox);
+
+        })
+        .catch((error: any) => {
+          console.error(error);
+        });
+    }
+
 
   }, [markerDrop, location])
 
@@ -160,12 +177,13 @@ const MapGeo = (props: Props) => {
 }
 
 const container = compose<Props, OwnProps>(
-  connect<{}, DispatchProps, {}, RootState>(
+  connect<StateProps, DispatchProps, {}, RootState>(
     (state: RootState) => ({
-
+      coordinates: state.domains.shapediver.coordinates
     }),
     {
-      setCoordinates
+      setCoordinates,
+      getUrbanPolicyData
     }
   )
 )(MapGeo);

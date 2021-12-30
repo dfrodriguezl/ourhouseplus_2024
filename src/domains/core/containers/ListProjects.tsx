@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { deleteProjectById, loadProjectsByUsername, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setImportModel, setTerrain } from 'domains/shapeDiver/slice';
+import { deleteProjectById, loadProjectsByUsername, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setImportModel, setTerrain, setCoordinates } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -148,12 +148,13 @@ interface DispatchProps {
   setOption: typeof setOption;
   setImportModel: typeof setImportModel;
   setTerrain: typeof setTerrain;
+  setCoordinates: typeof setCoordinates;
 }
 
 type Props = RouteComponentProps & StateProps & DispatchProps;
 export const ListProjects = (props: Props) => {
   const { loadProjectsByUsername, deleteProjectById, history, projects, loading, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject,
-    setOption, setImportModel, setTerrain } = props;
+    setOption, setImportModel, setTerrain, setCoordinates } = props;
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const classes = useStyles();
   const [hover, setHover] = useState(0);
@@ -229,7 +230,7 @@ export const ListProjects = (props: Props) => {
         setNameProject(project?.projectName!)
         setIdProject(id);
         setOption("edit");
-        
+        setCoordinates(project.coordinates ? project.coordinates : undefined);
         
         if (!project.area && project.pathTerrain) {
           unzipFile(project.pathTerrain, id, project.terrain);
@@ -417,7 +418,8 @@ const container = compose<Props, {}>(
       setIdProject,
       setOption,
       setImportModel,
-      setTerrain
+      setTerrain,
+      setCoordinates
     }
   )
 )(ListProjects);

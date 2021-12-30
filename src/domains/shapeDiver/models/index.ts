@@ -157,8 +157,15 @@ export interface ProjectData {
   floorSelection: number | undefined;
   modelData: ModelData | undefined;
   coordinates: Coordinates | undefined;
+  maxHeight: string | undefined;
+  maxFAR: string | undefined;
 }
 export interface Coordinates {
   lat: number | undefined;
   long: number | undefined;
+}
+
+export interface UrbanPolicyParams {
+  maxHeight: string | undefined;
+  far: string | undefined;
 }

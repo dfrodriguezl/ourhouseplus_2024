@@ -9,7 +9,7 @@ import { compose } from 'recompose';
 import _ from 'lodash';
 import { Densities, Density } from 'domains/core/models';
 import { useAuth0 } from '@auth0/auth0-react';
-import { setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setImportModel, setTerrain } from 'domains/shapeDiver/slice';
+import { setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setImportModel, setTerrain, setCoordinates } from 'domains/shapeDiver/slice';
 import { RootState } from 'app/store';
 import { connect } from 'react-redux';
 import { setOption } from '../coreSlice';
@@ -60,12 +60,13 @@ interface DispatchProps {
   setOption: typeof setOption;
   setImportModel: typeof setImportModel;
   setTerrain: typeof setTerrain;
+  setCoordinates: typeof setCoordinates;
 }
 
 
 type Props = OwnProps & DispatchProps;
 const ToolbarDetailsProject = (props: Props) => {
-  const { id, currentProject, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setOption, setImportModel, setTerrain } = props;
+  const { id, currentProject, setInitialParams, setSaveSuccess, setNameProject, setDensityGeneral, setIdProject, setOption, setImportModel, setTerrain, setCoordinates } = props;
   const classes = styles();
   const history = useHistory();
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
@@ -125,6 +126,7 @@ const ToolbarDetailsProject = (props: Props) => {
         setNameProject(project?.projectName!)
         setIdProject(id);
         setOption("edit");
+        setCoordinates(project.coordinates ? project.coordinates : undefined);
         // setTerrain(project?.terrain);
 
         if (project.pathTerrain) {
@@ -190,12 +192,11 @@ const container = compose<Props, OwnProps>(
       setIdProject,
       setOption,
       setImportModel,
-      setTerrain
+      setTerrain,
+      setCoordinates
     }
   )
 )(ToolbarDetailsProject);
 
 export default container;
-
-// export default ToolbarDetailsProject;
 

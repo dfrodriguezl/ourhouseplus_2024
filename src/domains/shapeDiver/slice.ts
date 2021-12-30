@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from 'app/store';
 import { LocationSimple, SearchParams } from 'domains/core/models';
-import { AdvancedOptions, Coordinates, ModelData, Project, ShapeDiverOptions } from 'domains/shapeDiver/models';
+import { AdvancedOptions, Coordinates, ModelData, Project, ShapeDiverOptions, UrbanPolicyParams } from 'domains/shapeDiver/models';
 import { get, post, deletes } from 'app/api';
 import { AxiosResponse } from 'axios';
 
@@ -25,7 +25,8 @@ export interface ShapeDiverState {
   nameProject: string;
   loading: boolean;
   idProject: string | undefined;
-  coordinates: Coordinates;
+  coordinates: Coordinates | undefined;
+  urbanPolicyParams: UrbanPolicyParams | undefined;
 }
 
 const initialState: ShapeDiverState = {
@@ -92,10 +93,8 @@ const initialState: ShapeDiverState = {
   nameProject: '',
   loading: false,
   idProject: undefined,
-  coordinates: {
-    long: 0,
-    lat: 0
-  }
+  coordinates: undefined,
+  urbanPolicyParams: undefined
 };
 
 export const shapeDiverSlice = createSlice({
@@ -196,9 +195,12 @@ export const shapeDiverSlice = createSlice({
     setUndefinedTower: (state, action: PayloadAction<number>) => {
       state.location!.undefinedTower = action.payload;
     },
-    setCoordinates: (state, action: PayloadAction<Coordinates>) => {
+    setCoordinates: (state, action: PayloadAction<Coordinates | undefined>) => {
       state.coordinates = action.payload;
-    }
+    },
+    setDataUrbanPolicy: (state, action: PayloadAction<UrbanPolicyParams | undefined>) => {
+      state.urbanPolicyParams = action.payload;
+    },
   },
 });
 
@@ -229,7 +231,8 @@ export const {
   setIdProject,
   setBalconyType,
   setUndefinedTower,
-  setCoordinates
+  setCoordinates,
+  setDataUrbanPolicy
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
@@ -241,7 +244,8 @@ export const getProjectData = (state: RootState) => ({
   roomType: state.domains.shapediver.roomType,
   floorSelection: state.domains.shapediver.floorSelection,
   modelData: state.domains.shapediver.modelData,
-  coordinates: state.domains.shapediver.coordinates
+  coordinates: state.domains.shapediver.coordinates,
+  urbanPolicy: state.domains.shapediver.urbanPolicyParams
 });
 
 export default shapeDiverSlice.reducer;
@@ -276,5 +280,11 @@ export const deleteProjectById = (id: string, username: string): AppThunk => dis
 export const editProject = (id: string, project: Project): AppThunk => dispatch => {
   post(`/EditProjectById?id=${id}`, { data: project }).then((data: AxiosResponse) => {
     dispatch(setCurrentProject(data.data))
+  });
+};
+
+export const getUrbanPolicyData = (coordinates: Coordinates): AppThunk => dispatch => {
+  get(`/GetUrbanPolicy?lat=${coordinates.lat}&lon=${coordinates.long}`).then((data: AxiosResponse) => {
+    dispatch(setDataUrbanPolicy(data.data[0]))
   });
 };
