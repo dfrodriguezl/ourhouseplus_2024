@@ -113,3 +113,7 @@ export { default as twelveInactive } from './12m_inactive.png'
 export { default as twelveSelected } from './12m_selected.png'
 export { default as fifteenInactive } from './15m_inactive.png'
 export { default as fifteenSelected } from './15m_selected.png'
+
+export {default as imgPage1Investor} from './img_page_1_investor_pdf.png'
+export {default as imgPage2Investor} from './img_page_2_investor_pdf.png'
+export {default as imgPage3Investor} from './img_page_3_investor_pdf.png'

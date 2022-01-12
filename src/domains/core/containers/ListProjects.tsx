@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { Grid, makeStyles, createStyles, IconButton, Typography, Button, Box, Link, LinearProgress } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer, FullPageOverlay } from 'domains/core/containers';
-import { height_6, download_white, height_12, height_13, suburban } from 'assets';
+import { height_6, download_white, height_12, height_13, suburban, imgPage1Investor, imgPage2Investor, imgPage3Investor } from 'assets';
 import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 import EditIcon from '@material-ui/icons/Edit';
@@ -19,6 +19,7 @@ import { Densities, Density } from 'domains/core/models';
 import _ from 'lodash';
 import { setOption } from '../coreSlice';
 import JSZip from 'jszip';
+import { jsPDF } from "jspdf";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -178,7 +179,7 @@ export const ListProjects = (props: Props) => {
     }
 
   }
-  
+
   const getDensityType = (value: number) => {
     const den = _.find(Densities, (x: Density) => x.value === value);
     return den;
@@ -222,7 +223,7 @@ export const ListProjects = (props: Props) => {
               unitsOrganization: locationSaved![densityLocal].unitsOrganization,
             } :
             project?.location,
-          area: project.area === 0 && project.pathTerrain && !project.modelData ? 1 : project.area === 0 && project.modelData?.totalLandArea ? project.modelData?.totalLandArea/10000 : project?.area!,
+          area: project.area === 0 && project.pathTerrain && !project.modelData ? 1 : project.area === 0 && project.modelData?.totalLandArea ? project.modelData?.totalLandArea / 10000 : project?.area!,
           density: getDensityType(densityGeneral)!
         });
         setDensityGeneral(densityGeneral);
@@ -231,7 +232,7 @@ export const ListProjects = (props: Props) => {
         setIdProject(id);
         setOption("edit");
         setCoordinates(project.coordinates ? project.coordinates : undefined);
-        
+
         if (!project.area && project.pathTerrain) {
           unzipFile(project.pathTerrain, id, project.terrain);
         } else {
@@ -245,7 +246,7 @@ export const ListProjects = (props: Props) => {
     }
   }
 
-  async function unzipFile(zip: any,id: string, terrain: number | undefined) {
+  async function unzipFile(zip: any, id: string, terrain: number | undefined) {
     const jsDecodeZip = new JSZip();
     const unzipped = await jsDecodeZip.loadAsync(zip);
     const content = await unzipped.file(unzipped.files['undefined'].name)?.async("blob").then(function (fileData) {
@@ -254,6 +255,267 @@ export const ListProjects = (props: Props) => {
     window.importFile = content;
     setTerrain(terrain);
     setImportModel(id + '.dxf');
+  }
+
+  const generateInvestorPdf = (project: Project) => {
+    // Default export is a4 paper, portrait, using millimeters for units
+    const doc = new jsPDF('landscape', 'px', 'a4');
+
+    // let image_pag1_inv = new Image();
+    // image_pag1_inv.src = 'assets/img_page_1_investor_pdf.png';
+
+    doc.addImage(imgPage1Investor, 'PNG', 0, 0, doc.internal.pageSize.width * 0.6, doc.internal.pageSize.height);
+
+    doc.setFontSize(9);
+    doc.setTextColor("#707070");
+    doc.text("PROJECT", doc.internal.pageSize.width - 15, 30, {
+      align: "right"
+    });
+    const nameProject = doc.splitTextToSize("LAS CASAS DE DIEGO 12345678910", (doc.internal.pageSize.width - (doc.internal.pageSize.width - 50)));
+    doc.setFontSize(12);
+    doc.setTextColor("#403F3F");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text(project.projectName, doc.internal.pageSize.width - 15, 40, {
+      align: "right"
+    });
+    doc.setFontSize(8);
+    doc.setTextColor("#707070");
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("collective housing", doc.internal.pageSize.width - 15, 50, {
+      align: "right"
+    });
+    doc.setFontSize(8);
+    doc.setTextColor("#707070");
+    doc.text(project.location.city + ".", doc.internal.pageSize.width - 15, 60, {
+      align: "right"
+    });
+    doc.setFillColor(237, 235, 235);
+    doc.rect(290, 100, doc.internal.pageSize.width - 290, 280, 'F');
+
+    doc.setFontSize(12);
+    doc.setTextColor("#403F3F");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("INVESTOR TEASER", doc.internal.pageSize.width - 15, 420, {
+      align: "right"
+    });
+    doc.setFontSize(7);
+    doc.setTextColor("#707070");
+    doc.text("Info project for investor", doc.internal.pageSize.width - 15, 430, {
+      align: "right"
+    });
+    doc.setFontSize(12);
+    doc.setTextColor("#403F3F");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text((project.area === 0 ? project.modelData?.totalLandArea.toLocaleString() : (project.area! * 10000).toLocaleString()) + " m2", doc.internal.pageSize.width - 320, 150);
+    doc.setFontSize(9);
+    doc.setTextColor("#707070");
+    doc.text("area terrain", doc.internal.pageSize.width - 320, 157);
+    doc.setFontSize(12);
+    doc.setTextColor("#403F3F");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text(project.modelData?.totalHousingUnits!.toString()!, doc.internal.pageSize.width - 320, 180);
+    doc.setFontSize(9);
+    doc.setTextColor("#707070");
+    doc.text("units housing", doc.internal.pageSize.width - 320, 187);
+    doc.setFontSize(12);
+    doc.setTextColor("#403F3F");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text(project.modelData?.dwellingsDensity!.toString()! + " u/ht", doc.internal.pageSize.width - 320, 210);
+    doc.setFontSize(9);
+    doc.setTextColor("#707070");
+    doc.text("housing density", doc.internal.pageSize.width - 320, 217);
+    doc.setFontSize(12);
+    doc.setTextColor("#403F3F");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text(project.modelData?.totalGrossFloorArea!.toLocaleString().toString()! + " m2", doc.internal.pageSize.width - 320, 240);
+    doc.setFontSize(9);
+    doc.setTextColor("#707070");
+    doc.text("total built area", doc.internal.pageSize.width - 320, 247);
+    doc.setFontSize(12);
+    doc.setTextColor("#403F3F");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text(getDensityType(project.location.densityGeneral! ? project.location.densityGeneral! : project.location.density)?.label!, doc.internal.pageSize.width - 320, 270);
+    doc.setFontSize(9);
+    doc.setTextColor("#707070");
+    doc.text("housing type", doc.internal.pageSize.width - 320, 277);
+    doc.circle(480, 220, 100);
+    doc.setFontSize(9);
+    doc.setTextColor("#707070");
+    doc.text("terrain address", doc.internal.pageSize.width - 15, 140, {
+      align: "right"
+    });
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("4", doc.internal.pageSize.width - 320, 330);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("transport nodes (400 m)", doc.internal.pageSize.width - 200, 330, {
+      align: "right"
+    });
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("300 m", doc.internal.pageSize.width - 320, 340);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("dist. university", doc.internal.pageSize.width - 200, 340, {
+      align: "right"
+    });
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("1500 m", doc.internal.pageSize.width - 320, 350);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("dist. hospital", doc.internal.pageSize.width - 200, 350, {
+      align: "right"
+    });
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("45 yrs", doc.internal.pageSize.width - 320, 360);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("avg age", doc.internal.pageSize.width - 200, 360, {
+      align: "right"
+    });
+    doc.addPage();
+    doc.addImage(imgPage2Investor, 'PNG', doc.internal.pageSize.width*0.6, 0, doc.internal.pageSize.width*0.4, doc.internal.pageSize.height);
+    doc.setFontSize(9);
+    doc.setTextColor("#707070");
+    doc.text("PROJECT", doc.internal.pageSize.width - 15, 30, {
+      align: "right"
+    });
+    doc.setFontSize(12);
+    doc.setTextColor("#403F3F");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text(project.projectName, doc.internal.pageSize.width - 15, 40, {
+      align: "right"
+    });
+    doc.setFontSize(8);
+    doc.setTextColor("#707070");
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("collective housing", doc.internal.pageSize.width - 15, 50, {
+      align: "right"
+    });
+    doc.setFontSize(8);
+    doc.setTextColor("#707070");
+    doc.text(project.location.city + ".", doc.internal.pageSize.width - 15, 60, {
+      align: "right"
+    });
+    doc.setFontSize(12);
+    doc.setTextColor("#FFFFFF");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("Project volume", doc.internal.pageSize.width - 15, 420, {
+      align: "right"
+    });
+    doc.setFontSize(7);
+    doc.setTextColor("#FFFFFF");
+    doc.text("View of project*", doc.internal.pageSize.width - 15, 430, {
+      align: "right"
+    });
+    doc.setFontSize(14);
+    doc.setTextColor("#BD775E");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("Plot info", 50, 30);
+    doc.setTextColor("#707070");
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.setFontSize(12);
+    doc.text("Area & costs", 50, 40);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.setTextColor("#000000");
+    doc.text((project.area === 0 ? project.modelData?.totalLandArea.toLocaleString() : (project.area! * 10000).toLocaleString()) + " m2", 50, 60);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("gross land area", 120, 60);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text((project.modelData?.groundFloorFreeSpace! * 10000).toLocaleString().toString() + " m2", 50, 70);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("usable land plot area", 120, 70);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("USD 3 millions", 50, 100);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Plot price", 50, 110);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("USD 200,000", 50, 120);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Cost construction project", 50, 130);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("USD 1,500 m2", 50, 140);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Cost construction project", 50, 150);
+    doc.setFontSize(14);
+    doc.setTextColor("#BD775E");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("Project", 50, 200);
+    doc.setTextColor("#707070");
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.setFontSize(12);
+    doc.text("Units detail", 50, 210);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.setTextColor("#000000");
+    doc.text((project.modelData?.totalGrossFloorArea)?.toLocaleString() + " m2", 50, 230);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Gross floor area (built area)", 120, 230);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text((project.modelData?.totalHousingUnits!)?.toLocaleString(), 50, 250);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Total units built", 120, 250);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text((project.modelData?.twoBedroom!)?.toLocaleString() + " (" + (project.modelData?.twoBedroomPorc)?.toLocaleString() + "%)", 50, 270);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Nbr. two bedroom (90 m2)", 120, 270);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text((project.modelData?.threeBedroom!)?.toLocaleString() + " (" + (project.modelData?.threeBedroomPorc)?.toLocaleString() + "%)", 50, 280);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Nbr. three bedroom (108 m2)", 120, 280);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text((project.modelData?.fourBedroom!)?.toLocaleString() + " (" + (project.modelData?.fourBedroomPorc)?.toLocaleString() + "%)", 50, 290);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Nbr. three bedroom loft (108 m2)", 120, 290);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text(getDensityType(project.location.densityGeneral! ? project.location.densityGeneral! : project.location.density)?.label!, 50, 400);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Housing type", 50, 410);
+    doc.addPage();
+    doc.setFontSize(9);
+    doc.setTextColor("#707070");
+    doc.text("PROJECT", doc.internal.pageSize.width - 15, 30, {
+      align: "right"
+    });
+    doc.setFontSize(12);
+    doc.setTextColor("#403F3F");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text(project.projectName, doc.internal.pageSize.width - 15, 40, {
+      align: "right"
+    });
+    doc.setFontSize(8);
+    doc.setTextColor("#707070");
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("collective housing", doc.internal.pageSize.width - 15, 50, {
+      align: "right"
+    });
+    doc.setTextColor("#707070");
+    doc.text(project.location.city + ".", doc.internal.pageSize.width - 15, 60, {
+      align: "right"
+    });
+    doc.setFontSize(12);
+    doc.setTextColor("#000000");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text(getDensityType(project.location.densityGeneral! ? project.location.densityGeneral! : project.location.density)?.label!, 50, 400);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("Housing type", 50, 410);
+    doc.addImage(imgPage3Investor, 'PNG', doc.internal.pageSize.width*0.6, 80, 240, 300);
+    doc.setFontSize(14);
+    doc.setTextColor("#BD775E");
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("Project Value", 50, 30);
+    doc.setTextColor("#707070");
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.setFontSize(12);
+    doc.text("Brief add value", 50, 40);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.setTextColor("#000000");
+    doc.text("1.xxxxxxxxxxxxxxx", 50, 60);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("xxxxxxxxxxx", 200, 60);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("2.xxxxxxxxxxxxxxx", 50, 70);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("xxxxxxxxxxx", 200, 70);
+    doc.setFont(doc.getFont().fontName, "normal", "bold");
+    doc.text("3.xxxxxxxxxxxxxxx", 50, 80);
+    doc.setFont(doc.getFont().fontName, "normal", "normal");
+    doc.text("xxxxxxxxxxx", 200, 80);
+    doc.save("a4.pdf");
   }
 
   useEffect(() => {
@@ -326,7 +588,7 @@ export const ListProjects = (props: Props) => {
                   <Grid item container xs={2}>
                     <Grid item container className={classes.backgroundProject} direction="column" justify="center" alignItems="center"
                       onClick={() =>
-                        p.area === 0 && p.pathTerrain && !p.modelData?
+                        p.area === 0 && p.pathTerrain && !p.modelData ?
                           gotTo3DView(p.id, p) :
                           p.modelData ?
                             goToProject(String(p.id)) : null
@@ -374,7 +636,7 @@ export const ListProjects = (props: Props) => {
                           <EditIcon className={classes.optionsIcon} />
                         </Typography>
                       </Link>
-                      <Link href="#" onMouseEnter={() => setHover(p.id)} onMouseLeave={() => setHover(0)}>
+                      <Link onMouseEnter={() => setHover(p.id)} onMouseLeave={() => setHover(0)} onClick={() => generateInvestorPdf(p)}>
                         <Typography className={classes.optionsProject}>
                           {
                             hover === p.id ?
