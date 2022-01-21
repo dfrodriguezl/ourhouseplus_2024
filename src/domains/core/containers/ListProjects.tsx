@@ -380,7 +380,7 @@ export const ListProjects = (props: Props) => {
                           <EditIcon className={classes.optionsIcon} />
                         </Typography>
                       </Link>
-                      <Link onMouseEnter={() => setHover(p.id)} onMouseLeave={() => setHover(0)} onClick={() => setClicked(p.id)}>
+                      {/* <Link onMouseEnter={() => setHover(p.id)} onMouseLeave={() => setHover(0)} onClick={() => setClicked(p.id)}>
                         <Typography className={classes.optionsProject}>
                           {
                             hover === p.id ?
@@ -389,7 +389,7 @@ export const ListProjects = (props: Props) => {
                           }
                           <img alt="download-pdf" src={download_white} className={classes.imgIcon} />
                         </Typography>
-                      </Link>
+                      </Link> */}
                       <div className={classes.optionsProject} onClick={() => deleteProjectById(p.id, user.email)}>
                         Delete
                         <DeleteIcon className={classes.optionsIcon} />
