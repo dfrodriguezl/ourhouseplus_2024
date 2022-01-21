@@ -28,7 +28,8 @@ export enum Parameters {
   MaxSecondaryFloors2 = 'MAX NBR SECONDARY FLOORS',
   FloorsAlignment = 'FLOORS-MAX FLOORS ALIGNEMENT',
   WindowPercentage2 = 'FACADE TYPE',
-  BalconyType = 'BALCONY TYPE'
+  BalconyType = 'BALCONY TYPE',
+  Exports = 'EXPORTS'
 }
 
 export enum DataParameters {
@@ -75,6 +76,11 @@ export enum DataParameters {
   FourBedroomPorc = 'DATA- (%) - T5',
   OneToTwoPorc = 'DATA- (%) - T2T3 LOFT',
   ThreeToFourPorc = 'DATA- (%) - T4T5 LOFT',
+}
+
+export enum exportParameters {
+  exportPNG = 'b96fc761e0e62a937a632469ebd1195d',
+  exportDWG = 'EXPORT-Plan Niveaux DWG'
 }
 
 export interface ShapeDiverOptions {

@@ -148,7 +148,10 @@ const SearchToolBar = (props: Props) => {
         window.importFile = undefined;
         setImportModel('')
         setTerrain(1)
-        setCoordinates(undefined)
+        setCoordinates({
+          lat: 0,
+          long: 0
+        })
 
         history.push('/models/step1');
       }

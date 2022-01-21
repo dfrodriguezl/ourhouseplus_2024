@@ -27,6 +27,10 @@ export interface ShapeDiverState {
   idProject: string | undefined;
   coordinates: Coordinates | undefined;
   urbanPolicyParams: UrbanPolicyParams | undefined;
+  exports: number;
+  exportPNG: boolean;
+  imagePNG: any;
+  loadingMap: boolean;
 }
 
 const initialState: ShapeDiverState = {
@@ -93,8 +97,15 @@ const initialState: ShapeDiverState = {
   nameProject: '',
   loading: false,
   idProject: undefined,
-  coordinates: undefined,
-  urbanPolicyParams: undefined
+  coordinates: {
+    lat: 0,
+    long: 0
+  },
+  urbanPolicyParams: undefined,
+  exports: 1,
+  exportPNG: false,
+  imagePNG: undefined,
+  loadingMap: false
 };
 
 export const shapeDiverSlice = createSlice({
@@ -201,6 +212,18 @@ export const shapeDiverSlice = createSlice({
     setDataUrbanPolicy: (state, action: PayloadAction<UrbanPolicyParams | undefined>) => {
       state.urbanPolicyParams = action.payload;
     },
+    setExports: (state, action: PayloadAction<number>) => {
+      state.exports = action.payload;
+    },
+    setExportPNG: (state, action: PayloadAction<boolean>) => {
+      state.exportPNG = action.payload;
+    },
+    setImagePNG: (state, action: PayloadAction<any>) => {
+      state.imagePNG = action.payload;
+    },
+    setLoadingMap: (state, action: PayloadAction<boolean>) => {
+      state.loadingMap = action.payload;
+    }
   },
 });
 
@@ -232,7 +255,11 @@ export const {
   setBalconyType,
   setUndefinedTower,
   setCoordinates,
-  setDataUrbanPolicy
+  setDataUrbanPolicy,
+  setExports,
+  setExportPNG,
+  setImagePNG,
+  setLoadingMap
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;

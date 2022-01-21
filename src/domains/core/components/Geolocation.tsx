@@ -62,7 +62,7 @@ const Geolocation = (props: Props) => {
 
                 </Grid>
                 <Grid item container xs={12} style={{ height: '70%' }}>
-                    <MapGeo markerDrop={true} location={location} changeLocation={updateLocationText} />
+                    <MapGeo markerDrop={true} location={location} changeLocation={updateLocationText} exportMap={false} mapContainer={true}/>
                 </Grid>
                 <Box>
                     <Button className={classes.button} onClick={() => closeDialog()}>
