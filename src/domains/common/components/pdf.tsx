@@ -9,7 +9,7 @@ import html2canvas from 'html2canvas';
 import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
-import { setExportPNG, setImagePNG, setLoadingMap } from 'domains/shapeDiver/slice';
+import { setImagePNG, setLoadingMap } from 'domains/shapeDiver/slice';
 
 
 interface OwnProps {
@@ -31,7 +31,7 @@ interface DispatchProps {
 
 type Props = StateProps & DispatchProps & OwnProps;
 const Pdf = (props: Props) => {
-  const { exportPdf, project, parentCallback, nameProject, imagePNG, loadingMap, setLoadingMap } = props;
+  const { exportPdf, project, parentCallback, nameProject, imagePNG, setLoadingMap } = props;
 
   const getDensityType = (value: number) => {
     const den = _.find(Densities, (x: Density) => x.value === value);
@@ -47,8 +47,6 @@ const Pdf = (props: Props) => {
         // Default export is a4 paper, portrait, using millimeters for units
         const doc = new jsPDF('landscape', 'px', 'a4');
 
-        // let image_pag1_inv = new Image();
-        // image_pag1_inv.src = 'assets/img_page_1_investor_pdf.png';
 
         doc.addImage(imgPage1Investor, 'PNG', 0, 0, doc.internal.pageSize.width * 0.6, doc.internal.pageSize.height);
 
@@ -57,7 +55,7 @@ const Pdf = (props: Props) => {
         doc.text("PROJECT", doc.internal.pageSize.width - 15, 30, {
           align: "right"
         });
-        // const nameProject = doc.splitTextToSize("LAS CASAS DE DIEGO 12345678910", (doc.internal.pageSize.width - (doc.internal.pageSize.width - 50)));
+
         doc.setFontSize(12);
         doc.setTextColor("#403F3F");
         doc.setFont(doc.getFont().fontName, "normal", "bold");
@@ -126,7 +124,7 @@ const Pdf = (props: Props) => {
         doc.text("housing type", doc.internal.pageSize.width - 320, 277);
 
         const imgMapa = exportMapFunc.current();
-        // console.log("IMG MAPA", imgMapa);
+
         doc.addImage(
           imgMapa,
           'PNG',
@@ -262,11 +260,7 @@ const Pdf = (props: Props) => {
         doc.text(getDensityType(project.location.densityGeneral! ? project.location.densityGeneral! : project.location.density)?.label!, 50, 400);
         doc.setFont(doc.getFont().fontName, "normal", "normal");
         doc.text("Housing type", 50, 410);
-        // doc.roundedRect()
-        // doc.roundedRect(270, 80, doc.internal.pageSize.width - 290, 280, 10, 10);
         html2canvas(document.querySelector("#sdv-container-viewport-canvas")! as HTMLElement).then(canvas => {
-          // console.log("CANVAS", canvas);
-          // console.log("CANVAS PNG", canvas.toDataURL("image/png"));
 
           doc.addImage(
             canvas.toDataURL("image/png"),
@@ -327,7 +321,7 @@ const Pdf = (props: Props) => {
           doc.setFont(doc.getFont().fontName, "normal", "normal");
           doc.text("xxxxxxxxxxx", 200, 80);
 
-          if(imagePNG){
+          if (imagePNG) {
             let image = new Image();
             image.src = imagePNG;
             doc.addImage(
@@ -343,47 +337,7 @@ const Pdf = (props: Props) => {
             setImagePNG(undefined);
           }
 
-          // doc.save("a4.pdf");
-          //   parentCallback(false);
-
-          
-          // html2canvas(document.querySelector(".ol-layer canvas")! as HTMLElement).then(canvas => {
-          //   const imgMapa = exportMapFunc.current();
-          //   // console.log("IMG MAPA", imgMapa);
-
-          // })
-
         });
-
-
-        // // if(exportMapFunc !== null){
-        // //   // (typeof exportMapFunc.current === function)
-        // //   imgMapa = exportMapFunc?.current();
-        // // }
-        // // const imgMapa = exportMapFunc !== null ? exportMapFunc!.current() : null;
-
-        // doc.addImage(
-        //   imgMapa,
-        //   'JPEG',
-        //   3,
-        //   9,
-        //   1000,
-        //   1000
-        // )
-        // html2canvas(document.querySelector("#sdv-container-viewport-canvas")! as HTMLElement).then(canvas => {
-        //   // console.log("CANVAS", canvas);
-        //   // console.log("CANVAS PNG", canvas.toDataURL("image/png"));
-        //   doc.addImage(
-        //     canvas.toDataURL("image/png"),
-        //     'JPEG',
-        //     3,
-        //     9,
-        //     200,
-        //     200
-        //   )
-        //   doc.save("a4.pdf");
-        //   parentCallback(false);
-        // });
 
       }
       generateInvestorPdf();
@@ -393,7 +347,7 @@ const Pdf = (props: Props) => {
   return (
     <Fragment>
       <div style={{ visibility: "hidden", overflow: "hidden", height: 1000, width: 1000 }}>
-        <MapGeo location={project?.location?.city} exportMapFunc={exportMapFunc} exportMap={true}/>
+        <MapGeo location={project?.location?.city} exportMapFunc={exportMapFunc} exportMap={true} />
       </div>
     </Fragment>
   )
@@ -413,5 +367,3 @@ const container = compose<Props, OwnProps>(
 )(Pdf);
 
 export default container;
-
-// export default Pdf;

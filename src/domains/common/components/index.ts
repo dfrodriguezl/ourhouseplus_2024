@@ -12,4 +12,4 @@ export { default as ContainerWhite } from './ContainerWhite';
 export { default as CommercialContainer } from './CommercialContainer';
 export { default as FacadeContainer } from './FacadeContainer';
 export { default as GeolocatedContainer } from './GeolocatedContainer';
-export { default as Pdf } from './Pdf';
+export { default as Pdf } from './pdf';
