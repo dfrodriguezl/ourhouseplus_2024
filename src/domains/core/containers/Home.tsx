@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import HomeSub2 from './HomeSub2';
+import HomeSub3 from './HomeSub3';
 
 
 interface StateProps {
@@ -40,6 +42,8 @@ const Home = (props: Props) => {
           </Grid>
         </Grid>
       </PageContainer>
+      <HomeSub2 />
+      <HomeSub3 />
       <HomeSub1 />
     </Fragment>
   )

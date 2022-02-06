@@ -10,3 +10,5 @@ export { default as DetailsProjects } from './DetailsProject';
 export { default as DetailsSummary } from './DetailsSummary';
 export { default as GeoContainer } from './GeoContainer';
 export { default as TerrainContainer } from './TerrainContainer';
+export { default as HomeSub2 } from './HomeSub2';
+export { default as HomeSub3 } from './HomeSub3';

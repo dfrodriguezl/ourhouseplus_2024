@@ -54,6 +54,9 @@ const useStyles = makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: '#FF6C6C'
     },
+  },
+  boldText: {
+    fontWeight: 'bolder'
   }
 })
 );
@@ -109,9 +112,9 @@ const FormMail = (props: Props) => {
     <RegisterContainer>
       <Grid item container sm={12} xs={10} className={classes.containerForm}>
         <Typography>
-          <h2 style={{ lineHeight: 1.2, fontWeight: 'bold' }}>We help you build better cities <br /> for the future.</h2>
-          {smallScreen ? <p style={{ fontSize: 13, lineHeight: 1.2 }}>Generate and analyse an automated preliminary design of collective housing project in three simple steps.</p> :
-            <h4 style={{ lineHeight: 1.0, fontWeight: 'normal' }}> Generate and analyse an automated preliminary <br /> design of collective housing project in three simple steps.</h4>}
+          <h2 style={{ lineHeight: 1.2, fontWeight: 'bold' }}>SUSTAINABLE CITIES <br /> BEGIN WITH SMART DEVELOPMENT</h2>
+          {smallScreen ? <p style={{ fontSize: 13, lineHeight: 1.2 }}>Real state developers and property owners access <span className={classes.boldText}>an instant property feasibility & pre-design housing project.</span></p> :
+            <h4 style={{ lineHeight: 1.0, fontWeight: 'normal' }}> Real state developers and property owners access <br /> <span className={classes.boldText}>an instant property feasibility & pre-design housing project.</span></h4>}
         </Typography>
       </Grid>
       {smallScreen ?
