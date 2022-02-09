@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     boxText: {
       marginBottom: 10,
-      color: "white"
+      color: "black"
     },
     icon: {
       color: '#92c0d3',

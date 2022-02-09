@@ -30,14 +30,14 @@ a {
 }
 
 .home {
-  background-image: url(assets/Background.png);
+  background-image: url(assets/background_v2.png);
   background-size: 1920px 1080px; 
   background-repeat: round;
 }
 
 @media screen and (max-width: 600px) {
   .home {
-    background-image: url(assets/Background.png);
+    background-image: url(assets/background_v2.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover; 
@@ -78,7 +78,7 @@ a {
 }
 
 .img-landing {
-  background-image: url(assets/Background.png);
+  background-image: url(assets/background_v2.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover; 
