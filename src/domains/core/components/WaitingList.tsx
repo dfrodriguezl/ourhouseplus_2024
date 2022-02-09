@@ -79,13 +79,13 @@ const SocialNetwork = () => {
 
   return (
     <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end' }}>
-      <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
+      <a href="https://www.linkedin.com/company/rea-web/" className={classes.links} target="_blank">
         <LinkedIn fontSize="large" />
       </a>
       <a href="https://www.linkedin.com/company/rea-web/" className={classes.links}>
         <Facebook fontSize="large" />
       </a>
-      <a href="https://www.linkedin.com/company/rea-web/">
+      <a href="https://www.instagram.com/rea_cities/?hl=en" className={classes.links} target="_blank">
         <Instagram fontSize="large" />
       </a>
       <p className={classes.endText}>Follow us on social.</p>
