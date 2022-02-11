@@ -66,9 +66,9 @@ const HomeSub3 = () => {
     <div className={isWaiting ? "home-sub-1" : "home-sub-1-waiting"}>
       <Container >
         <Grid container>
-          <Grid item xs={6} className={classes.title} style={{ alignSelf: 'center'}}>
-            <img src={WhiteBuildings} width="50%" style={{ position: 'relative' }} />
-            <img src={Messages} width="50%" style={{ position: 'relative', left: '-200px' }} />
+          <Grid item xs={6} className={classes.title} style={{ textAlign: 'justify'}}>
+            <img src={WhiteBuildings} width="60%" style={{ position: 'relative' }} />
+            <img src={Messages} width="60%" style={{ position: 'relative', left: '130px', top: '-100px' }} />
           </Grid>
           <Grid item xs={6} style={{ marginBottom: 40 }}>
             <Box component="h4" color="primary">REAL-TIME FEATURES</Box>
