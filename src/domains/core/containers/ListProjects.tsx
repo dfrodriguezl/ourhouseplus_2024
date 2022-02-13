@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from 'react';
 import { Grid, makeStyles, createStyles, IconButton, Typography, Button, Box, Link, LinearProgress } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer, FullPageOverlay } from 'domains/core/containers';
-import { height_6, download_white, height_12, height_13, suburban, imgPage1Investor, imgPage2Investor, imgPage3Investor } from 'assets';
+import { height_6, height_12, height_13, suburban } from 'assets';
 import AddIcon from '@material-ui/icons/Add';
 import AddSharpIcon from '@material-ui/icons/AddSharp';
 import EditIcon from '@material-ui/icons/Edit';
@@ -157,7 +157,6 @@ export const ListProjects = (props: Props) => {
     setOption, setImportModel, setTerrain, setCoordinates } = props;
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const classes = useStyles();
-  const [hover, setHover] = useState(0);
   const [clicked, setClicked] = useState(0);
 
   const goToHome = () => {
@@ -167,10 +166,6 @@ export const ListProjects = (props: Props) => {
   const goToProject = (id: string, project: Project) => {
     setCoordinates(project.coordinates ? project.coordinates : undefined);
     history.push("/details/" + id)
-  }
-
-  const handleCallBackPdf = () => {
-    setClicked(0)
   }
 
   const goToUploadShape = () => {

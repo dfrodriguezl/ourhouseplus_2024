@@ -12,7 +12,6 @@ import { RootState } from "app/store";
 import _ from 'lodash';
 import { useAuth0 } from '@auth0/auth0-react';
 import { loadProjectsByUsername, saveProject, setDensityGeneral, setIdProject, setImportModel, setInitialParams, setSaveSuccess, setTerrain } from "domains/shapeDiver/slice";
-import { Project } from "domains/shapeDiver/models";
 import JSZip from "jszip";
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -153,7 +152,6 @@ const TerrainContainer = (props: Props) => {
   const { user, isAuthenticated, loginWithRedirect } = useAuth0();
   const [nameProject, setNameProject] = useState<string>("");
   const [userName, setUserName] = useState<string>(user ? user.name : "");
-  const [project, setProject] = useState<Project>();
   const [open, setOpen] = useState(false);
   const [selectedFileCompress, setSelectedFileCompress] = useState<any>(null);
   const [densityLocal, setDensityLocal] = useState<string>("");

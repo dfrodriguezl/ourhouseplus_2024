@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Grid, Box, Paper, makeStyles, Button, Theme } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { ArrowForward } from '@material-ui/icons';
-import { basicVolume, facade, interior, Step21, Step22, Step23 } from 'assets';
+import { basicVolume, interior, Step21 } from 'assets';
 
 const styles = makeStyles((theme: Theme) => ({
   image: {

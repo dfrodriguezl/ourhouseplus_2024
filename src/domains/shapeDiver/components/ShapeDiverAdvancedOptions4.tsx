@@ -4,7 +4,6 @@ import { LocationSimple } from 'domains/core/models';
 import { connect } from 'react-redux';
 import { setAdvancedOptions } from '../slice';
 import { Fragment } from 'react';
-import { useHistory } from 'react-router-dom';
 
 const styles = makeStyles((theme: Theme) => ({
   titlePanel: {
@@ -66,7 +65,6 @@ interface DispatchProps {
 type Props = StateProps & DispatchProps;
 const ShapeDiverAdvancedOptions4 = (props: Props) => {
   const { location, setAdvancedOptions } = props;
-  const history = useHistory();
   const classes = styles();
 
   const updateTypology = (value: number) => {

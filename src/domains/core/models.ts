@@ -1,4 +1,4 @@
-import { juan, felix, alex, sebastien, lucas, ula, diego, radhi } from 'assets';
+import { juan, felix, alex, sebastien, lucas, ula, diego, radhi, facadeOptionA, facadeOptionB, facadeOptionC } from 'assets';
 
 export interface SearchParams {
   location: LocationSimple | undefined;
@@ -187,6 +187,24 @@ export const teamMembers = [
     position: 'Asian Market Research & Development',
     city: 'Jakarta, Indonesia',
     picture: radhi
+  }
+]
+
+export const carouselItem = [
+  {
+    id: 1,
+    img: facadeOptionA,
+    name: 'Option A'
+  },
+  {
+    id: 2,
+    img: facadeOptionB,
+    name: 'Option B'
+  },
+  {
+    id: 3,
+    img: facadeOptionC,
+    name: 'Option C'
   }
 ]
 

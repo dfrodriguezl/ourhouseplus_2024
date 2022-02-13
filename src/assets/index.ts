@@ -130,3 +130,11 @@ export {default as PdfIcon} from './pdf-icon.png'
 export {default as BuildingIcon} from './building-icon.png'
 export {default as WhiteBuildings} from './white_buildings.png'
 export {default as Messages} from './messages.png'
+
+export {default as AwesomeBuilding} from './awesome-building.png'
+
+export {default as facadeOptionA} from './facadeOptionA.png'
+export {default as facadeOptionB} from './facadeOptionB.png'
+export {default as facadeOptionC} from './facadeOptionC.png'
+
+export {default as featherLoader} from './feather_loader.png'

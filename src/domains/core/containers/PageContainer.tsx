@@ -81,9 +81,10 @@ const PageContainer = (props: Props) => {
   const isStep3 = history.location.pathname.indexOf('step3') > -1;
   const isListProjects = history.location.pathname.indexOf('projects') > -1;
   const isUploadShape = history.location.pathname.indexOf('uploadShape') > -1;
+  const isChooseFacade = history.location.pathname.indexOf('chooseFacade') > -1;
 
   return (
-    <div className={background} style={(isAbout || isDetails || isStep1 || isListProjects || isUploadShape || isStep2 || isStep3) ? { overflow: 'auto' } : expandAdvanced}>
+    <div className={background} style={(isAbout || isDetails || isStep1 || isListProjects || isUploadShape || isStep2 || isStep3 || isChooseFacade) ? { overflow: 'auto' } : expandAdvanced}>
       <Container>
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer} >
           {
