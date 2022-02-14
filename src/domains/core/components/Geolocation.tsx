@@ -1,7 +1,7 @@
 import { makeStyles, Theme, Typography, Grid, Box, Button } from '@material-ui/core';
 import { MapGeo } from 'domains/core/components'
 import { marker } from 'assets'
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
 const styles = makeStyles((theme: Theme) => ({
     whiteText: {
@@ -23,6 +23,27 @@ const styles = makeStyles((theme: Theme) => ({
         padding: '0px 150px',
         justify: 'center'
     },
+    button2: {
+        cursor: 'pointer',
+        borderRadius: 20,
+        backgroundColor: '#FF6C6C',
+        color: 'white',
+        textTransform: 'none',
+        margin: '30px 0px',
+        '&:hover': {
+            backgroundColor: '#FF6C6C'
+        },
+        padding: '10px 30px'
+    },
+    link: {
+        textAlign: 'center',
+        width: '100%',
+        textDecoration: 'underline',
+        '&:hover': {
+            cursor: 'pointer'
+        },
+        color: '#A2A0A0'
+    }
 }));
 
 interface StateProps {
@@ -30,11 +51,16 @@ interface StateProps {
     close?: any;
 }
 
-type Props = StateProps;
+interface OwnProps {
+    title?: string;
+    type?: string;
+}
+
+type Props = StateProps & OwnProps;
 const Geolocation = (props: Props) => {
 
     const classes = styles();
-    const { location, close } = props;
+    const { location, close, title, type } = props;
     const [textLocation, setTextLocation] = useState<string>(location!)
 
 
@@ -52,7 +78,7 @@ const Geolocation = (props: Props) => {
             </Grid>
             <Grid item container xs={6} justify="center" >
                 <Typography variant="h6" className={classes.whiteText}>
-                    Add project location
+                    {title}
                 </Typography>
                 <Grid xs={12} item className={classes.gridMarker}>
                     <Box className={classes.boxMarker} >
@@ -62,13 +88,30 @@ const Geolocation = (props: Props) => {
 
                 </Grid>
                 <Grid item container xs={12} style={{ height: '70%' }}>
-                    <MapGeo markerDrop={true} location={location} changeLocation={updateLocationText} exportMap={false} mapContainer={true}/>
+                    <MapGeo markerDrop={true} location={location} changeLocation={updateLocationText} exportMap={false} mapContainer={true} />
                 </Grid>
-                <Box>
-                    <Button className={classes.button} onClick={() => closeDialog()}>
-                        Save location
-                    </Button>
-                </Box>
+                {type === "flow" ?
+                    <Fragment>
+                        <Grid xs={12} container justify="center">
+                            <Button
+                                size="large"
+                                className={classes.button2}
+                            >
+                                Next
+                            </Button>
+                        </Grid>
+                        <Grid xs={12} container>
+                            <a className={classes.link}>
+                                Save for later
+                            </a>
+                        </Grid>
+                    </Fragment>
+                    : <Box>
+                        <Button className={classes.button} onClick={() => closeDialog()}>
+                            Save location
+                        </Button>
+                    </Box>}
+
             </Grid>
             <Grid xs={3}>
             </Grid>

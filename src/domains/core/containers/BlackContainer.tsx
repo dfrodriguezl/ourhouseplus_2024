@@ -2,9 +2,10 @@ import { createStyles, Grid, IconButton, makeStyles, Theme, Typography } from '@
 import { setExpandAdvanced } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
-import { PageContainer } from '.';
+import { GeoContainer, PageContainer } from '.';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import { useHistory } from 'react-router-dom';
+import { useState } from 'react';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -35,7 +36,15 @@ const BlackContainer = (props: Props) => {
   const classes = useStyles();
   const history = useHistory();
   const isLoading = history.location.pathname.indexOf('loading') > -1;
+  const [open, setOpen] = useState<boolean>(false);
 
+  const goToMap = () => {
+    setOpen(true);
+  }
+
+  const closeGeoDialog = () => {
+    setOpen(false);
+  }
 
   return (
     <PageContainer background="black-model" >
@@ -50,11 +59,12 @@ const BlackContainer = (props: Props) => {
       </Grid>
       {!isLoading ?
         <Grid container xs={12}>
-          <IconButton>
+          <IconButton onClick={() => goToMap()}>
             <ArrowBackIosIcon className={classes.title} />
             <Typography className={classes.title}>Back</Typography>
           </IconButton>
         </Grid> : null}
+        <GeoContainer open={open} location="New York" closeFunction={closeGeoDialog} type="flow"/>
     </PageContainer>
   );
 }

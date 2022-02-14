@@ -7,17 +7,18 @@ interface ownProps {
   open: boolean;
   location?: string;
   closeFunction?: any;
+  type?: string;
 }
 
 
 const GeoContainer = (props: ownProps) => {
 
-  const { open, location, closeFunction } = props;
+  const { open, location, closeFunction, type } = props;
 
   return (
     <Dialog fullScreen open={open} >
       <PageContainer background="black-model" >
-        <Geolocation location={location} close={closeFunction} />
+        <Geolocation location={location} close={closeFunction} title="Add project location" type={type!}/>
       </PageContainer>
     </Dialog>
   )
