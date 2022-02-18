@@ -5,6 +5,8 @@ import { BlackContainer } from '.';
 import { AwesomeBuilding } from 'assets';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import HourglassFullIcon from '@material-ui/icons/HourglassFull';
+import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 
 
 const itemsLoading = [
@@ -80,8 +82,20 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
+
+
 const Loading = () => {
   const classes = useStyles();
+  const history = useHistory();
+
+  useEffect(() => {
+    setTimeout(() => {
+      history.push('/models/step1');
+    }, 5000)
+  }, [history])
+
+
+
 
   return (
     <BlackContainer>
@@ -89,7 +103,7 @@ const Loading = () => {
         <Grid xs={1}></Grid>
         <Grid xs={2} item container>
           <IconButton className={classes.uploadIcon}>
-            <img src={AwesomeBuilding} width="70%" />
+            <img src={AwesomeBuilding} width="70%" alt="icon-upload" />
           </IconButton>
         </Grid>
         <Grid xs={1} />
@@ -107,31 +121,29 @@ const Loading = () => {
         <Grid xs={12} container>
           <Grid xs={6} item>
             {itemsLoading.map((item, index) => {
-              if (index < columnSize) {
-                return (
+              return (
+                index < columnSize ?
                   <Typography>
                     {item.state === "active" ?
                       <CheckCircleIcon fontSize='small' className={classes.colorIconActive} /> : null
                     }
                     <span className={classes.listText}>{item.name}</span>
-                  </Typography>
-                )
-              }
-            })}
+                  </Typography> : null
+              )
+            }, [])}
           </Grid>
           <Grid xs={6} item container>
             {itemsLoading.map((item, index) => {
-              if (index >= columnSize) {
-                return (
+              return (
+                index >= columnSize ?
                   <Typography>
                     {item.state === "active" ?
                       <CheckCircleIcon fontSize='small' className={classes.colorIconActive} />
                       : <HourglassFullIcon fontSize="small" className={classes.colorIconInactive} />
                     }
                     <span className={classes.listText}>{item.name}</span>
-                  </Typography>
-                )
-              }
+                  </Typography> : null
+              )
 
             })}
           </Grid>

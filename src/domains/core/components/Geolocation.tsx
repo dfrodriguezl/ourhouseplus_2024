@@ -54,13 +54,14 @@ interface StateProps {
 interface OwnProps {
     title?: string;
     type?: string;
+    nextAction?: any;
 }
 
 type Props = StateProps & OwnProps;
 const Geolocation = (props: Props) => {
 
     const classes = styles();
-    const { location, close, title, type } = props;
+    const { location, close, title, type, nextAction } = props;
     const [textLocation, setTextLocation] = useState<string>(location!)
 
 
@@ -71,6 +72,7 @@ const Geolocation = (props: Props) => {
     const closeDialog = () => {
         close()
     }
+    
 
     return (
         <Grid container item xs={12}>
@@ -96,6 +98,10 @@ const Geolocation = (props: Props) => {
                             <Button
                                 size="large"
                                 className={classes.button2}
+                                onClick={() => {
+                                    closeDialog();
+                                    nextAction();
+                                }}
                             >
                                 Next
                             </Button>

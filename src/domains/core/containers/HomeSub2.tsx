@@ -59,42 +59,42 @@ const HomeSub2 = () => {
           <Grid item container xs={12} style={{ justifyContent: 'center' }}>
             <Box className={classes.minContent}>
               <Avatar className={classes.avatarGray}>
-                <img src={SquareIcon} width="30px" />
+                <img src={SquareIcon} width="30px" alt="square"/>
               </Avatar>
               <h4>LOT</h4>
               <p className={classes.textSize}>You own or will buy a property to develop.</p>
             </Box>
             <Box className={classes.minContent}>
               <Avatar className={classes.avatarBlack}>
-                <img src={FeasibilityIcon} width="30px" />
+                <img src={FeasibilityIcon} width="30px" alt="feasibility"/>
               </Avatar>
               <h4>FEASIBILITY</h4>
               <p className={classes.textSize}>REA will analyse zoning codes & demographic data.</p>
             </Box>
             <Box className={classes.minContent}>
               <Avatar className={classes.avatarBlack}>
-                <img src={PreArchitectureIcon} width="30px" />
+                <img src={PreArchitectureIcon} width="30px" alt="pre-architecture"/>
               </Avatar>
               <h4>PRE-ARCHITECTURE</h4>
               <p className={classes.textSize}>REA will generate a project in real-time to access FAR, LUR and Units.</p>
             </Box>
             <Box className={classes.minContent}>
               <Avatar className={classes.avatarGray}>
-                <img src={FinancialIcon} width="20px" />
+                <img src={FinancialIcon} width="20px" alt="financial"/>
               </Avatar>
               <h4>FINANCIAL ANALYSIS</h4>
               <p className={classes.textSize}>With the project summary numbers given, make you financial analysis.</p>
             </Box>
             <Box className={classes.minContent}>
               <Avatar className={classes.avatarBlack}>
-                <img src={PdfIcon} width="30px" />
+                <img src={PdfIcon} width="30px" alt="pdf"/>
               </Avatar>
               <h4>PROJECT TEASER</h4>
               <p className={classes.textSize}>REA create a project investor/bank and client teaser pdf.</p>
             </Box>
             <Box className={classes.minContent}>
               <Avatar className={classes.avatarGray}>
-                <img src={BuildingIcon} width="30px" />
+                <img src={BuildingIcon} width="30px" alt="building"/>
               </Avatar>
               <h4>DEVELOPMENT</h4>
               <p className={classes.textSize}>Begin pre-sale, building permits of your new housing development.</p>

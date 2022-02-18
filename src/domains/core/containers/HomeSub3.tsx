@@ -37,8 +37,8 @@ const HomeSub3 = () => {
       <Container >
         <Grid container>
           <Grid item xs={6} className={classes.title} style={{ textAlign: 'justify' }}>
-            <img src={WhiteBuildings} width="60%" style={{ position: 'relative' }} />
-            <img src={Messages} width="60%" style={{ position: 'relative', left: '130px', top: '-100px' }} />
+            <img src={WhiteBuildings} width="60%" style={{ position: 'relative' }} alt="white-buildings"/>
+            <img src={Messages} width="60%" style={{ position: 'relative', left: '130px', top: '-100px' }} alt="messages"/>
           </Grid>
           <Grid item xs={6} style={{ marginBottom: 40 }}>
             <Box component="h4" color="primary">REAL-TIME FEATURES</Box>

@@ -4,6 +4,9 @@ import { RootState } from 'app/store';
 import { BlackContainer } from '.';
 import { AwesomeBuilding } from 'assets';
 import CarouselFacade from 'domains/common/components/CarouselFacade';
+import { useHistory } from 'react-router-dom';
+import { setWindow } from 'domains/shapeDiver/slice';
+import { LocationSimple } from '../models';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -52,8 +55,24 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Facade = () => {
+interface StateProps {
+  location: LocationSimple | undefined;
+}
+interface DispatchProps {
+  setWindow: typeof setWindow;
+}
+
+type Props = StateProps & DispatchProps;
+const Facade = (props: Props) => {
   const classes = useStyles();
+  const history = useHistory();
+  const { setWindow, location } = props;
+
+  const goToLoading = () => {
+    history.push("/loading")
+  }
+
+
 
   return (
     <BlackContainer title={"CHOOSE PROJECT FACADE"}>
@@ -61,7 +80,7 @@ const Facade = () => {
         <Grid xs={1}></Grid>
         <Grid xs={2} item container>
           <IconButton className={classes.uploadIcon}>
-            <img src={AwesomeBuilding} width="70%" />
+            <img src={AwesomeBuilding} width="70%" alt="awesome-building"/>
           </IconButton>
         </Grid>
         <Grid xs={1} />
@@ -72,12 +91,13 @@ const Facade = () => {
             <span className={classes.subtitleStyle}>Choose option to build</span>
           </Typography>
         </Grid>
-        <CarouselFacade />
+        <CarouselFacade setWindow={setWindow} location={location}/>
       </Grid>
       <Grid xs={12} container justify="center">
         <Button
           size="large"
           className={classes.button}
+          onClick={() => goToLoading()}
         >
           Next
         </Button>
@@ -92,9 +112,13 @@ const Facade = () => {
   );
 }
 
-const container = connect<{}, {}, {}, RootState>(
-  (state: RootState) => ({}),
-  {}
+const container = connect<StateProps, DispatchProps, {}, RootState>(
+  (state: RootState) => ({
+    location: state.domains.shapediver.location
+  }),
+  {
+    setWindow
+  }
 )(Facade);
 
 export default container;

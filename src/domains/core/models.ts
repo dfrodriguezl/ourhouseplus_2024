@@ -192,17 +192,17 @@ export const teamMembers = [
 
 export const carouselItem = [
   {
-    id: 1,
+    id: 0,
     img: facadeOptionA,
     name: 'Option A'
   },
   {
-    id: 2,
+    id: 1,
     img: facadeOptionB,
     name: 'Option B'
   },
   {
-    id: 3,
+    id: 2,
     img: facadeOptionC,
     name: 'Option C'
   }

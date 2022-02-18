@@ -118,13 +118,13 @@ const SocialNetwork = (propsClasses: propsClasses) => {
 
   return (
     <Grid item xs={12} sm={1} className={classes.socialButtons} style={{ alignSelf: 'flex-end' }}>
-      <a href="https://www.linkedin.com/company/rea-web/" className={classes.links} target="_blank">
+      <a href="https://www.linkedin.com/company/rea-web/" className={classes.links} target="_blank" rel="noreferrer">
         <LinkedIn />
       </a>
       <a href="https://www.linkedin.com/company/rea-web/" className={clsx(classes.links, true && classes.itemInactive, true)}>
         <Facebook />
       </a>
-      <a href="https://www.instagram.com/rea_cities/?hl=en" className={classes.links} target="_blank">
+      <a href="https://www.instagram.com/rea_cities/?hl=en" className={classes.links} target="_blank" rel="noreferrer">
         <Instagram />
       </a>
     </Grid>

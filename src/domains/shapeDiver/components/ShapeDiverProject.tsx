@@ -4,7 +4,7 @@ import { compose } from 'recompose';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Grid, makeStyles, Divider, IconButton, Theme, Snackbar, SnackbarContent } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { editProject, getProjectData, saveProject, setAdvancedOptions, setExportPNG, setExports, setNameProject } from 'domains/shapeDiver/slice';
+import { editProject, getProjectData, saveProject, setAdvancedOptions, setExportPNG, setNameProject } from 'domains/shapeDiver/slice';
 import { save } from 'assets'
 import CloseIcon from '@material-ui/icons/Close';
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
@@ -42,7 +42,6 @@ interface DispatchProps {
   saveProject: typeof saveProject;
   setNameProject: typeof setNameProject;
   editProject: typeof editProject;
-  setExports: typeof setExports;
   setExportPNG: typeof setExportPNG;
 }
 
@@ -56,7 +55,7 @@ interface StateProps {
 
 type Props = StateProps & DispatchProps;
 const ShapeDiverProject = (props: Props) => {
-  const { saveProject, projectData, saveSuccess, setNameProject, nameProject, editProject, idProject, option, setExports, setExportPNG } = props;
+  const { saveProject, projectData, saveSuccess, setNameProject, nameProject, editProject, idProject, option, setExportPNG } = props;
   const { user } = useAuth0();
   const [projectName, setProjectName] = useState(nameProject);
   const [open, setOpen] = useState(false);
@@ -194,8 +193,7 @@ const container = compose<Props, {}>(
       saveProject,
       setNameProject,
       editProject,
-      setExportPNG,
-      setExports
+      setExportPNG
     }
   )
 )(ShapeDiverProject);
