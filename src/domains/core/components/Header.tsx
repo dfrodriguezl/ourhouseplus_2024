@@ -143,7 +143,7 @@ const Header = (props: RouteComponentProps) => {
               <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={100} />
             </Link>
 
-            {!(isRegister || isSignUp || isWaiting || isAbout) ?
+            {!( isSignUp || isWaiting || isAbout) ?
               <div className={classes.menuButton}>
                 <IconButton
                   edge="end"
