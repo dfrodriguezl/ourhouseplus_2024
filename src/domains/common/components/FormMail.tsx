@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { Typography, Grid, Input, InputAdornment, Button } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useHistory } from 'react-router-dom';
 import { RegisterContainer } from 'domains/core/containers';
 import { ImgVideo } from '.';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   containerForm: {
@@ -57,7 +58,32 @@ const useStyles = makeStyles((theme) => ({
   },
   boldText: {
     fontWeight: 'bolder'
-  }
+  },
+  textCenter: {
+    textAlign: 'center'
+  },
+  fontText: {
+    fontSize: 15
+  },
+  inputSmall: {
+    width: '100%'
+  },
+  itemText: {
+    textTransform: 'capitalize',
+    color: '#000000'
+  },
+  buttonGreen: {
+    cursor: 'pointer',
+    borderRadius: 20,
+    backgroundColor: '#50A01E',
+    color: 'white',
+    textTransform: 'none',
+    '&:hover': {
+      backgroundColor: '#FF6C6C'
+    },
+    padding: '0px 10px'
+  },
+
 })
 );
 
@@ -112,13 +138,13 @@ const FormMail = (props: Props) => {
     <RegisterContainer>
       <Grid item container sm={12} xs={10} className={classes.containerForm}>
         <Typography>
-          <h2 style={{ lineHeight: 1.2, fontWeight: 'bold' }}>SUSTAINABLE CITIES <br /> BEGIN WITH SMART DEVELOPMENT</h2>
-          {smallScreen ? <p style={{ fontSize: 13, lineHeight: 1.2 }}>Real state developers and property owners access <span className={classes.boldText}>an instant property feasibility & pre-design housing project.</span></p> :
+          <h2 style={{ lineHeight: 1.2, fontWeight: 'bold' }} className={smallScreen ? classes.textCenter : ''}>SUSTAINABLE CITIES <br /> BEGIN WITH SMART DEVELOPMENT</h2>
+          {smallScreen ? null :
             <h4 style={{ lineHeight: 1.0, fontWeight: 'normal' }}> Real state developers and property owners access <br /> <span className={classes.boldText}>an instant property feasibility & pre-design housing project.</span></h4>}
         </Typography>
       </Grid>
-      {smallScreen ?
-        <ImgVideo></ImgVideo> : null}
+      {/* {smallScreen ?
+        <ImgVideo></ImgVideo> : null} */}
       <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end' }}>
         <form
           action="https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9"
@@ -131,8 +157,13 @@ const FormMail = (props: Props) => {
         >
           {status === "success" || status === "error" ?
             history.push("/waiting/" + firstName + "_" + lastName) : null}
-          <Input type="text" name="FNAME" id="mce-FNAME" placeholder="First name" onChange={handleChange1} className={classes.input} disableUnderline required />
-          <Input type="text" name="LNAME" id="mce-LNAME" placeholder="Last Name" onChange={handleChange2} className={classes.input} disableUnderline required />
+          {!smallScreen ?
+            <Fragment>
+              <Input type="text" name="FNAME" id="mce-FNAME" placeholder="First name" onChange={handleChange1} className={classes.input} disableUnderline required />
+              <Input type="text" name="LNAME" id="mce-LNAME" placeholder="Last Name" onChange={handleChange2} className={classes.input} disableUnderline required />
+            </Fragment>
+            : null}
+
           <div>
             <div className="response" id="mce-error-response" style={{ display: 'none' }}></div>
             <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
@@ -140,31 +171,40 @@ const FormMail = (props: Props) => {
           <div style={{ position: 'absolute', left: -5000 }} aria-hidden="true">
             <input type="text" name="b_3c39cbec5fc9d998a5b584676_4064b46da9" />
           </div>
+          {smallScreen ? <p className={clsx(classes.textCenter, true && classes.fontText, true)}>Generate a custom multifamily development on your lot in real time</p> : null}
           <Input type="text" name="EMAIL" id="mce-EMAIL"
             onChange={handleChange3}
-            placeholder="Enter email to sign up"
-            className={classes.input}
+            placeholder={!smallScreen ? "Enter email to sign up" : "Enter your email"}
+            // className={classes.input}
+            className={smallScreen ? clsx(classes.input, true && classes.inputSmall, true) : classes.input}
             disableUnderline
             required
             endAdornment={
-              <InputAdornment position="end">
-                <Button
-                  className={classes.button}
-                  onMouseEnter={() => setHover(true)}
-                  onMouseLeave={() => setHover(false)}
-                  type="submit"
-                  name="subscribe"
-                >
-                  Join us
-                </Button>
-                {/* <IconButton className={classes.iconButton} type="submit" name="subscribe">
+              !smallScreen ?
+                <InputAdornment position="end">
+                  <Button
+                    className={classes.button}
+                    onMouseEnter={() => setHover(true)}
+                    onMouseLeave={() => setHover(false)}
+                    type="submit"
+                    name="subscribe"
+                  >
+                    Join us
+                  </Button>
+                  {/* <IconButton className={classes.iconButton} type="submit" name="subscribe">
                   <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon>
                 </IconButton> */}
-              </InputAdornment>
+                </InputAdornment> : null
             }
           />
+          {smallScreen ? <Grid xs={12} container justify="center">
+            <Button className={classes.buttonGreen} type="submit" name="subscribe">
+              <p className={classes.itemText}>Get Started</p>
+            </Button>
+          </Grid> : null}
         </form>
-        <p className={classes.endText}>We are currently in beta, sign up to our waiting list.</p>
+        {!smallScreen ?
+          <p className={classes.endText}>We are currently in beta, sign up to our waiting list.</p> : null}
       </Grid>
     </RegisterContainer>
 

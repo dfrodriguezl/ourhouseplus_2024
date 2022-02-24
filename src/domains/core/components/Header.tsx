@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       padding: '20px 0',
-      background: 'transparent'
+      background: 'transparent',
     },
     menuButton: {
       marginLeft: 'auto',
@@ -65,10 +65,10 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'none',
     },
     root: {
-      color: "#FFFFFF"
+      color: "#000000"
     },
     icon: {
-      fontSize: "50px !important"
+      fontSize: "35px !important"
     },
     menu: {
       borderRadius: 15,
@@ -180,7 +180,7 @@ const Header = (props: RouteComponentProps) => {
         <AppBar position="static" elevation={0} className={classes.header}>
           <Toolbar variant="regular">
             <Link to="/register">
-              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={100} />
+              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={50} />
             </Link>
 
             {!(isSignUp || isWaiting || isAbout) ?

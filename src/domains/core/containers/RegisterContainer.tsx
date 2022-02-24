@@ -53,7 +53,7 @@ const RegisterContainer = (props: OwnProps) => {
 
   return (
     <Fragment>
-      <PageContainer background="waiting-back">
+      <PageContainer background={smallScreen ? "home-register" : "waiting-back"}>
         <Grid container item sm={12} xs={12} style={{ marginTop: 50 }}>
           <Grid container item sm={6} xs={12} className={classes.textContainer}>
             {children}
@@ -83,12 +83,12 @@ const RegisterContainer = (props: OwnProps) => {
       </PageContainer>
       {
         !isWaiting ?
-        <Fragment>
-          <HomeSub2 />
-          <HomeSub3 />
-          <HomeSub1 />
-        </Fragment>
-           : null
+          <Fragment>
+            <HomeSub2 />
+            <HomeSub3 />
+            <HomeSub1 />
+          </Fragment>
+          : null
       }
 
     </Fragment>
