@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Box, makeStyles, Theme, TableContainer, TableRow, TableCell, TableBody, Table } from '@material-ui/core';
+import { Container, Grid, Box, makeStyles, Theme, TableContainer, TableRow, TableCell, TableBody, Table, useTheme, useMediaQuery, TableHead, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { WhiteBuildings, Messages } from 'assets';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -21,7 +21,25 @@ const styles = makeStyles((theme: Theme) => ({
   },
   iconGray: {
     color: "#A0A0A0"
-  }
+  },
+  boldText: {
+    fontWeight: 'bolder'
+  },
+  itemText: {
+    textTransform: 'capitalize',
+    color: '#6F6E6E'
+  },
+  buttonGreen: {
+    cursor: 'pointer',
+    borderRadius: 20,
+    backgroundColor: 'transparent',
+    color: '#6F6E6E',
+    textTransform: 'none',
+    padding: '-10px 10px',
+    borderColor: '#6F6E6E',
+    lineHeight: 0,
+    margin: '10px 5px 10px'
+  },
 }));
 
 const HomeSub3 = () => {
@@ -30,20 +48,32 @@ const HomeSub3 = () => {
   const history = useHistory();
 
   const isWaiting = history.location.pathname.indexOf('register') > -1;
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
 
   return (
-    <div className={isWaiting ? "home-sub-1" : "home-sub-1-waiting"}>
+    <div className={!smallScreen ? isWaiting ? "home-sub-1" : "home-sub-1-waiting" : "home-sub-1-small"}>
       <Container >
         <Grid container>
-          <Grid item xs={6} className={classes.title} style={{ textAlign: 'justify' }}>
-            <img src={WhiteBuildings} width="60%" style={{ position: 'relative' }} alt="white-buildings"/>
-            <img src={Messages} width="60%" style={{ position: 'relative', left: '130px', top: '-100px' }} alt="messages"/>
-          </Grid>
-          <Grid item xs={6} style={{ marginBottom: 40 }}>
+          {!smallScreen ?
+            <Grid item xs={6} className={classes.title} style={{ textAlign: 'justify' }}>
+              <img src={WhiteBuildings} width="60%" style={{ position: 'relative' }} alt="white-buildings" />
+              <img src={Messages} width="60%" style={{ position: 'relative', left: '130px', top: '-100px' }} alt="messages" />
+            </Grid> : null
+          }
+
+          <Grid item xs={!smallScreen ? 6 : 12} style={{ marginBottom: 40 }}>
             <Box component="h4" color="primary">REAL-TIME FEATURES</Box>
             <TableContainer>
               <Table size="small" className={classes.table}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="center" className={classes.boldText}>Feature</TableCell>
+                    <TableCell align="center" className={classes.boldText}>basic</TableCell>
+                    <TableCell align="center" className={classes.boldText}>premium</TableCell>
+                  </TableRow>
+                </TableHead>
                 <TableBody>
                   <TableRow >
                     <TableCell classes={{ root: classes.rootCell }} padding="none" align="center">Property & lot zoning info</TableCell>
@@ -157,6 +187,9 @@ const HomeSub3 = () => {
               </Table>
 
             </TableContainer>
+            <Button className={classes.buttonGreen} variant="outlined" size="small">
+              <p className={classes.itemText}>Get Started</p>
+            </Button>
           </Grid>
         </Grid>
       </Container>
