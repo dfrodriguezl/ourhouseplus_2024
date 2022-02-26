@@ -63,7 +63,7 @@ const HomeSub3 = () => {
             </Grid> : null
           }
 
-          <Grid item xs={!smallScreen ? 6 : 12} style={{ marginBottom: 40 }}>
+          <Grid item xs={!smallScreen ? 6 : 12} style={{ marginBottom: !smallScreen ? 40 : 10 }}>
             <Box component="h4" color="primary">REAL-TIME FEATURES</Box>
             <TableContainer>
               <Table size="small" className={classes.table}>
@@ -187,9 +187,12 @@ const HomeSub3 = () => {
               </Table>
 
             </TableContainer>
-            <Button className={classes.buttonGreen} variant="outlined" size="small">
-              <p className={classes.itemText}>Get Started</p>
-            </Button>
+            {smallScreen ?
+              <Button className={classes.buttonGreen} variant="outlined" size="small">
+                <p className={classes.itemText}>Get Started</p>
+              </Button> : null
+            }
+
           </Grid>
         </Grid>
       </Container>
