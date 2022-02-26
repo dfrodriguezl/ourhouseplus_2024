@@ -80,6 +80,10 @@ a {
   background: #83828266;
 }
 
+.home-sub-1-small {
+  background: #8382821A;
+}
+
 .black-model {
   background-color: #141414;
 }
@@ -92,6 +96,13 @@ a {
   padding: 10px;
 }
 
+.img-landing-small {
+  background-image: url(assets/video-small.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; 
+  padding: 10px;
+}
 
 .img-team {
   background-image: url(assets/team.png);

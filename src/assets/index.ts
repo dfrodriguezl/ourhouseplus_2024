@@ -138,3 +138,5 @@ export {default as facadeOptionB} from './facadeOptionB.png'
 export {default as facadeOptionC} from './facadeOptionC.png'
 
 export {default as featherLoader} from './feather_loader.png'
+
+export {default as videoSmall} from './video-small.png'
