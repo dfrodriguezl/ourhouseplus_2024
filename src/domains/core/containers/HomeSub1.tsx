@@ -114,6 +114,10 @@ const HomeSub1 = () => {
     }
   }
 
+  const toGetStarted = () => {
+    window.scrollTo(0,0);
+  }
+
   return (
     <div className={!smallScreen ? isWaiting ? "home-sub-1-waiting" : "home-sub-1" : "home-sub-1-small"}>
       <Container >
@@ -199,7 +203,7 @@ const HomeSub1 = () => {
               <Typography variant="subtitle1" className={classes.centerText}>Basic volume</Typography>
               <Typography variant="subtitle2" className={classes.centerText}>Step One</Typography>
             </Grid>
-            <Button className={classes.buttonGreen} type="submit" name="subscribe">
+            <Button className={classes.buttonGreen} onClick={() => toGetStarted()}>
               <p className={classes.itemText}>Get Started</p>
             </Button>
           </Grid>

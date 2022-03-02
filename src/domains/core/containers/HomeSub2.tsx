@@ -79,6 +79,10 @@ const HomeSub2 = () => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
+  const toGetStarted = () => {
+    window.scrollTo(0,0);
+  }
+
 
   return (
     <div className={!smallScreen ? isWaiting ? "home-sub-1-waiting" : "home-sub-1" : "home-sub-1-small"}>
@@ -144,12 +148,12 @@ const HomeSub2 = () => {
             <Typography variant="subtitle2" className={classes.subtitle2}>
               We have created a simple process, using AI, to help you calculate and pre-design a housing project using sustainable methods.
             </Typography>
-            <Button className={classes.buttonGreen} variant="outlined" size="small">
+            <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
               <p className={classes.itemText}>Get Started</p>
             </Button>
             <ImgVideo img={true} type="small"></ImgVideo>
             <Grid container justify='flex-end'>
-              <Button className={classes.buttonGreen} variant="outlined" size="small">
+              <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
                 <p className={classes.itemText}>Get Started</p>
               </Button>
             </Grid>

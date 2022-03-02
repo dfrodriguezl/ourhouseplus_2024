@@ -4,6 +4,7 @@ import { PageContainer } from 'domains/core/containers'
 import { teamMembers } from 'domains/core/models';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
+import { useHistory } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -98,6 +99,7 @@ const About = () => {
   const [hover, setHover] = useState(0);
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const history = useHistory();
 
   const handleScroll = () => {
     window.scroll({
@@ -109,6 +111,10 @@ const About = () => {
 
   if (hover === 0) {
     handleScroll();
+  }
+
+  const toGetStarted = () => {
+    history.push("/register");
   }
 
 
@@ -211,7 +217,7 @@ const About = () => {
                 </Typography>
                 <br />
                 <Grid container justify='flex-end'>
-                  <Button className={classes.buttonOutlined} variant="outlined" size="small">
+                  <Button className={classes.buttonOutlined} variant="outlined" size="small" onClick={() => toGetStarted()}>
                     <p className={classes.itemTextOutlined}>Get Started</p>
                   </Button>
                 </Grid>
@@ -268,7 +274,7 @@ const About = () => {
               </List>
             </Grid>
             <Grid xs={12} container justify="center">
-              <Button className={classes.buttonGreen} type="submit" name="subscribe">
+              <Button className={classes.buttonGreen} onClick={() => toGetStarted()}>
                 <p className={classes.itemText}>Get Started</p>
               </Button>
             </Grid>
