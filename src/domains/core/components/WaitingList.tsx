@@ -43,7 +43,7 @@ const WaitingList = () => {
     <RegisterContainer>
       <Grid item container sm={12} xs={12} className={classes.textContainer}>
         <h2>You have <br /> <span style={{ textDecoration: 'underline' }}>Joined REA's waiting list!.</span></h2>
-        <Grid item sm={12} xs={5} >
+        <Grid item sm={12} xs={smallScreen ? 12 : 5} >
           <p>Hi {name ? name.replace("_", " ") : null} </p>
           {smallScreen ?
             <p style={{ textAlign: 'justify' }}>Thank you for your interest in <span style={{ fontWeight: 'bold' }}>rea</span>!<br />We are so grateful for and overwhelmed by the number of people
@@ -58,7 +58,7 @@ const WaitingList = () => {
 
         </Grid>
 
-        {smallScreen ?
+        {/* {smallScreen ?
           <Fragment>
             <Grid xs={1}></Grid>
             <Grid item xs={6}>
@@ -66,7 +66,7 @@ const WaitingList = () => {
             </Grid>
           </Fragment>
           : null
-        }
+        } */}
 
       </Grid>
 

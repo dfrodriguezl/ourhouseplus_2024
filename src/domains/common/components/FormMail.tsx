@@ -122,7 +122,18 @@ const FormMail = (props: Props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    email &&
+
+    if(smallScreen){
+      setFirstName(email);
+      setLastName(email);
+      email.indexOf("@") > -1 &&
+      onValidated({
+        EMAIL: email,
+        FNAME: firstName,
+        LNAME: lastName,
+      });
+    }else{
+      email &&
       firstName &&
       lastName &&
       email.indexOf("@") > -1 &&
@@ -131,6 +142,8 @@ const FormMail = (props: Props) => {
         FNAME: firstName,
         LNAME: lastName,
       });
+    }
+    
   }
 
 
