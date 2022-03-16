@@ -70,7 +70,7 @@ const styles = makeStyles((theme: Theme) => ({
   },
 }));
 
-const HomeSub2 = () => {
+const HomeSubVideo = () => {
   const classes = styles();
 
   const history = useHistory();
@@ -87,7 +87,7 @@ const HomeSub2 = () => {
   return (
     <div className={!smallScreen ? isWaiting ? "home-sub-1-waiting" : "home-sub-1" : "home-sub-1-small"}>
       <Container >
-        {!smallScreen ?
+        {/* {!smallScreen ?
           <Grid container>
             <Grid item xs={12} className={classes.title}>
               <Box component="h2" color="primary">PRE-DEVELOPMENT PROPERTY INTEGRATION</Box>
@@ -139,32 +139,20 @@ const HomeSub2 = () => {
             <Grid item xs={12} className={classes.subtitle}>
               <Box component="h3" color="primary">with rea</Box>
             </Grid>
-          </Grid> :
+          </Grid> : */}
           <Grid container>
-            <Typography variant="h6" className={classes.subtitle1}>
-              Looking for a bigger kitchen, an additional bedroom or a home office? <br />
-              <span className={classes.boldText}>It begins here.</span>
-            </Typography>
-            <Typography variant="subtitle2" className={classes.subtitle2}>
-              With only a few clicks, yo'll have a new home addition kit, ready to build, Three weeks after permitting. <br />
-              Save time and select various design themes via real-time design app.
-            </Typography>
-            <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
-              <p className={classes.itemText}>Get Started</p>
-            </Button>
-            {/* <ImgVideo img={true} type="small"></ImgVideo>
+            <ImgVideo img={true} type="small"></ImgVideo>
             <Grid container justify='flex-end'>
               <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
                 <p className={classes.itemText}>Get Started</p>
               </Button>
-            </Grid> */}
-
+            </Grid>
           </Grid>
-        }
+        {/* } */}
 
       </Container>
     </div>
   );
 }
 
-export default HomeSub2;
+export default HomeSubVideo;

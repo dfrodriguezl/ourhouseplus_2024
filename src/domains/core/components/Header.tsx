@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       padding: '20px 0',
-      background: 'transparent',
+      background: '#FFFFFF',
     },
     menuButton: {
       marginLeft: 'auto',
@@ -91,24 +91,31 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       cursor: 'pointer',
       borderRadius: 20,
-      backgroundColor: '#50A01E',
+      backgroundColor: '#1C3B09',
       color: 'white',
       textTransform: 'none',
       margin: '30px 10px',
       '&:hover': {
         backgroundColor: '#FF6C6C'
       },
-      padding: '0px 10px'
+      padding: '0px 20px'
     },
     imgLogo: {
-      marginRight: 10
+      marginRight: 15
     },
     bottomText:{
       position: 'absolute',
       bottom: 10,
       textAlign: 'center',
-      fontSize: 15,
-      width: '100%'
+      fontSize: 12,
+      width: '100%',
+      color: '#7E7E7E'
+    },
+    buttonMenu: {
+      marginBottom: -20
+    },
+    buttonMenu2: {
+      marginBottom: 50
     }
   })
 );
@@ -180,7 +187,7 @@ const Header = (props: RouteComponentProps) => {
         <AppBar position="static" elevation={0} className={classes.header}>
           <Toolbar variant="regular">
             <Link to="/register">
-              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={50} />
+              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={100} />
             </Link>
 
             {!(isSignUp || isWaiting || isAbout) ?
@@ -218,19 +225,19 @@ const Header = (props: RouteComponentProps) => {
                         <MenuItem>Become a member</MenuItem>
                       </Button> */}
 
-                        <Button onClick={() => openHome()}>
+                        <Button onClick={() => openHome()} className={classes.buttonMenu}>
                           <MenuItem className={classes.itemText}>Home</MenuItem>
                         </Button>
                         <br />
-                        <Button onClick={() => openAbout()}>
+                        <Button onClick={() => openAbout()} className={classes.buttonMenu}>
                           <MenuItem className={classes.itemText}>About us</MenuItem>
                         </Button>
                         <br />
-                        <Button onClick={() => openHome()}>
+                        <Button onClick={() => openHome()} className={classes.buttonMenu}>
                           <MenuItem className={classes.itemText}>How it works</MenuItem>
                         </Button>
                         <br />
-                        <Button onClick={() => openHome()}>
+                        <Button onClick={() => openHome()} className={classes.buttonMenu2}>
                           <MenuItem className={classes.itemText}>Contact</MenuItem>
                         </Button>
                         <br />
@@ -238,8 +245,8 @@ const Header = (props: RouteComponentProps) => {
                           <MenuItem className={classes.itemText}>Sign up</MenuItem>
                         </Button>
                         <br />
-                        <img src={logo} alt="logo" width={50} className={classes.imgLogo}/>
-                        <p className={classes.bottomText}>Copyright &copy; 2021 rea. All rights reserved</p>
+                        <img src={logo} alt="logo" width={70} className={classes.imgLogo}/>
+                        <p className={classes.bottomText}>Copyright &copy; 2022 Home+. All rights reserved</p>
                       </div>
                     </div>
 

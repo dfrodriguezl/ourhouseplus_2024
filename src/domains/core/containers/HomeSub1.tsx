@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container, Grid, Box, Paper, makeStyles, Button, Theme, useTheme, useMediaQuery, Typography } from '@material-ui/core';
+import { Container, Grid, Box, Paper, makeStyles, Button, Theme, useTheme, useMediaQuery, Typography, Card, CardContent } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { ArrowForward } from '@material-ui/icons';
-import { basicVolume, interior, Step21 } from 'assets';
+import { basicVolume, customizeOnline, interior, Step21 } from 'assets';
 
 const styles = makeStyles((theme: Theme) => ({
   image: {
@@ -67,7 +67,7 @@ const styles = makeStyles((theme: Theme) => ({
   centerText: {
     textAlign: 'center'
   },
-  imgSmall:{
+  imgSmall: {
     width: '100%',
     marginTop: 40
   },
@@ -87,6 +87,9 @@ const styles = makeStyles((theme: Theme) => ({
     padding: '0px 10px',
     marginBottom: 15
   },
+  card:{
+    margin: '10px 2px 20px'
+  }
 }));
 
 const HomeSub1 = () => {
@@ -115,13 +118,13 @@ const HomeSub1 = () => {
   }
 
   const toGetStarted = () => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
   return (
     <div className={!smallScreen ? isWaiting ? "home-sub-1-waiting" : "home-sub-1" : "home-sub-1-small"}>
       <Container >
-        {!smallScreen ?
+        {/* {!smallScreen ?
           <Grid container>
             <Grid item xs={12} className={classes.title}>
               <Box component="h2" color="primary">GENERATE YOUR PROJECT PRE-DEVELOPMENT IN THREE STEPS</Box>
@@ -196,21 +199,26 @@ const HomeSub1 = () => {
 
 
             </Grid>
-          </Grid> :
-          <Grid container justify="center">
-            <Grid className={classes.circle}>
-              <img src={basicVolume} alt="" className={classes.imgSmall} />
-              <Typography variant="subtitle1" className={classes.centerText}>Basic volume</Typography>
-              <Typography variant="subtitle2" className={classes.centerText}>Step One</Typography>
-            </Grid>
-            <Button className={classes.buttonGreen} onClick={() => toGetStarted()}>
-              <p className={classes.itemText}>Get Started</p>
-            </Button>
-          </Grid>
-        }
+          </Grid> : */}
+        <Grid container justify="center">
+          <Card className={classes.card}>
+            <CardContent>
+              <img src={customizeOnline} alt="customise-online" className={classes.imgSmall} />
+            </CardContent>
+          </Card>
+          {/* <Grid> */}
+              {/* <img src={customizeOnline} alt="" className={classes.imgSmall} /> */}
+              {/* <Typography variant="subtitle1" className={classes.centerText}>Basic volume</Typography>
+              <Typography variant="subtitle2" className={classes.centerText}>Step One</Typography> */}
+        {/* </Grid> */}
+        <Button className={classes.buttonGreen} onClick={() => toGetStarted()}>
+          <p className={classes.itemText}>Get Started</p>
+        </Button>
+      </Grid>
+      {/* } */}
 
-      </Container>
-    </div>
+    </Container>
+    </div >
   );
 }
 

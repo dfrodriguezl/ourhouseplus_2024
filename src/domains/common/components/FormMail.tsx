@@ -11,22 +11,26 @@ const useStyles = makeStyles((theme) => ({
   containerForm: {
     alignSelf: 'flex-end',
     [theme.breakpoints.down('sm')]: {
-      alignSelf: 'flex-start',
+      alignSelf: 'center',
+      textAlign: 'center'
     },
   },
   input: {
     margin: '5px 0 10px 0',
-    height: 30,
+    // height: 30,
     borderRadius: 50,
     width: '70%',
-    borderColor: '#707070',
-    borderWidth: '2px',
+    borderColor: '#030303',
+    borderWidth: '1px',
     paddingLeft: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     '&:focus': {
       outline: 'none'
     },
-    backgroundColor: 'white',
-    fontSize: 14
+    backgroundColor: '#FFFFFF8F',
+    fontSize: 14,
+    borderStyle: 'solid'
   },
   iconButton: {
     padding: '5px',
@@ -66,7 +70,8 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 15
   },
   inputSmall: {
-    width: '100%'
+    width: '70%',
+    margin: 'auto'
   },
   itemText: {
     textTransform: 'capitalize',
@@ -75,14 +80,19 @@ const useStyles = makeStyles((theme) => ({
   buttonGreen: {
     cursor: 'pointer',
     borderRadius: 20,
-    backgroundColor: '#50A01E',
-    color: 'white',
+    backgroundColor: '#FFFFFF',
+    color: '#1C5830',
     textTransform: 'none',
     '&:hover': {
       backgroundColor: '#FF6C6C'
     },
-    padding: '0px 10px'
+    padding: '10px 40px',
+    marginTop: 15
   },
+  titleStyle: {
+    color: '#FFFFFF',
+    display: 'block'
+  }
 
 })
 );
@@ -123,99 +133,122 @@ const FormMail = (props: Props) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    if(smallScreen){
+    if (smallScreen) {
       setFirstName(email);
       setLastName(email);
       email.indexOf("@") > -1 &&
-      onValidated({
-        EMAIL: email,
-        FNAME: firstName,
-        LNAME: lastName,
-      });
-    }else{
+        onValidated({
+          EMAIL: email,
+          FNAME: firstName,
+          LNAME: lastName,
+        });
+    } else {
       email &&
-      firstName &&
-      lastName &&
-      email.indexOf("@") > -1 &&
-      onValidated({
-        EMAIL: email,
-        FNAME: firstName,
-        LNAME: lastName,
-      });
+        firstName &&
+        lastName &&
+        email.indexOf("@") > -1 &&
+        onValidated({
+          EMAIL: email,
+          FNAME: firstName,
+          LNAME: lastName,
+        });
     }
-    
+
   }
 
 
   return (
     <RegisterContainer>
-      <Grid item container sm={12} xs={10} className={classes.containerForm}>
-        <Typography>
-          <h2 style={{ lineHeight: 1.2, fontWeight: 'bold' }} className={smallScreen ? classes.textCenter : ''}>SUSTAINABLE CITIES <br /> BEGIN WITH SMART DEVELOPMENT</h2>
+      <Grid item container sm={12} xs={12} className={classes.containerForm} justify="center" direction="column">
+        <Typography variant="subtitle1" className={classes.titleStyle}>
+          HOME Addition Kits
+        </Typography>
+        <Typography variant="h5" className={classes.titleStyle} style={{ fontWeight: 'bolder' }}>
+          Enjoy A Bigger Home.
+        </Typography>
+        <br />
+        <Typography variant="subtitle1" className={classes.titleStyle}>
+          Plan your home addition <br />
+          on our web in less than 10 minutes*.
+        </Typography>
+
+        {/* <Typography  className={classes.titleStyle}>
+          <h2 style={{ lineHeight: 1.2 }} className={smallScreen ? classes.textCenter : ''}>HOME Addition Kits <br /> Enjoy a Bigger Home.</h2>
           {smallScreen ? null :
             <h4 style={{ lineHeight: 1.0, fontWeight: 'normal' }}> Real state developers and property owners access <br /> <span className={classes.boldText}>an instant property feasibility & pre-design housing project.</span></h4>}
-        </Typography>
+        </Typography> */}
       </Grid>
       {/* {smallScreen ?
         <ImgVideo></ImgVideo> : null} */}
       <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end' }}>
-        <form
-          action="https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9"
-          method="post"
-          id="mc-embedded-subscribe-form"
-          name="mc-embedded-subscribe-form"
-          className="validate"
-          target="_blank"
-          onSubmit={handleSubmit}
-        >
-          {status === "success" || status === "error" ?
-            history.push("/waiting/" + firstName + "_" + lastName) : null}
-          {!smallScreen ?
-            <Fragment>
-              <Input type="text" name="FNAME" id="mce-FNAME" placeholder="First name" onChange={handleChange1} className={classes.input} disableUnderline required />
-              <Input type="text" name="LNAME" id="mce-LNAME" placeholder="Last Name" onChange={handleChange2} className={classes.input} disableUnderline required />
-            </Fragment>
-            : null}
+        <Typography variant="subtitle2" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.5 }}>
+          Design the home addition you want, <br />
+          for a guaranteed, all-in price **. <br />
+          New additions designs start at $199.
+        </Typography>
+        <Grid item xs={12}>
+          <form
+            action="https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9"
+            method="post"
+            id="mc-embedded-subscribe-form"
+            name="mc-embedded-subscribe-form"
+            className="validate"
+            target="_blank"
+            onSubmit={handleSubmit}
+          >
+            {status === "success" || status === "error" ?
+              history.push("/waiting/" + firstName + "_" + lastName) : null}
+            {!smallScreen ?
+              <Fragment>
+                <Input type="text" name="FNAME" id="mce-FNAME" placeholder="First name" onChange={handleChange1} className={classes.input} disableUnderline required />
+                <Input type="text" name="LNAME" id="mce-LNAME" placeholder="Last Name" onChange={handleChange2} className={classes.input} disableUnderline required />
+              </Fragment>
+              : null}
 
-          <div>
-            <div className="response" id="mce-error-response" style={{ display: 'none' }}></div>
-            <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
-          </div>
-          <div style={{ position: 'absolute', left: -5000 }} aria-hidden="true">
-            <input type="text" name="b_3c39cbec5fc9d998a5b584676_4064b46da9" />
-          </div>
-          {smallScreen ? <p className={clsx(classes.textCenter, true && classes.fontText, true)}>Generate a custom multifamily development on your lot in real time</p> : null}
-          <Input type="text" name="EMAIL" id="mce-EMAIL"
-            onChange={handleChange3}
-            placeholder={!smallScreen ? "Enter email to sign up" : "Enter your email"}
-            // className={classes.input}
-            className={smallScreen ? clsx(classes.input, true && classes.inputSmall, true) : classes.input}
-            disableUnderline
-            required
-            endAdornment={
-              !smallScreen ?
-                <InputAdornment position="end">
-                  <Button
-                    className={classes.button}
-                    onMouseEnter={() => setHover(true)}
-                    onMouseLeave={() => setHover(false)}
-                    type="submit"
-                    name="subscribe"
-                  >
-                    Join us
-                  </Button>
-                  {/* <IconButton className={classes.iconButton} type="submit" name="subscribe">
+            <div>
+              <div className="response" id="mce-error-response" style={{ display: 'none' }}></div>
+              <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
+            </div>
+            <div style={{ position: 'absolute', left: -5000 }} aria-hidden="true">
+              <input type="text" name="b_3c39cbec5fc9d998a5b584676_4064b46da9" />
+            </div>
+            {/* {smallScreen ? <p className={clsx(classes.textCenter, true && classes.fontText, true)}>Generate a custom multifamily development on your lot in real time</p> : null} */}
+            <Grid item container xs={12}>
+              <Input type="text" name="EMAIL" id="mce-EMAIL"
+                onChange={handleChange3}
+                placeholder={!smallScreen ? "Enter email to sign up" : "Enter your email"}
+                // className={classes.input}
+                className={smallScreen ? clsx(classes.input, true && classes.inputSmall, true) : classes.input}
+                disableUnderline
+                required
+                endAdornment={
+                  !smallScreen ?
+                    <InputAdornment position="end">
+                      <Button
+                        className={classes.button}
+                        onMouseEnter={() => setHover(true)}
+                        onMouseLeave={() => setHover(false)}
+                        type="submit"
+                        name="subscribe"
+                      >
+                        Join us
+                      </Button>
+                      {/* <IconButton className={classes.iconButton} type="submit" name="subscribe">
                   <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon>
                 </IconButton> */}
-                </InputAdornment> : null
-            }
-          />
-          {smallScreen ? <Grid xs={12} container justify="center">
-            <Button className={classes.buttonGreen} type="submit" name="subscribe">
-              <p className={classes.itemText}>Get Started</p>
-            </Button>
-          </Grid> : null}
-        </form>
+                    </InputAdornment> : null
+                }
+              />
+            </Grid>
+
+            {smallScreen ? <Grid xs={12} container justify="center">
+              <Button className={classes.buttonGreen} type="submit" name="subscribe">
+                <span className={classes.itemText}>Get Started</span>
+              </Button>
+            </Grid> : null}
+          </form>
+        </Grid>
+
         {!smallScreen ?
           <p className={classes.endText}>We are currently in beta, sign up to our waiting list.</p> : null}
       </Grid>

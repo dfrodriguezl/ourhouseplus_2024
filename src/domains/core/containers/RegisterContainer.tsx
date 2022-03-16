@@ -10,6 +10,7 @@ import { HomeSub1 } from 'domains/core/containers';
 import { ImgVideo } from 'domains/common/components';
 import HomeSub2 from './HomeSub2';
 import HomeSub3 from './HomeSub3';
+import HomeSubVideo from './HomeSubVideo';
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -21,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'black',
   },
   textContainer: {
-    paddingLeft: '25px',
+    // paddingLeft: '25px',
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: '15px',
+      // paddingLeft: '15px',
     },
   }
 }));
@@ -85,8 +86,9 @@ const RegisterContainer = (props: OwnProps) => {
         !isWaiting ?
           <Fragment>
             <HomeSub2 />
-            <HomeSub3 />
+            {/* <HomeSub3 /> */}
             <HomeSub1 />
+            <HomeSubVideo />
           </Fragment>
           : null
       }
