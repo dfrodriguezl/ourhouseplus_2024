@@ -73,22 +73,23 @@ const styles = makeStyles((theme: Theme) => ({
   },
   itemText: {
     textTransform: 'capitalize',
-    color: '#000000'
+    color: '#FFFFFF'
   },
   buttonGreen: {
     cursor: 'pointer',
     borderRadius: 20,
-    backgroundColor: '#50A01E',
+    backgroundColor: '#214609',
     color: 'white',
     textTransform: 'none',
-    '&:hover': {
-      backgroundColor: '#FF6C6C'
-    },
-    padding: '0px 10px',
-    marginBottom: 15
+    // '&:hover': {
+    //   backgroundColor: '#FF6C6C'
+    // },
+    padding: '5px 30px',
+    marginBottom: 30,
+    marginTop: 20
   },
-  card:{
-    margin: '10px 2px 20px'
+  card: {
+    margin: '10px 30px 20px'
   }
 }));
 
@@ -200,24 +201,35 @@ const HomeSub1 = () => {
 
             </Grid>
           </Grid> : */}
-        <Grid container justify="center">
+        <Grid container justify="center" direction="column" style={{ textAlign: 'center' }}>
           <Card className={classes.card}>
             <CardContent>
               <img src={customizeOnline} alt="customise-online" className={classes.imgSmall} />
             </CardContent>
           </Card>
-          {/* <Grid> */}
-              {/* <img src={customizeOnline} alt="" className={classes.imgSmall} /> */}
-              {/* <Typography variant="subtitle1" className={classes.centerText}>Basic volume</Typography>
-              <Typography variant="subtitle2" className={classes.centerText}>Step One</Typography> */}
-        {/* </Grid> */}
-        <Button className={classes.buttonGreen} onClick={() => toGetStarted()}>
-          <p className={classes.itemText}>Get Started</p>
-        </Button>
-      </Grid>
-      {/* } */}
+          <Typography variant="subtitle1" style={{ fontWeight: 'bolder' }}>
+            Customise online
+          </Typography>
+          <Typography variant="subtitle2">
+            Permit Papers - Order Kit - Extend Home
+          </Typography>
 
-    </Container>
+          {/* <Grid> */}
+          {/* <img src={customizeOnline} alt="" className={classes.imgSmall} /> */}
+          {/* <Typography variant="subtitle1" className={classes.centerText}>Basic volume</Typography>
+              <Typography variant="subtitle2" className={classes.centerText}>Step One</Typography> */}
+          {/* </Grid> */}
+          <br />
+          <Grid item container xs={12} justify="center">
+            <Button className={classes.buttonGreen} onClick={() => toGetStarted()}>
+              <span className={classes.itemText}>Get Started</span>
+            </Button>
+          </Grid>
+
+        </Grid>
+        {/* } */}
+
+      </Container>
     </div >
   );
 }

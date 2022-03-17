@@ -79,7 +79,7 @@ const Footer = (props: Props) => {
             <Grid item xs={12} sm={6}>
               <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/about">About</Link></Box>
               <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/how-it-works">How it works</Link></Box>
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/news">News</Link></Box>
+              {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/news">News</Link></Box> */}
               <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/contact-us">Contact</Link></Box>
             </Grid>
             {smallScreen ?
@@ -88,7 +88,7 @@ const Footer = (props: Props) => {
                 <Grid item xs={12} sm={5}>
                   <div className={classes.bottomLinks}>
                     <Box fontSize={10} color='white'>
-                      Copyright © 2021 rea. All rights reserved
+                      Copyright © 2022 Home+. All rights reserved
                     </Box>
                   </div>
                 </Grid>
@@ -97,7 +97,7 @@ const Footer = (props: Props) => {
                 <Grid item xs={12} sm={5}>
                   <div className={classes.bottomLinks}>
                     <Box fontSize={10} color='white'>
-                      Copyright © 2021 rea. All rights reserved
+                      Copyright © 2022 Home+. All rights reserved
                     </Box>
                   </div>
                 </Grid>

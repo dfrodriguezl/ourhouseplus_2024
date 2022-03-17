@@ -80,7 +80,7 @@ const HomeSubVideo = () => {
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const toGetStarted = () => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
 
@@ -140,14 +140,15 @@ const HomeSubVideo = () => {
               <Box component="h3" color="primary">with rea</Box>
             </Grid>
           </Grid> : */}
-          <Grid container>
-            <ImgVideo img={true} type="small"></ImgVideo>
-            <Grid container justify='flex-end'>
-              <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
-                <p className={classes.itemText}>Get Started</p>
-              </Button>
-            </Grid>
+        <Grid container>
+          <div style={{ marginTop: 50 }}></div>
+          <ImgVideo img={true} type="small"></ImgVideo>
+          <Grid container justify='flex-end'>
+            <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
+              <p className={classes.itemText}>Get Started</p>
+            </Button>
           </Grid>
+        </Grid>
         {/* } */}
 
       </Container>

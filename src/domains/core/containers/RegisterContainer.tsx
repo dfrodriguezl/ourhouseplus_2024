@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Grid, Fab } from '@material-ui/core';
-import { PageContainer } from 'domains/core/containers';
+import { HomeSubCarrousel, PageContainer } from 'domains/core/containers';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
@@ -88,6 +88,7 @@ const RegisterContainer = (props: OwnProps) => {
             <HomeSub2 />
             {/* <HomeSub3 /> */}
             <HomeSub1 />
+            <HomeSubCarrousel />
             <HomeSubVideo />
           </Fragment>
           : null

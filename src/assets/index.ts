@@ -141,3 +141,5 @@ export {default as featherLoader} from './feather_loader.png'
 
 export {default as videoSmall} from './video-small.png'
 export {default as customizeOnline} from './customise-online.jpg'
+export {default as home1Carrousel} from './home1-carrousel.jpeg'
+export {default as homeVideo} from './home-video.jpg'

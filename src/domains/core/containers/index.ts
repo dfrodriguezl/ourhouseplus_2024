@@ -16,3 +16,4 @@ export { default as BlackContainer } from './BlackContainer';
 export { default as Facade } from './Facade';
 export { default as Loading } from './Loading';
 export { default as HomeSubVideo } from './HomeSubVideo';
+export { default as HomeSubCarrousel } from './HomeSubCarrousel';
