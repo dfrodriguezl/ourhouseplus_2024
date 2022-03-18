@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#B4B4B3'
     },
     list: {
-      marginTop: '2%'
+      marginTop: '15%'
     },
     textItem: {
       fontSize: 13,
@@ -27,7 +27,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     container: {
       [theme.breakpoints.down('sm')]: {
-        paddingLeft: '15px',
+        // paddingLeft: '15px',
+        paddingLeft: 25,
+        paddingRight: 25
       },
     },
     title: {
@@ -62,18 +64,18 @@ const useStyles = makeStyles((theme: Theme) =>
     buttonGreen: {
       cursor: 'pointer',
       borderRadius: 20,
-      backgroundColor: '#50A01E',
+      backgroundColor: '#1C3B08',
       color: 'white',
       textTransform: 'none',
-      '&:hover': {
-        backgroundColor: '#FF6C6C'
-      },
-      padding: '0px 10px',
+      // '&:hover': {
+      //   backgroundColor: '#FF6C6C'
+      // },
+      padding: '0px 20px',
       marginBottom: 15
     },
     itemText: {
       textTransform: 'capitalize',
-      color: '#000000'
+      color: 'white'
     },
     buttonOutlined: {
       cursor: 'pointer',
@@ -84,7 +86,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '-10px 10px',
       borderColor: '#6F6E6E',
       lineHeight: 0,
-      margin: '0px 15px 20px'
+      margin: '0px 30px 60px'
     },
     itemTextOutlined: {
       textTransform: 'capitalize',
@@ -121,7 +123,7 @@ const About = () => {
 
   return (
     <PageContainer background={!smallScreen ? "waiting-back" : "home-sub-1-small"}>
-      {!smallScreen ?
+      {/* {!smallScreen ?
         <Fragment>
           <Grid item sm={1} />
           <Grid item container sm={10} xs={12} className={classes.container}>
@@ -197,90 +199,94 @@ const About = () => {
             </Grid>
           </Grid>
           <Grid item sm={1} />
-        </Fragment> :
-        <Fragment>
-          <Grid item sm={1} />
-          <Grid item container sm={10} xs={12} className={classes.container}>
-            <Grid item container sm={12} className={classes.titleContainer}>
-              <Typography variant="subtitle1">
-                Real estate developers and property owners access an
-                <span className={classes.boldText}> instant property feasibility & pre-design housing project.</span>
+        </Fragment> : */}
+      <Fragment>
+        {/* <Grid item sm={1} /> */}
+        <Grid item container xs={12} className={classes.container} direction="column">
+          <Grid item container className={classes.titleContainer}>
+            <Typography variant="subtitle1">
+              Looking for a bigger kitchen, an additional bedroom or a home office?
+              <br />
+              <span className={classes.boldText}> It begins here.</span>
+            </Typography>
+          </Grid>
+          <Grid item container style={{ height: '30%', alignSelf: 'center' }} >
+            <Grid item className={classes.imgContainer} direction="column">
+              <div className="home-register" style={{ height: '100%', borderRadius: 20 }}>
+              </div>
+              <br />
+              <Typography variant="subtitle2">
+                With only a few clicks, you'll have a new home addition kit, ready to build, three weeks after permitting.<br />
+                Save time and select various design themes via real-time.
               </Typography>
-            </Grid>
-            <Grid item container sm={12} style={{ height: '30%', alignSelf: 'center' }}>
-              <Grid item sm={12} xs={12} className={classes.imgContainer}>
-                <div className="home-register" style={{ height: '100%', borderRadius: 20 }}>
-                </div>
-                <br />
-                <Typography variant="subtitle2">
-                  We have created a simple process, using AI, to help you calculate and pre-design a housing project using sustainable methods.
-                </Typography>
-                <br />
-                <Grid container justify='flex-end'>
-                  <Button className={classes.buttonOutlined} variant="outlined" size="small" onClick={() => toGetStarted()}>
-                    <p className={classes.itemTextOutlined}>Get Started</p>
-                  </Button>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item container sm={12} className={classes.list}>
-              <List style={{ width: '100%' }}>
-                <Divider />
-                {teamMembers.map((tm) => {
-                  return (
-                    <ListItem key={tm.id} divider button onMouseEnter={() => setHover(tm.id)} onMouseLeave={() => setHover(0)}>
+              <br />
 
-                      {!smallScreen ?
-                        <Fragment>
-                          <ListItemText primary={tm.name} className={classes.textItem} style={{ width: '30%' }} disableTypography />
-                          <ListItemAvatar >
-                            <Avatar className={hover === tm.id ? classes.large : ''} src={tm.picture} />
-                          </ListItemAvatar>
-                          {hover === tm.id && tm.desc_1 ?
-                            <Grow in={true} {...({ timeout: 1000 })}>
-                              <ListItemText className={classes.textItem} style={{ width: '70%' }} disableTypography >
-                                <p>{tm.desc_1}</p>
-                                <p>{tm.desc_2}</p>
-                              </ListItemText>
-                            </Grow> :
-                            <Fragment>
-                              <ListItemText primary={tm.position} className={classes.textItem} style={{ width: '50%' }} disableTypography />
-                              <ListItemText primary={tm.city} className={classes.textItem} style={{ width: '20%' }} disableTypography />
-                            </Fragment>
-                          }
-                        </Fragment> :
-                        <Fragment>
-                          <ListItemText className={classes.textItem} style={{ width: '70%' }} disableTypography >
-                            <span className={classes.nameTitle}>{tm.name}</span>
-                            {hover === tm.id && tm.desc_1 ?
-                              <Grow in={true} {...({ timeout: 1000 })}>
-                                <span className={classes.nameSubtitle} style={{ padding: 10 }}>{tm.desc_1 + tm.desc_2}</span>
-                              </Grow>
-                              : <Fragment>
-                                <span className={classes.nameSubtitle}>{tm.position}</span>
-                                <br />
-                                <span className={classes.nameCity}>{tm.city}</span>
-                              </Fragment>
-                            }
-                          </ListItemText>
-                          <ListItemAvatar >
-                            <Avatar className={hover === tm.id ? classes.large : ''} src={tm.picture} />
-                          </ListItemAvatar>
-                        </Fragment>
-                      }
-                    </ListItem>
-                  )
-                })}
-              </List>
             </Grid>
-            <Grid xs={12} container justify="center">
-              <Button className={classes.buttonGreen} onClick={() => toGetStarted()}>
-                <p className={classes.itemText}>Get Started</p>
+            <Grid item container justify='flex-end'>
+              <Button className={classes.buttonOutlined} variant="outlined" size="small" onClick={() => toGetStarted()}>
+                <p className={classes.itemTextOutlined}>Get Started</p>
               </Button>
             </Grid>
           </Grid>
-          <Grid item sm={1} />
-        </Fragment>}
+          <Grid item container className={classes.list}>
+            <List style={{ width: '100%' }}>
+              <Divider />
+              {teamMembers.map((tm) => {
+                return (
+                  <ListItem key={tm.id} divider button onMouseEnter={() => setHover(tm.id)} onMouseLeave={() => setHover(0)}>
+
+                    {!smallScreen ?
+                      <Fragment>
+                        <ListItemText primary={tm.name} className={classes.textItem} style={{ width: '30%' }} disableTypography />
+                        <ListItemAvatar >
+                          <Avatar className={hover === tm.id ? classes.large : ''} src={tm.picture} />
+                        </ListItemAvatar>
+                        {hover === tm.id && tm.desc_1 ?
+                          <Grow in={true} {...({ timeout: 1000 })}>
+                            <ListItemText className={classes.textItem} style={{ width: '70%' }} disableTypography >
+                              <p>{tm.desc_1}</p>
+                              <p>{tm.desc_2}</p>
+                            </ListItemText>
+                          </Grow> :
+                          <Fragment>
+                            <ListItemText primary={tm.position} className={classes.textItem} style={{ width: '50%' }} disableTypography />
+                            <ListItemText primary={tm.city} className={classes.textItem} style={{ width: '20%' }} disableTypography />
+                          </Fragment>
+                        }
+                      </Fragment> :
+                      <Fragment>
+                        <ListItemText className={classes.textItem} style={{ width: '70%' }} disableTypography >
+                          <span className={classes.nameTitle}>{tm.name}</span>
+                          {hover === tm.id && tm.desc_1 ?
+                            <Grow in={true} {...({ timeout: 1000 })}>
+                              <span className={classes.nameSubtitle} style={{ padding: 10 }}>{tm.desc_1 + tm.desc_2}</span>
+                            </Grow>
+                            : <Fragment>
+                              <span className={classes.nameSubtitle}>{tm.position}</span>
+                              <br />
+                              <span className={classes.nameCity}>{tm.city}</span>
+                            </Fragment>
+                          }
+                        </ListItemText>
+                        <ListItemAvatar >
+                          <Avatar className={hover === tm.id ? classes.large : ''} src={tm.picture} />
+                        </ListItemAvatar>
+                      </Fragment>
+                    }
+                  </ListItem>
+                )
+              })}
+            </List>
+          </Grid>
+          <Grid container justify="center">
+            <Button className={classes.buttonGreen} onClick={() => toGetStarted()}>
+              <p className={classes.itemText}>Get Started</p>
+            </Button>
+          </Grid>
+        </Grid>
+        {/* <Grid item sm={1} /> */}
+      </Fragment>
+      {/* } */}
 
     </PageContainer>
   )
