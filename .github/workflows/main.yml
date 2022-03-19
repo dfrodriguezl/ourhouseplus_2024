@@ -41,9 +41,9 @@ jobs:
           # FTP host
           host:  ftp://ftp.elatelier.fr 
           # FTP user
-          user: admin@belmonteartesanal.com
+          user: admin@ourhouseplus.com
           # FTP password
-          password: 02212021Re
+          password: OurHousePlus032022
           # Force SSL encryption
           forceSsl: false
           # Local directory
