@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       textAlign: 'center',
-      color: 'white',
+      color: 'black',
       position: 'relative',
       letterSpacing: '1px',
       [theme.breakpoints.down('sm')]: {
@@ -22,8 +22,8 @@ export default function Slogan() {
 
   return (
     <div className={classes.root}>
-      <Box fontWeight="bold" fontSize={24} className={classes.header}>Building future communities together</Box>
-      <Box lineHeight={1.5}>Generate a preliminary design study of multi-dweling smart housing project in three simple steps</Box>
+      <Box fontWeight="bold" fontSize={24} className={classes.header}>Build and sell housing projects faster & better.</Box>
+      <Box lineHeight={1.5}>Generate in real time a housing project and download the Investor & Client presentations.</Box>
     </div>
   )
 }

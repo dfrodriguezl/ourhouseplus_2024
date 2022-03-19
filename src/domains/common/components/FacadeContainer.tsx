@@ -1,5 +1,5 @@
 import { Grid, makeStyles, createStyles, Box, Typography } from "@material-ui/core";
-import { ModelData, Project } from "domains/shapeDiver/models";
+import { Project } from "domains/shapeDiver/models";
 
 const useStyles = makeStyles(() =>
   createStyles({

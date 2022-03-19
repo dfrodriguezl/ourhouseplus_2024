@@ -11,15 +11,16 @@ import logo from 'assets/logo-small.png';
 import whiteLogo from 'assets/logo-small-white.png';
 import { Fragment, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import CloseIcon from '@material-ui/icons/Close';
 
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       padding: '20px 0',
-      background: 'transparent'
+      background: '#FFFFFF',
     },
     menuButton: {
       marginLeft: 'auto',
@@ -64,10 +65,10 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'none',
     },
     root: {
-      color: "#FFFFFF"
+      color: "#000000"
     },
     icon: {
-      fontSize: "50px !important"
+      fontSize: "35px !important"
     },
     menu: {
       borderRadius: 15,
@@ -77,6 +78,44 @@ const useStyles = makeStyles((theme: Theme) =>
     blackButton: {
       borderColor: '#707070',
       color: '#707070'
+    },
+    menuContainer: {
+      textAlign: 'right'
+    },
+    itemText: {
+      textTransform: 'capitalize'
+    },
+    iconClose: {
+      margin: 10
+    },
+    button: {
+      cursor: 'pointer',
+      borderRadius: 20,
+      backgroundColor: '#1C3B09',
+      color: 'white',
+      textTransform: 'none',
+      margin: '30px 10px',
+      '&:hover': {
+        backgroundColor: '#FF6C6C'
+      },
+      padding: '0px 20px'
+    },
+    imgLogo: {
+      marginRight: 15
+    },
+    bottomText:{
+      position: 'absolute',
+      bottom: 10,
+      textAlign: 'center',
+      fontSize: 12,
+      width: '100%',
+      color: '#7E7E7E'
+    },
+    buttonMenu: {
+      marginBottom: -20
+    },
+    buttonMenu2: {
+      marginBottom: 50
     }
   })
 );
@@ -97,6 +136,14 @@ const Header = (props: RouteComponentProps) => {
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const openHome = () => {
+    history.push('/home');
+  }
+
+  const openAbout = () => {
+    history.push('/about');
+  }
 
   const openRegister = () => {
     history.push('/register');
@@ -143,7 +190,7 @@ const Header = (props: RouteComponentProps) => {
               <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={100} />
             </Link>
 
-            {!(isRegister || isSignUp || isWaiting || isAbout) ?
+            {!(isSignUp || isWaiting ) ?
               <div className={classes.menuButton}>
                 <IconButton
                   edge="end"
@@ -170,23 +217,49 @@ const Header = (props: RouteComponentProps) => {
                 {
                   !isAuthenticated
                     ?
-                    <Fragment>
-                      <Button onClick={() => loginWithRedirect()}>
-                        <MenuItem>Sign in</MenuItem>
-                      </Button>
-                      <Button onClick={() => openRegister()}>
+                    <div>
+                      <CloseIcon className={classes.iconClose} onClick={() => handleDrawerClose()} />
+                      <div className={classes.menuContainer}>
+
+                        {/* <Button onClick={() => openRegister()}>
                         <MenuItem>Become a member</MenuItem>
-                      </Button>
-                    </Fragment>
+                      </Button> */}
+
+                        <Button onClick={() => openHome()} className={classes.buttonMenu}>
+                          <MenuItem className={classes.itemText}>Home</MenuItem>
+                        </Button>
+                        <br />
+                        <Button onClick={() => openAbout()} className={classes.buttonMenu}>
+                          <MenuItem className={classes.itemText}>About us</MenuItem>
+                        </Button>
+                        <br />
+                        <Button onClick={() => openHome()} className={classes.buttonMenu}>
+                          <MenuItem className={classes.itemText}>How it works</MenuItem>
+                        </Button>
+                        <br />
+                        <Button onClick={() => openHome()} className={classes.buttonMenu2}>
+                          <MenuItem className={classes.itemText}>Contact</MenuItem>
+                        </Button>
+                        <br />
+                        <Button className={classes.button} onClick={() => loginWithRedirect()}>
+                          <MenuItem className={classes.itemText}>Sign up</MenuItem>
+                        </Button>
+                        <br />
+                        <img src={logo} alt="logo" width={70} className={classes.imgLogo}/>
+                        <p className={classes.bottomText}>Copyright &copy; 2022 Home+. All rights reserved</p>
+                      </div>
+                    </div>
+
                     :
-                    <Fragment>
+                    <div>
+
                       <Button onClick={() => logout()}>
                         <MenuItem>Sign out</MenuItem>
                       </Button>
                       <Button>
                         <MenuItem>{user.name}</MenuItem>
                       </Button>
-                    </Fragment>
+                    </div>
 
                 }
 

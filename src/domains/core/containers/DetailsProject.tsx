@@ -1,61 +1,17 @@
-import { Fragment, useState } from 'react';
-import { Grid, makeStyles, createStyles, Typography, Button } from '@material-ui/core';
+import { Fragment } from 'react';
+import { Grid, makeStyles, createStyles } from '@material-ui/core';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { PageContainer } from 'domains/core/containers';
-import { download, img_basic_volume, img_facade, img_interior } from 'assets';
-import EditIcon from '@material-ui/icons/Edit';
-import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import { TopPanel } from '../components';
-import { loadProjectById } from 'domains/shapeDiver/slice';
+import { img_basic_volume, img_facade, img_interior } from 'assets';
+import { ToolbarDetailsProject, TopPanel } from '../components';
+import { loadProjectById, setTerrain } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { compose } from 'recompose';
 import { Project } from 'domains/shapeDiver/models';
 import { useEffect } from 'react';
-import { CommercialContainer, ContainerInfo, ContainerWhite, FacadeContainer, GeneralParameters, GeolocatedContainer } from 'domains/common/components';
+import { CommercialContainer, ContainerWhite, FacadeContainer, GeneralParameters, GeolocatedContainer } from 'domains/common/components';
 import DwellingsContainer from 'domains/common/components/DwellingsContainer';
-
-
-const varsBasicVolume = [
-  { name: "totalLandArea", label: "Total gross floor area", column: 1 },
-  { name: "landUserRatio", label: "Land use ratio (LUR)", column: 1 },
-  { name: "floorAreaRatio", label: "Floor area ratio (FAR)", column: 1 },
-  { name: "totalHousingUnits", label: "Total Units", column: 1, bottom: 2 },
-  { name: "terrain", label: "Lot shape", column: 1 },
-  { name: "density", label: "Level of density", column: 1 },
-  { name: "unitsNumberType", label: "Number of unit types", column: 1 },
-  { name: "averageBedroomPerDwelling", label: "Avg bedroom per dwelling (hr/du)", column: 2 },
-  { name: "greenSpacePerInhabitant", label: "Green space per inhabitant (m2)", column: 2, bottom: 2 },
-  { name: "greenSpaceDensity", label: "Green space density (%)", column: 2 },
-  { name: "roadDensity", label: "Road density (%)", column: 2, bottom: 2 },
-  { name: "studios", label: "Studios", column: 2 },
-  { name: "largeStudios", label: "Large studios", column: 2 },
-  { name: "oneBedroom", label: "One bedroom", column: 2 },
-  { name: "twoBedroom", label: "Two bedroom", column: 2 },
-  { name: "threeBedroom", label: "Three bedroom", column: 2 },
-  { name: "fourBedroom", label: "Four bedroom", column: 2 },
-]
-
-const varsFacade = [
-  { name: "windowPercentage", label: "Windows size", column: 1 },
-  { name: "facadeDirection", label: "Facade direction", column: 1 },
-  { name: "maxPriFloors", label: "Max primary floors", column: 2 },
-  { name: "maxSecFloors", label: "Max secondary floors", column: 2 },
-  { name: "streetFloors", label: "Street floors", column: 2 },
-]
-
-const varsInterior = [
-  { name: "flatSize", label: "Flat size", column: 1 },
-  { name: "roomType", label: "Room type", column: 1 },
-  { name: "totalLandArea", label: "Gross land area", column: 2, bottom: 2 },
-  { name: "totalGrossFloorArea", label: "Gross floor area (GFA)", column: 2 },
-  { name: "totalGrossLeasableArea", label: "Gross leasable area (GLA)", column: 2, bottom: 2 },
-  { name: "landUserRatio", label: "Land user ratio (LUR)", column: 2 },
-  { name: "plotRatio", label: "Plot ratio", column: 2, bottom: 2 },
-  { name: "totalHousingUnits", label: "Total units (nbr)", column: 2 },
-  { name: "dwellingsDensity", label: "Dwellings density (du/ha)", column: 2 },
-  { name: "averageInhabitantPerDwelling", label: "Avg. inhabitant per dwelling", column: 2 },
-]
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -103,64 +59,18 @@ interface StateProps {
 
 interface DispatchProps {
   loadProjectById: typeof loadProjectById;
+  setTerrain: typeof setTerrain;
 }
 
 type Props = StateProps & DispatchProps & RouteComponentProps<RouteProps>;
 export const DetailsProjects = (props: Props) => {
-  const { history, loadProjectById, currentProject, match: { params } } = props;
+  const { loadProjectById, currentProject, match: { params }, setTerrain } = props;
   const classes = useStyles();
-  const locationSaved: any = currentProject?.location;
-  const densityGeneral = currentProject?.location?.densityGeneral! ? currentProject?.location?.densityGeneral! : currentProject?.location?.density!;
-  const densityLocal = densityGeneral === 0 ? "suburban" : "urban";
-
-  const goToSummary = (id: string) => {
-    history.push("/detailsSum/" + id)
-  }
-
 
   useEffect(() => {
     loadProjectById(params.id);
-  }, [loadProjectById, params])
-
-  const projectObj = {
-    totalLandArea: currentProject?.modelData?.totalLandArea,
-    landUserRatio: currentProject?.modelData?.landUserRatio,
-    floorAreaRatio: currentProject?.modelData?.floorAreaRatio,
-    totalHousingUnits: currentProject?.modelData?.totalHousingUnits,
-    terrain: currentProject?.terrain,
-    terr: currentProject?.terrain,
-    averageBedroomPerDwelling: currentProject?.modelData?.averageBedroomPerDwelling,
-    greenSpacePerInhabitant: currentProject?.modelData?.greenSpacePerInhabitant,
-    greenSpaceDensity: currentProject?.modelData?.greenSpaceDensity,
-    roadDensity: currentProject?.modelData?.roadDensity,
-    studios: currentProject?.modelData?.studios,
-    largeStudios: currentProject?.modelData?.largeStudios,
-    oneBedroom: currentProject?.modelData?.oneBedroom,
-    twoBedroom: currentProject?.modelData?.twoBedroom,
-    threeBedroom: currentProject?.modelData?.threeBedroom,
-    fourBedroom: currentProject?.modelData?.fourBedroom,
-    windowPercentage: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].windowPercentage : currentProject?.location.windowPercentage : null,
-    windowPc: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].windowPercentage : currentProject?.location.windowPercentage : null,
-    facadeDirection: currentProject?.facadeDirection,
-    facadeDir: currentProject?.facadeDirection,
-    maxPriFloors: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].maxPriFloors : currentProject?.location.maxPriFloors : null,
-    maxSecFloors: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].maxSecFloors : currentProject?.location.maxSecFloors : null,
-    streetFloors: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].streetFloors : currentProject?.location.streetFloors : null,
-    flatSize: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].flatSize : currentProject?.location.flatSize : null,
-    flatS: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].flatSize : currentProject?.location.flatSize : null,
-    density: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].density : currentProject?.location.density : null,
-    den: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].density : currentProject?.location.density : null,
-    unitsNumberType: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].unitsNumberType : currentProject?.location.unitsNumberType : null,
-    unitsNumberT: locationSaved !== undefined ? locationSaved![densityLocal] ? locationSaved![densityLocal].unitsNumberType : currentProject?.location.unitsNumberType : null,
-    roomType: currentProject?.roomType,
-    roomT: currentProject?.roomType,
-    totalGrossFloorArea: currentProject?.modelData?.totalGrossFloorArea,
-    totalGrossLeasableArea: currentProject?.modelData?.totalGrossLeasableArea,
-    plotRatio: currentProject?.modelData?.plotRatio,
-    dwellingsDensity: currentProject?.modelData?.dwellingsDensity,
-    averageInhabitantPerDwelling: currentProject?.modelData?.averageInhabitantPerDwelling,
-  }
-
+    setTerrain(1)
+  }, [loadProjectById, params, setTerrain])
 
 
   return (
@@ -168,37 +78,13 @@ export const DetailsProjects = (props: Props) => {
       <PageContainer background="black-model">
         <Grid container xs={12} className={classes.topPanel} >
           <TopPanel />
-          <Grid item container xs={12} direction="row">
-            <Grid item container xs={5}>
-              <Typography variant="h6" className={classes.nameProject}>
-                {currentProject?.projectName} <span className={classes.summaryText}>Summary</span>
-              </Typography>
-            </Grid>
-            <Grid item container xs={7} style={{ justifyContent: 'flex-end' }}>
-              <Button className={classes.compareButton}
-                endIcon={<VisibilityOffIcon />}>
-                Publish
-              </Button>
-              <Button className={classes.compareButton}
-                endIcon={<EditIcon />}>
-                Edit
-              </Button>
-              <Button className={classes.compareButton}
-                endIcon={<img alt="downlaod-icon" src={download} width={15} />}
-                onClick={() => goToSummary(params.id)}>
-                Download pdf
-              </Button>
-            </Grid>
-          </Grid>
+          <ToolbarDetailsProject currentProject={currentProject!} id={params.id} />
           <GeneralParameters project={currentProject} />
           <ContainerWhite img={img_basic_volume} modelData={currentProject?.modelData}></ContainerWhite>
           <DwellingsContainer img={img_facade} modelData={currentProject?.modelData}></DwellingsContainer>
           <CommercialContainer img={img_facade}></CommercialContainer>
           <FacadeContainer img={img_interior} modelData={currentProject}></FacadeContainer>
           <GeolocatedContainer img={img_interior}></GeolocatedContainer>
-          {/* <ContainerInfo img={img_basic_volume} vars={varsBasicVolume} title={"Basic volume"} project={projectObj} />
-          <ContainerInfo img={img_facade} vars={varsFacade} title={"Facade"} project={projectObj} />
-          <ContainerInfo img={img_interior} vars={varsInterior} title={"Interior"} project={projectObj} /> */}
         </Grid>
       </PageContainer>
     </Fragment>
@@ -212,7 +98,8 @@ const container = compose<Props, {}>(
       currentProject: state.domains.shapediver.currentProject
     }),
     {
-      loadProjectById
+      loadProjectById,
+      setTerrain
     }
   ))
   (DetailsProjects);

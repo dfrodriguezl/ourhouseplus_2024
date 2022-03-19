@@ -37,7 +37,6 @@ interface ownProps {
 
 type Props = ownProps;
 const CommercialContainer = (props: Props) => {
-  const { img } = props;
   const classes = useStyles();
 
   return (

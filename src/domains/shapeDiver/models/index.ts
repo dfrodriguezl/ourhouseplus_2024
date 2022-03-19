@@ -28,6 +28,8 @@ export enum Parameters {
   MaxSecondaryFloors2 = 'MAX NBR SECONDARY FLOORS',
   FloorsAlignment = 'FLOORS-MAX FLOORS ALIGNEMENT',
   WindowPercentage2 = 'FACADE TYPE',
+  BalconyType = 'BALCONY TYPE',
+  Exports = 'EXPORTS'
 }
 
 export enum DataParameters {
@@ -72,6 +74,13 @@ export enum DataParameters {
   ThreeBedroomPorc = 'DATA- (%) - T4',
   FourBedroomm2 = 'DATA- (m2) - T5',
   FourBedroomPorc = 'DATA- (%) - T5',
+  OneToTwoPorc = 'DATA- (%) - T2T3 LOFT',
+  ThreeToFourPorc = 'DATA- (%) - T4T5 LOFT',
+}
+
+export enum exportParameters {
+  exportPNG = 'b96fc761e0e62a937a632469ebd1195d',
+  exportDWG = 'EXPORT-Plan Niveaux DWG'
 }
 
 export interface ShapeDiverOptions {
@@ -135,19 +144,34 @@ export interface ModelData {
   threeBedroomPorc: number;
   fourBedroomm2: number;
   fourBedroomPorc: number;
+  oneToTwoPorc: number;
+  threeToFourPorc: number;
 }
 
 export interface Project extends ProjectData {
   projectName: string;
   email: string;
+  pathTerrain: any | undefined;
 }
 
 export interface ProjectData {
-  area: number;
+  area: number | undefined;
   location: LocationSimple;
-  terrain: number;
-  facadeDirection: number;
-  roomType: number;
-  floorSelection: number;
-  modelData: ModelData;
+  terrain: number | undefined;
+  facadeDirection: number | undefined;
+  roomType: number | undefined;
+  floorSelection: number | undefined;
+  modelData: ModelData | undefined;
+  coordinates: Coordinates | undefined;
+  maxHeight: string | undefined;
+  maxFAR: string | undefined;
+}
+export interface Coordinates {
+  lat: number | undefined;
+  long: number | undefined;
+}
+
+export interface UrbanPolicyParams {
+  maxHeight: string | undefined;
+  far: string | undefined;
 }

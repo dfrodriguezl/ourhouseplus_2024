@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100vw',
       height: '100vh'
     },
+    noPadding:{
+      padding: 0
+    }
   })
 );
 
@@ -77,11 +80,15 @@ const PageContainer = (props: Props) => {
   const isAbout = history.location.pathname.indexOf('about') > -1;
   const isDetails = history.location.pathname.indexOf('details') > -1;
   const isStep1 = history.location.pathname.indexOf('step1') > -1;
+  const isStep2 = history.location.pathname.indexOf('step2') > -1;
+  const isStep3 = history.location.pathname.indexOf('step3') > -1;
   const isListProjects = history.location.pathname.indexOf('projects') > -1;
+  const isUploadShape = history.location.pathname.indexOf('uploadShape') > -1;
+  const isChooseFacade = history.location.pathname.indexOf('chooseFacade') > -1;
 
   return (
-    <div className={background} style={(isAbout || isDetails || isStep1 || isListProjects) ? { overflow: 'auto' } : expandAdvanced}>
-      <Container>
+    <div className={background} style={(isAbout || isDetails || isStep1 || isListProjects || isUploadShape || isStep2 || isStep3 || isChooseFacade) ? { overflow: 'auto' } : expandAdvanced}>
+      <Container className={classes.noPadding}>
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer} >
           {
             !noHeader &&

@@ -41,7 +41,6 @@ interface ownProps {
 
 type Props = ownProps;
 const GeolocatedContainer = (props: Props) => {
-  const { img } = props;
   const classes = useStyles();
 
   return (

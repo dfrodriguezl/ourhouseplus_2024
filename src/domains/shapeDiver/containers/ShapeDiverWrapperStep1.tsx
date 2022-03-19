@@ -5,8 +5,8 @@ import { compose } from 'recompose';
 import { RootState } from 'app/store';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Api } from 'shapediver-types';
-import { DataParameters, Parameters } from 'domains/shapeDiver/models';
-import { getArea, setModelData, setOptions } from 'domains/shapeDiver/slice';
+import { DataParameters, exportParameters, Parameters } from 'domains/shapeDiver/models';
+import { getArea, setExportPNG, setExports, setImagePNG, setModelData, setOptions } from 'domains/shapeDiver/slice';
 import { LocationSimple } from 'domains/core/models';
 import { FullPageOverlay } from 'domains/core/containers';
 
@@ -19,13 +19,14 @@ const styles = {
 
 
 interface StateProps {
-  terrain: number;
+  terrain: number | undefined;
   area: number | undefined;
   location: LocationSimple | undefined;
   importModel: string;
   densityGeneral: string;
+  exports: number;
+  exportPNG: boolean;
 }
-
 interface ComponentProps {
   isLoaded: boolean;
 }
@@ -33,6 +34,7 @@ interface ComponentProps {
 interface DispatchProps {
   setOptions: typeof setOptions;
   setModelData: typeof setModelData;
+  setImagePNG: typeof setImagePNG;
 }
 
 
@@ -60,7 +62,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
   }
 
   public async componentDidUpdate(_props: Props) {
-    const { terrain, area, location, setModelData, densityGeneral } = this.props;
+    const { terrain, area, location, setModelData, densityGeneral, exports, exportPNG, setImagePNG } = this.props;
     const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
 
@@ -71,7 +73,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.Terrain, value: terrain },
             { name: Parameters.Density, value: location.density },
             { name: Parameters.Area, value: area?.toString() },
-            { name: Parameters.Regen, value: location.regen },
+            { name: Parameters.Regen, value: Math.floor(Math.random() * 10) },
             { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
             { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
             { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
@@ -84,6 +86,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.IslandSpacings, value: location.islandSpacings },
             { name: Parameters.FloorsAlignment, value: location.floorsAlignment === undefined ? 0 : location.floorsAlignment },
             { name: Parameters.UnitsNumberType, value: location.unitsOrganization === undefined ? 0 : location.unitsOrganization },
+            { name: Parameters.Exports, value: exports },
           ] :
           [
             { name: Parameters.Terrain, value: terrain },
@@ -91,7 +94,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
             { name: Parameters.Area, value: area?.toString() },
             { name: Parameters.UnitsNumberType, value: location.unitsNumberType },
             { name: Parameters.MaxPrimaryFloors, value: location.maxPriFloors },
-            { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
+            // { name: Parameters.MaxSecondaryFloors, value: location.maxSecFloors },
             { name: Parameters.NumberStreetFloors, value: location.streetFloors },
             { name: Parameters.Typologies, value: location.typologies },
             { name: Parameters.AxisSelection, value: location.axisSelection },
@@ -121,9 +124,9 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         console.log(response.data)
       }
 
+
       const modelData = this.api!.scene.getData().data;
 
-      console.log("MODEL DATA", modelData)
 
       setModelData({
         totalLandArea: _.find(modelData, x => x.name === DataParameters.GrossLandArea)?.data ?? 0,
@@ -167,12 +170,32 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         threeBedroomPorc: _.find(modelData, x => x.name === DataParameters.ThreeBedroomPorc)?.data ?? 0,
         fourBedroomm2: _.find(modelData, x => x.name === DataParameters.FourBedroomm2)?.data ?? 0,
         fourBedroomPorc: _.find(modelData, x => x.name === DataParameters.FourBedroomPorc)?.data ?? 0,
+        oneToTwoPorc: _.find(modelData, x => x.name === DataParameters.OneToTwoPorc)?.data ?? 0,
+        threeToFourPorc: _.find(modelData, x => x.name === DataParameters.ThreeToFourPorc)?.data ?? 0,
       });
+
+      
+      if(exportPNG){
+        const exportResponse = await this.api!.exports.requestAsync({id: exportParameters.exportPNG});
+        // setExports(0)
+        // setExportPNG(false)
+
+        if (exportResponse.err) {
+          console.log(exportResponse.err);
+          return;
+        }
+  
+        if (exportResponse.data) {
+          console.log(exportResponse.data)
+          setImagePNG(exportResponse.data.content![0].href);
+          setExportPNG(false)
+        }
+      }
     }
   }
 
   public async componentDidMount() {
-    const { terrain, area, location, setOptions, setModelData, densityGeneral } = this.props;
+    const { terrain, area, location, setOptions, setModelData, densityGeneral, exports } = this.props;
     const typeDensity = densityGeneral === 'suburban' ? 'suburban' : 'urban';
 
 
@@ -195,7 +218,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       if (this.api) {
         // register a ShapeDiver CommPlugin
         await this.api.plugins.registerCommPluginAsync({
-          ticket: typeDensity === 'suburban' ? process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1!,
+          // ticket: typeDensity === 'suburban' ? process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1!,
+          ticket: typeDensity === 'suburban' ? location.city === "Medellin" ? process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_2_4_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1_SUB! : process.env.REACT_APP_SHAPE_DIVER_TICKET_STEP_1!,
           // URL of the ShapeDiver backend system used
           // runtime id to use for this CommPlugin (you might register several)
           runtimeId: 'CommPlugin_1',
@@ -208,6 +232,8 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
         this.parameters = this.api.parameters.get().data;
 
         console.log('Available model parameters', this.parameters);
+
+        console.log('Available export model parameters', this.api.exports.get().data);
 
         setOptions({
           regen: typeDensity === "urban" ?
@@ -225,6 +251,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
           floorAreaRatioNet: 0, floorAreaRatioGross: 0, populationDensity: 0, roadDensitym2: 0, greenSpaceDensitym2: 0,
           studiosm2: 0, studiosPorc: 0, largeStudiosm2: 0, largeStudiosPorc: 0, oneBedroomm2: 0, oneBedroomPorc: 0,
           twoBedroomm2: 0, twoBedroomPorc: 0, threeBedroomm2: 0, threeBedroomPorc: 0, fourBedroomm2: 0, fourBedroomPorc: 0,
+          oneToTwoPorc: 0, threeToFourPorc: 0
         });
 
         // // refresh (load geometry), because the initial parameter update might not have changed any values
@@ -248,6 +275,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
               { name: Parameters.StreetDensity, value: location.streetDensity },
               { name: Parameters.FloorsAlignment, value: location.floorsAlignment === undefined ? 0 : location.floorsAlignment },
               { name: Parameters.UnitsNumberType, value: location.unitsOrganization === undefined ? 0 : location.unitsOrganization },
+              { name: Parameters.Exports, value: exports },
             ] :
             [
               { name: Parameters.Terrain, value: terrain },
@@ -271,6 +299,7 @@ class ShapeDiverWrapperStep1 extends React.Component<Props, ComponentProps> {
       }
     }
   }
+
 
   render() {
 
@@ -301,11 +330,14 @@ const container = compose<Props, {}>(
       location: state.domains.shapediver.location,
       importModel: state.domains.shapediver.importModel,
       area: getArea(state),
-      densityGeneral: state.domains.shapediver.densityGeneral
+      densityGeneral: state.domains.shapediver.densityGeneral,
+      exports: state.domains.shapediver.exports,
+      exportPNG: state.domains.shapediver.exportPNG
     }),
     {
       setOptions,
       setModelData,
+      setImagePNG
     }
   )
 )(ShapeDiverWrapperStep1)

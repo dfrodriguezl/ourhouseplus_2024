@@ -113,3 +113,33 @@ export { default as twelveInactive } from './12m_inactive.png'
 export { default as twelveSelected } from './12m_selected.png'
 export { default as fifteenInactive } from './15m_inactive.png'
 export { default as fifteenSelected } from './15m_selected.png'
+
+export {default as imgPage1Investor} from './img_page_1_investor_pdf.png'
+export {default as imgPage2Investor} from './img_page_2_investor_pdf.png'
+export {default as imgPage3Investor} from './img_page_3_investor_pdf.png'
+
+export {default as Step21} from './step2_2_1.png'
+export {default as Step22} from './step2_2_2.png'
+export {default as Step23} from './step2_2_3.png'
+
+export {default as SquareIcon} from './square_icon.png'
+export {default as FeasibilityIcon} from './feasibility-icon.png'
+export {default as PreArchitectureIcon} from './pre-architecture-icon.png'
+export {default as FinancialIcon} from './financial-icon.png'
+export {default as PdfIcon} from './pdf-icon.png'
+export {default as BuildingIcon} from './building-icon.png'
+export {default as WhiteBuildings} from './white_buildings.png'
+export {default as Messages} from './messages.png'
+
+export {default as AwesomeBuilding} from './awesome-building.png'
+
+export {default as facadeOptionA} from './facadeOptionA.png'
+export {default as facadeOptionB} from './facadeOptionB.png'
+export {default as facadeOptionC} from './facadeOptionC.png'
+
+export {default as featherLoader} from './feather_loader.png'
+
+export {default as videoSmall} from './video-small.png'
+export {default as customizeOnline} from './customise-online.jpg'
+export {default as home1Carrousel} from './home1-carrousel.jpeg'
+export {default as homeVideo} from './home-video.jpg'

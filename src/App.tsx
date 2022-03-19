@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Home, Login, SignUp, ListProjects, DetailsProjects, DetailsSummary } from 'domains/core/containers';
+import { Home, Login, SignUp, ListProjects, DetailsProjects, DetailsSummary, TerrainContainer, Facade, Loading } from 'domains/core/containers';
 import { ThemeProvider } from '@material-ui/core';
 import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News, MailChimpFormContainer } from 'domains/common/containers';
 import theme from 'app/theme';
@@ -29,6 +29,9 @@ function App() {
         <Route path="/models/step2" component={ShapeDiverContainerStep2} />
         <Route path="/models/step3" component={ShapeDiverContainerStep3} />
         <Route path="/home" component={Home} />
+        <Route path="/uploadShape" component={TerrainContainer} />
+        <Route path="/chooseFacade" component={Facade} />
+        <Route path="/loading" component={Loading} />
         <Redirect from="/" to="/register" />
       </Switch>
       <Footer />

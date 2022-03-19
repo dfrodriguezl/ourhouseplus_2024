@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AppThunk, RootState } from 'app/store';
 import { LocationSimple, SearchParams } from 'domains/core/models';
-import { AdvancedOptions, ModelData, Project, ShapeDiverOptions } from 'domains/shapeDiver/models';
+import { AdvancedOptions, Coordinates, ModelData, Project, ShapeDiverOptions, UrbanPolicyParams } from 'domains/shapeDiver/models';
 import { get, post, deletes } from 'app/api';
 import { AxiosResponse } from 'axios';
 
 export interface ShapeDiverState {
   area: number;
   location: LocationSimple | undefined;
-  terrain: number;
+  terrain: number | undefined;
   options: ShapeDiverOptions | undefined;
   facadeDirection: number;
   roomType: number;
@@ -24,6 +24,13 @@ export interface ShapeDiverState {
   saveSuccess: boolean;
   nameProject: string;
   loading: boolean;
+  idProject: string | undefined;
+  coordinates: Coordinates | undefined;
+  urbanPolicyParams: UrbanPolicyParams | undefined;
+  exports: number;
+  exportPNG: boolean;
+  imagePNG: any;
+  loadingMap: boolean;
 }
 
 const initialState: ShapeDiverState = {
@@ -78,6 +85,8 @@ const initialState: ShapeDiverState = {
     threeBedroomPorc: 0,
     fourBedroomm2: 0,
     fourBedroomPorc: 0,
+    oneToTwoPorc: 0,
+    threeToFourPorc: 0
   },
   importModel: '',
   expandAdvanced: { height: '100vh' },
@@ -87,6 +96,16 @@ const initialState: ShapeDiverState = {
   saveSuccess: false,
   nameProject: '',
   loading: false,
+  idProject: undefined,
+  coordinates: {
+    lat: 0,
+    long: 0
+  },
+  urbanPolicyParams: undefined,
+  exports: 1,
+  exportPNG: false,
+  imagePNG: undefined,
+  loadingMap: false
 };
 
 export const shapeDiverSlice = createSlice({
@@ -98,7 +117,7 @@ export const shapeDiverSlice = createSlice({
       state.location = action.payload.location;
       state.densityGeneral = action.payload.density.type;
     },
-    setTerrain: (state, action: PayloadAction<number>) => {
+    setTerrain: (state, action: PayloadAction<number | undefined>) => {
       state.terrain = action.payload;
     },
     setDensity: (state, action: PayloadAction<number>) => {
@@ -178,6 +197,33 @@ export const shapeDiverSlice = createSlice({
     setDensityGeneral: (state, action: PayloadAction<number>) => {
       state.location!.densityGeneral = action.payload;
     },
+    setIdProject: (state, action: PayloadAction<string>) => {
+      state.idProject = action.payload;
+    },
+    setBalconyType: (state, action: PayloadAction<number>) => {
+      state.location!.balconyType = action.payload;
+    },
+    setUndefinedTower: (state, action: PayloadAction<number>) => {
+      state.location!.undefinedTower = action.payload;
+    },
+    setCoordinates: (state, action: PayloadAction<Coordinates | undefined>) => {
+      state.coordinates = action.payload;
+    },
+    setDataUrbanPolicy: (state, action: PayloadAction<UrbanPolicyParams | undefined>) => {
+      state.urbanPolicyParams = action.payload;
+    },
+    setExports: (state, action: PayloadAction<number>) => {
+      state.exports = action.payload;
+    },
+    setExportPNG: (state, action: PayloadAction<boolean>) => {
+      state.exportPNG = action.payload;
+    },
+    setImagePNG: (state, action: PayloadAction<any>) => {
+      state.imagePNG = action.payload;
+    },
+    setLoadingMap: (state, action: PayloadAction<boolean>) => {
+      state.loadingMap = action.payload;
+    }
   },
 });
 
@@ -204,7 +250,16 @@ export const {
   setCurrentProject,
   setNameProject,
   setLoadingStatus,
-  setDensityGeneral
+  setDensityGeneral,
+  setIdProject,
+  setBalconyType,
+  setUndefinedTower,
+  setCoordinates,
+  setDataUrbanPolicy,
+  setExports,
+  setExportPNG,
+  setImagePNG,
+  setLoadingMap
 } = shapeDiverSlice.actions;
 
 export const getArea = (state: RootState) => state.domains.shapediver.area;
@@ -215,7 +270,9 @@ export const getProjectData = (state: RootState) => ({
   facadeDirection: state.domains.shapediver.facadeDirection,
   roomType: state.domains.shapediver.roomType,
   floorSelection: state.domains.shapediver.floorSelection,
-  modelData: state.domains.shapediver.modelData
+  modelData: state.domains.shapediver.modelData,
+  coordinates: state.domains.shapediver.coordinates,
+  urbanPolicy: state.domains.shapediver.urbanPolicyParams
 });
 
 export default shapeDiverSlice.reducer;
@@ -247,8 +304,14 @@ export const deleteProjectById = (id: string, username: string): AppThunk => dis
     });
 };
 
-export const editProject = (project: Project): AppThunk => dispatch => {
-  post('/EditProjectById', { data: project }).then((data: AxiosResponse) => {
+export const editProject = (id: string, project: Project): AppThunk => dispatch => {
+  post(`/EditProjectById?id=${id}`, { data: project }).then((data: AxiosResponse) => {
     dispatch(setCurrentProject(data.data))
+  });
+};
+
+export const getUrbanPolicyData = (coordinates: Coordinates): AppThunk => dispatch => {
+  get(`/GetUrbanPolicy?lat=${coordinates.lat}&lon=${coordinates.long}`).then((data: AxiosResponse) => {
+    dispatch(setDataUrbanPolicy(data.data[0]))
   });
 };

@@ -4,16 +4,17 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Box, Divider, Grid, makeStyles, Theme, Dialog, List, ListItem } from '@material-ui/core';
-import { getLocations } from 'domains/core/coreSlice';
+import { getLocations, setOption } from 'domains/core/coreSlice';
 import { Densities, Density, Location, LocationSimple } from 'domains/core/models';
 import { ButtonWrapper, LocationMenu, SearchPill, UrbanismMenu } from 'domains/core/components';
-import { setInitialParams, setSaveSuccess, setDensityGeneral } from 'domains/shapeDiver/slice';
+import { setInitialParams, setSaveSuccess, setDensityGeneral, setNameProject, setImportModel, setTerrain, setCoordinates } from 'domains/shapeDiver/slice';
 import { setSearchClick } from 'domains/core/coreSlice';
 import { RootState } from 'app/store';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { back, forward } from 'assets';
 import { useAuth0 } from '@auth0/auth0-react';
+import { GeoContainer } from '../containers';
 
 const useStyles = makeStyles((theme: Theme) => ({
   searchBox: {
@@ -53,12 +54,16 @@ interface DispatchProps {
   setSearchClick: typeof setSearchClick;
   setSaveSuccess: typeof setSaveSuccess;
   setDensityGeneral: typeof setDensityGeneral;
+  setOption: typeof setOption;
+  setNameProject: typeof setNameProject;
+  setTerrain: typeof setTerrain;
+  setCoordinates: typeof setCoordinates;
 }
 
 type Props = DispatchProps & StateProps & RouteComponentProps;
 const SearchToolBar = (props: Props) => {
   const { isAuthenticated, loginWithRedirect, user } = useAuth0();
-  const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick, setSaveSuccess, setDensityGeneral } = props;
+  const { setInitialParams, history, locations, searchClick, getLocations, setSearchClick, setSaveSuccess, setDensityGeneral, setOption, setNameProject, setTerrain, setCoordinates } = props;
 
   const classes = useStyles();
   const [location, setLocation] = useState<Location>();
@@ -66,11 +71,26 @@ const SearchToolBar = (props: Props) => {
   const [area, setArea] = useState<number>();
   const [density, setDensity] = useState<Density>();
   const [searchBoxSelected, setSearchBoxSelected] = useState(1);
-
+  const [open, setOpen] = useState(false);
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
-  
+  const openGeoDialog = () => {
+    if (isAuthenticated && user) {
+      if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
+        setOpen(true);
+      }
+
+    } else {
+      loginWithRedirect();
+    }
+
+  }
+
+  const closeGeoDialog = () => {
+    setOpen(false);
+  }
+
 
   useEffect(() => {
     getLocations();
@@ -78,7 +98,7 @@ const SearchToolBar = (props: Props) => {
 
   const updateLocation = (value: string) => {
     const loc = _.find(locations, x => x.city === value);
-    setLocation(loc); 
+    setLocation(loc);
   }
 
   const updateStep = (step: number) => {
@@ -97,7 +117,7 @@ const SearchToolBar = (props: Props) => {
   const updateDensity = (value: string) => {
     const den = _.find(Densities, x => x.label === value);
     setDensity(den);
-    
+
     const densityLocal = den?.value === 0 ? "suburban" : "urban";
     setLocationSimple({
       id: location?.id!,
@@ -127,11 +147,10 @@ const SearchToolBar = (props: Props) => {
     });
   }
 
-
-  const next = () => {
+  const goToChooseFacade = () => {
     if (isAuthenticated && user) {
       if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
-        
+
         setInitialParams({
           location: locationSimple,
           area: area!,
@@ -139,6 +158,47 @@ const SearchToolBar = (props: Props) => {
         });
         setDensityGeneral(density!.value);
         setSaveSuccess(false)
+        setOption("save");
+        setNameProject("");
+        window.importFile = undefined;
+        setImportModel('')
+        setTerrain(1)
+        setCoordinates({
+          lat: 0,
+          long: 0
+        })
+
+        // history.push('/models/step1');
+      }
+    } else {
+      loginWithRedirect();
+    }
+
+    history.push('/chooseFacade');
+  }
+
+
+  const next = () => {
+    if (isAuthenticated && user) {
+      if (user['https://www.rea-web.com/roles'].includes('Administrator')) {
+
+        setInitialParams({
+          location: locationSimple,
+          area: area!,
+          density: density!
+        });
+        setDensityGeneral(density!.value);
+        setSaveSuccess(false)
+        setOption("save");
+        setNameProject("");
+        window.importFile = undefined;
+        setImportModel('')
+        setTerrain(1)
+        setCoordinates({
+          lat: 0,
+          long: 0
+        })
+
         history.push('/models/step1');
       }
     } else {
@@ -148,6 +208,7 @@ const SearchToolBar = (props: Props) => {
 
   return (
     <Grid container>
+      <GeoContainer open={open} location={locationSimple?.city} closeFunction={closeGeoDialog} type="flow" nextAction={goToChooseFacade} />
       {smallScreen && searchClick ?
         <Fragment>
           <Grid item xs={1}>
@@ -207,7 +268,7 @@ const SearchToolBar = (props: Props) => {
               <ButtonWrapper
                 label="Next"
                 size="small"
-                onClick={next}
+                onClick={() => openGeoDialog()}
                 disabled={!area || !location || !density}
               />
             </Grid>
@@ -313,7 +374,11 @@ const container = compose<Props, {}>(
       setInitialParams,
       setSearchClick,
       setSaveSuccess,
-      setDensityGeneral
+      setDensityGeneral,
+      setOption,
+      setNameProject,
+      setTerrain,
+      setCoordinates
     }
   )
 )(SearchToolBar);

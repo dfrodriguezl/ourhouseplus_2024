@@ -14,9 +14,9 @@ import 'fontsource-roboto';
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
-      <Auth0>
+      {/* <Auth0> */}
         <Route path="/" component={App} />
-      </Auth0>
+      {/* </Auth0> */}
     </Router>
   </Provider>,
   document.getElementById('root')

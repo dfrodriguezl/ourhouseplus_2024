@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { Grid, Fab } from '@material-ui/core';
-import { PageContainer } from 'domains/core/containers';
+import { HomeSubCarrousel, PageContainer } from 'domains/core/containers';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import KeyboardArrowDown from '@material-ui/icons/KeyboardArrowDown';
@@ -8,6 +8,9 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import { HomeSub1 } from 'domains/core/containers';
 import { ImgVideo } from 'domains/common/components';
+import HomeSub2 from './HomeSub2';
+import HomeSub3 from './HomeSub3';
+import HomeSubVideo from './HomeSubVideo';
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -19,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'black',
   },
   textContainer: {
-    paddingLeft: '25px',
+    // paddingLeft: '25px',
     [theme.breakpoints.down('sm')]: {
-      paddingLeft: '15px',
+      // paddingLeft: '15px',
     },
   }
 }));
@@ -51,7 +54,7 @@ const RegisterContainer = (props: OwnProps) => {
 
   return (
     <Fragment>
-      <PageContainer background="waiting-back">
+      <PageContainer background={smallScreen ? "home-register" : "waiting-back"}>
         <Grid container item sm={12} xs={12} style={{ marginTop: 50 }}>
           <Grid container item sm={6} xs={12} className={classes.textContainer}>
             {children}
@@ -81,7 +84,14 @@ const RegisterContainer = (props: OwnProps) => {
       </PageContainer>
       {
         !isWaiting ?
-          <HomeSub1 /> : null
+          <Fragment>
+            <HomeSub2 />
+            {/* <HomeSub3 /> */}
+            <HomeSub1 />
+            <HomeSubCarrousel />
+            <HomeSubVideo />
+          </Fragment>
+          : null
       }
 
     </Fragment>
