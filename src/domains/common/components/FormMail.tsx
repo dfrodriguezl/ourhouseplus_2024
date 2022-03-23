@@ -91,7 +91,11 @@ const useStyles = makeStyles((theme) => ({
   },
   titleStyle: {
     color: '#FFFFFF',
-    display: 'block'
+    display: 'block',
+    fontFamily: 'Arial'
+  },
+  spacingText:{
+    letterSpacing: 2
   }
 
 })
@@ -160,16 +164,16 @@ const FormMail = (props: Props) => {
   return (
     <RegisterContainer>
       <Grid item container sm={12} xs={12} className={classes.containerForm} justify="center" direction="column">
-        <Typography variant="subtitle1" className={classes.titleStyle}>
-          HOME Addition Kits
+        <Typography variant="subtitle1" className={classes.titleStyle} >
+          House Addition Kits
         </Typography>
         <Typography variant="h5" className={classes.titleStyle} style={{ fontWeight: 'bolder' }}>
-          Enjoy A Bigger Home.
+          <span className={classes.spacingText} >Enjoy A Bigger Home. </span>
         </Typography>
         <br />
-        <Typography variant="subtitle1" className={classes.titleStyle}>
-          Plan your home addition <br />
-          on our web in less than 10 minutes*.
+        <Typography variant="subtitle1" className={classes.titleStyle} style={{ lineHeight: 1 }}>
+          Design and plan your home addition <br />
+          in less than 10 minutes*.
         </Typography>
 
         {/* <Typography  className={classes.titleStyle}>
@@ -180,8 +184,8 @@ const FormMail = (props: Props) => {
       </Grid>
       {/* {smallScreen ?
         <ImgVideo></ImgVideo> : null} */}
-      <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end' }}>
-        <Typography variant="subtitle2" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.5 }}>
+      <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end', marginBottom: 20 }}>
+        <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 10, lineHeight: 1.3 }}>
           Design the home addition you want, <br />
           for a guaranteed, all-in price **. <br />
           New additions designs start at $199.
