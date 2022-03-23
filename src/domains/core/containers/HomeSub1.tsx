@@ -89,7 +89,8 @@ const styles = makeStyles((theme: Theme) => ({
     marginTop: 20
   },
   card: {
-    margin: '10px 30px 20px'
+    margin: '10px 20px 20px',
+    borderRadius: 20
   }
 }));
 

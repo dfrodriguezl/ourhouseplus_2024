@@ -4,6 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { FeasibilityIcon, FinancialIcon, PdfIcon, PreArchitectureIcon, SquareIcon, BuildingIcon, videoSmall, home1Carrousel } from 'assets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ImgVideo } from 'domains/common/components';
+import Carousel from 'react-material-ui-carousel';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 
 const styles = makeStyles((theme: Theme) => ({
   title: {
@@ -81,6 +84,9 @@ const styles = makeStyles((theme: Theme) => ({
   greenText: {
     color: '#2C7217',
     fontSize: 8
+  },
+  container: {
+    padding: 0
   }
 }));
 
@@ -100,15 +106,32 @@ const HomeSubVideo = () => {
 
   return (
     <div className={!smallScreen ? isWaiting ? "home-sub-1-waiting" : "home-sub-1" : "home-sub-1-small"}>
-      <Container>
+      <Container className={classes.container}>
         <Grid container>
           <Typography variant="h6" style={{ fontWeight: 'bolder', marginLeft: 40 }}>Our Models.</Typography>
-          <img src={home1Carrousel} width="100%" className={classes.imgCarrousel} />
-          <Grid container justify="center">
-            <Button className={classes.buttonGray}>
-              Contemporary&nbsp;&nbsp;&nbsp;<span className={classes.greenText}>Learn More.</span>
-            </Button>
-          </Grid>
+          <Carousel
+            NextIcon={<ArrowForwardIosIcon fontSize='small' />}
+            PrevIcon={<ArrowBackIosIcon fontSize='small' />}
+            autoPlay={false}
+            indicators={false}
+            navButtonsAlwaysVisible={true}
+            navButtonsProps={{
+              style: {
+                backgroundColor: "#FFFFFF00",
+                // marginRight: '-15px'
+              }
+            }}>
+            <div>
+              <img src={home1Carrousel} width="100%" className={classes.imgCarrousel} />
+              <Grid container justify="center">
+                <Button className={classes.buttonGray}>
+                  Contemporary&nbsp;&nbsp;&nbsp;<span className={classes.greenText}>Learn More.</span>
+                </Button>
+              </Grid>
+            </div>
+
+
+          </Carousel>
 
           {/* <ImgVideo img={true} type="small"></ImgVideo> */}
           {/* <Grid container justify='flex-end'>

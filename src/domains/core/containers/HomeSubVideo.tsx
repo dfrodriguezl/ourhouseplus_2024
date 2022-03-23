@@ -66,7 +66,7 @@ const styles = makeStyles((theme: Theme) => ({
     padding: '-10px 10px',
     borderColor: '#6F6E6E',
     lineHeight: 0,
-    margin: '0px 15px 20px'
+    margin: '0px 30px 20px'
   },
 }));
 

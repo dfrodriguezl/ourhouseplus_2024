@@ -24,8 +24,8 @@ const ImgVideo = (props: Props) => {
   const classes = useStyles();
   const [play, setPlay] = useState(false);
   const { img, type } = props;
-  const height = type! === "small" ? '150%' : '100%';
-  const marginBottom = type! === "small" ? 100 : 0;
+  const height = type! === "small" ? '200%' : '100%';
+  const marginBottom = type! === "small" ? 150 : 0;
 
   const handlePlay = () => {
     setPlay(true);
