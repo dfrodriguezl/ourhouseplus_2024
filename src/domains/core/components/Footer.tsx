@@ -88,7 +88,7 @@ const Footer = (props: Props) => {
                 <Grid item xs={12} sm={5}>
                   <div className={classes.bottomLinks}>
                     <Box fontSize={10} color='white'>
-                      Copyright © 2022 Home+. All rights reserved
+                      Copyright © 2022 House+. All rights reserved
                     </Box>
                   </div>
                 </Grid>
@@ -97,7 +97,7 @@ const Footer = (props: Props) => {
                 <Grid item xs={12} sm={5}>
                   <div className={classes.bottomLinks}>
                     <Box fontSize={10} color='white'>
-                      Copyright © 2022 Home+. All rights reserved
+                      Copyright © 2022 House+. All rights reserved
                     </Box>
                   </div>
                 </Grid>
