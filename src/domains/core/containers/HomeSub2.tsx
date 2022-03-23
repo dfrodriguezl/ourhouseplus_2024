@@ -48,10 +48,13 @@ const styles = makeStyles((theme: Theme) => ({
     textAlign: 'left'
   },
   subtitle1: {
-    margin: '40px 20px 10px'
+    margin: '40px 20px 10px',
+    lineHeight: 1.3 
   },
   subtitle2: {
-    margin: '5px 20px 20px'
+    margin: '20px 20px 20px',
+    lineHeight: 1.3,
+    fontWeight: 'lighter'
   },
   itemText: {
     textTransform: 'capitalize',
@@ -146,7 +149,7 @@ const HomeSub2 = () => {
               <span className={classes.boldText}>It begins here.</span>
             </Typography>
             <Typography variant="subtitle2" className={classes.subtitle2}>
-              With only a few clicks, yo'll have a new home addition kit, ready to build, Three weeks after permitting. <br />
+              With only a few clicks, you'll have a new home addition kit, ready to build, Three weeks after permitting. <br />
               Save time and select various design themes via real-time design app.
             </Typography>
             <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>

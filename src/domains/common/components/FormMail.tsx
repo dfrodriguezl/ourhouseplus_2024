@@ -184,8 +184,8 @@ const FormMail = (props: Props) => {
       </Grid>
       {/* {smallScreen ?
         <ImgVideo></ImgVideo> : null} */}
-      <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end', marginBottom: 20 }}>
-        <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 10, lineHeight: 1.3 }}>
+      <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end' }}>
+        <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3 }}>
           Design the home addition you want, <br />
           for a guaranteed, all-in price **. <br />
           New additions designs start at $199.
