@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { compose } from 'recompose';
-import { Box, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
+import { Box, Container, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
       flexDirection: 'row',
-      backgroundColor: '#010100'
+      backgroundColor: 'transparent'
     },
     footer: {
       fontSize: 12,
@@ -41,13 +41,16 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     socialButtons: {
+      marginTop: 15,
+      textAlign: 'center',
       [theme.breakpoints.down('sm')]: {
         marginTop: 15,
         textAlign: 'center',
       }
     },
     item: {
-      marginRight: 70,
+      // marginRight: 70,
+      color: 'white',
       [theme.breakpoints.down('sm')]: {
         marginRight: 0,
         display: 'block',
@@ -57,6 +60,9 @@ const useStyles = makeStyles((theme: Theme) =>
     itemInactive: {
       color: '#434343 !important',
       pointerEvents: 'none',
+    },
+    textCenter: {
+      textAlign: 'center'
     }
   })
 );
@@ -66,49 +72,50 @@ interface propsClasses {
 }
 
 type Props = RouteComponentProps;
-const Footer = (props: Props) => {
+const FooterEmbebbed = (props: Props) => {
   const classes = useStyles()
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   return (
     <Grid container item className={classes.root} xs={12}>
-      {smallScreen ? <Container maxWidth="lg">
+      <Container maxWidth={false}>
         <footer className={classes.footer}>
-          <Grid container>
-            <Grid item xs={12} sm={6}>
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/about">About</Link></Box>
+          <Grid container item>
+            <Grid item xs={12} sm={12} justify="center" className={classes.textCenter}>
+              <Typography variant="subtitle1" className={classes.item}> GO TO OUR MOBILE SITE FOR AN APPOINTMENT</Typography>
+              {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/about">About</Link></Box>
               <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/how-it-works">How it works</Link></Box>
               {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/news">News</Link></Box> */}
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/contact-us">Contact</Link></Box>
+              {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/contact-us">Contact</Link></Box> */}
             </Grid>
             {smallScreen ?
               <Fragment>
-                <SocialNetwork classes={classes} />
-                <Grid item xs={12} sm={5}>
+                {/* <SocialNetwork classes={classes} /> */}
+                {/* <Grid item xs={12} sm={12}>
                   <div className={classes.bottomLinks}>
                     <Box fontSize={10} color='white'>
                       Copyright © 2022 House+. All rights reserved
                     </Box>
                   </div>
-                </Grid>
+                </Grid> */}
               </Fragment> :
               <Fragment>
-                <Grid item xs={12} sm={5}>
-                  <div className={classes.bottomLinks}>
+                <Grid item container xs={12} sm={12} justify="center">
+                  <SocialNetwork classes={classes} />
+                  {/* <div className={classes.bottomLinks}>
                     <Box fontSize={10} color='white'>
                       Copyright © 2022 House+. All rights reserved
                     </Box>
-                  </div>
+                  </div> */}
                 </Grid>
-                <SocialNetwork classes={classes} />
+
               </Fragment>
             }
           </Grid>
 
         </footer>
-      </Container> : null}
-
+      </Container>
     </Grid>
   );
 }
@@ -118,7 +125,7 @@ const SocialNetwork = (propsClasses: propsClasses) => {
   const { classes } = propsClasses;
 
   return (
-    <Grid item xs={12} sm={1} className={classes.socialButtons} style={{ alignSelf: 'flex-end' }}>
+    <Grid item container xs={12} sm={12} className={classes.socialButtons} justify="center">
       <a href="https://www.linkedin.com/company/rea-web/" className={classes.links} target="_blank" rel="noreferrer">
         <LinkedIn />
       </a>
@@ -135,6 +142,6 @@ const SocialNetwork = (propsClasses: propsClasses) => {
 
 const container = compose<Props, {}>(
   withRouter,
-)(Footer)
+)(FooterEmbebbed)
 
 export default container;

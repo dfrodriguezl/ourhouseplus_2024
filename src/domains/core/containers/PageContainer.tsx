@@ -1,5 +1,5 @@
 import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
-import { Header } from 'domains/core/components'
+import { FooterEmbebbed, Header } from 'domains/core/components'
 import { setExpandAdvanced } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
@@ -88,7 +88,7 @@ const PageContainer = (props: Props) => {
 
   return (
     <div className={background} style={(isAbout || isDetails || isStep1 || isListProjects || isUploadShape || isStep2 || isStep3 || isChooseFacade) ? { overflow: 'auto' } : expandAdvanced}>
-      <Container className={classes.noPadding}>
+      <Container className={classes.noPadding} >
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer} >
           {
             !noHeader &&
@@ -100,6 +100,7 @@ const PageContainer = (props: Props) => {
             {children}
           </Grid>
         </Grid>
+        
       </Container>
     </div>
   );

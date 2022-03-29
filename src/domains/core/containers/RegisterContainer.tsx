@@ -11,6 +11,7 @@ import { ImgVideo } from 'domains/common/components';
 import HomeSub2 from './HomeSub2';
 import HomeSub3 from './HomeSub3';
 import HomeSubVideo from './HomeSubVideo';
+import { FooterEmbebbed } from '../components';
 
 const useStyles = makeStyles((theme) => ({
   fab: {
@@ -56,17 +57,21 @@ const RegisterContainer = (props: OwnProps) => {
     <Fragment>
       <PageContainer background={smallScreen ? "home-register" : "waiting-back"}>
         <Grid container item sm={12} xs={12} style={{ marginTop: 50 }}>
-          <Grid container item sm={6} xs={12} className={classes.textContainer}>
+          <Grid container item sm={12} xs={12} className={classes.textContainer}>
             {children}
+            <Grid container item xs={12} sm={12} style={{alignSelf: 'flex-end'}}>
+              <FooterEmbebbed />
+            </Grid>
+            
           </Grid>
-          {!smallScreen ?
+          {/* {!smallScreen ?
             <Grid item container sm={6} xs={12}>
               <ImgVideo></ImgVideo>
             </Grid> : null
-          }
+          } */}
 
         </Grid>
-        {!smallScreen ?
+        {/* {!smallScreen ?
           <Grid item sm={12} style={{ alignSelf: 'flex-end', textAlign: 'center' }}>
             {
               !isWaiting ?
@@ -79,11 +84,11 @@ const RegisterContainer = (props: OwnProps) => {
             }
 
           </Grid> : null
-        }
+        } */}
 
       </PageContainer>
       {
-        !isWaiting ?
+        !isWaiting && smallScreen ?
           <Fragment>
             <HomeSub2 />
             {/* <HomeSub3 /> */}

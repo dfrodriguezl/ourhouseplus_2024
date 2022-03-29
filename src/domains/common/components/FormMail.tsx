@@ -9,7 +9,8 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   containerForm: {
-    alignSelf: 'flex-end',
+    alignSelf: 'center',
+    textAlign: 'center',
     [theme.breakpoints.down('sm')]: {
       alignSelf: 'center',
       textAlign: 'center'
@@ -94,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     fontFamily: 'Arial'
   },
-  spacingText:{
+  spacingText: {
     letterSpacing: 2
   }
 
@@ -164,16 +165,19 @@ const FormMail = (props: Props) => {
   return (
     <RegisterContainer>
       <Grid item container sm={12} xs={12} className={classes.containerForm} justify="center" direction="column">
-        <Typography variant="subtitle1" className={classes.titleStyle} >
+        <Typography variant={smallScreen ? "subtitle1" : "h5"} className={classes.titleStyle} >
           House Addition Kits
+          {!smallScreen ? < br /> : null}
         </Typography>
-        <Typography variant="h5" className={classes.titleStyle} style={{ fontWeight: 'bolder' }}>
-          <span className={classes.spacingText} >Enjoy A Bigger Home. </span>
+        <Typography variant={smallScreen ? "h5" : "h3"} className={classes.titleStyle} style={{ fontWeight: 'bolder' }}>
+          <span className={classes.spacingText} > {smallScreen ? "Enjoy A Bigger Home." : "Enjoy More Space."} </span>
         </Typography>
         <br />
         <Typography variant="subtitle1" className={classes.titleStyle} style={{ lineHeight: 1 }}>
-          Design and plan your home addition <br />
-          in less than 10 minutes*.
+          {!smallScreen ? <Fragment>< br /> < br /></Fragment> : null}
+          {smallScreen ? "Design and plan your home addition" : "Plan and design your home addition"} <br />
+          {smallScreen ? "in less than 10 minutes*." : "in less than 10 minutes with us."}
+
         </Typography>
 
         {/* <Typography  className={classes.titleStyle}>
@@ -185,12 +189,13 @@ const FormMail = (props: Props) => {
       {/* {smallScreen ?
         <ImgVideo></ImgVideo> : null} */}
       <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end' }}>
-        <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3 }}>
+        {/* <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3 }}>
+
           Design the home addition you want, <br />
           for a guaranteed, all-in price **. <br />
           New additions designs start at $199.
-        </Typography>
-        <Grid item xs={12}>
+        </Typography> */}
+        {/* <Grid item xs={12}>
           <form
             action="https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9"
             method="post"
@@ -216,7 +221,6 @@ const FormMail = (props: Props) => {
             <div style={{ position: 'absolute', left: -5000 }} aria-hidden="true">
               <input type="text" name="b_3c39cbec5fc9d998a5b584676_4064b46da9" />
             </div>
-            {/* {smallScreen ? <p className={clsx(classes.textCenter, true && classes.fontText, true)}>Generate a custom multifamily development on your lot in real time</p> : null} */}
             <Grid item container xs={12}>
               <Input type="text" name="EMAIL" id="mce-EMAIL"
                 onChange={handleChange3}
@@ -237,9 +241,6 @@ const FormMail = (props: Props) => {
                       >
                         Join us
                       </Button>
-                      {/* <IconButton className={classes.iconButton} type="submit" name="subscribe">
-                  <ArrowForwardIcon className={classes.icon}></ArrowForwardIcon>
-                </IconButton> */}
                     </InputAdornment> : null
                 }
               />
@@ -251,10 +252,10 @@ const FormMail = (props: Props) => {
               </Button>
             </Grid> : null}
           </form>
-        </Grid>
+        </Grid> */}
 
-        {!smallScreen ?
-          <p className={classes.endText}>We are currently in beta, sign up to our waiting list.</p> : null}
+        {/* {!smallScreen ?
+          <p className={classes.endText}>We are currently in beta, sign up to our waiting list.</p> : null} */}
       </Grid>
     </RegisterContainer>
 
