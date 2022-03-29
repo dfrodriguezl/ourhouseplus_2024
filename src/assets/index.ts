@@ -143,3 +143,7 @@ export {default as videoSmall} from './video-small.png'
 export {default as customizeOnline} from './customise-online.jpg'
 export {default as home1Carrousel} from './home1-carrousel.jpeg'
 export {default as homeVideo} from './home-video.jpg'
+
+export {default as background1} from './backgroundFullScreen-1.jpg'
+export {default as background2} from './backgroundFullScreen-2.jpg'
+export {default as background3} from './backgroundFullScreen-3.jpg'
