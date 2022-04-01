@@ -22,6 +22,11 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '20px 0',
       background: '#FFFFFF',
     },
+    headerDesktop: {
+      padding: '20px 0',
+      background: 'transparent',
+      alignItems: 'center'
+    },
     menuButton: {
       marginLeft: 'auto',
       border: '1px white'
@@ -269,10 +274,10 @@ const Header = (props: RouteComponentProps) => {
         </AppBar>
       </Fragment>
       :
-      <AppBar position="static" elevation={0} className={classes.header}>
+      <AppBar position="static" elevation={0} className={classes.headerDesktop}>
         <Toolbar variant="regular">
           <Link to="/register">
-            <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={100} />
+            <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? whiteLogo : whiteLogo} alt="logo" width={150} />
           </Link>
           {
             !(isSignUp) ?

@@ -11,3 +11,4 @@ export { default as MapGeo } from './Map';
 export { default as Geolocation } from './Geolocation';
 export { default as TopPanel } from './TopPanel';
 export { default as ToolbarDetailsProject } from './ToolbarDetailsProject';
+export { default as FooterEmbebbed } from './FooterEmbebbed';

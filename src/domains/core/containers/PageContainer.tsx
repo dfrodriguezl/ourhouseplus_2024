@@ -1,9 +1,11 @@
-import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
-import { Header } from 'domains/core/components'
+import { Container, createStyles, Grid, makeStyles, Theme, useMediaQuery, useTheme } from '@material-ui/core'
+import { FooterEmbebbed, Header } from 'domains/core/components'
 import { setExpandAdvanced } from 'domains/shapeDiver/slice';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { useHistory } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { iteratorSymbol } from 'immer/dist/internal';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100vw',
       height: '100vh'
     },
-    noPadding:{
+    noPadding: {
       padding: 0
     }
   })
@@ -75,6 +77,15 @@ type Props = OwnProps & StateProps & DispatchProps;
 const PageContainer = (props: Props) => {
   const { children, noHeader, background, expandAdvanced } = props;
   const classes = useStyles();
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const imgs = [
+    "waiting-back",
+    "waiting-back-2",
+    "waiting-back-3"
+  ]
+
 
   const history = useHistory();
   const isAbout = history.location.pathname.indexOf('about') > -1;
@@ -86,9 +97,17 @@ const PageContainer = (props: Props) => {
   const isUploadShape = history.location.pathname.indexOf('uploadShape') > -1;
   const isChooseFacade = history.location.pathname.indexOf('chooseFacade') > -1;
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex === imgs.length - 1 ? 0 : prevIndex + 1));
+    }, 6000)
+
+    return () => clearInterval(intervalId);
+  }, [])
+
   return (
-    <div className={background} style={(isAbout || isDetails || isStep1 || isListProjects || isUploadShape || isStep2 || isStep3 || isChooseFacade) ? { overflow: 'auto' } : expandAdvanced}>
-      <Container className={classes.noPadding}>
+    <div className={smallScreen ? background : imgs[currentIndex]} style={(isAbout || isDetails || isStep1 || isListProjects || isUploadShape || isStep2 || isStep3 || isChooseFacade) ? { overflow: 'auto' } : expandAdvanced}>
+      <Container className={classes.noPadding} >
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer} >
           {
             !noHeader &&
@@ -100,6 +119,7 @@ const PageContainer = (props: Props) => {
             {children}
           </Grid>
         </Grid>
+
       </Container>
     </div>
   );

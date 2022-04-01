@@ -68,8 +68,30 @@ a {
 }
 
 .waiting-back {
-  opacity: 1;
-  background: transparent linear-gradient(103deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box;
+  background-image: url(assets/backgroundFullScreen-1.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; 
+  /* opacity: 1;
+  background: transparent linear-gradient(103deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box; */
+}
+
+.waiting-back-2 {
+  background-image: url(assets/backgroundFullScreen-2.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; 
+  /* opacity: 1;
+  background: transparent linear-gradient(103deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box; */
+}
+
+.waiting-back-3 {
+  background-image: url(assets/backgroundFullScreen-3.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; 
+  /* opacity: 1;
+  background: transparent linear-gradient(103deg, #D6D5E4 0%, #E6DFCE 100%, #8EBED2 100%, #A9A9A9 100%) 0% 0% no-repeat padding-box; */
 }
 
 .home-sub-1 {
