@@ -13,3 +13,4 @@ export { default as CommercialContainer } from './CommercialContainer';
 export { default as FacadeContainer } from './FacadeContainer';
 export { default as GeolocatedContainer } from './GeolocatedContainer';
 export { default as Pdf } from './pdf';
+export { default as PopupMail } from './PopupMail';

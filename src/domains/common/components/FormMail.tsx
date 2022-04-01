@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import { RegisterContainer } from 'domains/core/containers';
 import { ImgVideo } from '.';
 import clsx from 'clsx';
+import PopupMail from './PopupMail';
+import MailchimpFormContainerTwo from '../containers/MailChimpFormContainerTwo';
 
 const useStyles = makeStyles((theme) => ({
   containerForm: {
@@ -117,6 +119,7 @@ const FormMail = (props: Props) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [hover, setHover] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -161,9 +164,19 @@ const FormMail = (props: Props) => {
 
   }
 
+  const handleOpen = () => {
+    setOpen(true);
+  }
+  
+  const handleClose = () => {
+    setOpen(false);
+  }
+
+
 
   return (
     <RegisterContainer>
+      <MailchimpFormContainerTwo open={open} handleClose={handleClose}/>
       <Grid item container sm={12} xs={12} className={classes.containerForm} justify="center" direction="column">
         <Typography variant={smallScreen ? "subtitle1" : "h5"} className={classes.titleStyle} >
           House Addition Kits
@@ -189,12 +202,12 @@ const FormMail = (props: Props) => {
       {/* {smallScreen ?
         <ImgVideo></ImgVideo> : null} */}
       <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end' }}>
-        {/* <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3 }}>
-
+        {smallScreen ? <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3 }}>
           Design the home addition you want, <br />
           for a guaranteed, all-in price **. <br />
           New additions designs start at $199.
-        </Typography> */}
+        </Typography> : null}
+
         {/* <Grid item xs={12}>
           <form
             action="https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9"
@@ -256,6 +269,12 @@ const FormMail = (props: Props) => {
 
         {/* {!smallScreen ?
           <p className={classes.endText}>We are currently in beta, sign up to our waiting list.</p> : null} */}
+
+        {smallScreen ? <Grid xs={12} container justify="center">
+          <Button className={classes.buttonGreen} type="submit" name="subscribe" onClick={() => handleOpen()}>
+            <span className={classes.itemText}>Book Appointment</span>
+          </Button>
+        </Grid> : null}
       </Grid>
     </RegisterContainer>
 

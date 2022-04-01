@@ -6,3 +6,4 @@ export { default as Leadership } from './Leadership'
 export { default as HowItWorks } from './HowItWorks';
 export { default as Jobs } from './Jobs';
 export { default as MailChimpFormContainer } from './MailChimpFormContainer';
+export { default as MailChimpFormContainerTwo } from './MailChimpFormContainerTwo';

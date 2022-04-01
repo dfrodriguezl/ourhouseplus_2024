@@ -59,10 +59,12 @@ const RegisterContainer = (props: OwnProps) => {
         <Grid container item sm={12} xs={12} style={{ marginTop: 50 }}>
           <Grid container item sm={12} xs={12} className={classes.textContainer}>
             {children}
-            <Grid container item xs={12} sm={12} style={{alignSelf: 'flex-end'}}>
-              <FooterEmbebbed />
-            </Grid>
-            
+            {!smallScreen ?
+              <Grid container item xs={12} sm={12} style={{ alignSelf: 'flex-end' }}>
+                <FooterEmbebbed />
+              </Grid> : null}
+
+
           </Grid>
           {/* {!smallScreen ?
             <Grid item container sm={6} xs={12}>
