@@ -147,3 +147,7 @@ export {default as homeVideo} from './home-video.jpg'
 export {default as background1} from './backgroundFullScreen-1.jpg'
 export {default as background2} from './backgroundFullScreen-2.jpg'
 export {default as background3} from './backgroundFullScreen-3.jpg'
+
+export {default as house} from './house.png'
+export {default as software} from './software.png'
+export {default as truc} from './truc.png'
