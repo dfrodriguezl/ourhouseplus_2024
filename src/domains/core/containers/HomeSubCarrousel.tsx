@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Grid, Box, makeStyles, Theme, Avatar, useTheme, Typography, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { FeasibilityIcon, FinancialIcon, PdfIcon, PreArchitectureIcon, SquareIcon, BuildingIcon, videoSmall, home1Carrousel } from 'assets';
+import { FeasibilityIcon, FinancialIcon, PdfIcon, PreArchitectureIcon, SquareIcon, BuildingIcon, videoSmall, home1Carrousel, background1 } from 'assets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ImgVideo } from 'domains/common/components';
 import Carousel from 'react-material-ui-carousel';
@@ -122,7 +122,7 @@ const HomeSubVideo = () => {
               }
             }}>
             <div>
-              <img src={home1Carrousel} width="100%" className={classes.imgCarrousel} />
+              <img src={background1} width="100%" className={classes.imgCarrousel} />
               <Grid container justify="center">
                 <Button className={classes.buttonGray}>
                   Contemporary&nbsp;&nbsp;&nbsp;<span className={classes.greenText}>Learn More.</span>

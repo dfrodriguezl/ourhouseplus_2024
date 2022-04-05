@@ -2,7 +2,7 @@ import React from 'react';
 import { Container, Grid, Box, Paper, makeStyles, Button, Theme, useTheme, useMediaQuery, Typography, Card, CardContent } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { ArrowForward } from '@material-ui/icons';
-import { basicVolume, customizeOnline, interior, Step21 } from 'assets';
+import { basicVolume, customizeOnline, house, interior, software, Step21, truc } from 'assets';
 
 const styles = makeStyles((theme: Theme) => ({
   image: {
@@ -91,6 +91,9 @@ const styles = makeStyles((theme: Theme) => ({
   card: {
     margin: '10px 20px 20px',
     borderRadius: 20
+  },
+  contenedorImgs: {
+    marginTop: 20
   }
 }));
 
@@ -202,18 +205,44 @@ const HomeSub1 = () => {
 
             </Grid>
           </Grid> : */}
-        <Grid container justify="center" direction="column" style={{ textAlign: 'center' }}>
-          <Card className={classes.card}>
+        <Grid container justify="center" direction="column" style={{ textAlign: 'center'}}>
+          {/* <Card className={classes.card}>
             <CardContent>
               <img src={customizeOnline} alt="customise-online" className={classes.imgSmall} />
             </CardContent>
-          </Card>
+          </Card> */}
           <Typography variant="subtitle1" style={{ fontWeight: 'bolder' }}>
             Customise online
           </Typography>
           <Typography variant="subtitle2">
             Permit Papers - Order Kit - Extend Home
           </Typography>
+          <Grid xs={12} item container className={classes.contenedorImgs}>
+            <Grid xs={12} container justify="flex-start" style={{marginLeft: '20px', marginRight: '20px' }}>
+              <img alt="software" src={software} width="60%" />
+              <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'right', marginTop: -70}}>
+                <span style={{ fontWeight: 'bolder' }}>1. Design the extension on <br /> our web page.</span>
+                <br />
+                You get a avg price of your project <br />in real time.
+              </Typography>
+            </Grid>
+            <Grid xs={12} container justify="flex-end" style={{marginTop: 20, marginLeft: '20px', marginRight: '20px' }}>
+              <img alt="software" src={truc} width="60%" style={{}} />
+              <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'left', marginTop: -90 }}>
+                <span style={{ fontWeight: 'bolder' }}>2. Order your DYI kit or <br /> choose contractor.</span>
+                <br />
+                You get the elements like an IKEA <br />kit ready to build.
+              </Typography>
+            </Grid>
+            <Grid xs={12} container justify="flex-start" style={{marginTop: 20, marginLeft: '20px', marginRight: '20px' }}>
+              <img alt="software" src={house} width="60%" />
+              <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'right', marginTop: -60 }}>
+                <span style={{ fontWeight: 'bolder' }}>3. Build your extension on <br /> time and budget.</span>
+                <br />
+                A bigger home has never been <br />easier.
+              </Typography>
+            </Grid>
+          </Grid>
 
           {/* <Grid> */}
           {/* <img src={customizeOnline} alt="" className={classes.imgSmall} /> */}
