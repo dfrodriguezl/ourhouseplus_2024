@@ -205,7 +205,7 @@ const FormMail = (props: Props) => {
         {smallScreen ? <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3 }}>
           Design the home addition you want, <br />
           for a guaranteed, all-in price **. <br />
-          New additions designs start at $199.
+          {/* New additions designs start at $199. */}
         </Typography> : null}
 
         {/* <Grid item xs={12}>
