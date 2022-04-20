@@ -138,6 +138,9 @@ const Header = (props: RouteComponentProps) => {
   const isSignUp = props.history.location.pathname.indexOf('signup') > -1;
   const isWaiting = props.history.location.pathname.indexOf('waiting') > -1;
   const isAbout = props.history.location.pathname.indexOf('about') > -1;
+  const isList = props.history.location.pathname.indexOf('listSpending') > -1;
+  const isContainerBudget = props.history.location.pathname.indexOf('detailProjectBudget') > -1;
+  const isUploadPhoto = props.history.location.pathname.indexOf('uploadPhoto') > -1;
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -192,7 +195,7 @@ const Header = (props: RouteComponentProps) => {
         <AppBar position="static" elevation={0} className={classes.header}>
           <Toolbar variant="regular">
             <Link to="/register">
-              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? logo : whiteLogo} alt="logo" width={100} />
+              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto ? logo : whiteLogo} alt="logo" width={100} />
             </Link>
 
             {!(isSignUp || isWaiting ) ?

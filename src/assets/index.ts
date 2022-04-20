@@ -151,3 +151,5 @@ export {default as background3} from './backgroundFullScreen-3.jpg'
 export {default as house} from './house.png'
 export {default as software} from './software.png'
 export {default as truc} from './truc.png'
+
+export {default as bill} from './bill.png'

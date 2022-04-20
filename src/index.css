@@ -67,6 +67,12 @@ a {
   background: transparent linear-gradient(180deg, #FFFFFF 0%, #F2EBE0 100%) 0% 0% no-repeat padding-box;
 }
 
+.waiting-background-list {
+  opacity: 1;
+  /* background: transparent linear-gradient(180deg, #FFFFFF 0%, #F2EBE0 100%) 0% 0% no-repeat padding-box; */
+  background-color: #8382821A;
+}
+
 .waiting-back {
   background-image: url(assets/backgroundFullScreen-1.jpg);
   background-repeat: no-repeat;

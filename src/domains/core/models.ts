@@ -208,4 +208,35 @@ export const carouselItem = [
   }
 ]
 
+export interface ProjectBudget {
+  id: number;
+  name: string;
+  type: string;
+  budgetTarget: number;
+  currency: string;
+  spended: number;
+  spendedPercentage: number;
+}
+
+export const projectsBudget = [
+  {
+    id: 1,
+    name: '5240 Downs Lane',
+    type: 'Kitchen remodelling',
+    budgetTarget: 17000,
+    currency: 'USD',
+    spended: 16000,
+    spendedPercentage: 94
+  },
+  {
+    id: 2,
+    name: '568 Matt Lane',
+    type: 'Stairs remodelling',
+    budgetTarget: 3500,
+    currency: 'USD',
+    spended: 1000,
+    spendedPercentage: 28
+  }
+] 
+
 
