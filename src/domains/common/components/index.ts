@@ -14,3 +14,6 @@ export { default as FacadeContainer } from './FacadeContainer';
 export { default as GeolocatedContainer } from './GeolocatedContainer';
 export { default as Pdf } from './pdf';
 export { default as PopupMail } from './PopupMail';
+export { default as ListProjectsBudget } from './ListProjectsBudget';
+export { default as BudgetProject } from './BudgetProject';
+
