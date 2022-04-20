@@ -3,7 +3,8 @@ import { PageContainer } from "domains/core/containers";
 import React from "react";
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
 import { projectsBudget } from "domains/core/models";
-import BudgetProject from "./BudgetProject";
+import BudgetProjectDetail from "./BudgetProjectDetail";
+import { RouteComponentProps } from "react-router-dom";
 
 
 const useStyles = makeStyles(() =>
@@ -32,11 +33,18 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const ListProjectsBudget = () => {
+interface RouteProps {
+  id: string;
+}
+
+type Props = RouteComponentProps<RouteProps>;
+const ProjectBudgetContainer = (props: Props) => {
   const classes = useStyles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const listProjects = projectsBudget;
+  const { match: { params } } = props;
+  const idProject = params.id;
+  const projectSelected = projectsBudget.filter((o) => o.id === Number(idProject));
 
   return (
     <PageContainer background={smallScreen ? "waiting-background-list" : "waiting-back"}>
@@ -49,10 +57,10 @@ const ListProjectsBudget = () => {
             </Typography>
           </Grid>
           <Grid item container xs={12} className={classes.listContainer}>
-            {listProjects.map((pr) => {
+            {/* {listProjects.map((pr) => {
               return <BudgetProject project={pr} type="item" />
-            }, [])}
-            <BudgetProject type="button" />
+            }, [])} */}
+            <BudgetProjectDetail project={projectSelected[0]} />
           </Grid>
           <Grid item container xs={12} justify="center" className={classes.bottomTextContainer}>
             <Typography variant="subtitle1" className={classes.bottomText}>Build on budget.</Typography>
@@ -63,4 +71,4 @@ const ListProjectsBudget = () => {
   )
 }
 
-export default ListProjectsBudget;
+export default ProjectBudgetContainer;

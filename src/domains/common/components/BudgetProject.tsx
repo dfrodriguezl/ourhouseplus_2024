@@ -3,6 +3,7 @@ import { Grid, makeStyles, createStyles, Avatar, Typography } from "@material-ui
 import { ProjectBudget } from "domains/core/models";
 import { background1 } from "assets";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -48,16 +49,22 @@ const BudgetProject = (props: Props) => {
   const classes = useStyles();
   const { project, type } = props;
 
+  const history = useHistory();
+
+  const goToProject = (id: number) => {
+    history.push("/detailProjectBudget/" + id)
+  }
+
   return (
     <Grid container className={classes.container}>
       {type === "item" ?
         <Fragment>
-          <Grid item container xs={3} justify="center" className={classes.avatarContainer}>
+          <Grid item container xs={3} justify="center" className={classes.avatarContainer} onClick={() => goToProject(project!.id)}>
             <Avatar>
               <img src={background1} />
             </Avatar>
           </Grid>
-          <Grid item xs={9} className={classes.textContainer}>
+          <Grid item xs={9} className={classes.textContainer} onClick={() => goToProject(project!.id)}>
             <Typography variant="subtitle1" className={classes.boldText}>Project | {project!.name}</Typography>
             <Typography variant="subtitle1" >Type |. {project!.type}</Typography>
             <Typography variant="subtitle1" className={classes.boldText}>Budget target | {project!.budgetTarget} {project!.currency}</Typography>

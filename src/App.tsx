@@ -6,7 +6,7 @@ import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News, MailCh
 import theme from 'app/theme';
 import { ShapeDiverContainerStep1, ShapeDiverContainerStep2, ShapeDiverContainerStep3 } from 'domains/shapeDiver/containers';
 import { Footer, WaitingList } from 'domains/core/components';
-import { ListProjectsBudget } from 'domains/common/components';
+import { ListProjectsBudget, ProjectBudgetContainer } from 'domains/common/components';
 
 function App() {
   return (
@@ -34,6 +34,7 @@ function App() {
         <Route path="/chooseFacade" component={Facade} />
         <Route path="/loading" component={Loading} />
         <Route path="/listSpending" component={ListProjectsBudget} />
+        <Route path="/detailProjectBudget/:id" component={ProjectBudgetContainer} />
         <Redirect from="/" to="/register" />
       </Switch>
       <Footer />

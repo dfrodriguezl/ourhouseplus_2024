@@ -16,4 +16,6 @@ export { default as Pdf } from './pdf';
 export { default as PopupMail } from './PopupMail';
 export { default as ListProjectsBudget } from './ListProjectsBudget';
 export { default as BudgetProject } from './BudgetProject';
+export { default as ProjectBudgetContainer } from './ProjectBudgetContainer';
+export { default as BudgetProjectDetail } from './BudgetProjectDetail';
 
