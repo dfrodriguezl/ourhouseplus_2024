@@ -1,9 +1,15 @@
 import { createStyles, Grid, makeStyles, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import { PageContainer } from "domains/core/containers";
-import React from "react";
+import React, { useEffect } from "react";
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import { projectsBudget } from "domains/core/models";
+import { ProjectBudget, projectsBudget } from "domains/core/models";
 import BudgetProject from "./BudgetProject";
+import { getProjectsBudget, setProjectsBudget } from "domains/core/coreSlice";
+import { compose } from "recompose";
+import { useHistory, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { RootState } from "app/store";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 const useStyles = makeStyles(() =>
@@ -32,11 +38,35 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const ListProjectsBudget = () => {
+
+interface DispatchProps {
+  getProjectsBudget: typeof getProjectsBudget;
+}
+
+interface StateProps {
+  listProjects: ProjectBudget[] | undefined;
+}
+
+type Props = StateProps & DispatchProps;
+const ListProjectsBudget = (props: Props) => {
   const classes = useStyles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const listProjects = projectsBudget;
+  const history = useHistory();
+  // const listProjects = projectsBudget;
+  const { getProjectsBudget, listProjects } = props;
+  const { user, isAuthenticated } = useAuth0();
+
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      if (user['http://ourhouseplus.com/roles'].includes('admin')) {
+        getProjectsBudget(user.email);
+      } else {
+        history.push("/register")
+      }
+
+    }
+  }, [listProjects])
 
   return (
     <PageContainer background={smallScreen ? "waiting-background-list" : "waiting-back"}>
@@ -49,9 +79,9 @@ const ListProjectsBudget = () => {
             </Typography>
           </Grid>
           <Grid item container xs={12} className={classes.listContainer}>
-            {listProjects.map((pr) => {
+            {listProjects ? listProjects!.map((pr) => {
               return <BudgetProject project={pr} type="item" />
-            }, [])}
+            }, []) : null}
             <BudgetProject type="button" />
           </Grid>
           <Grid item container xs={12} justify="center" className={classes.bottomTextContainer}>
@@ -63,4 +93,18 @@ const ListProjectsBudget = () => {
   )
 }
 
-export default ListProjectsBudget;
+const container = compose<Props, {}>(
+  withRouter,
+  connect<StateProps, DispatchProps, {}, RootState>(
+    (state: RootState) => ({
+      listProjects: state.domains.core.projectsBudget,
+    }),
+    {
+      getProjectsBudget
+    }
+  )
+)(ListProjectsBudget);
+
+export default container;
+
+// export default ListProjectsBudget;
