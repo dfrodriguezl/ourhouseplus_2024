@@ -13,6 +13,7 @@ interface CoreState {
   option: string;
   projectsBudget: ProjectBudget[] | undefined;
   saveSuccess: boolean | undefined;
+  currentProject: ProjectBudget | undefined;
 }
 
 const initialState: CoreState = {
@@ -23,7 +24,8 @@ const initialState: CoreState = {
   terrain: undefined,
   option: '',
   projectsBudget: undefined,
-  saveSuccess: undefined
+  saveSuccess: undefined,
+  currentProject: undefined
 };
 
 export const coreSlice = createSlice({
@@ -52,6 +54,9 @@ export const coreSlice = createSlice({
     },
     setSaveSuccess: (state, action: PayloadAction<boolean>) => {
       state.saveSuccess = action.payload;
+    },
+    setCurrentProject: (state, action: PayloadAction<ProjectBudget>) => {
+      state.currentProject = action.payload;
     }
   },
 });
@@ -63,7 +68,8 @@ export const {
   saveTerrain,
   setOption,
   setProjectsBudget,
-  setSaveSuccess
+  setSaveSuccess,
+  setCurrentProject
 } = coreSlice.actions;
 
 export const getLocations = (): AppThunk => dispatch => {
@@ -71,7 +77,6 @@ export const getLocations = (): AppThunk => dispatch => {
     dispatch(setLocations(data.data))
   });
 };
-
 
 export const getProjectsBudget = (username: string): AppThunk => dispatch => {
   get(`/LoadProjectsBudgetByUsername?username=${username}`).then((data: AxiosResponse<ProjectBudget[]>) => {
@@ -82,6 +87,12 @@ export const getProjectsBudget = (username: string): AppThunk => dispatch => {
 export const saveProjectBudget = (project: ProjectBudget): AppThunk => dispatch => {
   post('/SaveProjectBudget', { data: project }).then((data: AxiosResponse) => {
     dispatch(setSaveSuccess(data.data.message === "Success" ? true : false))
+  });
+};
+
+export const editProjectBudget = (id: string, project: ProjectBudget): AppThunk => dispatch => {
+  post(`/EditProjectBudgetById?id=${id}`, { data: project }).then((data: AxiosResponse) => {
+    dispatch(setCurrentProject(data.data))
   });
 };
 

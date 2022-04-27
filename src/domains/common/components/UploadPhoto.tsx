@@ -1,8 +1,15 @@
 import { Button, createStyles, Grid, makeStyles, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import { PageContainer } from "domains/core/containers";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { bill } from "assets";
+import { ProjectBudget, Spend } from "domains/core/models";
+import { compose } from "recompose";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { RootState } from "app/store";
+import Select from 'react-select';
+import { editProjectBudget } from "domains/core/coreSlice";
 
 
 const useStyles = makeStyles(() =>
@@ -20,8 +27,8 @@ const useStyles = makeStyles(() =>
     },
     container: {
       borderRadius: 20,
-      border: '#707070 solid 1px',
-      background: '#FFFFFF',
+      border: '#707070 solid 0px',
+      background: 'transparent',
       margin: '20px 90px',
       height: 30
     },
@@ -41,15 +48,44 @@ const useStyles = makeStyles(() =>
   })
 );
 
+interface DispatchProps {
+  editProjectBudget: typeof editProjectBudget;
+}
 
-const UploadPhoto = () => {
+interface StateProps {
+  listProjects: ProjectBudget[] | undefined;
+}
+
+type Props = StateProps & DispatchProps;
+const UploadPhoto = (props: Props) => {
   const classes = useStyles();
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [selectedImage, setSelectedImage] = useState<any>(null);
+  const { listProjects, editProjectBudget } = props;
+  const [projectSelected, setProjectSelected] = useState<ProjectBudget>();
+  const spend: Spend[] = [{
+    date: new Date(),
+    detail: "Test detail",
+    quantity: 20000
+  }]
 
   const onChangeImage = (e: any) => {
     setSelectedImage(e.target.files[0]);
+    setProjectSelected({
+      ...projectSelected!,
+      spends: spend
+    })
+  }
+
+  const onChangeProject = (e: any) => {
+    setProjectSelected(e)
+  }
+
+  const upload = () => {
+    if(projectSelected){
+      editProjectBudget(String(projectSelected?.id), projectSelected!);
+    }   
   }
 
   return (
@@ -57,8 +93,15 @@ const UploadPhoto = () => {
       {smallScreen ?
         <Grid container>
           <Grid item container xs={12} justify="center" className={classes.container} direction="row">
-            <Typography variant="subtitle1">Choose project.</Typography>
-            <ExpandMoreIcon className={classes.addButton} />
+            {/* <Typography variant="subtitle1">Choose project.</Typography>
+            <ExpandMoreIcon className={classes.addButton} /> */}
+            <Select
+              options={listProjects}
+              getOptionValue={(o) => String(o.id)}
+              getOptionLabel={(o) => o.name}
+              placeholder="Choose project."
+              onChange={onChangeProject}
+            ></Select>
           </Grid>
           <Grid item container xs={12} justify="center" direction="column" alignContent="center" className={classes.containerPhoto}>
             <input
@@ -74,7 +117,7 @@ const UploadPhoto = () => {
             <Typography variant="caption">choose photo <br /> from phone library</Typography>
           </Grid>
           <Grid item container xs={12} justify="center" className={classes.containerButton}>
-            <Button className={classes.buttonUpload} component="span">Upload</Button>
+            <Button className={classes.buttonUpload} component="span" onClick={() => upload()}>Upload</Button>
           </Grid>
           <Grid item container xs={12} justify="center" className={classes.bottomTextContainer}>
             <Typography variant="subtitle1" className={classes.bottomText}>Build on budget.</Typography>
@@ -85,4 +128,18 @@ const UploadPhoto = () => {
   )
 }
 
-export default UploadPhoto;
+const container = compose<Props, {}>(
+  withRouter,
+  connect<StateProps, DispatchProps, {}, RootState>(
+    (state: RootState) => ({
+      listProjects: state.domains.core.projectsBudget,
+    }),
+    {
+      editProjectBudget
+    }
+  )
+)(UploadPhoto);
+
+export default container;
+
+// export default UploadPhoto;

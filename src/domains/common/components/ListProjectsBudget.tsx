@@ -2,9 +2,9 @@ import { createStyles, Grid, makeStyles, Typography, useMediaQuery, useTheme } f
 import { PageContainer } from "domains/core/containers";
 import React, { useEffect } from "react";
 import AddAPhotoIcon from '@material-ui/icons/AddAPhoto';
-import { ProjectBudget, projectsBudget } from "domains/core/models";
+import { ProjectBudget } from "domains/core/models";
 import BudgetProject from "./BudgetProject";
-import { getProjectsBudget, setProjectsBudget } from "domains/core/coreSlice";
+import { getProjectsBudget } from "domains/core/coreSlice";
 import { compose } from "recompose";
 import { useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -66,13 +66,17 @@ const ListProjectsBudget = (props: Props) => {
       }
 
     }
-  }, [listProjects])
+  }, [getProjectsBudget])
+
+  const toUploadPhoto = () => {
+    history.push("/uploadPhoto");
+  }
 
   return (
     <PageContainer background={smallScreen ? "waiting-background-list" : "waiting-back"}>
       {smallScreen ?
         <Grid container>
-          <Grid item container xs={12} justify="center" className={classes.containerAdd} direction="row">
+          <Grid item container xs={12} justify="center" className={classes.containerAdd} direction="row" onClick={() => toUploadPhoto()}>
             <AddAPhotoIcon className={classes.addButton} />
             <Typography variant="subtitle1" className={classes.addText}>
               Add spending.

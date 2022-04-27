@@ -217,11 +217,18 @@ export interface ProjectBudget {
   spended: number;
   spendedPercentage: number;
   email?: string;
-  imgs?:ImgBudget[]
+  spends?: Spend[]
 }
 
 export interface ImgBudget {
   date?: Date;
+  file?: File;
+}
+
+export interface Spend {
+  date?: Date;
+  detail?: string;
+  quantity?: number;
   file?: File;
 }
 
