@@ -230,6 +230,7 @@ export interface Spend {
   detail?: string;
   quantity?: number;
   file?: File;
+  type?: number;
 }
 
 export const projectsBudget = [

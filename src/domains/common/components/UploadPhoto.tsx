@@ -67,7 +67,8 @@ const UploadPhoto = (props: Props) => {
   const spend: Spend[] = [{
     date: new Date(),
     detail: "Test detail",
-    quantity: 20000
+    quantity: 20000,
+    type: 1
   }]
 
   const onChangeImage = (e: any) => {

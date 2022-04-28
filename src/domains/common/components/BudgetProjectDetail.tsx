@@ -70,14 +70,24 @@ const BudgetProjectDetail = (props: Props) => {
           <Typography variant="subtitle1" className={classes.boldText}>Material spending</Typography>
           <Typography variant="subtitle1">Type |. {project!.type}</Typography>
           <br />
-          <Typography variant="subtitle1" >04/10   Paint Home depot   2 500 USD</Typography>
-          <br />
-          <Typography variant="subtitle1" >04/09   Brushes Home depot   1 500 USD</Typography>
-          <br />
+          {project?.spends!.map((s) => {
+            return s.type === 1 ?
+            <Fragment>
+              <Typography variant="subtitle1" >{new Date(s.date!).getDate() + "/" + new Date(s.date!).getMonth()}   {s.detail}   {s.quantity} {project!.currency}</Typography>
+              <br />
+            </Fragment> : null
+          }, [])}
+
           <Typography variant="subtitle1" className={classes.boldText}>Labor spending</Typography>
           <Typography variant="subtitle1">Type |. {project!.type}</Typography>
           <br />
-          <Typography variant="subtitle1" >04/10   Jhon P. Week 1   2 500 USD</Typography>
+          {project?.spends!.map((s) => {
+            return s.type === 2 ?
+            <Fragment>
+              <Typography variant="subtitle1" >{s.date}   {s.detail}   {s.quantity} USD</Typography>
+              <br />
+            </Fragment> : null
+          }, [])}
         </Grid>
       </Fragment>
     </Grid>
