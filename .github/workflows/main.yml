@@ -29,10 +29,10 @@ jobs:
         with:
           files: '["**/*.env"]'
         env:
-          REACT_APP_API_BASE_URL: https://rea-fn-test-fr-central.azurewebsites.net/api
-          REACT_APP_API_ACCESS_CODE: 1N1G1t1vQZ3UBXYlxkdGcNKjp6s8R4UZD4dB1gz6pi5CrJvEQqL5Dw==
-          REACT_APP_AUTH0_DOMAIN: dev-ourhouseplus.us.auth0.com
-          REACT_APP_AUTH0_CLIENT_ID: JQfAlJFgNIbjjzDhEvlajQ3Bk9ALauUD
+          API_BASE_URL: https://rea-fn-test-fr-central.azurewebsites.net/api
+          API_ACCESS_CODE: 1N1G1t1vQZ3UBXYlxkdGcNKjp6s8R4UZD4dB1gz6pi5CrJvEQqL5Dw==
+          AUTH0_DOMAIN: dev-ourhouseplus.us.auth0.com
+          AUTH0_CLIENT_ID: JQfAlJFgNIbjjzDhEvlajQ3Bk9ALauUD
 
       
       - name: Yarn CLI
