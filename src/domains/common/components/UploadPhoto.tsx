@@ -1,7 +1,6 @@
 import { Button, createStyles, Grid, makeStyles, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import { PageContainer } from "domains/core/containers";
-import React, { useEffect, useState } from "react";
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import React, { useState } from "react";
 import { bill } from "assets";
 import { ProjectBudget, Spend } from "domains/core/models";
 import { compose } from "recompose";
@@ -64,19 +63,29 @@ const UploadPhoto = (props: Props) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const { listProjects, editProjectBudget } = props;
   const [projectSelected, setProjectSelected] = useState<ProjectBudget>();
-  const spend: Spend[] = [{
+  const spend: Spend = {
     date: new Date(),
     detail: "Test detail",
     quantity: 20000,
     type: 1
-  }]
+  };
 
   const onChangeImage = (e: any) => {
     setSelectedImage(e.target.files[0]);
-    setProjectSelected({
-      ...projectSelected!,
-      spends: spend
-    })
+    let spends = Object.assign([], projectSelected?.spends!);
+    if(spends){
+      spends.push(spend);
+      setProjectSelected({
+        ...projectSelected!,
+        spends: spends
+      })
+    } else {
+      setProjectSelected({
+        ...projectSelected!,
+        spends: [spend]
+      })
+    }
+    
   }
 
   const onChangeProject = (e: any) => {
@@ -94,8 +103,6 @@ const UploadPhoto = (props: Props) => {
       {smallScreen ?
         <Grid container>
           <Grid item container xs={12} justify="center" className={classes.container} direction="row">
-            {/* <Typography variant="subtitle1">Choose project.</Typography>
-            <ExpandMoreIcon className={classes.addButton} /> */}
             <Select
               options={listProjects}
               getOptionValue={(o) => String(o.id)}
@@ -142,5 +149,3 @@ const container = compose<Props, {}>(
 )(UploadPhoto);
 
 export default container;
-
-// export default UploadPhoto;

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Grid, makeStyles, createStyles, Avatar, Typography } from "@material-ui/core";
 import { ProjectBudget } from "domains/core/models";
 import { background1 } from "assets";
@@ -48,11 +48,32 @@ type Props = OwnProps;
 const BudgetProject = (props: Props) => {
   const classes = useStyles();
   const { project, type } = props;
+  const [totalSpended, setTotalSpended] = useState(0);
+  const [totalSpendedPercentage, setTotalSpendedPercentage] = useState(0);
 
   const history = useHistory();
 
   const goToProject = (id: number) => {
     history.push("/detailProjectBudget/" + id)
+  }
+
+  const goToNewProject = () => {
+    history.push("/newProject")
+  }
+
+  useEffect(() => {
+    getTotalSpended();
+  },[])
+
+  const getTotalSpended = () => {
+    let total = 0;
+    if(project?.spends){
+      project.spends.map((s) => {
+        total = total + s.quantity!;
+      },[])
+      setTotalSpended(total);
+      setTotalSpendedPercentage(Math.round((total/project.budgetTarget)*100));
+    }
   }
 
   return (
@@ -69,12 +90,12 @@ const BudgetProject = (props: Props) => {
             <Typography variant="subtitle1" >Type |. {project!.type}</Typography>
             <Typography variant="subtitle1" className={classes.boldText}>Budget target | {project!.budgetTarget} {project!.currency}</Typography>
             <br />
-            <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Spended | {project!.spended} {project!.currency}</Typography>
-            <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Total spended | {project!.spendedPercentage} %</Typography>
+            <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Spended | {totalSpended} {project!.currency}</Typography>
+            <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Total spended | {totalSpendedPercentage} %</Typography>
           </Grid>
         </Fragment> :
         <Fragment>
-          <Grid container justify="center" direction="row" alignItems="center">
+          <Grid container justify="center" direction="row" alignItems="center" onClick={() => goToNewProject()}>
             <AddCircleIcon fontSize="large" className={classes.iconAdd} />
             <Typography variant="h6" className={classes.boldText}>
               Start new project.

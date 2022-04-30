@@ -142,6 +142,7 @@ const Header = (props: RouteComponentProps) => {
   const isList = props.history.location.pathname.indexOf('listSpending') > -1;
   const isContainerBudget = props.history.location.pathname.indexOf('detailProjectBudget') > -1;
   const isUploadPhoto = props.history.location.pathname.indexOf('uploadPhoto') > -1;
+  const isNewProject = props.history.location.pathname.indexOf('newProject') > -1;
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -194,17 +195,16 @@ const Header = (props: RouteComponentProps) => {
   }
 
   const openNewProject = () => {
-    history.push("/uploadPhoto")
+    history.push("/newProject")
   }
 
   return (
     smallScreen ?
       <Fragment>
-        {console.log("ROL", user)}
         <AppBar position="static" elevation={0} className={classes.header}>
           <Toolbar variant="regular">
             <Link to="/register">
-              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto ? logo : whiteLogo} alt="logo" width={100} />
+              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto || isNewProject? logo : whiteLogo} alt="logo" width={100} />
             </Link>
 
             {!(isSignUp || isWaiting) ?
