@@ -25,6 +25,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
+      - uses: cschleiden/replace-tokens@v1
+        with:
+          files: '["**/*.env"]'
+        env:
+          REACT_APP_API_BASE_URL: https://rea-fn-test-fr-central.azurewebsites.net/api
+          REACT_APP_API_ACCESS_CODE: 1N1G1t1vQZ3UBXYlxkdGcNKjp6s8R4UZD4dB1gz6pi5CrJvEQqL5Dw==
+          REACT_APP_AUTH0_DOMAIN: dev-ourhouseplus.us.auth0.com
+          REACT_APP_AUTH0_CLIENT_ID: JQfAlJFgNIbjjzDhEvlajQ3Bk9ALauUD
+
+      
       - name: Yarn CLI
         # You may pin to the exact commit or the version.
         # uses: CultureHQ/actions-yarn@661c6f3a66041c2432bcfb78096b9207304614c8
