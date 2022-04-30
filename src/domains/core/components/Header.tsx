@@ -108,7 +108,7 @@ const useStyles = makeStyles((theme: Theme) =>
     imgLogo: {
       marginRight: 15
     },
-    bottomText:{
+    bottomText: {
       position: 'absolute',
       bottom: 10,
       textAlign: 'center',
@@ -132,6 +132,7 @@ const Header = (props: RouteComponentProps) => {
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = useRef<any>(null);
   const history = props.history;
+  const isAdmin = isAuthenticated ? user['http://ourhouseplus.com/roles'].includes('admin') : false;
 
   const isHome = props.history.location.pathname.indexOf('home') > -1;
   const isRegister = props.history.location.pathname.indexOf('register') > -1;
@@ -141,12 +142,13 @@ const Header = (props: RouteComponentProps) => {
   const isList = props.history.location.pathname.indexOf('listSpending') > -1;
   const isContainerBudget = props.history.location.pathname.indexOf('detailProjectBudget') > -1;
   const isUploadPhoto = props.history.location.pathname.indexOf('uploadPhoto') > -1;
+  const isNewProject = props.history.location.pathname.indexOf('newProject') > -1;
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const openHome = () => {
-    history.push('/home');
+    history.push('/register');
   }
 
   const openAbout = () => {
@@ -157,9 +159,9 @@ const Header = (props: RouteComponentProps) => {
     history.push('/register');
   }
 
-  const openProjects = () => {
-    history.push('/projects');
-  }
+  // const openProjects = () => {
+  //   history.push('/projects');
+  // }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -188,6 +190,13 @@ const Header = (props: RouteComponentProps) => {
     }
   }
 
+  const openProjects = () => {
+    history.push("/listSpending")
+  }
+
+  const openNewProject = () => {
+    history.push("/newProject")
+  }
 
   return (
     smallScreen ?
@@ -195,10 +204,10 @@ const Header = (props: RouteComponentProps) => {
         <AppBar position="static" elevation={0} className={classes.header}>
           <Toolbar variant="regular">
             <Link to="/register">
-              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto ? logo : whiteLogo} alt="logo" width={100} />
+              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto || isNewProject? logo : whiteLogo} alt="logo" width={100} />
             </Link>
 
-            {!(isSignUp || isWaiting ) ?
+            {!(isSignUp || isWaiting) ?
               <div className={classes.menuButton}>
                 <IconButton
                   edge="end"
@@ -232,6 +241,7 @@ const Header = (props: RouteComponentProps) => {
                         {/* <Button onClick={() => openRegister()}>
                         <MenuItem>Become a member</MenuItem>
                       </Button> */}
+                        
 
                         <Button onClick={() => openHome()} className={classes.buttonMenu}>
                           <MenuItem className={classes.itemText}>Home</MenuItem>
@@ -253,13 +263,25 @@ const Header = (props: RouteComponentProps) => {
                           <MenuItem className={classes.itemText}>Sign up</MenuItem>
                         </Button>
                         <br />
-                        <img src={logo} alt="logo" width={70} className={classes.imgLogo}/>
+                        <img src={logo} alt="logo" width={70} className={classes.imgLogo} />
                         <p className={classes.bottomText}>Copyright &copy; 2022 Home+. All rights reserved</p>
                       </div>
                     </div>
 
                     :
                     <div>
+                      {isAuthenticated && isAdmin?
+                          <Fragment>
+                            <Button onClick={() => openProjects()} className={classes.buttonMenu}>
+                              <MenuItem className={classes.itemText}>Your projects</MenuItem>
+                            </Button>
+                            <br />
+                            <Button onClick={() => openNewProject()} className={classes.buttonMenu}>
+                              <MenuItem className={classes.itemText}>New project</MenuItem>
+                            </Button>
+                            <br />
+                          </Fragment>
+                          : null}
 
                       <Button onClick={() => logout()}>
                         <MenuItem>Sign out</MenuItem>

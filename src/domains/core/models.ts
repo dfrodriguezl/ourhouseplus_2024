@@ -216,6 +216,21 @@ export interface ProjectBudget {
   currency: string;
   spended: number;
   spendedPercentage: number;
+  email?: string;
+  spends?: Spend[]
+}
+
+export interface ImgBudget {
+  date?: Date;
+  file?: File;
+}
+
+export interface Spend {
+  date?: Date;
+  detail?: string;
+  quantity?: number;
+  file?: File;
+  type?: number;
 }
 
 export const projectsBudget = [

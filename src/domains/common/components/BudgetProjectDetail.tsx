@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Grid, makeStyles, createStyles, Avatar, Typography } from "@material-ui/core";
 import { ProjectBudget } from "domains/core/models";
 import { background1 } from "assets";
@@ -49,6 +49,23 @@ type Props = OwnProps;
 const BudgetProjectDetail = (props: Props) => {
   const classes = useStyles();
   const { project } = props;
+  const [totalSpended, setTotalSpended] = useState(0);
+  const [totalSpendedPercentage, setTotalSpendedPercentage] = useState(0);
+
+  useEffect(() => {
+    getTotalSpended();
+  },[])
+
+  const getTotalSpended = () => {
+    let total = 0;
+    if(project?.spends){
+      project.spends.map((s) => {
+        total = total + s.quantity!;
+      },[])
+      setTotalSpended(total);
+      setTotalSpendedPercentage(Math.round((total/project.budgetTarget)*100));
+    }
+  }
 
   return (
     <Grid container className={classes.container}>
@@ -63,21 +80,31 @@ const BudgetProjectDetail = (props: Props) => {
           <Typography variant="subtitle1" >Type |. {project!.type}</Typography>
           <Typography variant="subtitle1" className={classes.boldText}>Budget target | {project!.budgetTarget} {project!.currency}</Typography>
           <br />
-          <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Spended | {project!.spended} {project!.currency}</Typography>
-          <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Total spended | {project!.spendedPercentage} %</Typography>
+          <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Spended | {totalSpended} {project!.currency}</Typography>
+          <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Total spended | {totalSpendedPercentage} %</Typography>
         </Grid>
         <Grid xs={12} item container direction="column" className={classes.containerDetails}>
           <Typography variant="subtitle1" className={classes.boldText}>Material spending</Typography>
           <Typography variant="subtitle1">Type |. {project!.type}</Typography>
           <br />
-          <Typography variant="subtitle1" >04/10   Paint Home depot   2 500 USD</Typography>
-          <br />
-          <Typography variant="subtitle1" >04/09   Brushes Home depot   1 500 USD</Typography>
-          <br />
+          {project?.spends ? project?.spends!.map((s) => {
+            return s.type === 1 ?
+            <Fragment>
+              <Typography variant="subtitle1" >{new Date(s.date!).getDate() + "/" + (new Date(s.date!).getMonth() + 1)}   {s.detail}   {s.quantity} {project!.currency}</Typography>
+              <br />
+            </Fragment> : null
+          }, []) : null}
+
           <Typography variant="subtitle1" className={classes.boldText}>Labor spending</Typography>
           <Typography variant="subtitle1">Type |. {project!.type}</Typography>
           <br />
-          <Typography variant="subtitle1" >04/10   Jhon P. Week 1   2 500 USD</Typography>
+          {project?.spends ? project?.spends!.map((s) => {
+            return s.type === 2 ?
+            <Fragment>
+              <Typography variant="subtitle1" >{new Date(s.date!).getDate() + "/" + (new Date(s.date!).getMonth() + 1)}   {s.detail}   {s.quantity} USD</Typography>
+              <br />
+            </Fragment> : null
+          }, []) : null}
         </Grid>
       </Fragment>
     </Grid>

@@ -19,4 +19,5 @@ export { default as BudgetProject } from './BudgetProject';
 export { default as ProjectBudgetContainer } from './ProjectBudgetContainer';
 export { default as BudgetProjectDetail } from './BudgetProjectDetail';
 export { default as UploadPhoto } from './UploadPhoto';
+export { default as NewBudgetProject } from './NewBudgetProject';
 

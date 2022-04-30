@@ -14,7 +14,7 @@ const Auth0 = (props: Props) => {
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      redirectUri={window.location.origin + '/#/home'}
+      redirectUri={window.location.origin}
     >
       {props.children}
     </Auth0Provider>

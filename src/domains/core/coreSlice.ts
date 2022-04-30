@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { get } from 'app/api';
+import { get, post } from 'app/api';
 import { AppThunk } from 'app/store';
 import { AxiosResponse } from 'axios';
-import { LocationSimple, Density, Location, Terrain } from './models';
+import { LocationSimple, Density, Location, Terrain, ProjectBudget } from './models';
 
 interface CoreState {
   location: LocationSimple | undefined;
@@ -11,6 +11,9 @@ interface CoreState {
   searchClick: Boolean;
   terrain: Terrain | undefined;
   option: string;
+  projectsBudget: ProjectBudget[] | undefined;
+  saveSuccess: boolean | undefined;
+  currentProject: ProjectBudget | undefined;
 }
 
 const initialState: CoreState = {
@@ -19,7 +22,10 @@ const initialState: CoreState = {
   locations: [],
   searchClick: false,
   terrain: undefined,
-  option: ''
+  option: '',
+  projectsBudget: undefined,
+  saveSuccess: undefined,
+  currentProject: undefined
 };
 
 export const coreSlice = createSlice({
@@ -43,6 +49,15 @@ export const coreSlice = createSlice({
     setOption: (state, action: PayloadAction<string>) => {
       state.option = action.payload;
     },
+    setProjectsBudget: (state, action: PayloadAction<ProjectBudget[]>) => {
+      state.projectsBudget = action.payload;
+    },
+    setSaveSuccess: (state, action: PayloadAction<boolean>) => {
+      state.saveSuccess = action.payload;
+    },
+    setCurrentProject: (state, action: PayloadAction<ProjectBudget>) => {
+      state.currentProject = action.payload;
+    }
   },
 });
 
@@ -51,12 +66,33 @@ export const {
   // doSearch,
   setSearchClick,
   saveTerrain,
-  setOption
+  setOption,
+  setProjectsBudget,
+  setSaveSuccess,
+  setCurrentProject
 } = coreSlice.actions;
 
 export const getLocations = (): AppThunk => dispatch => {
   get('/Location').then((data: AxiosResponse<Location[]>) => {
     dispatch(setLocations(data.data))
+  });
+};
+
+export const getProjectsBudget = (username: string): AppThunk => dispatch => {
+  get(`/LoadProjectsBudgetByUsername?username=${username}`).then((data: AxiosResponse<ProjectBudget[]>) => {
+    dispatch(setProjectsBudget(data.data))
+  });
+};
+
+export const saveProjectBudget = (project: ProjectBudget): AppThunk => dispatch => {
+  post('/SaveProjectBudget', { data: project }).then((data: AxiosResponse) => {
+    dispatch(setSaveSuccess(data.data.message === "Success" ? true : false))
+  });
+};
+
+export const editProjectBudget = (id: string, project: ProjectBudget): AppThunk => dispatch => {
+  post(`/EditProjectBudgetById?id=${id}`, { data: project }).then((data: AxiosResponse) => {
+    dispatch(setCurrentProject(data.data))
   });
 };
 
