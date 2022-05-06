@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { RootState } from "app/store";
 import Select from 'react-select';
-import { editProjectBudget } from "domains/core/coreSlice";
+import { editProjectBudget, sendEmail } from "domains/core/coreSlice";
 
 
 const useStyles = makeStyles(() =>
@@ -49,6 +49,7 @@ const useStyles = makeStyles(() =>
 
 interface DispatchProps {
   editProjectBudget: typeof editProjectBudget;
+  sendEmail: typeof sendEmail;
 }
 
 interface StateProps {
@@ -61,19 +62,20 @@ const UploadPhoto = (props: Props) => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [selectedImage, setSelectedImage] = useState<any>(null);
-  const { listProjects, editProjectBudget } = props;
+  const { listProjects, editProjectBudget, sendEmail } = props;
   const [projectSelected, setProjectSelected] = useState<ProjectBudget>();
-  const spend: Spend = {
+  let spend: Spend = {
     date: new Date(),
     detail: "Test detail",
     quantity: 20000,
-    type: 1
+    type: 1,
+    file: selectedImage
   };
 
   const onChangeImage = (e: any) => {
     setSelectedImage(e.target.files[0]);
     let spends = Object.assign([], projectSelected?.spends!);
-    if(spends){
+    if (spends) {
       spends.push(spend);
       setProjectSelected({
         ...projectSelected!,
@@ -85,7 +87,7 @@ const UploadPhoto = (props: Props) => {
         spends: [spend]
       })
     }
-    
+
   }
 
   const onChangeProject = (e: any) => {
@@ -93,9 +95,15 @@ const UploadPhoto = (props: Props) => {
   }
 
   const upload = () => {
-    if(projectSelected){
+    if (projectSelected) {
+      const formData = new FormData();
+      //Adding files to the formdata
+      formData.append("image", new Blob([selectedImage],{type: selectedImage.type}));
+      formData.append("name", new Blob([projectSelected.name], {type: "text/plain"}));
       editProjectBudget(String(projectSelected?.id), projectSelected!);
-    }   
+      sendEmail(formData);
+      alert("Spend created");
+    }
   }
 
   return (
@@ -143,7 +151,8 @@ const container = compose<Props, {}>(
       listProjects: state.domains.core.projectsBudget,
     }),
     {
-      editProjectBudget
+      editProjectBudget,
+      sendEmail
     }
   )
 )(UploadPhoto);

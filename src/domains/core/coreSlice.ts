@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { get, post } from 'app/api';
+import { get, post, postForm } from 'app/api';
 import { AppThunk } from 'app/store';
 import { AxiosResponse } from 'axios';
-import { LocationSimple, Density, Location, Terrain, ProjectBudget } from './models';
+import { LocationSimple, Density, Location, Terrain, ProjectBudget, Spend } from './models';
 
 interface CoreState {
   location: LocationSimple | undefined;
@@ -93,6 +93,13 @@ export const saveProjectBudget = (project: ProjectBudget): AppThunk => dispatch 
 export const editProjectBudget = (id: string, project: ProjectBudget): AppThunk => dispatch => {
   post(`/EditProjectBudgetById?id=${id}`, { data: project }).then((data: AxiosResponse) => {
     dispatch(setCurrentProject(data.data))
+  });
+};
+
+export const sendEmail = (formData: FormData): AppThunk => dispatch => {
+  post('/SendEmail', { data: formData }).then((data: AxiosResponse) => {
+    dispatch(setSaveSuccess(data.data.message === "Success" ? true : false));
+    console.log("Email sent!!!")
   });
 };
 
