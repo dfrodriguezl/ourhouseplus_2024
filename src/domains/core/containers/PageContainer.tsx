@@ -97,6 +97,7 @@ const PageContainer = (props: Props) => {
   const isUploadShape = history.location.pathname.indexOf('uploadShape') > -1;
   const isChooseFacade = history.location.pathname.indexOf('chooseFacade') > -1;
   const isUploadPhoto = history.location.pathname.indexOf('uploadPhoto') > -1;
+  const isProjectDetail = history.location.pathname.indexOf('detailProjectBudget') > -1;
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -107,7 +108,8 @@ const PageContainer = (props: Props) => {
   }, [])
 
   return (
-    <div className={smallScreen ? background : imgs[currentIndex]} style={(isAbout || isDetails || isStep1 || isListProjects || isUploadShape || isStep2 || isStep3 || isChooseFacade || isUploadPhoto) ? { overflow: 'auto' } : expandAdvanced}>
+    <div className={smallScreen ? background : imgs[currentIndex]} style={(isAbout || isDetails || isStep1 || isListProjects || isUploadShape 
+    || isStep2 || isStep3 || isChooseFacade || isUploadPhoto || isProjectDetail) ? { overflow: 'auto' } : expandAdvanced}>
       <Container className={classes.noPadding} >
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer} >
           {
