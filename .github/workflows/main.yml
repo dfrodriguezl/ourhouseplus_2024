@@ -27,7 +27,7 @@ jobs:
       
       - uses: cschleiden/replace-tokens@v1.1
         with:
-          files: '["**/*.env"]'
+          files: '[".env"]'
         env:
           API_BASE_URL: https://rea-fn-test-fr-central.azurewebsites.net/api
           API_ACCESS_CODE: 1N1G1t1vQZ3UBXYlxkdGcNKjp6s8R4UZD4dB1gz6pi5CrJvEQqL5Dw==
