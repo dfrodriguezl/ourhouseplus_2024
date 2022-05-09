@@ -12,7 +12,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <Switch>
-        <Route path="/about" component={About} />
+        {/* <Route path="/about" component={About} /> */}
         <Route path="/contact-us" component={ContactUs} />
         <Route path="/investors" component={Investors} />
         <Route path="/jobs" component={Jobs} />
