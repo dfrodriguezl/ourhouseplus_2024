@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Grid, makeStyles, createStyles, Avatar, Typography } from "@material-ui/core";
+import { Grid, makeStyles, createStyles, Avatar, Typography, IconButton } from "@material-ui/core";
 import { ProjectBudget } from "domains/core/models";
 import { background1 } from "assets";
-import AddCircleIcon from '@material-ui/icons/AddCircle';
 
 const useStyles = makeStyles(() =>
   createStyles({

@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { Grid, makeStyles, createStyles, Avatar, Typography, useTheme, useMediaQuery, Theme, Button } from "@material-ui/core";
+import React, { Fragment, useState } from "react";
+import { Grid, makeStyles, createStyles, Avatar, Typography, useTheme, useMediaQuery, Theme, Button, Snackbar, SnackbarContent, IconButton } from "@material-ui/core";
 import { ProjectBudget } from "domains/core/models";
 import { background1 } from "assets";
 import { PageContainer } from "domains/core/containers";
@@ -10,6 +10,7 @@ import { withRouter } from "react-router-dom";
 import { RootState } from "app/store";
 import { connect } from "react-redux";
 import { useAuth0 } from "@auth0/auth0-react";
+import { Close } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -113,7 +114,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     input: {
       border: 'none'
-    }
+    },
+    root: {
+      background: theme.palette.common.white,
+      color: theme.palette.common.black,
+    },
   })
 );
 
@@ -128,13 +133,19 @@ const NewBudgetProject = (props: Props) => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { register, handleSubmit, watch, formState: { errors } } = useForm();
+  const [open, setOpen] = useState(false);
   const { user } = useAuth0();
 
+  const handleCloseSnackbar = () => {
+    setOpen(false)
+  }
+
   const onSubmit = (data: any) => {
-    console.log("DATA", data);
+    // console.log("DATA", data);
     data.email = user.email;
     const projectNew: ProjectBudget = data;
     saveProjectBudget(projectNew); 
+    setOpen(true);
   }
 
   return (
@@ -196,6 +207,27 @@ const NewBudgetProject = (props: Props) => {
           </Grid>
         </Grid>
         : null}
+        <Snackbar
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+        open={open}
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+      >
+        <SnackbarContent
+          message="Your project has been created"
+          className={classes.root}
+          action={
+            <Fragment>
+              <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar} style={{ color: 'black' }}>
+                <Close fontSize="small" />
+              </IconButton>
+            </Fragment>
+          } />
+
+      </Snackbar>
     </PageContainer>
   )
 }

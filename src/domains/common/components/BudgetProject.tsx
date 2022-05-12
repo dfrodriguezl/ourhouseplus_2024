@@ -1,9 +1,15 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Grid, makeStyles, createStyles, Avatar, Typography } from "@material-ui/core";
+import { Grid, makeStyles, createStyles, Avatar, Typography, IconButton } from "@material-ui/core";
 import { ProjectBudget } from "domains/core/models";
 import { background1 } from "assets";
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import { useHistory } from "react-router-dom";
+import { useHistory, withRouter } from "react-router-dom";
+import DeleteIcon from '@material-ui/icons/Delete';
+import { deleteProjectById } from "domains/shapeDiver/slice";
+import { compose } from "recompose";
+import { connect } from "react-redux";
+import { RootState } from "app/store";
+import { deleteProjectBudget } from "domains/core/coreSlice";
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -11,7 +17,8 @@ const useStyles = makeStyles(() =>
       borderRadius: 20,
       border: '#707070 solid 1px',
       background: '#FFFFFF',
-      margin: '5px'
+      margin: '5px',
+      paddingBottom: 15
     },
     avatarContainer: {
       paddingTop: 15
@@ -44,10 +51,14 @@ export interface OwnProps {
   type: string;
 }
 
-type Props = OwnProps;
+export interface DispatchProps {
+  deleteProjectBudget: typeof deleteProjectBudget;
+}
+
+type Props = OwnProps & DispatchProps;
 const BudgetProject = (props: Props) => {
   const classes = useStyles();
-  const { project, type } = props;
+  const { project, type, deleteProjectBudget } = props;
   const [totalSpended, setTotalSpended] = useState(0);
   const [totalSpendedPercentage, setTotalSpendedPercentage] = useState(0);
 
@@ -59,6 +70,10 @@ const BudgetProject = (props: Props) => {
 
   const goToNewProject = () => {
     history.push("/newProject")
+  }
+
+  const deleteProject = () => {
+    deleteProjectBudget(String(project?.id), String(project?.email))!;
   }
 
   useEffect(() => {
@@ -80,10 +95,13 @@ const BudgetProject = (props: Props) => {
     <Grid container className={classes.container}>
       {type === "item" ?
         <Fragment>
-          <Grid item container xs={3} justify="center" className={classes.avatarContainer} onClick={() => goToProject(project!.id)}>
+          <Grid item container xs={3} justify="center" className={classes.avatarContainer} >
             <Avatar>
               <img src={background1} />
             </Avatar>
+            <IconButton>
+              <DeleteIcon onClick={() => deleteProject()}/>
+            </IconButton>
           </Grid>
           <Grid item xs={9} className={classes.textContainer} onClick={() => goToProject(project!.id)}>
             <Typography variant="subtitle1" className={classes.boldText}>Project | {project!.name}</Typography>
@@ -109,4 +127,17 @@ const BudgetProject = (props: Props) => {
   )
 }
 
-export default BudgetProject;
+const container = compose<Props, OwnProps>(
+  withRouter,
+  connect<{}, DispatchProps, {}, RootState>(
+    (state: RootState) => ({
+    }),
+    {
+      deleteProjectBudget
+    }
+  )
+)(BudgetProject);
+
+export default container;
+
+// export default BudgetProject;
