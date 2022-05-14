@@ -60,13 +60,15 @@ const ListProjectsBudget = (props: Props) => {
   useEffect(() => {
     if (isAuthenticated && user) {
       if (user['http://ourhouseplus.com/roles'].includes('admin')) {
-        getProjectsBudget(user.email);
+        if(user.email){
+          getProjectsBudget(user.email);
+        } 
       } else {
         history.push("/register")
       }
 
     }
-  }, [getProjectsBudget])
+  }, [getProjectsBudget, user])
 
   const toUploadPhoto = () => {
     history.push("/uploadPhoto");

@@ -36,7 +36,11 @@ const useStyles = makeStyles(() =>
     },
     containerDetails: {
       padding: '20px 20px'
-    }
+    },
+    orangeText: {
+      color: '#ffa500',
+      lineHeight: 1.2
+    },
   })
 );
 
@@ -79,8 +83,8 @@ const BudgetProjectDetail = (props: Props) => {
           <Typography variant="subtitle1" >Type |. {project!.type}</Typography>
           <Typography variant="subtitle1" className={classes.boldText}>Budget target | {project!.budgetTarget} {project!.currency}</Typography>
           <br />
-          <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Spended | {totalSpended} {project!.currency}</Typography>
-          <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Total spended | {totalSpendedPercentage} %</Typography>
+          <Typography variant="subtitle1" className={totalSpendedPercentage>= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>Spended | {totalSpended} {project!.currency}</Typography>
+          <Typography variant="subtitle1" className={totalSpendedPercentage>= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>Total spended | {totalSpendedPercentage} %</Typography>
         </Grid>
         <Grid xs={12} item container direction="column" className={classes.containerDetails}>
           <Typography variant="subtitle1" className={classes.boldText}>Material spending</Typography>

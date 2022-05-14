@@ -28,7 +28,8 @@ const useStyles = makeStyles(() =>
     },
     boldText: {
       fontWeight: 'bolder',
-      lineHeight: 0.8
+      lineHeight: 0.8,
+      marginBottom: 2
     },
     redText: {
       color: '#F20000',
@@ -42,7 +43,11 @@ const useStyles = makeStyles(() =>
       color: '#608657',
       height: '100%',
       marginRight: 15
-    }
+    },
+    orangeText: {
+      color: '#ffa500',
+      lineHeight: 1.2
+    },
   })
 );
 
@@ -107,9 +112,10 @@ const BudgetProject = (props: Props) => {
             <Typography variant="subtitle1" className={classes.boldText}>Project | {project!.name}</Typography>
             <Typography variant="subtitle1" >Type |. {project!.type}</Typography>
             <Typography variant="subtitle1" className={classes.boldText}>Budget target | {project!.budgetTarget} {project!.currency}</Typography>
+            <Typography variant="subtitle2" className={classes.boldText}>Date project start | {project!.dateStart}</Typography>
             <br />
-            <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Spended | {totalSpended} {project!.currency}</Typography>
-            <Typography variant="subtitle1" className={project!.spendedPercentage >= 70 ? classes.redText : classes.greenText}>Total spended | {totalSpendedPercentage} %</Typography>
+            <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>Spended | {totalSpended} {project!.currency}</Typography>
+            <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>Total spended | {totalSpendedPercentage} %</Typography>
           </Grid>
         </Fragment> :
         <Fragment>

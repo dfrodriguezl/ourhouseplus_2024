@@ -217,7 +217,8 @@ export interface ProjectBudget {
   spended: number;
   spendedPercentage: number;
   email?: string;
-  spends?: Spend[]
+  spends?: Spend[],
+  dateStart?: Date;
 }
 
 export interface ImgBudget {

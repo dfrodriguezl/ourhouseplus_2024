@@ -1,6 +1,6 @@
-import { Button, createStyles, Grid, makeStyles, Typography, useMediaQuery, useTheme } from "@material-ui/core";
+import { Button, createStyles, Grid, IconButton, makeStyles, Snackbar, SnackbarContent, Theme, Typography, useMediaQuery, useTheme } from "@material-ui/core";
 import { PageContainer } from "domains/core/containers";
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import { bill } from "assets";
 import { ProjectBudget, Spend } from "domains/core/models";
 import { compose } from "recompose";
@@ -9,9 +9,10 @@ import { connect } from "react-redux";
 import { RootState } from "app/store";
 import Select from 'react-select';
 import { editProjectBudget, sendEmail } from "domains/core/coreSlice";
+import { Close } from "@material-ui/icons";
 
 
-const useStyles = makeStyles(() =>
+const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     addButton: {
       marginLeft: 10
@@ -43,7 +44,11 @@ const useStyles = makeStyles(() =>
     },
     containerButton: {
       height: '5%'
-    }
+    },
+    root: {
+      background: theme.palette.common.white,
+      color: theme.palette.common.black,
+    },
   })
 );
 
@@ -64,6 +69,7 @@ const UploadPhoto = (props: Props) => {
   const [selectedImage, setSelectedImage] = useState<any>(null);
   const { listProjects, editProjectBudget, sendEmail } = props;
   const [projectSelected, setProjectSelected] = useState<ProjectBudget>();
+  const [open, setOpen] = useState(false);
   let spend: Spend = {
     date: new Date(),
     detail: "Test detail",
@@ -98,12 +104,19 @@ const UploadPhoto = (props: Props) => {
     if (projectSelected) {
       const formData = new FormData();
       //Adding files to the formdata
-      formData.append("image", new Blob([selectedImage],{type: selectedImage.type}));
-      formData.append("name", new Blob([projectSelected.name], {type: "text/plain"}));
+      formData.append("image", new Blob([selectedImage], { type: selectedImage.type }));
+      formData.append("name", new Blob([projectSelected.name], { type: "text/plain" }));
+      formData.append("type", new Blob([projectSelected.type], { type: "text/plain" }));
+      formData.append("user", new Blob([projectSelected.email!], { type: "text/plain" }));
       editProjectBudget(String(projectSelected?.id), projectSelected!);
       sendEmail(formData);
-      alert("Spend created");
+      setOpen(true);
+      // alert("Spend created");
     }
+  }
+
+  const handleCloseSnackbar = () => {
+    setOpen(false)
   }
 
   return (
@@ -138,6 +151,27 @@ const UploadPhoto = (props: Props) => {
           <Grid item container xs={12} justify="center" className={classes.bottomTextContainer}>
             <Typography variant="subtitle1" className={classes.bottomText}>Build on budget.</Typography>
           </Grid>
+          <Snackbar
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'center',
+            }}
+            open={open}
+            autoHideDuration={3000}
+            onClose={() => setOpen(false)}
+          >
+            <SnackbarContent
+              message="The information can take 1-6 hours to show into your account."
+              className={classes.root}
+              action={
+                <Fragment>
+                  <IconButton size="small" aria-label="close" color="inherit" onClick={handleCloseSnackbar} style={{ color: 'black' }}>
+                    <Close fontSize="small" />
+                  </IconButton>
+                </Fragment>
+              } />
+
+          </Snackbar>
         </Grid>
         : null}
     </PageContainer>
