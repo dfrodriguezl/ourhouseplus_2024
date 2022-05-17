@@ -107,14 +107,14 @@ const PopupMail = (props: Props) => {
         </Grid>
         <Grid xs={12} container justify="center">
           <Typography variant="h6" className={classes.centerText}>
-            On your appointment we will use our design software, to design a custom home addition.
+            On your appointment we will how the app works and give you a test access.
           </Typography>
           <Typography variant="subtitle1" className={classes.boldText}>
             Start with house+.
           </Typography>
           <Grid item xs={12}>
             <form
-              action="https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9"
+              action="https://ourhouseplus.us13.list-manage.com/subscribe/post?u=73c11ec3ce5675332aa57238e&amp;id=0a9ff0b07f"
               method="post"
               id="mc-embedded-subscribe-form"
               name="mc-embedded-subscribe-form"
@@ -130,7 +130,7 @@ const PopupMail = (props: Props) => {
                 <div className="response" id="mce-success-response" style={{ display: 'none' }}></div>
               </div>
               <div style={{ position: 'absolute', left: -5000 }} aria-hidden="true">
-                <input type="text" name="b_3c39cbec5fc9d998a5b584676_4064b46da9" />
+                <input type="text" name="b_73c11ec3ce5675332aa57238e_0a9ff0b07f" />
               </div>
               <Grid item container xs={12}>
                 <Input type="text" name="EMAIL" id="mce-EMAIL"
