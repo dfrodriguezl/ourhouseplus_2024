@@ -145,12 +145,13 @@ const HomeSub2 = () => {
           </Grid> :
           <Grid container>
             <Typography variant="h6" className={classes.subtitle1}>
-              Looking for a bigger kitchen, an additional bedroom or a home office? <br />
+              You're a contractor modelling a kitchen, bathroom or home and lose time tracking expenses and project? <br />
               <span className={classes.boldText}>It begins here.</span>
             </Typography>
             <Typography variant="subtitle2" className={classes.subtitle2}>
-              With only a few clicks, you'll have a new home addition kit, ready to build, Three weeks after permitting. <br />
-              Save time and select various design themes via real-time design app.
+              With only a few clicks, you upload your remodelling purchases and projects review pictures, <br />
+              and automatically your information is organized. You get a daily review of your projects progress. <br />
+              Save time and don't waste money with our app.
             </Typography>
             <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
               <p className={classes.itemText}>Get Started</p>

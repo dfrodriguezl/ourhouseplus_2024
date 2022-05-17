@@ -95,7 +95,7 @@ const RegisterContainer = (props: OwnProps) => {
             <HomeSub2 />
             {/* <HomeSub3 /> */}
             <HomeSub1 />
-            <HomeSubCarrousel />
+            {/* <HomeSubCarrousel /> */}
             <HomeSubVideo />
           </Fragment>
           : null

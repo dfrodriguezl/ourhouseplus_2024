@@ -153,3 +153,7 @@ export {default as software} from './software.png'
 export {default as truc} from './truc.png'
 
 export {default as bill} from './bill.png'
+
+export {default as step1House} from './step1_house.png'
+export {default as step2House} from './step2_house.png'
+export {default as step3House} from './step3_house.png'
