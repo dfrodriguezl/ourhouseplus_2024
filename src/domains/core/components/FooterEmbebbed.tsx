@@ -83,7 +83,7 @@ const FooterEmbebbed = (props: Props) => {
         <footer className={classes.footer}>
           <Grid container item>
             <Grid item xs={12} sm={12} justify="center" className={classes.textCenter}>
-              <Typography variant="subtitle1" className={classes.item}> GO TO OUR MOBILE SITE FOR AN APPOINTMENT</Typography>
+              <Typography variant="subtitle1" className={classes.item}> GO TO OUR MOBILE SITE FOR AN APPOINTMENT TO TEST THE APP</Typography>
               {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/about">About</Link></Box>
               <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/how-it-works">How it works</Link></Box>
               {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/news">News</Link></Box> */}

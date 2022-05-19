@@ -183,13 +183,16 @@ const FormMail = (props: Props) => {
           {!smallScreen ? < br /> : null}
         </Typography> */}
         <Typography variant={smallScreen ? "h5" : "h3"} className={classes.titleStyle} style={{ fontWeight: 'bolder', lineHeight: 1 }}>
-          <span className={classes.spacingText} > {smallScreen ? ["Take Control of Your Renovations",<br/>,"Budget & Workflow."] : "Enjoy More Space."} </span>
+          <span className={classes.spacingText} >Take Control of Your Renovations <br/> Budget & Workflow.</span>
         </Typography>
         <br />
         {smallScreen ? <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3, padding: '10px 60px' }}>
           Saving money and time as easy as taking a picture of your material, labor bills and project progress, House+ app will organize the information and review the process for you. <br />
           {/* New additions designs start at $199. */}
-        </Typography> : null}
+        </Typography> : <Typography variant="h6" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3, padding: '10px 20%' }}>
+          Saving money and time as easy as taking a picture of your material, labor bills and project progress, House+ app will organize the information and review the process for you. <br />
+          {/* New additions designs start at $199. */}
+        </Typography>}
         {/* <Typography variant="subtitle1" className={classes.titleStyle} style={{ lineHeight: 1 }}>
           {!smallScreen ? <Fragment>< br /> < br /></Fragment> : null}
           {smallScreen ? "Design and plan your home addition" : "Plan and design your home addition"} <br />
