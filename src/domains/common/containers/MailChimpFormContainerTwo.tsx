@@ -11,7 +11,7 @@ interface ownProps {
 type Props = ownProps;
 const MailchimpFormContainerTwo = (props: Props) => {
   const { open, handleClose } = props;
-  const postUrl = 'https://rea-web.us6.list-manage.com/subscribe/post?u=3c39cbec5fc9d998a5b584676&amp;id=4064b46da9';
+  const postUrl = 'https://ourhouseplus.us13.list-manage.com/subscribe/post?u=73c11ec3ce5675332aa57238e&amp;id=0a9ff0b07f';
 
   const handleScroll = () => {
     window.scroll({

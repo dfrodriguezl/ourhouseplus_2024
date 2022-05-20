@@ -121,6 +121,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     buttonMenu2: {
       marginBottom: 50
+    },
+    logoText: {
+      color: 'white',
+      textAlign: 'center'
     }
   })
 );
@@ -303,6 +307,8 @@ const Header = (props: RouteComponentProps) => {
         <Toolbar variant="regular">
           <Link to="/register">
             <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? whiteLogo : whiteLogo} alt="logo" width={150} />
+            <br />
+            <span className={classes.logoText}>stress-free remodeling</span>
           </Link>
           {
             !(isSignUp) ?

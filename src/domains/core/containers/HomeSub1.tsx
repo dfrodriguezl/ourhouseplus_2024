@@ -2,7 +2,8 @@ import React from 'react';
 import { Container, Grid, Box, Paper, makeStyles, Button, Theme, useTheme, useMediaQuery, Typography, Card, CardContent } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { ArrowForward } from '@material-ui/icons';
-import { basicVolume, customizeOnline, house, interior, software, Step21, truc } from 'assets';
+import { basicVolume, customizeOnline, house, interior, software, step1House, Step21, step2House, step3House, truc } from 'assets';
+import { url } from 'inspector';
 
 const styles = makeStyles((theme: Theme) => ({
   image: {
@@ -94,6 +95,15 @@ const styles = makeStyles((theme: Theme) => ({
   },
   contenedorImgs: {
     marginTop: 20
+  },
+  rectangleContainer: {
+    backgroundColor: 'white',
+    padding: 20,
+    border: '1px solid #BCBCBC',
+    borderRadius: 20
+  },
+  smallFont: {
+    fontSize: 10
   }
 }));
 
@@ -205,41 +215,47 @@ const HomeSub1 = () => {
 
             </Grid>
           </Grid> : */}
-        <Grid container justify="center" direction="column" style={{ textAlign: 'center'}}>
+        <Grid container justify="center" direction="column" style={{ textAlign: 'center' }}>
           {/* <Card className={classes.card}>
             <CardContent>
               <img src={customizeOnline} alt="customise-online" className={classes.imgSmall} />
             </CardContent>
           </Card> */}
           <Typography variant="subtitle1" style={{ fontWeight: 'bolder' }}>
-            Customise online
+            HOW IT WORKS
           </Typography>
-          <Typography variant="subtitle2">
+          {/* <Typography variant="subtitle2">
             Permit Papers - Order Kit - Extend Home
-          </Typography>
+          </Typography> */}
           <Grid xs={12} item container className={classes.contenedorImgs}>
-            <Grid xs={12} container justify="flex-start" style={{marginLeft: '20px', marginRight: '20px' }}>
-              <img alt="software" src={software} width="60%" />
-              <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'right', marginTop: -70}}>
-                <span style={{ fontWeight: 'bolder' }}>1. Design the extension on <br /> our web page.</span>
+            <Grid xs={12} container justify="flex-start" style={{ marginLeft: '20px', marginRight: '20px' }}>
+              <Grid className={classes.rectangleContainer}>
+                <img alt="software" src={step1House} width="80%" />
+              </Grid>
+              <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'right' }}>
+                <span style={{ fontWeight: 'bolder' }}>1. Set your projects <br /> type & budget objectives.</span>
                 <br />
-                You get a avg price of your project <br />in real time.
+                <span className={classes.smallFont}>House+ will track your propose custom a workflow.</span>
               </Typography>
             </Grid>
-            <Grid xs={12} container justify="flex-end" style={{marginTop: 20, marginLeft: '20px', marginRight: '20px' }}>
-              <img alt="software" src={truc} width="60%" style={{}} />
-              <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'left', marginTop: -90 }}>
-                <span style={{ fontWeight: 'bolder' }}>2. Order your DYI kit or <br /> choose contractor.</span>
+            <Grid xs={12} container justify="flex-end" style={{ marginTop: 20, marginLeft: '20px', marginRight: '20px' }}>
+              <Grid className={classes.rectangleContainer}>
+                <img alt="software" src={step2House} width="80%" />
+              </Grid>
+              <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'left' }}>
+                <span style={{ fontWeight: 'bolder' }}>2. Take a picture of your project <br /> expenses and details.</span>
                 <br />
-                You get the elements like an IKEA <br />kit ready to build.
+                <span className={classes.smallFont}>House+ will track automatically organize the information.</span>
               </Typography>
             </Grid>
-            <Grid xs={12} container justify="flex-start" style={{marginTop: 20, marginLeft: '20px', marginRight: '20px' }}>
-              <img alt="software" src={house} width="60%" />
-              <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'right', marginTop: -60 }}>
-                <span style={{ fontWeight: 'bolder' }}>3. Build your extension on <br /> time and budget.</span>
+            <Grid xs={12} container justify="flex-start" style={{ marginTop: 20, marginLeft: '20px', marginRight: '20px' }}>
+              <Grid className={classes.rectangleContainer}>
+                <img alt="software" src={step3House} width="80%" />
+              </Grid>
+              <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'right' }}>
+                <span style={{ fontWeight: 'bolder' }}>3. Track your projects progress <br /> with our daily notification.</span>
                 <br />
-                A bigger home has never been <br />easier.
+                <span className={classes.smallFont}>House+ will notify the expenses percentage and workflow.</span>
               </Typography>
             </Grid>
           </Grid>

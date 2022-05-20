@@ -142,6 +142,7 @@ const HomeSubVideo = () => {
           </Grid> : */}
         <Grid container>
           <div style={{ marginTop: 50 }}></div>
+          <Typography variant="h6" style={{fontWeight: 'bolder'}}>Our App.</Typography>
           <ImgVideo img={true} type="small"></ImgVideo>
           <Grid container justify='flex-end'>
             <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
