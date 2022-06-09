@@ -187,7 +187,7 @@ const FormMail = (props: Props) => {
         </Typography>
         <br />
         {smallScreen ? <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3, padding: '10px 60px' }}>
-          Saving money and time as easy as taking a picture of your material, labor bills and project progress, House+ app will organize the information and review the process for you. <br />
+          Saving money and time as easy as taking a picture of your material, labor bills and project progress,<br /> <br />House+ app will organize the information and review the process for you. <br />
           {/* New additions designs start at $199. */}
         </Typography> : <Typography variant="h6" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3, padding: '10px 20%' }}>
           Saving money and time as easy as taking a picture of your material, labor bills and project progress, House+ app will organize the information and review the process for you. <br />
