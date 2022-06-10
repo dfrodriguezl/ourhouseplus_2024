@@ -145,12 +145,12 @@ const HomeSub2 = () => {
           </Grid> :
           <Grid container>
             <Typography variant="h6" className={classes.subtitle1}>
-              You're a contractor modelling a kitchen, bathroom or home and lose time tracking expenses and project? <br />
+              You're a contractor remodelling a kitchen, bathroom or home and always lose time tracking expenses and project? <br />
               <span className={classes.boldText}>It begins here.</span>
             </Typography>
             <Typography variant="subtitle2" className={classes.subtitle2}>
               With only a few clicks, you upload your remodelling purchases and projects review pictures, <br />
-              and automatically your information is organized. You get a daily review of your projects progress. <br />
+              and automatically your information is organized. <br /><br />You get a daily review of your projects progress. <br />
               Save time and don't waste money with our app.
             </Typography>
             <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
