@@ -149,7 +149,7 @@ const ShapeDiverProject = (props: Props) => {
             <PictureAsPdfIcon fontSize="small" onClick={() => exportPdf()} />
           </IconButton>
           <div style={{ visibility: "hidden", overflow: "hidden", height: 0 }}>
-            <Pdf exportPdf={clickedExport} project={projectData} parentCallback={handleCallBackPdf} nameProject={nameProject}/>
+            {/* <Pdf exportPdf={clickedExport} project={projectData} parentCallback={handleCallBackPdf} nameProject={nameProject}/> */}
           </div>
         </Grid>
       </Grid>

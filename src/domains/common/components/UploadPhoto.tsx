@@ -10,6 +10,7 @@ import { RootState } from "app/store";
 import Select from 'react-select';
 import { editProjectBudget, sendEmail } from "domains/core/coreSlice";
 import { Close } from "@material-ui/icons";
+import JSZip from "jszip";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -81,6 +82,28 @@ const UploadPhoto = (props: Props) => {
   const onChangeImage = (e: any) => {
     setSelectedImage(e.target.files[0]);
     let spends = Object.assign([], projectSelected?.spends!);
+    const reader = new FileReader();
+    // let fileCompress = selectedImage;
+    reader.onload = async function (evt: any) {
+      if (evt.target.readyState !== 2) return;
+
+      if (evt.target.error) {
+        alert("Error while reading file");
+        return;
+      }
+
+      const jsZip = new JSZip();
+      const fileContent = evt.target.result;
+      const zip = await jsZip.file(fileContent.path, fileContent).generateAsync({
+        type: 'string',
+        compression: 'DEFLATE'
+      })
+
+      spend.file = zip;
+    }
+
+    reader.readAsArrayBuffer(e.target.files[0]);
+    
     if (spends) {
       spends.push(spend);
       setProjectSelected({
@@ -101,7 +124,7 @@ const UploadPhoto = (props: Props) => {
   }
 
   const upload = () => {
-    if (projectSelected) {
+    if (projectSelected?.name && selectedImage) {
       const formData = new FormData();
       //Adding files to the formdata
       formData.append("image", new Blob([selectedImage], { type: selectedImage.type }));
@@ -111,7 +134,8 @@ const UploadPhoto = (props: Props) => {
       editProjectBudget(String(projectSelected?.id), projectSelected!);
       sendEmail(formData);
       setOpen(true);
-      // alert("Spend created");
+    } else {
+      alert("You must select a project or image");
     }
   }
 

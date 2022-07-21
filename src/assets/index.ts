@@ -56,6 +56,7 @@ export { default as work } from './Work.png'
 export { default as workSelected } from './WorkSelected.png'
 
 export { default as logoSmallWhite } from './logo-small-white.png'
+export { default as logoSmall } from './logo-small.png'
 
 export { default as oneCircle } from './OneCircle.png';
 export { default as twoCircle } from './TwoCircle.png';
