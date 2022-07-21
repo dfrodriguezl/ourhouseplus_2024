@@ -230,7 +230,7 @@ export interface Spend {
   date?: Date;
   detail?: string;
   quantity?: number;
-  file?: File;
+  file?: string;
   type?: number;
 }
 
