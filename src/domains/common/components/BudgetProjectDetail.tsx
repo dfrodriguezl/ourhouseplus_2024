@@ -128,14 +128,14 @@ const BudgetProjectDetail = (props: Props) => {
                 <br />
               </Fragment> : null
           }, []) : null}
-          {/* <Grid>
+          <Grid>
             <IconButton>
               <PictureAsPdfIcon fontSize="small" onClick={() => exportPdf()} />
             </IconButton>
             <div style={{ visibility: "hidden", overflow: "hidden", height: 0 }}>
               <Pdf exportPdf={clickedExport} parentCallback={handleCallBackPdf} project={project!} />
             </div>
-          </Grid> */}
+          </Grid>
         </Grid>
       </Fragment>
     </Grid>
