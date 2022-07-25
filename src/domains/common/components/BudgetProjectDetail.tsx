@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Grid, makeStyles, createStyles, Avatar, Typography, IconButton } from "@material-ui/core";
+import { Grid, makeStyles, createStyles, Avatar, Typography, IconButton, Button } from "@material-ui/core";
 import { ProjectBudget } from "domains/core/models";
 import { background1 } from "assets";
 import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
@@ -46,6 +46,16 @@ const useStyles = makeStyles(() =>
     orangeText: {
       color: '#ffa500',
       lineHeight: 1.2
+    },
+    buttonUpload: {
+      background: '#4A7A5A',
+      color: 'white',
+      textTransform: "capitalize",
+      padding: '0px 30px',
+      borderRadius: 20
+    },
+    containerButton: {
+      height: '5%'
     },
   })
 );
@@ -128,14 +138,17 @@ const BudgetProjectDetail = (props: Props) => {
                 <br />
               </Fragment> : null
           }, []) : null}
-          {/* <Grid>
-            <IconButton>
+          <Grid>
+            {/* <IconButton>
               <PictureAsPdfIcon fontSize="small" onClick={() => exportPdf()} />
-            </IconButton>
+            </IconButton> */}
+            <Grid item container xs={12} justify="center" className={classes.containerButton}>
+              <Button className={classes.buttonUpload} component="span" onClick={() => exportPdf()}>Export Pdf</Button>
+            </Grid>
             <div style={{ visibility: "hidden", overflow: "hidden", height: 0 }}>
               <Pdf exportPdf={clickedExport} parentCallback={handleCallBackPdf} project={project!} />
             </div>
-          </Grid> */}
+          </Grid>
         </Grid>
       </Fragment>
     </Grid>
