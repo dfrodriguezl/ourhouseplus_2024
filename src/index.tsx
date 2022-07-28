@@ -10,6 +10,7 @@ import Auth0 from 'app/Auth0';
 
 import './index.css';
 import 'fontsource-roboto';
+import './i18n';
 
 ReactDOM.render(
   <Provider store={store}>

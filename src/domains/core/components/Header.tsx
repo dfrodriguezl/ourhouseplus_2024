@@ -12,6 +12,7 @@ import whiteLogo from 'assets/logo-small-white.png';
 import { Fragment, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import CloseIcon from '@material-ui/icons/Close';
+import { useTranslation } from 'react-i18next';
 
 
 const drawerWidth = 300;
@@ -150,6 +151,7 @@ const Header = (props: RouteComponentProps) => {
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { t } = useTranslation();
 
   const openHome = () => {
     history.push('/register');
@@ -208,7 +210,7 @@ const Header = (props: RouteComponentProps) => {
         <AppBar position="static" elevation={0} className={classes.header}>
           <Toolbar variant="regular">
             <Link to="/register">
-              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto || isNewProject? logo : whiteLogo} alt="logo" width={100} />
+              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto || isNewProject ? logo : whiteLogo} alt="logo" width={100} />
             </Link>
 
             {!(isSignUp || isWaiting) ?
@@ -245,10 +247,10 @@ const Header = (props: RouteComponentProps) => {
                         {/* <Button onClick={() => openRegister()}>
                         <MenuItem>Become a member</MenuItem>
                       </Button> */}
-                        
+
 
                         <Button onClick={() => openHome()} className={classes.buttonMenu}>
-                          <MenuItem className={classes.itemText}>Home</MenuItem>
+                          <MenuItem className={classes.itemText}>{t('drawer.home')}</MenuItem>
                         </Button>
                         <br />
                         <Button onClick={() => openAbout()} className={classes.buttonMenu}>
@@ -274,18 +276,18 @@ const Header = (props: RouteComponentProps) => {
 
                     :
                     <div>
-                      {isAuthenticated && isAdmin?
-                          <Fragment>
-                            <Button onClick={() => openProjects()} className={classes.buttonMenu}>
-                              <MenuItem className={classes.itemText}>Your projects</MenuItem>
-                            </Button>
-                            <br />
-                            <Button onClick={() => openNewProject()} className={classes.buttonMenu}>
-                              <MenuItem className={classes.itemText}>New project</MenuItem>
-                            </Button>
-                            <br />
-                          </Fragment>
-                          : null}
+                      {isAuthenticated && isAdmin ?
+                        <Fragment>
+                          <Button onClick={() => openProjects()} className={classes.buttonMenu}>
+                            <MenuItem className={classes.itemText}>Your projects</MenuItem>
+                          </Button>
+                          <br />
+                          <Button onClick={() => openNewProject()} className={classes.buttonMenu}>
+                            <MenuItem className={classes.itemText}>New project</MenuItem>
+                          </Button>
+                          <br />
+                        </Fragment>
+                        : null}
 
                       <Button onClick={() => logout()}>
                         <MenuItem>Sign out</MenuItem>
