@@ -10,6 +10,7 @@ import { useHistory, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { RootState } from "app/store";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles(() =>
@@ -56,6 +57,7 @@ const ListProjectsBudget = (props: Props) => {
   // const listProjects = projectsBudget;
   const { getProjectsBudget, listProjects } = props;
   const { user, isAuthenticated } = useAuth0();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -81,7 +83,7 @@ const ListProjectsBudget = (props: Props) => {
           <Grid item container xs={12} justify="center" className={classes.containerAdd} direction="row" onClick={() => toUploadPhoto()}>
             <AddAPhotoIcon className={classes.addButton} />
             <Typography variant="subtitle1" className={classes.addText}>
-              Add spending.
+              {t('add_spending')}.
             </Typography>
           </Grid>
           <Grid item container xs={12} className={classes.listContainer}>
@@ -91,7 +93,7 @@ const ListProjectsBudget = (props: Props) => {
             <BudgetProject type="button" />
           </Grid>
           <Grid item container xs={12} justify="center" className={classes.bottomTextContainer}>
-            <Typography variant="subtitle1" className={classes.bottomText}>Build on budget.</Typography>
+            <Typography variant="subtitle1" className={classes.bottomText}>{t('build_on_budget')}.</Typography>
           </Grid>
         </Grid>
         : null}

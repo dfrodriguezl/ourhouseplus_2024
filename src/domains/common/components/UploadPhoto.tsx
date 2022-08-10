@@ -11,6 +11,7 @@ import Select from 'react-select';
 import { editProjectBudget, sendEmail } from "domains/core/coreSlice";
 import { Close } from "@material-ui/icons";
 import JSZip from "jszip";
+import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -71,6 +72,7 @@ const UploadPhoto = (props: Props) => {
   const { listProjects, editProjectBudget, sendEmail } = props;
   const [projectSelected, setProjectSelected] = useState<ProjectBudget>();
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
   let spend: Spend = {
     date: new Date(),
     detail: "Test detail",
@@ -135,7 +137,7 @@ const UploadPhoto = (props: Props) => {
       sendEmail(formData);
       setOpen(true);
     } else {
-      alert("You must select a project or image");
+      alert(t('must_select'));
     }
   }
 
@@ -152,7 +154,7 @@ const UploadPhoto = (props: Props) => {
               options={listProjects}
               getOptionValue={(o) => String(o.id)}
               getOptionLabel={(o) => o.name}
-              placeholder="Choose project."
+              placeholder={t('choose_project')}
               onChange={onChangeProject}
             ></Select>
           </Grid>
@@ -167,13 +169,13 @@ const UploadPhoto = (props: Props) => {
             <label htmlFor="image-bill">
               <img src={selectedImage ? URL.createObjectURL(selectedImage) : bill} alt="exmaple-bill" width={250} />
             </label>
-            <Typography variant="caption">choose photo <br /> from phone library</Typography>
+            <Typography variant="caption">{t('choose_photo')} <br /> {t('from_photo')}</Typography>
           </Grid>
           <Grid item container xs={12} justify="center" className={classes.containerButton}>
-            <Button className={classes.buttonUpload} component="span" onClick={() => upload()}>Upload</Button>
+            <Button className={classes.buttonUpload} component="span" onClick={() => upload()}>{t('upload')}</Button>
           </Grid>
           <Grid item container xs={12} justify="center" className={classes.bottomTextContainer}>
-            <Typography variant="subtitle1" className={classes.bottomText}>Build on budget.</Typography>
+            <Typography variant="subtitle1" className={classes.bottomText}>{t('build_on_budget')}.</Typography>
           </Grid>
           <Snackbar
             anchorOrigin={{
@@ -185,7 +187,7 @@ const UploadPhoto = (props: Props) => {
             onClose={() => setOpen(false)}
           >
             <SnackbarContent
-              message="The information can take 1-6 hours to show into your account."
+              message={('snackbar_notification')}
               className={classes.root}
               action={
                 <Fragment>

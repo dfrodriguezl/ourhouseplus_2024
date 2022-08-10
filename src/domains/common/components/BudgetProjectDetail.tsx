@@ -8,6 +8,7 @@ import { compose } from 'recompose';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
 import { Pdf } from ".";
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -75,6 +76,7 @@ const BudgetProjectDetail = (props: Props) => {
   const [totalSpended, setTotalSpended] = useState(0);
   const [totalSpendedPercentage, setTotalSpendedPercentage] = useState(0);
   const [clickedExport, setClickedExport] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getTotalSpended();
@@ -109,16 +111,16 @@ const BudgetProjectDetail = (props: Props) => {
           </Avatar>
         </Grid>
         <Grid item xs={9} className={classes.textContainer}>
-          <Typography variant="subtitle1" className={classes.boldText}>Project | {project!.name}</Typography>
-          <Typography variant="subtitle1" >Type |. {project!.type}</Typography>
-          <Typography variant="subtitle1" className={classes.boldText}>Budget target | {project!.budgetTarget} {project!.currency}</Typography>
+          <Typography variant="subtitle1" className={classes.boldText}>{t('project')} | {project!.name}</Typography>
+          <Typography variant="subtitle1" >{t('type')} |. {project!.type}</Typography>
+          <Typography variant="subtitle1" className={classes.boldText}>{t('budget_target')} | {project!.budgetTarget} {project!.currency}</Typography>
           <br />
-          <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>Spended | {totalSpended} {project!.currency}</Typography>
-          <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>Total spended | {totalSpendedPercentage} %</Typography>
+          <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>{t('spended')} | {totalSpended} {project!.currency}</Typography>
+          <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>{t('total_spended')} | {totalSpendedPercentage} %</Typography>
         </Grid>
         <Grid xs={12} item container direction="column" className={classes.containerDetails}>
-          <Typography variant="subtitle1" className={classes.boldText}>Material spending</Typography>
-          <Typography variant="subtitle1">Type |. {project!.type}</Typography>
+          <Typography variant="subtitle1" className={classes.boldText}>{t('material_spending')}</Typography>
+          <Typography variant="subtitle1">{t('type')} |. {project!.type}</Typography>
           <br />
           {project?.spends ? project?.spends!.map((s) => {
             return s.type === 1 ?
@@ -128,13 +130,13 @@ const BudgetProjectDetail = (props: Props) => {
               </Fragment> : null
           }, []) : null}
 
-          <Typography variant="subtitle1" className={classes.boldText}>Labor spending</Typography>
-          <Typography variant="subtitle1">Type |. {project!.type}</Typography>
+          <Typography variant="subtitle1" className={classes.boldText}>{t('labor_spending')}</Typography>
+          <Typography variant="subtitle1">{t('type')} |. {project!.type}</Typography>
           <br />
           {project?.spends ? project?.spends!.map((s) => {
             return s.type === 2 ?
               <Fragment>
-                <Typography variant="subtitle1" >{new Date(s.date!).getDate() + "/" + (new Date(s.date!).getMonth() + 1)}   {s.detail}   {s.quantity} USD</Typography>
+                <Typography variant="subtitle1" >{new Date(s.date!).getDate() + "/" + (new Date(s.date!).getMonth() + 1)}   {s.detail}   {s.quantity} {project!.currency}</Typography>
                 <br />
               </Fragment> : null
           }, []) : null}
@@ -143,7 +145,7 @@ const BudgetProjectDetail = (props: Props) => {
               <PictureAsPdfIcon fontSize="small" onClick={() => exportPdf()} />
             </IconButton> */}
             <Grid item container xs={12} justify="center" className={classes.containerButton}>
-              <Button className={classes.buttonUpload} component="span" onClick={() => exportPdf()}>Export Pdf</Button>
+              <Button className={classes.buttonUpload} component="span" onClick={() => exportPdf()}>{t('export_pdf')}</Button>
             </Grid>
             <div style={{ visibility: "hidden", overflow: "hidden", height: 0 }}>
               <Pdf exportPdf={clickedExport} parentCallback={handleCallBackPdf} project={project!} />
