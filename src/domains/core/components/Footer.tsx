@@ -6,6 +6,7 @@ import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -70,6 +71,7 @@ const Footer = (props: Props) => {
   const classes = useStyles()
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { t } = useTranslation();
 
   return (
     <Grid container item className={classes.root} xs={12}>
@@ -77,10 +79,10 @@ const Footer = (props: Props) => {
         <footer className={classes.footer}>
           <Grid container>
             <Grid item xs={12} sm={6}>
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/about">About</Link></Box>
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/how-it-works">How it works</Link></Box>
+              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/about">{t('about')}</Link></Box>
+              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/how-it-works">{t('drawer_how_works')}</Link></Box>
               {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/news">News</Link></Box> */}
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/contact-us">Contact</Link></Box>
+              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/contact-us">{t('drawer_contact')}</Link></Box>
             </Grid>
             {smallScreen ?
               <Fragment>
@@ -88,7 +90,7 @@ const Footer = (props: Props) => {
                 <Grid item xs={12} sm={5}>
                   <div className={classes.bottomLinks}>
                     <Box fontSize={10} color='white'>
-                      Copyright © 2022 House+. All rights reserved
+                      Copyright © 2022 House+. {t('drawer_copyright')}
                     </Box>
                   </div>
                 </Grid>
@@ -97,7 +99,7 @@ const Footer = (props: Props) => {
                 <Grid item xs={12} sm={5}>
                   <div className={classes.bottomLinks}>
                     <Box fontSize={10} color='white'>
-                      Copyright © 2022 House+. All rights reserved
+                      Copyright © 2022 House+. {t('drawer_copyright')}
                     </Box>
                   </div>
                 </Grid>

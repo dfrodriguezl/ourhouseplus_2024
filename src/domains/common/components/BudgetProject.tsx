@@ -10,6 +10,7 @@ import { compose } from "recompose";
 import { connect } from "react-redux";
 import { RootState } from "app/store";
 import { deleteProjectBudget } from "domains/core/coreSlice";
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -66,6 +67,7 @@ const BudgetProject = (props: Props) => {
   const { project, type, deleteProjectBudget } = props;
   const [totalSpended, setTotalSpended] = useState(0);
   const [totalSpendedPercentage, setTotalSpendedPercentage] = useState(0);
+  const { t } = useTranslation();
 
   const history = useHistory();
 
@@ -109,20 +111,20 @@ const BudgetProject = (props: Props) => {
             </IconButton>
           </Grid>
           <Grid item xs={9} className={classes.textContainer} onClick={() => goToProject(project!.id)}>
-            <Typography variant="subtitle1" className={classes.boldText}>Project | {project!.name}</Typography>
-            <Typography variant="subtitle1" >Type |. {project!.type}</Typography>
-            <Typography variant="subtitle1" className={classes.boldText}>Budget target | {project!.budgetTarget} {project!.currency}</Typography>
-            <Typography variant="subtitle2" className={classes.boldText}>Date project start | {project!.dateStart}</Typography>
+            <Typography variant="subtitle1" className={classes.boldText}>{t('project')} | {project!.name}</Typography>
+            <Typography variant="subtitle1" >{t('type')}  |. {project!.type}</Typography>
+            <Typography variant="subtitle1" className={classes.boldText}>{t('budget_target')}  | {project!.budgetTarget} {project!.currency}</Typography>
+            <Typography variant="subtitle2" className={classes.boldText}>{t('date_project_start')} | {project!.dateStart}</Typography>
             <br />
-            <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>Spended | {totalSpended} {project!.currency}</Typography>
-            <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>Total spended | {totalSpendedPercentage} %</Typography>
+            <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>{t('spended')} | {totalSpended} {project!.currency}</Typography>
+            <Typography variant="subtitle1" className={totalSpendedPercentage >= 90 ? classes.redText : totalSpendedPercentage >= 70 ? classes.orangeText : classes.greenText}>{t('total_spended')} | {totalSpendedPercentage} %</Typography>
           </Grid>
         </Fragment> :
         <Fragment>
           <Grid container justify="center" direction="row" alignItems="center" onClick={() => goToNewProject()}>
             <AddCircleIcon fontSize="large" className={classes.iconAdd} />
             <Typography variant="h6" className={classes.boldText}>
-              Start new project.
+            {t('start_project')}.
             </Typography>
           </Grid>
         </Fragment>
