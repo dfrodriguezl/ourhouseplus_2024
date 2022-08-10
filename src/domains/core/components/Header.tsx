@@ -14,7 +14,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useTranslation } from 'react-i18next';
 
-
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -250,27 +249,27 @@ const Header = (props: RouteComponentProps) => {
 
 
                         <Button onClick={() => openHome()} className={classes.buttonMenu}>
-                          <MenuItem className={classes.itemText}>{t('drawer.home')}</MenuItem>
+                          <MenuItem className={classes.itemText}>{t('drawer_home')}</MenuItem>
                         </Button>
                         <br />
                         <Button onClick={() => openAbout()} className={classes.buttonMenu}>
-                          <MenuItem className={classes.itemText}>About us</MenuItem>
+                          <MenuItem className={classes.itemText}>{t('drawer_about')}</MenuItem>
                         </Button>
                         <br />
                         <Button onClick={() => openHome()} className={classes.buttonMenu}>
-                          <MenuItem className={classes.itemText}>How it works</MenuItem>
+                          <MenuItem className={classes.itemText}>{t('drawer_how_works')}</MenuItem>
                         </Button>
                         <br />
                         <Button onClick={() => openHome()} className={classes.buttonMenu2}>
-                          <MenuItem className={classes.itemText}>Contact</MenuItem>
+                          <MenuItem className={classes.itemText}>{t('drawer_contact')}</MenuItem>
                         </Button>
                         <br />
                         <Button className={classes.button} onClick={() => loginWithRedirect()}>
-                          <MenuItem className={classes.itemText}>Sign up</MenuItem>
+                          <MenuItem className={classes.itemText}>{t('drawer_login')}</MenuItem>
                         </Button>
                         <br />
                         <img src={logo} alt="logo" width={70} className={classes.imgLogo} />
-                        <p className={classes.bottomText}>Copyright &copy; 2022 Home+. All rights reserved</p>
+                        <p className={classes.bottomText}>Copyright &copy; 2022 Home+. {t('drawer_copyright')}</p>
                       </div>
                     </div>
 
