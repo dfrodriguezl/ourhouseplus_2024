@@ -278,18 +278,18 @@ const Header = (props: RouteComponentProps) => {
                       {isAuthenticated && isAdmin ?
                         <Fragment>
                           <Button onClick={() => openProjects()} className={classes.buttonMenu}>
-                            <MenuItem className={classes.itemText}>Your projects</MenuItem>
+                            <MenuItem className={classes.itemText}>{t('drawer_your_projects')}</MenuItem>
                           </Button>
                           <br />
                           <Button onClick={() => openNewProject()} className={classes.buttonMenu}>
-                            <MenuItem className={classes.itemText}>New project</MenuItem>
+                            <MenuItem className={classes.itemText}>{t('drawer_new_project')}</MenuItem>
                           </Button>
                           <br />
                         </Fragment>
                         : null}
 
                       <Button onClick={() => logout()}>
-                        <MenuItem>Sign out</MenuItem>
+                        <MenuItem>{t('drawer_sign_out')}</MenuItem>
                       </Button>
                       <Button>
                         <MenuItem>{user.name}</MenuItem>

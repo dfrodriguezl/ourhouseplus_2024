@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { FeasibilityIcon, FinancialIcon, PdfIcon, PreArchitectureIcon, SquareIcon, BuildingIcon, videoSmall } from 'assets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ImgVideo } from 'domains/common/components';
+import { useTranslation } from 'react-i18next';
 
 const styles = makeStyles((theme: Theme) => ({
   title: {
@@ -78,6 +79,7 @@ const HomeSubVideo = () => {
   const isWaiting = history.location.pathname.indexOf('register') > -1;
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { t } = useTranslation();
 
   const toGetStarted = () => {
     window.scrollTo(0, 0);
@@ -142,11 +144,11 @@ const HomeSubVideo = () => {
           </Grid> : */}
         <Grid container>
           <div style={{ marginTop: 50 }}></div>
-          <Typography variant="h6" style={{fontWeight: 'bolder'}}>Our App.</Typography>
+          <Typography variant="h6" style={{fontWeight: 'bolder'}}>{t('our_app')}.</Typography>
           <ImgVideo img={true} type="small"></ImgVideo>
           <Grid container justify='flex-end'>
             <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
-              <p className={classes.itemText}>Get Started</p>
+              <p className={classes.itemText}>{t('get_started')}</p>
             </Button>
           </Grid>
         </Grid>

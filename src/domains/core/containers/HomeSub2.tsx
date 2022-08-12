@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { FeasibilityIcon, FinancialIcon, PdfIcon, PreArchitectureIcon, SquareIcon, BuildingIcon, videoSmall } from 'assets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ImgVideo } from 'domains/common/components';
+import { useTranslation } from 'react-i18next';
 
 const styles = makeStyles((theme: Theme) => ({
   title: {
@@ -49,7 +50,7 @@ const styles = makeStyles((theme: Theme) => ({
   },
   subtitle1: {
     margin: '40px 20px 10px',
-    lineHeight: 1.3 
+    lineHeight: 1.3
   },
   subtitle2: {
     margin: '20px 20px 20px',
@@ -81,9 +82,10 @@ const HomeSub2 = () => {
   const isWaiting = history.location.pathname.indexOf('register') > -1;
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { t } = useTranslation();
 
   const toGetStarted = () => {
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
 
@@ -145,16 +147,16 @@ const HomeSub2 = () => {
           </Grid> :
           <Grid container>
             <Typography variant="h6" className={classes.subtitle1}>
-              You're a contractor remodelling a kitchen, bathroom or home and always lose time tracking expenses and project? <br />
-              <span className={classes.boldText}>It begins here.</span>
+              {t('contractor')} <br />
+              <span className={classes.boldText}>{t('begins_here')}.</span>
             </Typography>
             <Typography variant="subtitle2" className={classes.subtitle2}>
-              With only a few clicks, you upload your remodelling purchases and projects review pictures, <br />
-              and automatically your information is organized. <br /><br />You get a daily review of your projects progress. <br />
-              Save time and don't waste money with our app.
+              {t('few_clicks')}, <br />
+              {t('automatically')}. <br /><br />{t('daily_review')}. <br />
+              {t('save_time')}.
             </Typography>
             <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
-              <p className={classes.itemText}>Get Started</p>
+              <p className={classes.itemText}>{t('get_started')}</p>
             </Button>
             {/* <ImgVideo img={true} type="small"></ImgVideo>
             <Grid container justify='flex-end'>

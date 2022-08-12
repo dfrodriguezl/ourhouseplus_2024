@@ -8,6 +8,7 @@ import { RouteComponentProps, useHistory, withRouter } from "react-router-dom";
 import { compose } from "recompose";
 import { connect } from "react-redux";
 import { RootState } from "app/store";
+import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles(() =>
@@ -53,6 +54,7 @@ const ProjectBudgetContainer = (props: Props) => {
   const idProject = params.id;
   const projectSelected = listProjects ? listProjects.filter((o) => String(o.id) === String(idProject)) : undefined;
   const history = useHistory();
+  const { t } = useTranslation();
   // const projectSelected = projectsBudget.filter((o) => o.id === Number(idProject));
 
   const toUploadPhoto = () => {
@@ -66,7 +68,7 @@ const ProjectBudgetContainer = (props: Props) => {
           <Grid item container xs={12} justify="center" className={classes.containerAdd} direction="row" onClick={() => toUploadPhoto()}> 
             <AddAPhotoIcon className={classes.addButton} />
             <Typography variant="subtitle1" className={classes.addText}>
-              Add spending.
+            {t('add_spending')}.
             </Typography>
           </Grid>
           <Grid item container xs={12} className={classes.listContainer}>
@@ -79,7 +81,7 @@ const ProjectBudgetContainer = (props: Props) => {
 
           </Grid>
           <Grid item container xs={12} justify="center" className={classes.bottomTextContainer}>
-            <Typography variant="subtitle1" className={classes.bottomText}>Build on budget.</Typography>
+            <Typography variant="subtitle1" className={classes.bottomText}>{t('build_on_budget')}.</Typography>
           </Grid>
         </Grid>
         : null}

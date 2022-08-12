@@ -8,6 +8,7 @@ import { ImgVideo } from '.';
 import clsx from 'clsx';
 import PopupMail from './PopupMail';
 import MailchimpFormContainerTwo from '../containers/MailChimpFormContainerTwo';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles((theme) => ({
   containerForm: {
@@ -125,6 +126,7 @@ const FormMail = (props: Props) => {
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handleChange1 = (e: any) => {
     setFirstName(e.target.value)
@@ -183,14 +185,14 @@ const FormMail = (props: Props) => {
           {!smallScreen ? < br /> : null}
         </Typography> */}
         <Typography variant={smallScreen ? "h5" : "h3"} className={classes.titleStyle} style={{ fontWeight: 'bolder', lineHeight: 1 }}>
-          <span className={classes.spacingText} >Take Control of Your Renovations <br/> Budget & Workflow.</span>
+          <span className={classes.spacingText} >{t('take_control')} <br/> {t('budget_workflow')}.</span>
         </Typography>
         <br />
         {smallScreen ? <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3, padding: '10px 60px' }}>
-          Saving money and time as easy as taking a picture of your material, labor bills and project progress,<br /> <br />House+ app will organize the information and review the process for you. <br />
+          {t('saving_money')},<br /> <br />{t('organize')}. <br />
           {/* New additions designs start at $199. */}
         </Typography> : <Typography variant="h6" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3, padding: '10px 20%' }}>
-          Saving money and time as easy as taking a picture of your material, labor bills and project progress, House+ app will organize the information and review the process for you. <br />
+        {t('saving_money')}, {t('organize')}. <br />
           {/* New additions designs start at $199. */}
         </Typography>}
         {/* <Typography variant="subtitle1" className={classes.titleStyle} style={{ lineHeight: 1 }}>
@@ -210,7 +212,7 @@ const FormMail = (props: Props) => {
         <ImgVideo></ImgVideo> : null} */}
       <Grid item sm={12} xs={12} style={{ alignSelf: 'flex-end' }}>
         {smallScreen ? <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3 }}>
-          Stress-free remodeling
+        {t('stress_free')}
         </Typography> : null}
 
         {/* <Grid item xs={12}>
@@ -277,7 +279,7 @@ const FormMail = (props: Props) => {
 
         {smallScreen ? <Grid xs={12} container justify="center">
           <Button className={classes.buttonGreen} type="submit" name="subscribe" onClick={() => handleOpen()}>
-            <span className={classes.itemText}>Book Appointment</span>
+            <span className={classes.itemText}>{t('book_appointment')}</span>
           </Button>
         </Grid> : null}
       </Grid>
