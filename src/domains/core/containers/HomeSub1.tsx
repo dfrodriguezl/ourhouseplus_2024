@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { ArrowForward } from '@material-ui/icons';
 import { basicVolume, customizeOnline, house, interior, software, step1House, Step21, step2House, step3House, truc } from 'assets';
 import { url } from 'inspector';
+import { useTranslation } from 'react-i18next';
 
 const styles = makeStyles((theme: Theme) => ({
   image: {
@@ -115,6 +116,7 @@ const HomeSub1 = () => {
   const isWaiting = history.location.pathname.indexOf('register') > -1;
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { t } = useTranslation();
 
   const handleScroll = () => {
     window.scroll({
@@ -222,7 +224,7 @@ const HomeSub1 = () => {
             </CardContent>
           </Card> */}
           <Typography variant="subtitle1" style={{ fontWeight: 'bolder' }}>
-            HOW IT WORKS
+            {t('how_it_works')}
           </Typography>
           {/* <Typography variant="subtitle2">
             Permit Papers - Order Kit - Extend Home
@@ -233,9 +235,9 @@ const HomeSub1 = () => {
                 <img alt="software" src={step1House} width="80%" />
               </Grid>
               <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'right' }}>
-                <span style={{ fontWeight: 'bolder' }}>1. Set your projects <br /> type & budget objectives.</span>
+                <span style={{ fontWeight: 'bolder' }}>1. {t('set_your_projects')} <br /> {t('objectives')}.</span>
                 <br />
-                <span className={classes.smallFont}>House+ will track your propose custom a workflow.</span>
+                <span className={classes.smallFont}>{t('track')}.</span>
               </Typography>
             </Grid>
             <Grid xs={12} container justify="flex-end" style={{ marginTop: 20, marginLeft: '20px', marginRight: '20px' }}>
@@ -243,9 +245,9 @@ const HomeSub1 = () => {
                 <img alt="software" src={step2House} width="80%" />
               </Grid>
               <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'left' }}>
-                <span style={{ fontWeight: 'bolder' }}>2. Take a picture of your project <br /> expenses and details.</span>
+                <span style={{ fontWeight: 'bolder' }}>2. {t('2_1')} <br /> {t('2_2')}.</span>
                 <br />
-                <span className={classes.smallFont}>House+ will track automatically organize the information.</span>
+                <span className={classes.smallFont}>{t('2_3')}.</span>
               </Typography>
             </Grid>
             <Grid xs={12} container justify="flex-start" style={{ marginTop: 20, marginLeft: '20px', marginRight: '20px' }}>
@@ -253,9 +255,9 @@ const HomeSub1 = () => {
                 <img alt="software" src={step3House} width="80%" />
               </Grid>
               <Typography variant="subtitle2" style={{ width: '100%', textAlign: 'right' }}>
-                <span style={{ fontWeight: 'bolder' }}>3. Track your projects progress <br /> with our daily notification.</span>
+                <span style={{ fontWeight: 'bolder' }}>3. {t('3_1')} <br /> {t('3_2')}.</span>
                 <br />
-                <span className={classes.smallFont}>House+ will notify the expenses percentage and workflow.</span>
+                <span className={classes.smallFont}>{t('3_3')}.</span>
               </Typography>
             </Grid>
           </Grid>
@@ -268,7 +270,7 @@ const HomeSub1 = () => {
           <br />
           <Grid item container xs={12} justify="center">
             <Button className={classes.buttonGreen} onClick={() => toGetStarted()}>
-              <span className={classes.itemText}>Get Started</span>
+              <span className={classes.itemText}>{t('get_started')}</span>
             </Button>
           </Grid>
 
