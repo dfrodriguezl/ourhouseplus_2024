@@ -309,7 +309,7 @@ const Header = (props: RouteComponentProps) => {
           <Link to="/register">
             <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? whiteLogo : whiteLogo} alt="logo" width={150} />
             <br />
-            <span className={classes.logoText}>stress-free remodeling</span>
+            <span className={classes.logoText}>{t('stress_free')}</span>
           </Link>
           {
             !(isSignUp) ?
