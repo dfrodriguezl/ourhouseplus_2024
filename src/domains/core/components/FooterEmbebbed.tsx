@@ -6,6 +6,7 @@ import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import { useTranslation } from 'react-i18next';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -76,6 +77,7 @@ const FooterEmbebbed = (props: Props) => {
   const classes = useStyles()
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { t } = useTranslation();
 
   return (
     <Grid container item className={classes.root} xs={12}>
@@ -83,7 +85,7 @@ const FooterEmbebbed = (props: Props) => {
         <footer className={classes.footer}>
           <Grid container item>
             <Grid item xs={12} sm={12} justify="center" className={classes.textCenter}>
-              <Typography variant="subtitle1" className={classes.item}> GO TO OUR MOBILE SITE FOR AN APPOINTMENT TO TEST THE APP</Typography>
+              <Typography variant="subtitle1" className={classes.item}> {t('go_to')}</Typography>
               {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link to="/about">About</Link></Box>
               <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/how-it-works">How it works</Link></Box>
               {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/news">News</Link></Box> */}
