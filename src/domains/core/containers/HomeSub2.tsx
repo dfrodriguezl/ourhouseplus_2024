@@ -151,9 +151,9 @@ const HomeSub2 = () => {
               <span className={classes.boldText}>{t('begins_here')}.</span>
             </Typography>
             <Typography variant="subtitle2" className={classes.subtitle2}>
-              {t('few_clicks')}, <br />
-              {t('automatically')}. <br /><br />{t('daily_review')}. <br />
-              {t('save_time')}.
+              {t('few_clicks')} <br />
+              {/* {t('automatically')}. <br /><br />{t('daily_review')}. <br /> */}
+              {/* {t('save_time')}. */}
             </Typography>
             <Button className={classes.buttonGreen} variant="outlined" size="small" onClick={() => toGetStarted()}>
               <p className={classes.itemText}>{t('get_started')}</p>

@@ -1,12 +1,13 @@
 import React from 'react';
 import { Container, Grid, Box, makeStyles, Theme, Avatar, useTheme, Typography, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { FeasibilityIcon, FinancialIcon, PdfIcon, PreArchitectureIcon, SquareIcon, BuildingIcon, videoSmall, home1Carrousel, background1 } from 'assets';
+import { FeasibilityIcon, FinancialIcon, PdfIcon, PreArchitectureIcon, SquareIcon, BuildingIcon, videoSmall, home1Carrousel, background1, house3, house1, house2, house4 } from 'assets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ImgVideo } from 'domains/common/components';
 import Carousel from 'react-material-ui-carousel';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { useTranslation } from 'react-i18next';
 
 const styles = makeStyles((theme: Theme) => ({
   title: {
@@ -98,6 +99,7 @@ const HomeSubVideo = () => {
   const isWaiting = history.location.pathname.indexOf('register') > -1;
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { t } = useTranslation();
 
   const toGetStarted = () => {
     window.scrollTo(0, 0);
@@ -108,7 +110,7 @@ const HomeSubVideo = () => {
     <div className={!smallScreen ? isWaiting ? "home-sub-1-waiting" : "home-sub-1" : "home-sub-1-small"}>
       <Container className={classes.container}>
         <Grid container>
-          <Typography variant="h6" style={{ fontWeight: 'bolder', marginLeft: 40 }}>Our Models.</Typography>
+          <Typography variant="h6" style={{ fontWeight: 'bolder', marginLeft: 40 }}>{t('our_app')}</Typography>
           <Carousel
             NextIcon={<ArrowForwardIosIcon fontSize='small' />}
             PrevIcon={<ArrowBackIosIcon fontSize='small' />}
@@ -122,11 +124,23 @@ const HomeSubVideo = () => {
               }
             }}>
             <div>
-              <img src={background1} width="100%" className={classes.imgCarrousel} />
+              <img src={house3} width="100%" className={classes.imgCarrousel} />
               <Grid container justify="center">
-                <Button className={classes.buttonGray}>
-                  Contemporary&nbsp;&nbsp;&nbsp;<span className={classes.greenText}>Learn More.</span>
-                </Button>
+              </Grid>
+            </div>
+            <div>
+              <img src={house1} width="100%" className={classes.imgCarrousel} />
+              <Grid container justify="center">
+              </Grid>
+            </div>
+            <div>
+              <img src={house2} width="100%" className={classes.imgCarrousel} />
+              <Grid container justify="center">
+              </Grid>
+            </div>
+            <div>
+              <img src={house4} width="100%" className={classes.imgCarrousel} />
+              <Grid container justify="center">
               </Grid>
             </div>
 
