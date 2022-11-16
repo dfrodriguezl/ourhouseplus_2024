@@ -185,11 +185,14 @@ const FormMail = (props: Props) => {
           {!smallScreen ? < br /> : null}
         </Typography> */}
         <Typography variant={smallScreen ? "h5" : "h3"} className={classes.titleStyle} style={{ fontWeight: 'bolder', lineHeight: 1 }}>
-          <span className={classes.spacingText} >{t('take_control')} <br/> {t('budget_workflow')}.</span>
+          <span className={classes.spacingText} >{t('take_control')} 
+          {/* <br/> {t('budget_workflow')}. */}
+          </span>
         </Typography>
         <br />
         {smallScreen ? <Typography variant="caption" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3, padding: '10px 60px' }}>
-          {t('saving_money')},<br /> <br />{t('organize')}. <br />
+          {t('saving_money')},<br /> 
+          {/* <br />{t('organize')}. <br /> */}
           {/* New additions designs start at $199. */}
         </Typography> : <Typography variant="h6" className={classes.titleStyle} style={{ textAlign: 'center', marginBottom: 30, lineHeight: 1.3, padding: '10px 20%' }}>
         {t('saving_money')}, {t('organize')}. <br />

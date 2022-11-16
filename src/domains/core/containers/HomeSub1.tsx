@@ -5,6 +5,10 @@ import { ArrowForward } from '@material-ui/icons';
 import { basicVolume, customizeOnline, house, interior, software, step1House, Step21, step2House, step3House, truc } from 'assets';
 import { url } from 'inspector';
 import { useTranslation } from 'react-i18next';
+import HotelIcon from '@material-ui/icons/Hotel';
+import GroupIcon from '@material-ui/icons/Group';
+import PhonelinkRingIcon from '@material-ui/icons/PhonelinkRing';
+import HeadsetIcon from '@material-ui/icons/Headset';
 
 const styles = makeStyles((theme: Theme) => ({
   image: {
@@ -230,7 +234,27 @@ const HomeSub1 = () => {
             Permit Papers - Order Kit - Extend Home
           </Typography> */}
           <Grid xs={12} item container className={classes.contenedorImgs}>
-            <Grid xs={12} container justify="flex-start" style={{ marginLeft: '20px', marginRight: '20px' }}>
+            <Grid xs={6} item>
+              <HotelIcon fontSize="large" />
+              <Typography variant="subtitle1" style={{ fontWeight: 'bolder' }} >Private & Comfortable</Typography>
+              <p style={{ fontSize: 15 }}>Fully furnished beautiful studios of 250 - 350 sqf.</p>
+            </Grid>
+            <Grid xs={6} item>
+              <GroupIcon fontSize="large" />
+              <Typography variant="subtitle1" style={{ fontWeight: 'bolder' }}>Extended Family</Typography>
+              <p style={{ fontSize: 15 }}>The extraordinary shared spaces are designed to build new friendships.</p>
+            </Grid>
+            <Grid xs={6} item>
+              <PhonelinkRingIcon fontSize="large" />
+              <Typography variant="subtitle1" style={{ fontWeight: 'bolder' }}>Control your experience</Typography>
+              <p style={{ fontSize: 15 }}>From our app, control the access, lights and talk to your roommates.</p>
+            </Grid>
+            <Grid xs={6} item>
+              <HeadsetIcon fontSize="large" />
+              <Typography variant="subtitle1" style={{ fontWeight: 'bolder' }}>Here for you</Typography>
+              <p style={{ fontSize: 15 }}>If you need to share something to us, we are within reach on our app.</p>
+            </Grid>
+            {/* <Grid xs={12} container justify="flex-start" style={{ marginLeft: '20px', marginRight: '20px' }}>
               <Grid className={classes.rectangleContainer}>
                 <img alt="software" src={step1House} width="80%" />
               </Grid>
@@ -259,7 +283,7 @@ const HomeSub1 = () => {
                 <br />
                 <span className={classes.smallFont}>{t('3_3')}.</span>
               </Typography>
-            </Grid>
+            </Grid> */}
           </Grid>
 
           {/* <Grid> */}

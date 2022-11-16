@@ -158,3 +158,8 @@ export {default as bill} from './bill.png'
 export {default as step1House} from './step1_house.png'
 export {default as step2House} from './step2_house.png'
 export {default as step3House} from './step3_house.png'
+
+export {default as house1} from './house_1.jpg'
+export {default as house2} from './house_2.jpg'
+export {default as house3} from './house_3.jpg'
+export {default as house4} from './house_4.jpg'
