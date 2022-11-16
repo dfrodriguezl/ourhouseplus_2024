@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Grid, Box, makeStyles, Theme, Avatar, useTheme, Typography, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
-import { FeasibilityIcon, FinancialIcon, PdfIcon, PreArchitectureIcon, SquareIcon, BuildingIcon, videoSmall, home1Carrousel, background1, house3, house1, house2, house4 } from 'assets';
+import { FeasibilityIcon, FinancialIcon, PdfIcon, PreArchitectureIcon, SquareIcon, BuildingIcon, videoSmall, home1Carrousel, background1, house3w, house1w, house2w, house4w } from 'assets';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { ImgVideo } from 'domains/common/components';
 import Carousel from 'react-material-ui-carousel';
@@ -124,22 +124,22 @@ const HomeSubVideo = () => {
               }
             }}>
             <div>
-              <img src={house3} width="100%" className={classes.imgCarrousel} />
+              <img src={house3w} width="100%" className={classes.imgCarrousel} />
               <Grid container justify="center">
               </Grid>
             </div>
             <div>
-              <img src={house1} width="100%" className={classes.imgCarrousel} />
+              <img src={house1w} width="100%" className={classes.imgCarrousel} />
               <Grid container justify="center">
               </Grid>
             </div>
             <div>
-              <img src={house2} width="100%" className={classes.imgCarrousel} />
+              <img src={house2w} width="100%" className={classes.imgCarrousel} />
               <Grid container justify="center">
               </Grid>
             </div>
             <div>
-              <img src={house4} width="100%" className={classes.imgCarrousel} />
+              <img src={house4w} width="100%" className={classes.imgCarrousel} />
               <Grid container justify="center">
               </Grid>
             </div>
