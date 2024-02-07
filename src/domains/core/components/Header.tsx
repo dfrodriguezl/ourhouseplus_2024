@@ -1,4 +1,4 @@
-import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Drawer, IconButton, MenuItem, MenuList, Popper, Grow, Paper, ClickAwayListener } from '@material-ui/core';
+import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Drawer, IconButton, MenuItem, MenuList, Popper, Grow, Paper, ClickAwayListener, Typography, Grid } from '@material-ui/core';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import PersonIcon from '@material-ui/icons/Person';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: '#FFFFFF',
     },
     headerDesktop: {
-      padding: '20px 0',
+      padding: '50px 0',
       background: 'transparent',
       alignItems: 'center'
     },
@@ -125,6 +125,9 @@ const useStyles = makeStyles((theme: Theme) =>
     logoText: {
       color: 'white',
       textAlign: 'center'
+    },
+    whiteText: {
+      color: 'white'
     }
   })
 );
@@ -305,72 +308,96 @@ const Header = (props: RouteComponentProps) => {
       </Fragment>
       :
       <AppBar position="static" elevation={0} className={classes.headerDesktop}>
-        <Toolbar variant="regular">
-          <Link to="/register">
-            <img src={isHome || isRegister || isSignUp || isWaiting || isAbout ? whiteLogo : whiteLogo} alt="logo" width={150} />
-            <br />
-            <span className={classes.logoText}>{t('stress_free')}</span>
-          </Link>
-          {
-            !(isSignUp) ?
-              <div className={classes.menuButton}>
-                {
-                  !isAuthenticated
-                    ?
-                    <Fragment>
-                      {
-                        isAbout || isRegister || isWaiting ?
-                          null :
-                          <Fragment>
-                            <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
-                              Sign in
-                            </Button>
-                            <Button className={classes.becomeMember} onClick={() => openRegister()}>
-                              Become a member
-                            </Button>
-                          </Fragment>
-                      }
+        <Grid container xs={12} justify='space-between'>
+          <Grid item>
+            <Link to="#">
+              <Typography variant="h6" className={classes.whiteText}>CS DECORATION</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+          <Link to="#">
+            <Typography variant="subtitle2" className={classes.whiteText}>PROJECT GALLERY</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+          <Link to="#">
+            <Typography variant="subtitle2" className={classes.whiteText}>FURNITURE SEARCH</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+          <Link to="#">
+            <Typography variant="subtitle2" className={classes.whiteText}>FURNITURE NEWS</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            {
+              !(isSignUp) ?
+                <div className={classes.menuButton}>
+                  {
+                    !isAuthenticated
+                      ?
+                      <Fragment>
+                        {
+                          isAbout || isRegister || isWaiting ?
+                            null :
+                            <Fragment>
+                              <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
+                                Sign in
+                              </Button>
+                              <Button className={classes.becomeMember} onClick={() => openRegister()}>
+                                Become a member
+                              </Button>
+                            </Fragment>
+                        }
 
-                    </Fragment>
-                    :
-                    <Fragment>
-                      <Button
-                        className={classes.becomeMember}
-                        startIcon={<PersonIcon />}
-                        endIcon={<ExpandMoreIcon />}
-                        ref={anchorRef}
-                        aria-controls={openMenu ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        onClick={handleClick}>
-                        {user.name}
-                      </Button>
-                      <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                        {({ TransitionProps, placement }) => (
-                          <Grow
-                            {...TransitionProps}
-                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                          >
-                            <Paper className={classes.menu}>
-                              <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                  <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
-                                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                  <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
-                                </MenuList>
-                              </ClickAwayListener>
-                            </Paper>
-                          </Grow>
-                        )}
-                      </Popper>
-                    </Fragment>
+                      </Fragment>
+                      :
+                      <Fragment>
+                        <Button
+                          className={classes.becomeMember}
+                          startIcon={<PersonIcon />}
+                          endIcon={<ExpandMoreIcon />}
+                          ref={anchorRef}
+                          aria-controls={openMenu ? 'menu-list-grow' : undefined}
+                          aria-haspopup="true"
+                          onClick={handleClick}>
+                          {user.name}
+                        </Button>
+                        <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                          {({ TransitionProps, placement }) => (
+                            <Grow
+                              {...TransitionProps}
+                              style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                            >
+                              <Paper className={classes.menu}>
+                                <ClickAwayListener onClickAway={handleClose}>
+                                  <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                    <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
+                                    <MenuItem onClick={handleClose}>Profile</MenuItem>
+                                    <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
+                                  </MenuList>
+                                </ClickAwayListener>
+                              </Paper>
+                            </Grow>
+                          )}
+                        </Popper>
+                      </Fragment>
 
-                }
+                  }
 
-              </div> : null
-          }
+                </div> : null
+            }
+          </Grid>
 
-        </Toolbar>
-      </AppBar>
+
+
+
+        </Grid >
+
+
+
+
+      </AppBar >
   );
 }
 

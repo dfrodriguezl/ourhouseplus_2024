@@ -37,7 +37,7 @@ function App() {
         <Route path="/detailProjectBudget/:id" component={ProjectBudgetContainer} />
         <Route path="/uploadPhoto" component={UploadPhoto} />
         <Route path="/newProject" component={NewBudgetProject} />
-        <Redirect from="/" to="/register" />
+        <Redirect from="/" to="/home" />
       </Switch>
       <Footer />
     </ThemeProvider>

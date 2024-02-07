@@ -26,11 +26,11 @@ const Home = (props: Props) => {
 
   return (
     <Fragment>
-      <PageContainer background={!smallScreen ? "home" : searchClick ? "home-black" : "home"}>
+      <PageContainer background="home">
         <Grid container justify="center">
-          <Grid item xs={smallScreen ? 12 : 8}>
+          {/* <Grid item xs={smallScreen ? 12 : 8}>
             <SearchToolBar />
-          </Grid>
+          </Grid> */}
           <Grid item container xs={12} direction="row" style={{ marginTop: '38vh' }}>
             <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
               <Slogan />

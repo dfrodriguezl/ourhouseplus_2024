@@ -109,8 +109,7 @@ const PageContainer = (props: Props) => {
   }, [])
 
   return (
-    <div className={smallScreen ? background : imgs[currentIndex]} style={(isAbout || isDetails || isStep1 || isListProjects || isUploadShape 
-    || isStep2 || isStep3 || isChooseFacade || isUploadPhoto || isProjectDetail || isListSpending) ? { overflow: 'auto' } : expandAdvanced}>
+    <div className={background}>
       <Container className={classes.noPadding} >
         <Grid container direction="column" alignItems="stretch" className={classes.pageContainer} >
           {
