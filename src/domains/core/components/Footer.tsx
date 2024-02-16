@@ -1,12 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { compose } from 'recompose';
-import { Box, Container, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
-import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { useTheme } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import { useTranslation } from 'react-i18next';
+import { createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -67,42 +62,16 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-interface propsClasses {
-  classes: any;
-}
 
 type Props = RouteComponentProps;
 const Footer = (props: Props) => {
   const classes = useStyles()
-  const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const { t } = useTranslation();
 
   return (
     <Grid container item className={classes.root} xs={12} justify="flex-end">
       <Typography className={classes.fontStyle}>HOUSE COLLECTION By HOUSE+</Typography>
     </Grid>
   );
-}
-
-const SocialNetwork = (propsClasses: propsClasses) => {
-
-  const { classes } = propsClasses;
-
-  return (
-    <Grid item xs={12} sm={1} className={classes.socialButtons} style={{ alignSelf: 'flex-end' }}>
-      <a href="https://www.linkedin.com/company/rea-web/" className={classes.links} target="_blank" rel="noreferrer">
-        <LinkedIn />
-      </a>
-      <a href="https://www.linkedin.com/company/rea-web/" className={clsx(classes.links, true && classes.itemInactive, true)}>
-        <Facebook />
-      </a>
-      <a href="https://www.instagram.com/rea_cities/?hl=en" className={classes.links} target="_blank" rel="noreferrer">
-        <Instagram />
-      </a>
-    </Grid>
-  )
-
 }
 
 const container = compose<Props, {}>(

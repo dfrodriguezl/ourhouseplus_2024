@@ -38,7 +38,7 @@ export default function ProjectContainer(props: Props) {
             <Typography variant="subtitle2">{project.location}</Typography>
             <Typography variant="subtitle2">{project.deliveryDueDate}</Typography>
           </div>
-          <img src={project.picture} />
+          <img src={project.picture} alt="project"/>
         </Fragment>
         :
         <div className={classes.containerButtonStyle}>

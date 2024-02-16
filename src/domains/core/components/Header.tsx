@@ -6,9 +6,6 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-
-import logo from 'assets/logo-small.png';
-import whiteLogo from 'assets/logo-small-white.png';
 import { Fragment, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import CloseIcon from '@material-ui/icons/Close';
@@ -141,15 +138,10 @@ const Header = (props: RouteComponentProps) => {
   const history = props.history;
   const isAdmin = isAuthenticated ? user['http://ourhouseplus.com/roles'].includes('admin') : false;
 
-  const isHome = props.history.location.pathname.indexOf('home') > -1;
   const isRegister = props.history.location.pathname.indexOf('register') > -1;
   const isSignUp = props.history.location.pathname.indexOf('signup') > -1;
   const isWaiting = props.history.location.pathname.indexOf('waiting') > -1;
   const isAbout = props.history.location.pathname.indexOf('about') > -1;
-  const isList = props.history.location.pathname.indexOf('listSpending') > -1;
-  const isContainerBudget = props.history.location.pathname.indexOf('detailProjectBudget') > -1;
-  const isUploadPhoto = props.history.location.pathname.indexOf('uploadPhoto') > -1;
-  const isNewProject = props.history.location.pathname.indexOf('newProject') > -1;
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -212,7 +204,7 @@ const Header = (props: RouteComponentProps) => {
         <AppBar position="static" elevation={0} className={classes.header}>
           <Toolbar variant="regular">
             <Link to="/register">
-              <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto || isNewProject ? logo : whiteLogo} alt="logo" width={100} />
+              {/* <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto || isNewProject ? logo : whiteLogo} alt="logo" width={100} /> */}
             </Link>
 
             {!(isSignUp || isWaiting) ?
@@ -271,7 +263,7 @@ const Header = (props: RouteComponentProps) => {
                           <MenuItem className={classes.itemText}>{t('drawer_login')}</MenuItem>
                         </Button>
                         <br />
-                        <img src={logo} alt="logo" width={70} className={classes.imgLogo} />
+                        {/* <img src={logo} alt="logo" width={70} className={classes.imgLogo} /> */}
                         <p className={classes.bottomText}>Copyright &copy; 2022 Home+. {t('drawer_copyright')}</p>
                       </div>
                     </div>

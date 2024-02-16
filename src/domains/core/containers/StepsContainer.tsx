@@ -1,5 +1,5 @@
-import React, { Fragment, useState } from 'react';
-import { Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import React from 'react';
+import { Grid, makeStyles, Theme } from '@material-ui/core';
 import { Project } from "../models";
 import { ProjectSummary } from '../components';
 

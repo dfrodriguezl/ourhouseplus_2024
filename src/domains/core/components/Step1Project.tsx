@@ -1,8 +1,6 @@
-import React, { Fragment, useState } from 'react';
-import { Button, Grid, makeStyles, TextField, Theme, Typography } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { Project } from "../models";
-import { ProjectSummary } from '.';
-import { StepsContainer } from '../containers';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -50,7 +48,7 @@ interface OwnProps {
 
 type Props = OwnProps;
 export default function Step1Project(props: Props) {
-  const { children, setStep, setProject } = props;
+  const { setStep, setProject } = props;
   const [nameProject, setNameProject] = useState("");
   const [locationProject, setLocationProject] = useState("");
   const [deliveryDueDate, setDeliveryDueDate] = useState("");

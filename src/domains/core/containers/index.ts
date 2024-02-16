@@ -1,23 +1,6 @@
-export { default as Login } from './Login';
 export { default as Home } from './Home';
-export { default as HomeSub1 } from './HomeSub1';
-export { default as PageContainer } from './PageContainer'
-export { default as FullPageOverlay } from './FullPageOverlay';
-export { default as RegisterContainer } from './RegisterContainer';
-export { default as SignUp } from './SignUp';
-export { default as ListProjects } from './ListProjects';
-export { default as DetailsProjects } from './DetailsProject';
-export { default as DetailsSummary } from './DetailsSummary';
-export { default as GeoContainer } from './GeoContainer';
-export { default as TerrainContainer } from './TerrainContainer';
-export { default as HomeSub2 } from './HomeSub2';
-export { default as HomeSub3 } from './HomeSub3';
-export { default as BlackContainer } from './BlackContainer';
-export { default as Facade } from './Facade';
-export { default as Loading } from './Loading';
-export { default as HomeSubVideo } from './HomeSubVideo';
-export { default as HomeSubCarrousel } from './HomeSubCarrousel';
 export { default as HomeSub } from './HomeSub';
 export { default as StepsContainer } from './StepsContainer';
+export { default as PageContainer } from './PageContainer';
 export { default as CreateProject } from './CreateProject';
 
