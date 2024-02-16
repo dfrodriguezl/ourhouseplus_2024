@@ -142,10 +142,10 @@ const NewBudgetProject = (props: Props) => {
 
   const onSubmit = (data: any) => {
     // console.log("DATA", data);
-    data.email = user.email;
-    const projectNew: ProjectBudget = data;
-    saveProjectBudget(projectNew); 
-    setOpen(true);
+    // data.email = user.email;
+    // const projectNew: ProjectBudget = data;
+    // saveProjectBudget(projectNew); 
+    // setOpen(true);
   }
 
   return (
