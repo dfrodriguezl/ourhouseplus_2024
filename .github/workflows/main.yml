@@ -1,64 +1,36 @@
-# This is a basic workflow to help you get started with Actions
+name: Upload Website
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ master ]
+    branches: [ "master" ]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      - uses: cschleiden/replace-tokens@v1.1
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          files: '[".env"]'
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build app
+        run: npm run build
+
+      - name: Upload to S3
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --acl public-read
         env:
-          API_BASE_URL: https://rea-fn-test-fr-central.azurewebsites.net/api
-          API_ACCESS_CODE: 1N1G1t1vQZ3UBXYlxkdGcNKjp6s8R4UZD4dB1gz6pi5CrJvEQqL5Dw==
-          AUTH0_DOMAIN: dev-ourhouseplus.us.auth0.com
-          AUTH0_CLIENT_ID: JQfAlJFgNIbjjzDhEvlajQ3Bk9ALauUD
-
-      
-      - name: Yarn CLI
-        # You may pin to the exact commit or the version.
-        # uses: CultureHQ/actions-yarn@661c6f3a66041c2432bcfb78096b9207304614c8
-        uses: CultureHQ/actions-yarn@v1.0.1
-        
-      - run: yarn install
-      - run: CI=false yarn build
-      
-      - name: ftp-action
-        # You may pin to the exact commit or the version.
-        # uses: sebastianpopp/ftp-action@eb75c5cb29d23ee4a729720a27dfb66403cb0f6d
-        uses: sebastianpopp/ftp-action@v2.0.0
-        with:
-          # FTP host
-          host:  ftp://ftp.elatelier.fr 
-          # FTP user
-          user: admin@ourhouseplus.com
-          # FTP password
-          password: OurHousePlus032022
-          # Force SSL encryption
-          forceSsl: false
-          # Local directory
-          localDir: ./build
-          # Remote directory
-          remoteDir: /
-
-
+          SOURCE_DIR: build/
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
