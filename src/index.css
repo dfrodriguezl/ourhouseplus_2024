@@ -35,6 +35,11 @@ a {
   background-repeat: round;
 }
 
+.create-project {
+  background: transparent linear-gradient(180deg, #2A2A2A 0%, #29292981 26%, #54545400 100%) 0% 0% no-repeat padding-box;
+  background-size: 1920px 1080px; 
+}
+
 .home-register {
   background-image: url(assets/background_3.webp);
   background-repeat: no-repeat;

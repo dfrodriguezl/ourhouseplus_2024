@@ -17,3 +17,7 @@ export { default as Facade } from './Facade';
 export { default as Loading } from './Loading';
 export { default as HomeSubVideo } from './HomeSubVideo';
 export { default as HomeSubCarrousel } from './HomeSubCarrousel';
+export { default as HomeSub } from './HomeSub';
+export { default as StepsContainer } from './StepsContainer';
+export { default as CreateProject } from './CreateProject';
+

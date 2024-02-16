@@ -1,5 +1,20 @@
-import { juan, felix, alex, sebastien, lucas, ula, diego, radhi, facadeOptionA, facadeOptionB, facadeOptionC } from 'assets';
+import { juan, felix, alex, sebastien, lucas, ula, diego, radhi, facadeOptionA, facadeOptionB, facadeOptionC, image_1, image_2 } from 'assets';
 
+
+export interface Project {
+  name: string;
+  location: string;
+  deliveryDueDate: string;
+  picture?: any;
+  livingRoom?: boolean;
+  livingRoomNumber?: number;
+  dinningRoom?: boolean;
+  bedRoom?: boolean;
+  bedRoomNumber?: number;
+  toilet?: boolean;
+  toiletNumber?: number;
+  projectStyle?: string;
+}
 export interface SearchParams {
   location: LocationSimple | undefined;
   area: number;
@@ -101,6 +116,21 @@ export interface Terrain {
   location?: LocationSimple;
   densityGeneral?: number;
 }
+
+export const projects: Project[] = [
+  {
+    name: 'I04 WOOSTER STREET',
+    location: 'NY - USA',
+    deliveryDueDate: '2023-01-01',
+    picture: image_1
+  },
+  {
+    name: '4546 DOWNS LANE ST',
+    location: 'ASPEN - USA',
+    deliveryDueDate: '2023-01-01',
+    picture: image_2
+  }
+]
 
 export const Densities = [
   {

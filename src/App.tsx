@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { Home, Login, SignUp, ListProjects, DetailsProjects, DetailsSummary, TerrainContainer, Facade, Loading } from 'domains/core/containers';
+import { Home, Login, SignUp, ListProjects, DetailsProjects, DetailsSummary, TerrainContainer, Facade, Loading, CreateProject } from 'domains/core/containers';
 import { ThemeProvider } from '@material-ui/core';
 import { About, ContactUs, HowItWorks, Investors, Jobs, Leadership, News, MailChimpFormContainer } from 'domains/common/containers';
 import theme from 'app/theme';
@@ -37,6 +37,7 @@ function App() {
         <Route path="/detailProjectBudget/:id" component={ProjectBudgetContainer} />
         <Route path="/uploadPhoto" component={UploadPhoto} />
         <Route path="/newProject" component={NewBudgetProject} />
+        <Route path="/createProject" component={CreateProject} />
         <Redirect from="/" to="/home" />
       </Switch>
       <Footer />

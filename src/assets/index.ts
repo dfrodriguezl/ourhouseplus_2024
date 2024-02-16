@@ -169,3 +169,6 @@ export {default as house2w} from './house_2.webp'
 export {default as house3w} from './house_3.webp'
 export {default as house4w} from './house_4.webp'
 export {default as background33} from './background_3.webp'
+
+export {default as image_1} from './image_1.png'
+export {default as image_2} from './image_2.png'

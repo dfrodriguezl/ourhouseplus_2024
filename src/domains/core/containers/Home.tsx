@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 import { Grid } from '@material-ui/core';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { SearchToolBar } from 'domains/core/components';
-import { PageContainer } from 'domains/core/containers';
+import { HomeSub, PageContainer } from 'domains/core/containers';
 import { Slogan, ScrollDown } from 'domains/common/components';
 import { HomeSub1 } from 'domains/core/containers';
 import { connect } from 'react-redux';
@@ -31,20 +31,21 @@ const Home = (props: Props) => {
           {/* <Grid item xs={smallScreen ? 12 : 8}>
             <SearchToolBar />
           </Grid> */}
-          <Grid item container xs={12} direction="row" style={{ marginTop: '38vh' }}>
+          <Grid item container xs={12} direction="row" style={{ marginTop: '38vh', marginBottom: '10vh' }}>
             <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
               <Slogan />
             </Grid>
-            {smallScreen ? null :
+            {/* {smallScreen ? null :
               <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
                 <ScrollDown />
-              </Grid>}
+              </Grid>} */}
           </Grid>
         </Grid>
       </PageContainer>
-      <HomeSub2 />
+      <HomeSub />
+      {/* <HomeSub2 />
       <HomeSub3 />
-      <HomeSub1 />
+      <HomeSub1 /> */}
     </Fragment>
   )
 }
@@ -55,4 +56,4 @@ const container = connect<StateProps, {}, {}, RootState>(
   })
 )(Home);
 
-export default container;
+export default withRouter(container);

@@ -12,7 +12,11 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     header: {
-      paddingBottom: 5
+      paddingBottom: 5,
+      color: 'white'
+    },
+    whiteText: {
+      color: 'white'
     }
   })
 );
@@ -22,8 +26,10 @@ export default function Slogan() {
 
   return (
     <div className={classes.root}>
-      <Box fontWeight="bold" fontSize={24} className={classes.header}>Build and sell housing projects faster & better.</Box>
-      <Box lineHeight={1.5}>Generate in real time a housing project and download the Investor & Client presentations.</Box>
+      <Box fontWeight="bold" fontSize={24} className={classes.header}>LOFT NY</Box>
+      <Box lineHeight={1.5} className={classes.whiteText}>I04 WOOSTER STREET</Box>
+      <Box lineHeight={1.5} className={classes.whiteText}>NY - USA</Box>
+      <Box lineHeight={1.5} className={classes.whiteText}>2023</Box>
     </div>
   )
 }

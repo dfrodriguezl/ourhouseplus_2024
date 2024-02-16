@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { compose } from 'recompose';
-import { Box, Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core';
+import { Box, Container, createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
 import { Facebook, Instagram, LinkedIn } from '@material-ui/icons';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -14,7 +14,12 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
       flexDirection: 'row',
-      backgroundColor: '#010100'
+      background: '#2A2A2A 0% 0% no-repeat padding-box',
+      padding: '20px 50px'
+    },
+    fontStyle: {
+      color: '#FFFFFF',
+      font: 'normal normal normal 20px/23px Centaur'
     },
     footer: {
       fontSize: 12,
@@ -74,43 +79,8 @@ const Footer = (props: Props) => {
   const { t } = useTranslation();
 
   return (
-    <Grid container item className={classes.root} xs={12}>
-      {smallScreen ? <Container maxWidth="lg">
-        <footer className={classes.footer}>
-          <Grid container>
-            <Grid item xs={12} sm={6}>
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/about">{t('about')}</Link></Box>
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/how-it-works">{t('drawer_how_works')}</Link></Box>
-              {/* <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/news">News</Link></Box> */}
-              <Box component="span" fontSize={14} lineHeight={1.7} className={classes.item}><Link className={classes.itemInactive} to="/contact-us">{t('drawer_contact')}</Link></Box>
-            </Grid>
-            {smallScreen ?
-              <Fragment>
-                <SocialNetwork classes={classes} />
-                <Grid item xs={12} sm={5}>
-                  <div className={classes.bottomLinks}>
-                    <Box fontSize={10} color='white'>
-                      Copyright © 2022 House+. {t('drawer_copyright')}
-                    </Box>
-                  </div>
-                </Grid>
-              </Fragment> :
-              <Fragment>
-                <Grid item xs={12} sm={5}>
-                  <div className={classes.bottomLinks}>
-                    <Box fontSize={10} color='white'>
-                      Copyright © 2022 House+. {t('drawer_copyright')}
-                    </Box>
-                  </div>
-                </Grid>
-                <SocialNetwork classes={classes} />
-              </Fragment>
-            }
-          </Grid>
-
-        </footer>
-      </Container> : null}
-
+    <Grid container item className={classes.root} xs={12} justify="flex-end">
+      <Typography className={classes.fontStyle}>HOUSE COLLECTION By HOUSE+</Typography>
     </Grid>
   );
 }

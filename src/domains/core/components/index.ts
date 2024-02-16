@@ -12,3 +12,8 @@ export { default as Geolocation } from './Geolocation';
 export { default as TopPanel } from './TopPanel';
 export { default as ToolbarDetailsProject } from './ToolbarDetailsProject';
 export { default as FooterEmbebbed } from './FooterEmbebbed';
+export { default as ProjectContainer } from './ProjectContainer';
+export { default as ProjectsList } from './ProjectsList';
+export { default as ProjectSummary } from './ProjectSummary';
+export { default as Step1Project } from './Step1Project';
+export { default as Step2Project } from './Step2Project';
