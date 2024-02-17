@@ -6,9 +6,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import { useTheme } from '@material-ui/core/styles';
-
 import { Fragment, useState, useRef } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
+// import { useAuth0 } from '@auth0/auth0-react';
 import CloseIcon from '@material-ui/icons/Close';
 import { useTranslation } from 'react-i18next';
 
@@ -131,19 +130,20 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Header = (props: RouteComponentProps) => {
-  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  // const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
+  const isAuthenticated = true;
+  const isAdmin = true;
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = useRef<any>(null);
   const history = props.history;
-  const isAdmin = isAuthenticated ? user['http://ourhouseplus.com/roles'].includes('admin') : false;
+  // const isAdmin = isAuthenticated ? user['http://ourhouseplus.com/roles'].includes('admin') : false;
 
   const isRegister = props.history.location.pathname.indexOf('register') > -1;
   const isSignUp = props.history.location.pathname.indexOf('signup') > -1;
   const isWaiting = props.history.location.pathname.indexOf('waiting') > -1;
   const isAbout = props.history.location.pathname.indexOf('about') > -1;
-
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
@@ -261,9 +261,9 @@ const Header = (props: RouteComponentProps) => {
                           <MenuItem className={classes.itemText}>{t('drawer_contact')}</MenuItem>
                         </Button>
                         <br />
-                        <Button className={classes.button} onClick={() => loginWithRedirect()}>
+                        {/* <Button className={classes.button} onClick={() => loginWithRedirect()}>
                           <MenuItem className={classes.itemText}>{t('drawer_login')}</MenuItem>
-                        </Button>
+                        </Button> */}
                         <br />
                         {/* <img src={logo} alt="logo" width={70} className={classes.imgLogo} /> */}
                         <p className={classes.bottomText}>Copyright &copy; 2022 Home+. {t('drawer_copyright')}</p>
@@ -285,11 +285,11 @@ const Header = (props: RouteComponentProps) => {
                         </Fragment>
                         : null}
 
-                      <Button onClick={() => logout()}>
+                      {/* <Button onClick={() => logout()}>
                         <MenuItem>{t('drawer_sign_out')}</MenuItem>
-                      </Button>
+                      </Button> */}
                       <Button>
-                        <MenuItem>{user.name}</MenuItem>
+                        {/* <MenuItem>{user.name}</MenuItem> */}
                       </Button>
                     </div>
 
@@ -335,7 +335,7 @@ const Header = (props: RouteComponentProps) => {
                           isAbout || isRegister || isWaiting ?
                             null :
                             <Fragment>
-                              <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
+                              <Button className={classes.whiteButtons} >
                                 Sign in
                               </Button>
                               <Button className={classes.becomeMember} onClick={() => openRegister()}>
@@ -355,7 +355,6 @@ const Header = (props: RouteComponentProps) => {
                           aria-controls={openMenu ? 'menu-list-grow' : undefined}
                           aria-haspopup="true"
                           onClick={handleClick}>
-                          {user.name}
                         </Button>
                         <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                           {({ TransitionProps, placement }) => (
@@ -368,7 +367,7 @@ const Header = (props: RouteComponentProps) => {
                                   <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                     <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
                                     <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                    <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
+                                    <MenuItem>Sign Out</MenuItem>
                                   </MenuList>
                                 </ClickAwayListener>
                               </Paper>

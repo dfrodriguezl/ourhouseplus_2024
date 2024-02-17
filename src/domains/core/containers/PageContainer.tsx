@@ -2,7 +2,6 @@ import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/c
 import { Header } from 'domains/core/components'
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
-import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

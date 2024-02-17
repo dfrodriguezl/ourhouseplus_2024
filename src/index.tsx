@@ -3,21 +3,25 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { store } from './app/store';
 import history from 'app/history';
-import { Provider } from 'react-redux';
+import { Provider, ProviderProps } from 'react-redux';
 import { Router, Route } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
-import Auth0 from 'app/Auth0';
+// import Auth0 from 'app/Auth0';
 
 import './index.css';
 import 'fontsource-roboto';
 import './i18n';
 
+const providerProps: ProviderProps = {
+  store: store,
+};
+
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider {...providerProps}>
     <Router history={history}>
-      <Auth0>
+      {/* <Auth0> */}
         <Route path="/" component={App} />
-      </Auth0>
+      {/* </Auth0> */}
     </Router>
   </Provider>,
   document.getElementById('root')
