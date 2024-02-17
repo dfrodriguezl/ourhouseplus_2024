@@ -1,9 +1,6 @@
-import React, { Fragment } from 'react';
-import { Button, Grid, makeStyles, Switch, TextField, Theme, Typography } from '@material-ui/core';
+import React from 'react';
+import { Button, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
 import { Project } from "../models";
-import { ProjectSummary } from '.';
-import { StepsContainer } from '../containers';
-import { image_1 } from 'assets';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -57,7 +54,6 @@ interface OwnProps {
 
 type Props = OwnProps;
 export default function Step3Project(props: Props) {
-  const { project, children } = props;
   const classes = useStyles();
 
   return (

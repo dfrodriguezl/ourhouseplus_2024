@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { deletes, get, post } from 'app/api';
 import { AppThunk } from 'app/store';
 import { AxiosResponse } from 'axios';
-import { LocationSimple, Density, Location, Terrain, ProjectBudget, Spend } from './models';
+import { LocationSimple, Density, Location, Terrain, ProjectBudget } from './models';
 
 interface CoreState {
   location: LocationSimple | undefined;

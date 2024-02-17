@@ -1,12 +1,8 @@
-import { Container, createStyles, Grid, makeStyles, Theme, useMediaQuery, useTheme } from '@material-ui/core'
-import { FooterEmbebbed, Header } from 'domains/core/components'
-import { setExpandAdvanced } from 'domains/shapeDiver/slice';
+import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
+import { Header } from 'domains/core/components'
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
-import { useHistory } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-import { iteratorSymbol } from 'immer/dist/internal';
-
+import React from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -59,7 +55,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface DispatchProps {
-  setExpandAdvanced: typeof setExpandAdvanced;
+  
 }
 interface OwnProps {
   background?: string;
@@ -68,45 +64,15 @@ interface OwnProps {
 }
 
 interface StateProps {
-  expandAdvanced?: Object;
+  
 }
 
 
 
 type Props = OwnProps & StateProps & DispatchProps;
 const PageContainer = (props: Props) => {
-  const { children, noHeader, background, expandAdvanced } = props;
+  const { children, noHeader, background } = props;
   const classes = useStyles();
-  const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const imgs = [
-    "waiting-back",
-    "waiting-back-2",
-    "waiting-back-3"
-  ]
-
-
-  const history = useHistory();
-  const isAbout = history.location.pathname.indexOf('about') > -1;
-  const isDetails = history.location.pathname.indexOf('details') > -1;
-  const isStep1 = history.location.pathname.indexOf('step1') > -1;
-  const isStep2 = history.location.pathname.indexOf('step2') > -1;
-  const isStep3 = history.location.pathname.indexOf('step3') > -1;
-  const isListProjects = history.location.pathname.indexOf('projects') > -1;
-  const isUploadShape = history.location.pathname.indexOf('uploadShape') > -1;
-  const isChooseFacade = history.location.pathname.indexOf('chooseFacade') > -1;
-  const isUploadPhoto = history.location.pathname.indexOf('uploadPhoto') > -1;
-  const isProjectDetail = history.location.pathname.indexOf('detailProjectBudget') > -1;
-  const isListSpending = history.location.pathname.indexOf('listSpending') > -1;
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex === imgs.length - 1 ? 0 : prevIndex + 1));
-    }, 6000)
-
-    return () => clearInterval(intervalId);
-  }, [])
 
   return (
     <div className={background}>
@@ -130,10 +96,10 @@ const PageContainer = (props: Props) => {
 
 const container = connect<StateProps, DispatchProps, {}, RootState>(
   (state: RootState) => ({
-    expandAdvanced: state.domains.shapediver.expandAdvanced
+    
   }),
   {
-    setExpandAdvanced
+    
   }
 )(PageContainer);
 
