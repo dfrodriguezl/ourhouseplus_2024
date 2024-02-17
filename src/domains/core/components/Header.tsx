@@ -1,5 +1,5 @@
 import { AppBar, Button, createStyles, makeStyles, Theme, Toolbar, Drawer, IconButton, MenuItem, MenuList, Popper, Grow, Paper, ClickAwayListener, Typography, Grid } from '@material-ui/core';
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import PersonIcon from '@material-ui/icons/Person';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -129,7 +129,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Header = (props: RouteComponentProps) => {
+const Header = () => {
   // const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const isAuthenticated = true;
   const isAdmin = true;
@@ -137,28 +137,29 @@ const Header = (props: RouteComponentProps) => {
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = useRef<any>(null);
-  const history = props.history;
+  const history = useNavigate();
+  const location = useLocation();
   // const isAdmin = isAuthenticated ? user['http://ourhouseplus.com/roles'].includes('admin') : false;
 
-  const isRegister = props.history.location.pathname.indexOf('register') > -1;
-  const isSignUp = props.history.location.pathname.indexOf('signup') > -1;
-  const isWaiting = props.history.location.pathname.indexOf('waiting') > -1;
-  const isAbout = props.history.location.pathname.indexOf('about') > -1;
+  const isRegister = location.pathname.indexOf('register') > -1;
+  const isSignUp = location.pathname.indexOf('signup') > -1;
+  const isWaiting = location.pathname.indexOf('waiting') > -1;
+  const isAbout = location.pathname.indexOf('about') > -1;
 
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { t } = useTranslation();
 
   const openHome = () => {
-    history.push('/register');
+    history('/register');
   }
 
   const openAbout = () => {
-    history.push('/about');
+    history('/about');
   }
 
   const openRegister = () => {
-    history.push('/register');
+    history('/register');
   }
 
   // const openProjects = () => {
@@ -193,11 +194,11 @@ const Header = (props: RouteComponentProps) => {
   }
 
   const openProjects = () => {
-    history.push("/listSpending")
+    history("/listSpending")
   }
 
   const openNewProject = () => {
-    history.push("/newProject")
+    history("/newProject")
   }
 
   return (
@@ -302,7 +303,7 @@ const Header = (props: RouteComponentProps) => {
       </Fragment>
       :
       <AppBar position="static" elevation={0} className={classes.headerDesktop}>
-        <Grid container xs={12} justify='space-between'>
+        <Grid container justify='space-between'>
           <Grid item>
             <Link to="#">
               <Typography variant="h6" className={classes.whiteText}>CS DECORATION</Typography>
@@ -394,4 +395,4 @@ const Header = (props: RouteComponentProps) => {
   );
 }
 
-export default withRouter(Header);
+export default Header;

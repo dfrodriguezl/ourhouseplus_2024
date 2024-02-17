@@ -1,6 +1,5 @@
 import React, { Fragment } from 'react';
 import { Grid } from '@material-ui/core';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { HomeSub, PageContainer } from 'domains/core/containers';
 import { Slogan } from 'domains/common/components';
 import { connect } from 'react-redux';
@@ -11,7 +10,7 @@ interface StateProps {
   
 }
 
-type Props = RouteComponentProps & StateProps;
+type Props = StateProps;
 const Home = (props: Props) => {
 
   return (
@@ -46,4 +45,4 @@ const container = connect<StateProps, {}, {}, RootState>(
   })
 )(Home);
 
-export default withRouter(container);
+export default container;

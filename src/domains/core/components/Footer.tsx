@@ -1,7 +1,5 @@
 import React from 'react';
-import { compose } from 'recompose';
 import { createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,8 +60,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-type Props = RouteComponentProps;
-const Footer = (props: Props) => {
+const Footer = () => {
   const classes = useStyles()
 
   return (
@@ -73,8 +70,4 @@ const Footer = (props: Props) => {
   );
 }
 
-const container = compose<Props, {}>(
-  withRouter,
-)(Footer)
-
-export default container;
+export default Footer;

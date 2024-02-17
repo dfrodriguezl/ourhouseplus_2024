@@ -3,7 +3,7 @@ import { Grid, IconButton, makeStyles, Theme, Typography } from '@material-ui/co
 import { Project } from "../models";
 import ProjectContainer from './ProjectContainer';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
   containerStyle: {
@@ -19,34 +19,35 @@ interface OwnProps {
   projects: Project[];
 }
 
-type Props = RouteComponentProps & OwnProps;
+type Props = OwnProps;
 function ProjectsList(props: Props) {
-  const { projects, history } = props;
+  const { projects } = props;
   const classes = useStyles();
+  const history = useNavigate();
 
   const goToCreateProject = () => {
-    history.push("/createProject")
+    history("/createProject")
   }
 
   return (
     <Grid container className={classes.containerStyle} justify="space-between">
-      {projects.map((project: Project) => {
+      {projects.map((project: Project, index: number) => {
         return (
-          <Grid item >
+          <Grid item key={index}>
             <ProjectContainer project={project} />
           </Grid>
         )
       }, [])}
       <Grid item>
-          <ProjectContainer>
-            <Typography variant="subtitle1">CREATE NEW PROJECT</Typography>
-            <IconButton aria-label="create project" component="div">
-              <AddCircleIcon fontSize='large' className={classes.buttonStyle} onClick={() => goToCreateProject()}/>
-            </IconButton>
-          </ProjectContainer>
+        <ProjectContainer>
+          <Typography variant="subtitle1">CREATE NEW PROJECT</Typography>
+          <IconButton aria-label="create project" component="div" onClick={() => goToCreateProject()}>
+            <AddCircleIcon fontSize='large' className={classes.buttonStyle} />
+          </IconButton>
+        </ProjectContainer>
       </Grid>
     </Grid>
   );
 }
 
-export default withRouter(ProjectsList);
+export default ProjectsList;

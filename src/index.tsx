@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom/client";
 import App from './App';
 import { store } from './app/store';
-import history from 'app/history';
 import { Provider, ProviderProps } from 'react-redux';
-import { Router, Route } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import * as serviceWorker from './serviceWorker';
 // import Auth0 from 'app/Auth0';
 
@@ -16,15 +15,14 @@ const providerProps: ProviderProps = {
   store: store,
 };
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+root.render(
   <Provider {...providerProps}>
-    <Router history={history}>
-      {/* <Auth0> */}
-        <Route path="/" component={App} />
-      {/* </Auth0> */}
-    </Router>
-  </Provider>,
-  document.getElementById('root')
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );
 
 // If you want your app to work offline and load faster, you can change
