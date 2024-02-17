@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Button, Grid, Theme, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Project } from "../models";
 
 
@@ -30,13 +31,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: '10px'
   },
   buttonStyle: {
-    background: '#707070 0% 0% no-repeat padding-box',
+    background: '#707070 0% 0% no-repeat padding-box !important',
     borderRadius: '5px',
-    font: 'normal normal normal 20px/23px Centaur',
-    color: '#FFFFFF',
+    font: 'normal normal normal 20px/23px Centaur !important',
+    color: '#FFFFFF !important',
     letterSpacing: '0px',
-    padding: '5px 50px',
-    marginTop: '50px'
+    padding: '5px 50px !important',
+    marginTop: '50px !important'
   }
 }));
 
@@ -77,19 +78,19 @@ export default function Step1Project(props: Props) {
   }
 
   return (
-    <Grid container justify="center" alignContent='space-between' alignItems='center' className={classes.containerStyle} direction="column">
+    <Grid container justifyContent="center" alignContent='space-between' alignItems='center' className={classes.containerStyle} direction="column">
       <Typography variant="subtitle1">CREATE NEW PROJECT</Typography>
-      <Grid container justify="space-between" className={classes.containerFormStyle} direction="column" alignContent='center' alignItems='center'>
+      <Grid container justifyContent="space-between" className={classes.containerFormStyle} direction="column" alignContent='center' alignItems='center'>
         <form>
-          <Grid container className={classes.elementFormStyle} direction="row" justify="space-between" alignItems='center'>
+          <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
             <label>Name Project*</label>
             <input id="name-project" className={classes.inputStyle} onChange={handleChange1}></input>
           </Grid>
-          <Grid container className={classes.elementFormStyle} direction="row" justify="space-between" alignItems='center'>
+          <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
             <label>Location Project*</label>
             <input id="location-project" className={classes.inputStyle} onChange={handleChange2}></input>
           </Grid>
-          <Grid container className={classes.elementFormStyle} direction="row" justify="space-between" alignItems='center'>
+          <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
             <label>Delivery Due Date</label>
             <input id="delivery-due-date" className={classes.inputStyle} onChange={handleChange3}></input>
           </Grid>

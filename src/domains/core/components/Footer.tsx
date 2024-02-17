@@ -1,5 +1,9 @@
 import React from 'react';
-import { createStyles, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Grid, Theme, Typography } from '@mui/material';
+
+
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -16,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     footer: {
       fontSize: 12,
-      padding: theme.spacing(2, 2),
       lineHeight: '16px',
       '& a': {
         color: 'white',
@@ -32,26 +35,12 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: 5,
       '& img': {
         paddingLeft: 10
-      },
-      [theme.breakpoints.down('sm')]: {
-        textAlign: 'center',
-        marginRight: 0,
-        float: 'none'
       }
     },
     socialButtons: {
-      [theme.breakpoints.down('sm')]: {
-        marginTop: 15,
-        textAlign: 'center',
-      }
     },
     item: {
       marginRight: 70,
-      [theme.breakpoints.down('sm')]: {
-        marginRight: 0,
-        display: 'block',
-        textAlign: 'center',
-      }
     },
     itemInactive: {
       color: '#434343 !important',
@@ -64,7 +53,7 @@ const Footer = () => {
   const classes = useStyles()
 
   return (
-    <Grid container item className={classes.root} xs={12} justify="flex-end">
+    <Grid container item className={classes.root} xs={12} justifyContent="flex-end">
       <Typography className={classes.fontStyle}>HOUSE COLLECTION By HOUSE+</Typography>
     </Grid>
   );

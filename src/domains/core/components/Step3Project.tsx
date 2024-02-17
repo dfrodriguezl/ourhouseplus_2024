@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Grid, makeStyles, Theme, Typography } from '@material-ui/core';
+import { Button, Grid, Theme, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Project } from "../models";
 
 
@@ -31,13 +32,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: '30px'
   },
   buttonStyle: {
-    background: '#707070 0% 0% no-repeat padding-box',
+    background: '#707070 0% 0% no-repeat padding-box !important',
     borderRadius: '5px',
-    font: 'normal normal normal 20px/23px Centaur',
-    color: '#FFFFFF',
+    font: 'normal normal normal 20px/23px Centaur !important',
+    color: '#FFFFFF !important',
     letterSpacing: '0px',
-    padding: '5px 50px',
-    marginTop: '50px'
+    padding: '5px 50px !important',
+    marginTop: '50px !important'
   },
   dragDropStyle: {
     border: "1px solid gray",
@@ -57,14 +58,14 @@ export default function Step3Project(props: Props) {
   const classes = useStyles();
 
   return (
-    <Grid container justify="center" alignContent='space-between' alignItems='center' className={classes.containerStyle} direction="column">
+    <Grid container justifyContent="center" alignContent='space-between' alignItems='center' className={classes.containerStyle} direction="column">
       <Typography variant="subtitle1">PROJECT IMAGE</Typography>
-      <Grid container justify="space-between" className={classes.containerFormStyle} direction="column" alignContent='center' alignItems='center' >
-        <Grid container className={classes.dragDropStyle} justify="center" alignContent='center'>
+      <Grid container justifyContent="space-between" className={classes.containerFormStyle} direction="column" alignContent='center' alignItems='center' >
+        <Grid container className={classes.dragDropStyle} justifyContent="center" alignContent='center'>
           <Typography variant="subtitle1">DRAG AND DROP</Typography>
         </Grid>
 
-        <Grid container className={classes.elementFormStyle} direction="row" justify="center" alignItems='center'>
+        <Grid container className={classes.elementFormStyle} direction="row" justifyContent="center" alignItems='center'>
           <label>Project Style*</label>
           <input id="living-room-number" className={classes.inputStyle}></input>
         </Grid>

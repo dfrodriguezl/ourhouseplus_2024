@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Button, Grid, makeStyles, Switch, Theme, Typography } from '@material-ui/core';
+import { Button, Grid, Switch, Theme, Typography } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Project } from "../models";
 
 
@@ -30,13 +31,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     margin: '10px'
   },
   buttonStyle: {
-    background: '#707070 0% 0% no-repeat padding-box',
+    background: '#707070 0% 0% no-repeat padding-box !important',
     borderRadius: '5px',
-    font: 'normal normal normal 20px/23px Centaur',
-    color: '#FFFFFF',
+    font: 'normal normal normal 20px/23px Centaur !important',
+    color: '#FFFFFF !important',
     letterSpacing: '0px',
-    padding: '5px 50px',
-    marginTop: '50px'
+    padding: '5px 50px !important',
+    marginTop: '50px !important'
   }
 }));
 
@@ -103,29 +104,29 @@ export default function Step2Project(props: Props) {
   }
 
   return (
-    <Grid container justify="center" alignContent='space-between' alignItems='center' className={classes.containerStyle} direction="column">
+    <Grid container justifyContent="center" alignContent='space-between' alignItems='center' className={classes.containerStyle} direction="column">
       <Typography variant="subtitle1">MAIN ROOMS</Typography>
-      <Grid container justify="space-between" className={classes.containerFormStyle} direction="column" alignContent='center' alignItems='center'>
+      <Grid container justifyContent="space-between" className={classes.containerFormStyle} direction="column" alignContent='center' alignItems='center'>
         <form>
-          <Grid container className={classes.elementFormStyle} direction="row" justify="space-between" alignItems='center'>
+          <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
             <label>Living Room</label>
             <Switch name="living-room-switch" onChange={handleChangeSwitchLiving} />
             <Typography variant="subtitle2">No.</Typography>
             <input id="living-room-number" className={classes.inputStyle} onChange={handleChangeNumberLiving}></input>
           </Grid>
-          <Grid container className={classes.elementFormStyle} direction="row" justify="space-between" alignItems='center'>
+          <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
             <label>Dinning Room</label>
             <Switch name="dinning-room-switch" onChange={handleChangeSwitchDinning}/>
             <div></div>
             <div></div>
           </Grid>
-          <Grid container className={classes.elementFormStyle} direction="row" justify="space-between" alignItems='center'>
+          <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
             <label>Bed Rooms</label>
             <Switch name="bed-room-switch" onChange={handleChangeSwitchBed}/>
             <Typography variant="subtitle2">No.</Typography>
             <input id="bed-room-number" className={classes.inputStyle} onChange={handleChangeNumberBed}></input>
           </Grid>
-          <Grid container className={classes.elementFormStyle} direction="row" justify="space-between" alignItems='center'>
+          <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
             <label>Toilets / Bathrooms</label>
             <Switch name="bath-room-switch" onChange={handleChangeSwitchToilet}/>
             <Typography variant="subtitle2">No.</Typography>
