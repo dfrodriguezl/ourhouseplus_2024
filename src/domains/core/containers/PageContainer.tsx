@@ -1,4 +1,6 @@
-import { Container, createStyles, Grid, makeStyles, Theme } from '@material-ui/core'
+import { Container, Grid, Theme } from '@mui/material';
+import createStyles from '@mui/styles/createStyles';
+import makeStyles from '@mui/styles/makeStyles';
 import { Header } from 'domains/core/components'
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
@@ -9,21 +11,13 @@ const useStyles = makeStyles((theme: Theme) =>
       minHeight: '100vh',
       height: '100vh',
       width: '100%',
-      margin: 0,
-      [theme.breakpoints.down('sm')]: {
-        minHeight: '80vh',
-        height: '90vh'
-      },
+      margin: 0
     },
     pageContainerExcept: {
       minHeight: '140vh',
       height: '140vh',
       width: '100%',
       margin: 0,
-      [theme.breakpoints.down('sm')]: {
-        minHeight: '80vh',
-        height: '90vh'
-      },
     },
     headerContainer: {
       justifyContent: 'center',
@@ -83,7 +77,7 @@ const PageContainer = (props: Props) => {
               <Header />
             </Grid>
           }
-          <Grid item container className={classes.bodyContainer} justify="center">
+          <Grid item container className={classes.bodyContainer} justifyContent="center">
             {children}
           </Grid>
         </Grid>

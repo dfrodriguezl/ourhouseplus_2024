@@ -1,5 +1,6 @@
 import React from 'react';
-import { Grid, makeStyles, Theme } from '@material-ui/core';
+import { Grid, Theme } from '@mui/material';
+import makeStyles from '@mui/styles/makeStyles';
 import { Project } from "../models";
 import { ProjectSummary } from '../components';
 

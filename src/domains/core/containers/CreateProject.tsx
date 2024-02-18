@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { Project } from "../models";
 import { PageContainer, StepsContainer } from '.';
 import Step1Project from '../components/Step1Project';
@@ -18,7 +18,7 @@ export default function CreateProject(props: Props) {
 
   return (
     <PageContainer background="create-project">
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <StepsContainer step={step} project={project}>
           {step === 1 ?
             <Step1Project setStep={setStep} setProject={setProject}/> :

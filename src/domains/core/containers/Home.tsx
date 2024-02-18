@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Grid } from '@material-ui/core';
+import { Grid } from '@mui/material';
 import { HomeSub, PageContainer } from 'domains/core/containers';
 import { Slogan } from 'domains/common/components';
 import { connect } from 'react-redux';
@@ -16,7 +16,7 @@ const Home = (props: Props) => {
   return (
     <Fragment>
       <PageContainer background="home">
-        <Grid container justify="center">
+        <Grid container justifyContent="center">
           {/* <Grid item xs={smallScreen ? 12 : 8}>
             <SearchToolBar />
           </Grid> */}
@@ -36,7 +36,7 @@ const Home = (props: Props) => {
       <HomeSub3 />
       <HomeSub1 /> */}
     </Fragment>
-  )
+  );
 }
 
 const container = connect<StateProps, {}, {}, RootState>(

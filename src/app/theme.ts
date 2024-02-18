@@ -1,8 +1,8 @@
-import { red } from '@material-ui/core/colors';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { red } from '@mui/material/colors';
+import { createTheme, adaptV4Theme } from '@mui/material/styles';
 
 // A custom theme for this app
-const theme = createMuiTheme({
+const theme = createTheme(adaptV4Theme({
   typography: {
     fontFamily: 'Roboto',
   },
@@ -34,6 +34,6 @@ const theme = createMuiTheme({
       }
     }
   }
-});
+}));
 
 export default theme;

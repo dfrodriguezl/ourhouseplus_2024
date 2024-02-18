@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid } from '@material-ui/core';
+import { Container, Grid } from '@mui/material';
 import { projects } from '../models';
 import { ProjectsList } from '../components';
 
