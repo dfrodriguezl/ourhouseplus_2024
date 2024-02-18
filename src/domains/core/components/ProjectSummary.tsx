@@ -51,7 +51,7 @@ export default function ProjectSummary(props: Props) {
         <Grid container direction="column" className={classes.containerDescriptionStyle}>
           <Typography variant="subtitle1" className={classes.textStyleSubtitle}>Rooms Number - {Number(project?.livingRoomNumber!) + Number(project?.bedRoomNumber!) + Number(project?.toiletNumber!)}</Typography>
           <div>
-          <Typography variant="subtitle1">{project?.livingRoom}</Typography>
+            <Typography variant="subtitle1">{project?.livingRoom}</Typography>
             {project?.livingRoom ?
               project.livingRoomNumber === 1 ?
                 <Typography variant="subtitle1">1 Living Room</Typography> :
@@ -77,7 +77,7 @@ export default function ProjectSummary(props: Props) {
                 <Typography variant="subtitle1">{project.toiletNumber} Toilets/Bathrooms</Typography> :
               null
             }
-           
+
           </div>
 
 
