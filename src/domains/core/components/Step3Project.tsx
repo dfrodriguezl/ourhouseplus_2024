@@ -4,6 +4,8 @@ import makeStyles from '@mui/styles/makeStyles';
 import { Project } from "../models";
 import { post } from 'app/api';
 import { useDropzone } from 'react-dropzone';
+import AWS from 'aws-sdk';
+import { PutObjectRequest } from 'aws-sdk/clients/s3';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -61,34 +63,13 @@ export default function Step3Project(props: Props) {
   const classes = useStyles();
   const [projectStyle, setProjectStyle] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<any>(null);
+
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
       'image/*': []
     },
     onDrop: (acceptedFiles) => {
-      console.log("AC", acceptedFiles[0]);
       setSelectedImage(acceptedFiles[0]);
-      const reader = new FileReader();
-      // let fileCompress = selectedImage;
-      reader.onload = async function (evt: any) {
-        if (evt.target.readyState !== 2) return;
-
-        if (evt.target.error) {
-          alert("Error while reading file");
-          return;
-        }
-
-        // const jsZip = new JSZip();
-        // const fileContent = evt.target.result;
-        // const zip = await jsZip.file(fileContent.path, fileContent).generateAsync({
-        //   type: 'string',
-        //   compression: 'DEFLATE'
-        // })
-
-        // spend.file = zip;
-      }
-
-      reader.readAsArrayBuffer(acceptedFiles[0]);
     },
   });
 
@@ -106,50 +87,42 @@ export default function Step3Project(props: Props) {
   }
 
   const saveProject = () => {
-    let projectLocal: Project = project!;
-    projectLocal.projectStyle = projectStyle;
-    createProject(projectLocal);
+    uploadImageToS3();
   }
 
-  // const onChangeImage = () => {
-  //   // setSelectedImage(e.target.files[0]);
-  //   // let spends = Object.assign([], projectSelected?.spends!);
-  //   const reader = new FileReader();
-  //   // let fileCompress = selectedImage;
-  //   reader.onload = async function (evt: any) {
-  //     if (evt.target.readyState !== 2) return;
+  const uploadImageToS3 = () => {
+    const S3_BUCKET = process.env.REACT_APP_AWS_BUCKET_NAME;
+      const REGION = process.env.REACT_APP_AWS_REGION;
 
-  //     if (evt.target.error) {
-  //       alert("Error while reading file");
-  //       return;
-  //     }
+      AWS.config.update({
+        accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY,
+        secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY
+      });
 
-  //     // const jsZip = new JSZip();
-  //     // const fileContent = evt.target.result;
-  //     // const zip = await jsZip.file(fileContent.path, fileContent).generateAsync({
-  //     //   type: 'string',
-  //     //   compression: 'DEFLATE'
-  //     // })
+      const s3 = new AWS.S3({
+        params: { Bucket: S3_BUCKET },
+        region: REGION,
+      });
 
-  //     // spend.file = zip;
-  //   }
+      const params: PutObjectRequest = {
+        Bucket: S3_BUCKET!,
+        Key: selectedImage.name,
+        Body: selectedImage
+      };
 
-  //   reader.readAsArrayBuffer(e.target.files[0]);
-
-  //   if (spends) {
-  //     spends.push(spend);
-  //     setProjectSelected({
-  //       ...projectSelected!,
-  //       spends: spends
-  //     })
-  //   } else {
-  //     setProjectSelected({
-  //       ...projectSelected!,
-  //       spends: [spend]
-  //     })
-  //   }
-
-  // }
+      s3.upload(params, (err, data) => {
+        if (err) {
+          console.error("Error uploading file:", err);
+          return;
+        }
+      
+        let projectLocal: Project = project!;
+        projectLocal.projectStyle = projectStyle;
+        projectLocal.picture = data.Location;
+        createProject(projectLocal);
+        
+      })
+  }
 
   return (
     <Grid container justifyContent="center" alignContent='space-between' alignItems='center' className={classes.containerStyle} direction="column">
