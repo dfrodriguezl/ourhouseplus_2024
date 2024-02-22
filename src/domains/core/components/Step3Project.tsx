@@ -3,6 +3,7 @@ import { Button, Grid, Theme, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Project } from "../models";
 import { post } from 'app/api';
+import { useDropzone } from 'react-dropzone';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -56,14 +57,45 @@ interface OwnProps {
 
 type Props = OwnProps;
 export default function Step3Project(props: Props) {
-  const {project} = props;
+  const { project } = props;
   const classes = useStyles();
   const [projectStyle, setProjectStyle] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<any>(null);
+  const { getRootProps, getInputProps } = useDropzone({
+    accept: {
+      'image/*': []
+    },
+    onDrop: (acceptedFiles) => {
+      console.log("AC", acceptedFiles[0]);
+      setSelectedImage(acceptedFiles[0]);
+      const reader = new FileReader();
+      // let fileCompress = selectedImage;
+      reader.onload = async function (evt: any) {
+        if (evt.target.readyState !== 2) return;
+
+        if (evt.target.error) {
+          alert("Error while reading file");
+          return;
+        }
+
+        // const jsZip = new JSZip();
+        // const fileContent = evt.target.result;
+        // const zip = await jsZip.file(fileContent.path, fileContent).generateAsync({
+        //   type: 'string',
+        //   compression: 'DEFLATE'
+        // })
+
+        // spend.file = zip;
+      }
+
+      reader.readAsArrayBuffer(acceptedFiles[0]);
+    },
+  });
 
   const createProject = (project: Project) => {
-    post("/projects", {data: project}).then((response) => {
+    post("/projects", { data: project }).then((response) => {
       const result: Project = response.data;
-      if(result.idProject){
+      if (result.idProject) {
         alert("Project created!!!");
       }
     })
@@ -79,13 +111,64 @@ export default function Step3Project(props: Props) {
     createProject(projectLocal);
   }
 
+  // const onChangeImage = () => {
+  //   // setSelectedImage(e.target.files[0]);
+  //   // let spends = Object.assign([], projectSelected?.spends!);
+  //   const reader = new FileReader();
+  //   // let fileCompress = selectedImage;
+  //   reader.onload = async function (evt: any) {
+  //     if (evt.target.readyState !== 2) return;
+
+  //     if (evt.target.error) {
+  //       alert("Error while reading file");
+  //       return;
+  //     }
+
+  //     // const jsZip = new JSZip();
+  //     // const fileContent = evt.target.result;
+  //     // const zip = await jsZip.file(fileContent.path, fileContent).generateAsync({
+  //     //   type: 'string',
+  //     //   compression: 'DEFLATE'
+  //     // })
+
+  //     // spend.file = zip;
+  //   }
+
+  //   reader.readAsArrayBuffer(e.target.files[0]);
+
+  //   if (spends) {
+  //     spends.push(spend);
+  //     setProjectSelected({
+  //       ...projectSelected!,
+  //       spends: spends
+  //     })
+  //   } else {
+  //     setProjectSelected({
+  //       ...projectSelected!,
+  //       spends: [spend]
+  //     })
+  //   }
+
+  // }
+
   return (
     <Grid container justifyContent="center" alignContent='space-between' alignItems='center' className={classes.containerStyle} direction="column">
       <Typography variant="subtitle1">PROJECT IMAGE</Typography>
-      <Grid container justifyContent="space-between" className={classes.containerFormStyle} direction="column" alignContent='center' alignItems='center' >
-        <Grid container className={classes.dragDropStyle} justifyContent="center" alignContent='center'>
-          <Typography variant="subtitle1">DRAG AND DROP</Typography>
-        </Grid>
+      <Grid container justifyContent="space-between" className={classes.containerFormStyle} direction="column" alignContent='center' alignItems='center'>
+        <div {...getRootProps({ refKey: 'innerRef' })}>
+          <input
+            style={{ display: 'none' }}
+            {...getInputProps()} />
+          <label htmlFor="image-project">
+            {selectedImage ?
+              <img src={selectedImage ? URL.createObjectURL(selectedImage) : ""} alt="style" width={250} />
+              : <Grid container className={classes.dragDropStyle} justifyContent="center" alignContent='center'>
+                <Typography variant="subtitle1">DRAG AND DROP</Typography>
+              </Grid>}
+          </label>
+        </div>
+
+
 
         <Grid container className={classes.elementFormStyle} direction="row" justifyContent="center" alignItems='center'>
           <label>Project Style*</label>

@@ -35,6 +35,7 @@
     "lodash": "^4.17.20",
     "react": "18",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.30.0",
     "react-i18next": "^11.18.3",
     "react-mailchimp-subscribe": "2.1.3",
