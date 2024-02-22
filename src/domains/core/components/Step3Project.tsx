@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Grid, Theme, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Project } from "../models";
+import { post } from 'app/api';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -55,7 +56,28 @@ interface OwnProps {
 
 type Props = OwnProps;
 export default function Step3Project(props: Props) {
+  const {project} = props;
   const classes = useStyles();
+  const [projectStyle, setProjectStyle] = useState<string>("");
+
+  const createProject = (project: Project) => {
+    post("/projects", {data: project}).then((response) => {
+      const result: Project = response.data;
+      if(result.idProject){
+        alert("Project created!!!");
+      }
+    })
+  }
+
+  const handleProjectStyle = (e: any) => {
+    setProjectStyle(e.target.value);
+  }
+
+  const saveProject = () => {
+    let projectLocal: Project = project!;
+    projectLocal.projectStyle = projectStyle;
+    createProject(projectLocal);
+  }
 
   return (
     <Grid container justifyContent="center" alignContent='space-between' alignItems='center' className={classes.containerStyle} direction="column">
@@ -67,10 +89,10 @@ export default function Step3Project(props: Props) {
 
         <Grid container className={classes.elementFormStyle} direction="row" justifyContent="center" alignItems='center'>
           <label>Project Style*</label>
-          <input id="living-room-number" className={classes.inputStyle}></input>
+          <input id="project-style" className={classes.inputStyle} onChange={handleProjectStyle}></input>
         </Grid>
       </Grid>
-      <Button className={classes.buttonStyle}>START PROJECT</Button>
+      <Button className={classes.buttonStyle} onClick={() => saveProject()}>START PROJECT</Button>
     </Grid>
   );
 }

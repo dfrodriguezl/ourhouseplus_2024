@@ -2,6 +2,7 @@ import { image_1, image_2 } from 'assets';
 
 
 export interface Project {
+  idProject?: string;
   name: string;
   location: string;
   deliveryDueDate: string;

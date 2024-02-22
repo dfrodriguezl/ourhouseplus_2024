@@ -27,7 +27,6 @@ const performRequest = (url: string, method: Method, options?: ApiOptions) => {
     data: options?.data,
     params: {
       ...options?.params,
-      code: process.env.REACT_APP_API_ACCESS_CODE
     }
   })
 }

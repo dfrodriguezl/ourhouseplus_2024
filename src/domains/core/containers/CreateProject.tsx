@@ -25,7 +25,7 @@ export default function CreateProject(props: Props) {
             step === 2 ?
               <Step2Project setStep={setStep} setProject={setProject} project={project}/> :
               step === 3 ?
-              <Step3Project /> :
+              <Step3Project project={project} /> :
               null}
         </StepsContainer>
       </Grid>

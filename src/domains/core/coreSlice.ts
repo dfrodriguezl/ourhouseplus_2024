@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { deletes, get, post } from 'app/api';
 import { AppThunk } from 'app/store';
 import { AxiosResponse } from 'axios';
-import { LocationSimple, Density, Location, Terrain, ProjectBudget } from './models';
+import { LocationSimple, Density, Location, Terrain, ProjectBudget, Project } from './models';
 
 interface CoreState {
   location: LocationSimple | undefined;
@@ -14,6 +14,7 @@ interface CoreState {
   projectsBudget: ProjectBudget[] | undefined;
   saveSuccess: boolean | undefined;
   currentProject: ProjectBudget | undefined;
+  projects: Project[];
 }
 
 const initialState: CoreState = {
@@ -25,7 +26,8 @@ const initialState: CoreState = {
   option: '',
   projectsBudget: undefined,
   saveSuccess: undefined,
-  currentProject: undefined
+  currentProject: undefined,
+  projects: []
 };
 
 export const coreSlice = createSlice({
@@ -57,6 +59,9 @@ export const coreSlice = createSlice({
     },
     setCurrentProject: (state, action: PayloadAction<ProjectBudget>) => {
       state.currentProject = action.payload;
+    },
+    setProjects: (state, action: PayloadAction<Project[]>) => {
+      state.projects = action.payload;
     }
   },
 });
@@ -69,7 +74,8 @@ export const {
   setOption,
   setProjectsBudget,
   setSaveSuccess,
-  setCurrentProject
+  setCurrentProject,
+  setProjects
 } = coreSlice.actions;
 
 export const getLocations = (): AppThunk => dispatch => {
@@ -108,5 +114,11 @@ export const deleteProjectBudget = (id: string, username: string): AppThunk => d
     dispatch(setProjectsBudget(data.data))
   });
 };
+
+export const getProjects = (): AppThunk => dispatch => {
+  get(`/projects`).then((data: AxiosResponse<Project[]>) => {
+    dispatch(setProjects(data.data))
+  })
+}
 
 export default coreSlice.reducer;
