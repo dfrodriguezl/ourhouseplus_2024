@@ -144,6 +144,9 @@ const Header = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = useRef<any>(null);
 
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
 
   const handleClick = () => {
     setOpenMenu((prevOpen) => !prevOpen);
