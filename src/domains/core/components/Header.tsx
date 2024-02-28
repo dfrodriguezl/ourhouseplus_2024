@@ -140,13 +140,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const Header = () => {
   const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = useRef<any>(null);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
 
   const handleClick = () => {
     setOpenMenu((prevOpen) => !prevOpen);
@@ -225,7 +221,7 @@ const Header = () => {
                           >
                             <Paper className={classes.menu}>
                               <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                <MenuList autoFocusItem={true} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                   {/* <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
                                   <MenuItem onClick={handleClose}>Profile</MenuItem> */}
                                   <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
