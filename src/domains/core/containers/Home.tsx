@@ -4,14 +4,17 @@ import { HomeSub, PageContainer } from 'domains/core/containers';
 import { Slogan } from 'domains/common/components';
 import { connect } from 'react-redux';
 import { RootState } from 'app/store';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
-interface StateProps {
-  
+interface OwnProps {
+
 }
 
-type Props = StateProps;
+type Props = OwnProps;
 const Home = (props: Props) => {
+  const { isAuthenticated, user } = useAuth0();
+  const isAdmin = isAuthenticated ? user!['http://ourhouseplus.com/roles'].includes('admin') : false;
 
   return (
     <Fragment>
@@ -31,7 +34,9 @@ const Home = (props: Props) => {
           </Grid>
         </Grid>
       </PageContainer>
-      <HomeSub />
+      {isAdmin ?
+        <HomeSub /> : null}
+
       {/* <HomeSub2 />
       <HomeSub3 />
       <HomeSub1 /> */}
@@ -39,9 +44,9 @@ const Home = (props: Props) => {
   );
 }
 
-const container = connect<StateProps, {}, {}, RootState>(
+const container = connect<OwnProps, {}, {}, RootState>(
   (state: RootState) => ({
-    
+
   })
 )(Home);
 

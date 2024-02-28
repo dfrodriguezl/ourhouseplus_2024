@@ -2,9 +2,6 @@ import {
   AppBar,
   Button,
   Theme,
-  Toolbar,
-  Drawer,
-  IconButton,
   MenuItem,
   MenuList,
   Popper,
@@ -16,17 +13,11 @@ import {
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MenuIcon from '@mui/icons-material/Menu';
-import clsx from 'clsx';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
 import { Fragment, useState, useRef } from 'react';
-// import { useAuth0 } from '@auth0/auth0-react';
-import CloseIcon from '@mui/icons-material/Close';
-import { useTranslation } from 'react-i18next';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const drawerWidth = 300;
 
@@ -147,49 +138,12 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Header = () => {
-  // const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
-  const isAuthenticated = true;
-  const isAdmin = true;
+  const { isAuthenticated, loginWithRedirect, logout, user } = useAuth0();
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = useRef<any>(null);
-  const history = useNavigate();
-  const location = useLocation();
-  // const isAdmin = isAuthenticated ? user['http://ourhouseplus.com/roles'].includes('admin') : false;
 
-  const isRegister = location.pathname.indexOf('register') > -1;
-  const isSignUp = location.pathname.indexOf('signup') > -1;
-  const isWaiting = location.pathname.indexOf('waiting') > -1;
-  const isAbout = location.pathname.indexOf('about') > -1;
-
-  const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const { t } = useTranslation();
-
-  const openHome = () => {
-    history('/register');
-  }
-
-  const openAbout = () => {
-    history('/about');
-  }
-
-  const openRegister = () => {
-    history('/register');
-  }
-
-  // const openProjects = () => {
-  //   history.push('/projects');
-  // }
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
 
   const handleClick = () => {
     setOpenMenu((prevOpen) => !prevOpen);
@@ -210,115 +164,8 @@ const Header = () => {
     }
   }
 
-  const openProjects = () => {
-    history("/listSpending")
-  }
 
-  const openNewProject = () => {
-    history("/newProject")
-  }
-
-  return smallScreen ?
-    <Fragment>
-      <AppBar position="static" elevation={0} className={classes.header}>
-        <Toolbar variant="regular">
-          <Link to="/register">
-            {/* <img src={isHome || isRegister || isSignUp || isWaiting || isAbout || isList || isContainerBudget || isUploadPhoto || isNewProject ? logo : whiteLogo} alt="logo" width={100} /> */}
-          </Link>
-
-          {!(isSignUp || isWaiting) ?
-            <div className={classes.menuButton}>
-              <IconButton
-                edge="end"
-                color="secondary"
-                aria-label="menu"
-                onClick={handleDrawerOpen}
-                className={clsx(classes.menuButton2 && classes.root, open && classes.hide)}
-                size="large">
-                <MenuIcon className={classes.icon} />
-              </IconButton>
-            </div> : null
-          }
-
-
-          <Drawer
-            className={classes.drawer}
-            anchor="right"
-            open={open}
-            onClose={handleDrawerClose}
-            classes={{
-              paper: classes.drawerPaper,
-            }}>
-            <div>
-              {
-                !isAuthenticated
-                  ?
-                  <div>
-                    <CloseIcon className={classes.iconClose} onClick={() => handleDrawerClose()} />
-                    <div className={classes.menuContainer}>
-
-                      {/* <Button onClick={() => openRegister()}>
-                      <MenuItem>Become a member</MenuItem>
-                    </Button> */}
-
-
-                      <Button onClick={() => openHome()} className={classes.buttonMenu}>
-                        <MenuItem className={classes.itemText}>{t('drawer_home')}</MenuItem>
-                      </Button>
-                      <br />
-                      <Button onClick={() => openAbout()} className={classes.buttonMenu}>
-                        <MenuItem className={classes.itemText}>{t('drawer_about')}</MenuItem>
-                      </Button>
-                      <br />
-                      <Button onClick={() => openHome()} className={classes.buttonMenu}>
-                        <MenuItem className={classes.itemText}>{t('drawer_how_works')}</MenuItem>
-                      </Button>
-                      <br />
-                      <Button onClick={() => openHome()} className={classes.buttonMenu2}>
-                        <MenuItem className={classes.itemText}>{t('drawer_contact')}</MenuItem>
-                      </Button>
-                      <br />
-                      {/* <Button className={classes.button} onClick={() => loginWithRedirect()}>
-                        <MenuItem className={classes.itemText}>{t('drawer_login')}</MenuItem>
-                      </Button> */}
-                      <br />
-                      {/* <img src={logo} alt="logo" width={70} className={classes.imgLogo} /> */}
-                      <p className={classes.bottomText}>Copyright &copy; 2022 Home+. {t('drawer_copyright')}</p>
-                    </div>
-                  </div>
-
-                  :
-                  <div>
-                    {isAuthenticated && isAdmin ?
-                      <Fragment>
-                        <Button onClick={() => openProjects()} className={classes.buttonMenu}>
-                          <MenuItem className={classes.itemText}>{t('drawer_your_projects')}</MenuItem>
-                        </Button>
-                        <br />
-                        <Button onClick={() => openNewProject()} className={classes.buttonMenu}>
-                          <MenuItem className={classes.itemText}>{t('drawer_new_project')}</MenuItem>
-                        </Button>
-                        <br />
-                      </Fragment>
-                      : null}
-
-                    {/* <Button onClick={() => logout()}>
-                      <MenuItem>{t('drawer_sign_out')}</MenuItem>
-                    </Button> */}
-                    <Button>
-                      {/* <MenuItem>{user.name}</MenuItem> */}
-                    </Button>
-                  </div>
-
-              }
-
-            </div>
-          </Drawer>
-        </Toolbar>
-      </AppBar>
-    </Fragment>
-    :
-    <AppBar position="static" elevation={0} className={classes.headerDesktop}>
+  return (<AppBar position="static" elevation={0} className={classes.headerDesktop}>
       <Grid container justifyContent='space-between'>
         <Grid item>
           <Link to="#">
@@ -341,26 +188,19 @@ const Header = () => {
           </Link>
         </Grid>
         <Grid item>
-          {
-            !(isSignUp) ?
               <div className={classes.menuButton}>
                 {
                   !isAuthenticated
                     ?
                     <Fragment>
-                      {
-                        isAbout || isRegister || isWaiting ?
-                          null :
                           <Fragment>
-                            <Button className={classes.whiteButtons} >
+                            <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
                               Sign in
                             </Button>
-                            <Button className={classes.becomeMember} onClick={() => openRegister()}>
+                            {/* <Button className={classes.becomeMember} onClick={() => openRegister()}>
                               Become a member
-                            </Button>
+                            </Button> */}
                           </Fragment>
-                      }
-
                     </Fragment>
                     :
                     <Fragment>
@@ -372,6 +212,7 @@ const Header = () => {
                         aria-controls={openMenu ? 'menu-list-grow' : undefined}
                         aria-haspopup="true"
                         onClick={handleClick}>
+                          {user!.name}
                       </Button>
                       <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
                         {({ TransitionProps, placement }) => (
@@ -382,9 +223,9 @@ const Header = () => {
                             <Paper className={classes.menu}>
                               <ClickAwayListener onClickAway={handleClose}>
                                 <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                  <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
-                                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                  <MenuItem>Sign Out</MenuItem>
+                                  {/* <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
+                                  <MenuItem onClick={handleClose}>Profile</MenuItem> */}
+                                  <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
                                 </MenuList>
                               </ClickAwayListener>
                             </Paper>
@@ -395,19 +236,10 @@ const Header = () => {
 
                 }
 
-              </div> : null
-          }
+              </div>
         </Grid>
-
-
-
-
       </Grid >
-
-
-
-
-    </AppBar >;
+    </AppBar >)
 }
 
 export default Header;
