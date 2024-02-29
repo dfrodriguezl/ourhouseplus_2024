@@ -15,6 +15,7 @@ export interface Project {
   toilet?: boolean;
   toiletNumber?: number;
   projectStyle?: string;
+  user?: string;
 }
 export interface SearchParams {
   location: LocationSimple | undefined;

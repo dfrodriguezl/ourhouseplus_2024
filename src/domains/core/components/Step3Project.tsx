@@ -6,6 +6,7 @@ import { post } from 'app/api';
 import { useDropzone } from 'react-dropzone';
 import AWS from 'aws-sdk';
 import { PutObjectRequest } from 'aws-sdk/clients/s3';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -60,6 +61,7 @@ interface OwnProps {
 type Props = OwnProps;
 export default function Step3Project(props: Props) {
   const { project } = props;
+  const { user } = useAuth0();
   const classes = useStyles();
   const [projectStyle, setProjectStyle] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<any>(null);
@@ -119,6 +121,7 @@ export default function Step3Project(props: Props) {
         let projectLocal: Project = project!;
         projectLocal.projectStyle = projectStyle;
         projectLocal.picture = data.Location;
+        projectLocal.user = user?.email;
         createProject(projectLocal);
         
       })
