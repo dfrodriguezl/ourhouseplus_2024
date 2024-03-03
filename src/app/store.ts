@@ -1,22 +1,11 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import rootReducers from 'app/rootReducers';
+import { configureStore } from '@reduxjs/toolkit';
+import coreSliceReducer from 'domains/core/coreSlice';
 
 export const store = configureStore({
-  reducer: rootReducers,
-});
+  reducer: coreSliceReducer,
+})
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-export type AppThunk<ReturnType = void> = ThunkAction<
-  ReturnType,
-  RootState,
-  unknown,
-  Action<string>
->;
-
-if ((module as any).hot) {
-  (module as any).hot.accept('./rootReducers', () => {
-    const nextReducer = require('./rootReducers').default;
-    store.replaceReducer(nextReducer);
-  });
-}
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>
+// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
+export type AppDispatch = typeof store.dispatch

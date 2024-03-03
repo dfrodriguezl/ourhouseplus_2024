@@ -16,7 +16,16 @@ export interface Project {
   toiletNumber?: number;
   projectStyle?: string;
   user?: string;
+  rooms?: Room[];
 }
+
+export interface Room {
+  type: string;
+  order: string;
+  name: string;
+  total: number;
+}
+
 export interface SearchParams {
   location: LocationSimple | undefined;
   area: number;

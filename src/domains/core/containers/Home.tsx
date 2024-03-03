@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import { Grid } from '@mui/material';
-import { HomeSub, PageContainer } from 'domains/core/containers';
+import { HomeSub, PageContainer,  } from 'domains/core/containers';
 import { Slogan } from 'domains/common/components';
-import { connect } from 'react-redux';
-import { RootState } from 'app/store';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useAppSelector } from 'app/hooks'
+import HomeSubRooms from './HomeSubRooms';
 
 
 interface OwnProps {
@@ -15,6 +15,7 @@ type Props = OwnProps;
 const Home = (props: Props) => {
   const { isAuthenticated, user } = useAuth0();
   const isAdmin = isAuthenticated ? user!['http://ourhouseplus.com/roles'].includes('admin') : false;
+  const currentProject = useAppSelector((state) => state.currentProject);
 
   return (
     <Fragment>
@@ -35,19 +36,11 @@ const Home = (props: Props) => {
         </Grid>
       </PageContainer>
       {isAdmin ?
-        <HomeSub /> : null}
-
-      {/* <HomeSub2 />
-      <HomeSub3 />
-      <HomeSub1 /> */}
+        currentProject ?
+          <HomeSubRooms project={currentProject}/> :
+          <HomeSub /> : null}
     </Fragment>
   );
 }
 
-const container = connect<OwnProps, {}, {}, RootState>(
-  (state: RootState) => ({
-
-  })
-)(Home);
-
-export default container;
+export default Home;
