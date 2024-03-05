@@ -2,6 +2,9 @@ import React, { Fragment } from 'react';
 import { Grid, Theme, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Project } from "../models";
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'app/hooks';
+import { setCurrentProject } from '../coreSlice';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -29,9 +32,16 @@ type Props = OwnProps;
 export default function ProjectContainer(props: Props) {
   const { project, children } = props;
   const classes = useStyles();
+  const history = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const goToRooms = () => {
+    dispatch(setCurrentProject(project!))
+    history("/rooms")
+  }
 
   return (
-    <Grid container className={classes.containerStyle} direction="column" style={project ? { width: '400px' } : {}} >
+    <Grid container className={classes.containerStyle} direction="column" style={project ? { width: '400px' } : {}} onClick={() => goToRooms()}>
       {project ?
         <Fragment>
           <div className={classes.textContainerStyle}>

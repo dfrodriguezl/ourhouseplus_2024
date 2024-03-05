@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react';
 import { Grid } from '@mui/material';
-import { HomeSub, PageContainer, } from 'domains/core/containers';
+import { PageContainer, } from 'domains/core/containers';
 import { Slogan } from 'domains/common/components';
 import { useAuth0 } from '@auth0/auth0-react';
+import { useAppSelector } from 'app/hooks'
+import HomeSubRooms from './HomeSubRooms';
 
 
 interface OwnProps {
@@ -10,9 +12,10 @@ interface OwnProps {
 }
 
 type Props = OwnProps;
-const Home = (props: Props) => {
+const RoomsGeneral = (props: Props) => {
   const { isAuthenticated, user } = useAuth0();
   const isAdmin = isAuthenticated ? user!['http://ourhouseplus.com/roles'].includes('admin') : false;
+  const currentProject = useAppSelector((state) => state.currentProject);
 
   return (
     <Fragment>
@@ -26,9 +29,11 @@ const Home = (props: Props) => {
         </Grid>
       </PageContainer>
       {isAdmin ?
-          <HomeSub /> : null}
+        currentProject ?
+          <HomeSubRooms project={currentProject} /> :
+          null : null}
     </Fragment>
   );
 }
 
-export default Home;
+export default RoomsGeneral;

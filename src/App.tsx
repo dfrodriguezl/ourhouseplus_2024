@@ -6,6 +6,7 @@ import theme from 'app/theme';
 import { Footer } from 'domains/core/components';
 import { Provider } from 'react-redux';
 import { store } from 'app/store';
+import RoomsGeneral from 'domains/core/containers/RoomsGeneral';
 
 
 declare module '@mui/styles/defaultTheme' {
@@ -22,6 +23,7 @@ function App() {
           <Routes>
             <Route path="/createProject" element={<CreateProject />} />
             <Route path="/" element={<Home />} />
+            <Route path="/rooms" element={<RoomsGeneral />} />
           </Routes>
           <Footer />
         </ThemeProvider>
