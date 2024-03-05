@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Grid, Snackbar, Theme, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
-import { Project, Room } from "../models";
+import { Project, Room, bedroomFurniture, dinningRoomsFurniture, livingRoomsFurniture, toiletFurniture } from "../models";
 import { post } from 'app/api';
 import { useDropzone } from 'react-dropzone';
 import AWS from 'aws-sdk';
@@ -148,7 +148,8 @@ export default function Step3Project(props: Props) {
           type: "living_room",
           order: orderGlobal.toString().padStart(3, '0'),
           name: "Living Room",
-          total: 0
+          total: 0,
+          furnitures: livingRoomsFurniture
         }
 
         rooms.push(room);
@@ -161,7 +162,8 @@ export default function Step3Project(props: Props) {
         type: "dinning_room",
         order: orderGlobal.toString().padStart(3, '0'),
         name: "Dinning Room",
-        total: 0
+        total: 0,
+        furnitures: dinningRoomsFurniture
       }
 
       rooms.push(room);
@@ -174,7 +176,8 @@ export default function Step3Project(props: Props) {
           type: "bed_room",
           order: orderGlobal.toString().padStart(3, '0'),
           name: "Bedroom",
-          total: 0
+          total: 0,
+          furnitures: bedroomFurniture
         }
 
         rooms.push(room);
@@ -188,7 +191,8 @@ export default function Step3Project(props: Props) {
           type: "toilet",
           order: orderGlobal.toString().padStart(3, '0'),
           name: "Toilet",
-          total: 0
+          total: 0,
+          furnitures: toiletFurniture
         }
 
         rooms.push(room);

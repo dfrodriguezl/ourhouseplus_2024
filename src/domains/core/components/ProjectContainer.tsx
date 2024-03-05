@@ -41,15 +41,17 @@ export default function ProjectContainer(props: Props) {
   }
 
   return (
-    <Grid container className={classes.containerStyle} direction="column" style={project ? { width: '400px' } : {}} onClick={() => goToRooms()}>
+    <Grid container className={classes.containerStyle} direction="column" style={project ? { width: '400px' } : {}} >
       {project ?
         <Fragment>
-          <div className={classes.textContainerStyle}>
-            <Typography variant="subtitle2">{project.name}</Typography>
-            <Typography variant="subtitle2">{project.location}</Typography>
-            <Typography variant="subtitle2">{project.deliveryDueDate}</Typography>
+          <div onClick={() => goToRooms()}>
+            <div className={classes.textContainerStyle}>
+              <Typography variant="subtitle2">{project.name}</Typography>
+              <Typography variant="subtitle2">{project.location}</Typography>
+              <Typography variant="subtitle2">{project.deliveryDueDate}</Typography>
+            </div>
+            <img src={project.picture} alt="project" />
           </div>
-          <img src={project.picture} alt="project"/>
         </Fragment>
         :
         <div className={classes.containerButtonStyle}>

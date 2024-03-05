@@ -24,6 +24,15 @@ export interface Room {
   order: string;
   name: string;
   total: number;
+  furnitures?: Item[];
+}
+
+export interface Item {
+  type: string;
+  price: number;
+  url_image?: string;
+  quantity: number;
+  avg_size?: number;
 }
 
 export interface SearchParams {
@@ -140,6 +149,133 @@ export const projects: Project[] = [
     location: 'ASPEN - USA',
     deliveryDueDate: '2023-01-01',
     picture: image_2
+  }
+]
+
+export const dinningRoomsFurniture: Item[] = [
+  {
+    type: 'Dinning table',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Dinning chairs',
+    price: 0,
+    quantity: 8
+  },
+  {
+    type: 'Suspention',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Console',
+    price: 0,
+    quantity: 1
+  }
+]
+
+export const livingRoomsFurniture: Item[] = [
+  {
+    type: 'Sofa',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Arm Chairs',
+    price: 0,
+    quantity: 2
+  },
+  {
+    type: 'Coffee table',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Big sidetable',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Small side table',
+    price: 0,
+    quantity: 2
+  },
+  {
+    type: 'Reading lamp',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Floor lamp',
+    price: 0,
+    quantity: 2
+  },
+  {
+    type: 'Rug',
+    price: 0,
+    quantity: 2
+  }
+]
+
+export const toiletFurniture: Item[] = [
+  {
+    type: 'Lavoratory sink',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Lavoratory fauset',
+    price: 0,
+    quantity: 2
+  },
+  {
+    type: 'Mirror',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Wall lights',
+    price: 0,
+    quantity: 2
+  },
+  {
+    type: 'Toilet',
+    price: 0,
+    quantity: 1
+  }
+]
+
+export const bedroomFurniture: Item[] = [
+  {
+    type: 'Bed headboard',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Bed sommier',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Rug',
+    price: 0,
+    quantity: 1
+  },
+  {
+    type: 'Side tables',
+    price: 0,
+    quantity: 2
+  },
+  {
+    type: 'Desk lamps',
+    price: 0,
+    quantity: 2
+  },
+  {
+    type: 'Console',
+    price: 0,
+    quantity: 1
   }
 ]
 
