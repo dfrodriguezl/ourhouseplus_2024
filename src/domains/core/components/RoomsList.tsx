@@ -27,8 +27,8 @@ function RoomsList(props: Props) {
   const classes = useStyles();
   const history = useNavigate();
 
-  const goToCreateProject = () => {
-    history("/createProject")
+  const goToCreateRoom = () => {
+    history("/createRoom")
   }
 
   return (
@@ -46,7 +46,7 @@ function RoomsList(props: Props) {
           <IconButton
             aria-label="create project"
             component="div"
-            onClick={() => goToCreateProject()}
+            onClick={() => goToCreateRoom()}
             size="large">
             <AddCircleIcon fontSize='large' className={classes.buttonStyle} />
           </IconButton>
