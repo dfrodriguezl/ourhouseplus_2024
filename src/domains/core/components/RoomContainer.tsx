@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { Button, Grid, Theme, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Room } from "../models";
+import ItemsContainer from './ItemsContainer';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -35,13 +36,14 @@ export default function RoomContainer(props: Props) {
   const classes = useStyles();
 
   return (
-    <Grid container className={classes.containerStyle} direction="column" style={room ? { width: '400px' } : {}} >
+    <Grid container className={classes.containerStyle} direction="column" style={room ? { width: '450px' } : {}} >
       {room ?
         <Fragment>
           <Grid container className={classes.textContainerStyle} direction="row" justifyContent="space-between">
             <Typography variant="subtitle2">{room.order}. {room.name.toUpperCase()}</Typography>
             <Typography variant="subtitle2">TOTAL: ${room.total} </Typography>
             <Button className={classes.buttonStyle}>EDIT ROOM</Button>
+            <ItemsContainer items={room.furnitures}/>
           </Grid>
         </Fragment>
         :
