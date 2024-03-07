@@ -2,6 +2,12 @@ import React, { useState } from 'react';
 import { Button, Grid, Switch, Theme, Typography } from '@mui/material';
 import { PageContainer } from '.';
 import { makeStyles } from '@mui/styles';
+import { useAppSelector } from 'app/hooks';
+import { Item, Project, Room, bedroomFurniture, dinningRoomsFurniture, livingRoomsFurniture, toiletFurniture } from '../models';
+import { put } from 'app/api';
+import { useAppDispatch } from 'app/hooks';
+import { setCurrentProject } from '../coreSlice';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
   containerStyle: {
@@ -57,6 +63,9 @@ const CreateRoom = (props: Props) => {
   const [dinningRoom, setDinningRoom] = useState<boolean>(false);
   const [bedRoom, setBedRoom] = useState<boolean>(false);
   const [toilets, setToilets] = useState<boolean>(false);
+  const currentProject = useAppSelector((state) => state.currentProject);
+  const dispatch = useAppDispatch();
+  const history = useNavigate();
 
   const handleChangeSwitchLiving = (e: any) => {
     setLivingRoom(e.target.checked);
@@ -74,6 +83,51 @@ const CreateRoom = (props: Props) => {
     setToilets(e.target.checked);
   }
 
+  const createNewRoom = () => {
+    const typeRoom: string = livingRoom ? "living_room" :
+      dinningRoom ? "dinning_room" :
+        bedRoom ? "bed_room" :
+          toilets ? "toilet" :
+            "";
+
+    const orderRoom: string = (currentProject?.rooms?.length! + 1).toString().padStart(3, '0')!;
+
+    const nameRoom: string = livingRoom ? "Living Room" :
+      dinningRoom ? "Dinning Room" :
+        bedRoom ? "Bedroom" :
+          toilets ? "Toilet" :
+            "";
+
+    const furnituresRoom: Item[] | undefined = livingRoom ? livingRoomsFurniture :
+      dinningRoom ? dinningRoomsFurniture :
+        bedRoom ? bedroomFurniture :
+          toilets ? toiletFurniture :
+            undefined;
+
+    const newRoom: Room = {
+      type: typeRoom,
+      order: orderRoom,
+      name: nameRoom,
+      total: 0,
+      furnitures: furnituresRoom
+    }
+
+    let project: Project = Object.assign({}, currentProject!); ;
+    let rooms: Room[] =  Object.assign([], project?.rooms!);
+    rooms.push(newRoom);
+
+    project.rooms = rooms;
+
+    dispatch(setCurrentProject(project!))
+
+      put("/projects/" + project?.idProject, { data: project! }).then((response) => {
+        if(response.data.rooms){
+          history("/rooms");
+        }
+      })
+
+  }
+
   return (
     <PageContainer background="create-project">
       <Grid container justifyContent="center">
@@ -83,23 +137,23 @@ const CreateRoom = (props: Props) => {
             <form>
               <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
                 <label>Living Room</label>
-                <Switch name="living-room-switch" onChange={handleChangeSwitchLiving} checked={livingRoom}/>
+                <Switch name="living-room-switch" onChange={handleChangeSwitchLiving} checked={livingRoom} />
               </Grid>
               <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
                 <label>Dinning Room</label>
-                <Switch name="dinning-room-switch" onChange={handleChangeSwitchDinning} checked={dinningRoom}/>
+                <Switch name="dinning-room-switch" onChange={handleChangeSwitchDinning} checked={dinningRoom} />
               </Grid>
               <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
                 <label>Bed Rooms</label>
-                <Switch name="bed-room-switch" onChange={handleChangeSwitchBed} checked={bedRoom}/>
+                <Switch name="bed-room-switch" onChange={handleChangeSwitchBed} checked={bedRoom} />
               </Grid>
               <Grid container className={classes.elementFormStyle} direction="row" justifyContent="space-between" alignItems='center'>
                 <label>Toilets / Bathrooms</label>
-                <Switch name="bath-room-switch" onChange={handleChangeSwitchToilet} checked={toilets}/>
+                <Switch name="bath-room-switch" onChange={handleChangeSwitchToilet} checked={toilets} />
               </Grid>
             </form>
           </Grid>
-          <Button className={classes.buttonStyle}>ADD ROOM</Button>
+          <Button className={classes.buttonStyle} onClick={() => createNewRoom()}>ADD ROOM</Button>
         </Grid>
       </Grid>
     </PageContainer>

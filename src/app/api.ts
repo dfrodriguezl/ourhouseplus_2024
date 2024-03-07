@@ -10,6 +10,10 @@ export const post = (url: string, options: ApiOptions) => {
   return performRequest(url, 'POST', options);
 }
 
+export const put = (url: string, options: ApiOptions) => {
+  return performRequest(url, 'PUT', options);
+}
+
 
 export const deletes = (url: string) => {
   return performRequest(url, 'DELETE');
