@@ -3,6 +3,7 @@ import { Button, Grid, Theme, Typography } from '@mui/material';
 import makeStyles from '@mui/styles/makeStyles';
 import { Room } from "../models";
 import ItemsContainer from './ItemsContainer';
+import { useNavigate } from 'react-router-dom';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -34,6 +35,11 @@ type Props = OwnProps;
 export default function RoomContainer(props: Props) {
   const { room, children } = props;
   const classes = useStyles();
+  const history = useNavigate();
+
+  const goToRoom = () => {
+    history("/editRoom")
+  }
 
   return (
     <Grid container className={classes.containerStyle} direction="column" style={room ? { width: '450px' } : {}} >
@@ -42,7 +48,7 @@ export default function RoomContainer(props: Props) {
           <Grid container className={classes.textContainerStyle} direction="row" justifyContent="space-between">
             <Typography variant="subtitle2">{room.order}. {room.name.toUpperCase()}</Typography>
             <Typography variant="subtitle2">TOTAL: ${room.total} </Typography>
-            <Button className={classes.buttonStyle}>EDIT ROOM</Button>
+            <Button className={classes.buttonStyle} onClick={() => goToRoom()}>EDIT ROOM</Button>
             <ItemsContainer items={room.furnitures}/>
           </Grid>
         </Fragment>
