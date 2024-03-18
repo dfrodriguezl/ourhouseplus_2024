@@ -5,6 +5,7 @@ import { Slogan } from 'domains/common/components';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useAppSelector } from 'app/hooks'
 import HomeSubRoomsEdit from './HomeSubRoomsEdit';
+import ItemChoosen from '../components/ItemChoosen';
 
 
 interface OwnProps {
@@ -21,9 +22,13 @@ const RoomsEdit = (props: Props) => {
     <Fragment>
       <PageContainer background="home">
         <Grid container justifyContent="center">
-          <Grid item container xs={12} direction="row" style={{ marginTop: '38vh', marginBottom: '10vh' }}>
-            <Grid item xs={12} style={{ alignSelf: 'flex-end' }}>
+          <Grid item container xs={12} direction="row">
+            <Grid item xs={12} style={{ alignSelf: 'flex-start' }}>
               <Slogan />
+            </Grid>
+            <Grid container direction="row" justifyContent="center">
+              <ItemChoosen>FURNITURE CHOOSEN</ItemChoosen>
+              <ItemChoosen>MATERIALS CHOOSEN</ItemChoosen>
             </Grid>
           </Grid>
         </Grid>

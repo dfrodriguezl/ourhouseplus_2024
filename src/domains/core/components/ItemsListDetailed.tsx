@@ -23,9 +23,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   buttonTextStyle: {
     color: 'black',
-        padding: 0,
-        textTransform: 'none',
-        fontSize: 10
+    padding: 0,
+    textTransform: 'none',
+    fontSize: 10
   }
 }));
 
