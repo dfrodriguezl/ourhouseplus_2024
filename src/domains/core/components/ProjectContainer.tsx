@@ -50,7 +50,7 @@ export default function ProjectContainer(props: Props) {
               <Typography variant="subtitle2">{project.location}</Typography>
               <Typography variant="subtitle2">{project.deliveryDueDate}</Typography>
             </div>
-            <img src={project.picture} alt="project" />
+            <img src={project.picture} alt="project" width="100%"/>
           </div>
         </Fragment>
         :

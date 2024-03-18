@@ -4,6 +4,8 @@ import makeStyles from '@mui/styles/makeStyles';
 import { Room } from "../models";
 import ItemsContainer from './ItemsContainer';
 import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'app/hooks';
+import { setCurrentRoom } from '../coreSlice';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -36,8 +38,10 @@ export default function RoomContainer(props: Props) {
   const { room, children } = props;
   const classes = useStyles();
   const history = useNavigate();
+  const dispatch = useAppDispatch();
 
   const goToRoom = () => {
+    dispatch(setCurrentRoom(room!))
     history("/editRoom")
   }
 

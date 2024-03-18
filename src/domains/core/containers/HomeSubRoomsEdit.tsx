@@ -1,24 +1,17 @@
 import React from 'react';
-import { Project } from '../models';
-import { Container, Grid, Typography } from '@mui/material';
-import RoomsList from '../components/RoomsList';
+import { Room } from '../models';
+import { Container, Grid } from '@mui/material';
+import ItemsListDetailed from '../components/ItemsListDetailed';
+import { useAppSelector } from 'app/hooks';
 
-
-interface ownProps {
-  project?: Project;
-}
-
-type Props = ownProps;
-
-const HomeSubRoomsEdit = (props: Props) => {
-  const { project } = props;
+const HomeSubRoomsEdit = () => {
+  const currentRoom: Room = useAppSelector((state) => state.currentRoom!);
 
   return (
     <div>
-      <Container>
+      <Container maxWidth="xl">
         <Grid container direction="row">
-          <Typography>Edit Room</Typography>
-          <RoomsList rooms={project?.rooms!} />
+          <ItemsListDetailed room={currentRoom}/>
         </Grid>
       </Container>
     </div>

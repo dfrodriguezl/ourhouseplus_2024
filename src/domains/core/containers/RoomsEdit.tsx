@@ -30,7 +30,7 @@ const RoomsEdit = (props: Props) => {
       </PageContainer>
       {isAdmin ?
         currentProject ?
-          <HomeSubRoomsEdit project={currentProject} /> :
+          <HomeSubRoomsEdit /> :
           null : null}
     </Fragment>
   );
