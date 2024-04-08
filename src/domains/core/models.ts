@@ -348,4 +348,20 @@ export const projectsBudget = [
   }
 ] 
 
+export const types = [
+  'Chair',
+  'Desk',
+  'Library',
+  'Table',
+  'Lounge Chair',
+  'Coffee Table',
+  'Side Table',
+  'Bench',
+  'Sofa',
+  'Bedside',
+  'Wall light',
+  'Console',
+  'Lamp'
+]
+
 

@@ -9,6 +9,8 @@ import { store } from 'app/store';
 import RoomsGeneral from 'domains/core/containers/RoomsGeneral';
 import CreateRoom from 'domains/core/containers/CreateRoom';
 import RoomsEdit from 'domains/core/containers/RoomsEdit';
+import Combinations from 'domains/core/containers/Combinations';
+
 
 
 declare module '@mui/styles/defaultTheme' {
@@ -28,6 +30,7 @@ function App() {
             <Route path="/rooms" element={<RoomsGeneral />} />
             <Route path="/createRoom" element={<CreateRoom />} />
             <Route path="/editRoom" element={<RoomsEdit />} />
+            <Route path="/combinations" element={<Combinations />} />
           </Routes>
           <Footer />
         </ThemeProvider>
