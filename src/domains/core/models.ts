@@ -35,6 +35,21 @@ export interface Item {
   avg_size?: number;
 }
 
+export interface ItemCatalogue {
+  dimension_h: string;
+  brand: string;
+  name: string;
+  country: string;
+  style: string;
+  furniture_type: string;
+  dimension_l: string;
+  idItem: string;
+  dimension_w: string;
+  production: string;
+  material: string;
+  Image_path: string;
+}
+
 export interface SearchParams {
   location: LocationSimple | undefined;
   area: number;

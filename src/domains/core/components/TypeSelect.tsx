@@ -14,16 +14,18 @@ interface OwnProps {
     name?: string;
     helper?: string;
     options?: string[];
+    setType?: any;
 }
 
 type Props = OwnProps;
 const TypeSelect = (props: Props) => {
-    const { name, helper, options } = props;
+    const { name, helper, options, setType } = props;
     const classes = useStyles();
-    const [age, setAge] = React.useState('');
+    const [typeLocal, setTypeLocal] = React.useState('');
 
     const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value as string);
+        setType(event.target.value as string);
+        setTypeLocal(event.target.value as string);
     };
 
     return (
@@ -33,14 +35,14 @@ const TypeSelect = (props: Props) => {
                 <Select
                     labelId="select-type-1-label"
                     id="select-type-1"
-                    value={age}
-                    label="Type 1"
+                    value={typeLocal}
+                    label={name}
                     onChange={handleChange}
                     className={classes.selectStyle}
                 >
-                    {options?.map((option: string) => {
+                    {options?.map((option: string, index: number) => {
                         return (
-                            <MenuItem value={option}>{option}</MenuItem>
+                            <MenuItem value={option} key={index}>{option}</MenuItem>
                         )
                     })}
                 </Select>
