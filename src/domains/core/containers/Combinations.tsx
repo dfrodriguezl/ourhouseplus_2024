@@ -2,10 +2,11 @@ import React, { Fragment, useState } from 'react';
 import { PageContainer } from '.';
 import TypeSelect from '../components/TypeSelect';
 import { Button, Grid, Theme } from '@mui/material';
-import { types } from '../models';
+import { ItemCatalogue, types } from '../models';
 import { makeStyles } from '@mui/styles';
 import FurnitureCombinations from '../components/FurnitureCombinations';
 import CombinationsQualification from '../components/CombinationsQualification';
+import { post } from 'app/api';
 
 const useStyles = makeStyles((theme: Theme) => ({
     selectStyle: {
@@ -32,13 +33,39 @@ const Combinations = () => {
     const [type1, setType1] = useState();
     const [type2, setType2] = useState();
     const [openCombinations, setOpenCombinations] = useState(false);
+    const [item1, setItem1] = useState<ItemCatalogue>();
+    const [item2, setItem2] = useState<ItemCatalogue>();
+    const [qualificationSelected, setQualificationSelected] = useState<string>();
+    const [update, setUpdate] = useState<number>();
 
-    const handleClick = (e: any) => {
+    const handleClick = () => {
         if (type1 && type2) {
-            setOpenCombinations(!openCombinations)
+            if(!openCombinations){
+                setOpenCombinations(!openCombinations)
+            }
+            
+            setUpdate(Math.random())
+        }
+    }
+
+    const nextCombination = () => {
+        setUpdate(Math.random())
+    }
+
+    const saveCombination = () => {
+        const dataRequest = {
+            id_type_1: item1?.idItem,
+            id_type_2: item2?.idItem,
+            qualification: qualificationSelected
         }
 
+        post("/combinations", { data: dataRequest }).then((response) => {
+            setQualificationSelected("")
+            nextCombination()
+          })
     }
+
+
 
     return (
         <PageContainer background="create-project">
@@ -52,10 +79,10 @@ const Combinations = () => {
                 </Grid>
                 {openCombinations ?
                     <Fragment>
-                        <FurnitureCombinations type1={type1} type2={type2} />
-                        <CombinationsQualification />
+                        <FurnitureCombinations type1={type1} type2={type2} setItem1={setItem1} setItem2={setItem2} update={update} />
+                        <CombinationsQualification setQualification={setQualificationSelected} qualification={qualificationSelected}/>
                         <Grid container justifyContent="center" className={classes.containerButtonStyle}>
-                            <Button className={classes.buttonStyle}>Next</Button>
+                            <Button className={classes.buttonStyle} onClick={() => saveCombination()}>Next</Button>
                         </Grid>
                     </Fragment>
                     : null

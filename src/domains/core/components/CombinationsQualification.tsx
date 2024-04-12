@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { FormControl, FormControlLabel, Grid, Radio, RadioGroup, Theme, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 
@@ -18,29 +18,45 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     containerStyle: {
         marginTop: '20px'
+    },
+    textStyle: {
+        textAlign: 'center'
     }
+    
 })
 )
 
+interface OwnProps {
+    setQualification?: any;
+    qualification?: string;
+}
 
-const CombinationsQualification = () => {
+type Props = OwnProps;
+const CombinationsQualification = (props: Props) => {
     const classes = useStyles();
+    const { qualification, setQualification } = props;
+
+    const handleValue = (event: ChangeEvent<HTMLInputElement>) => {
+        setQualification((event.target as HTMLInputElement).value)
+    }
 
     return (
         <Grid container justifyContent="center" direction="column" alignContent="center" className={classes.containerStyle}>
-            <Typography variant="h6">Combination Qualification</Typography>
+            <Typography variant="h6" className={classes.textStyle}>Combination Qualification</Typography>
             <FormControl>
                 <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
                     defaultValue="female"
                     name="radio-buttons-group"
                     row
+                    onChange={handleValue}
+                    value={qualification}
                 >
-                    <FormControlLabel value="1" control={<Radio />} label="1" />
-                    <FormControlLabel value="2" control={<Radio />} label="2" />
-                    <FormControlLabel value="3" control={<Radio />} label="3" />
-                    <FormControlLabel value="4" control={<Radio />} label="4" />
-                    <FormControlLabel value="5" control={<Radio />} label="5" />
+                    <FormControlLabel value="1" control={<Radio />} label="1" labelPlacement="top" />
+                    <FormControlLabel value="2" control={<Radio />} label="2" labelPlacement="top" />
+                    <FormControlLabel value="3" control={<Radio />} label="3" labelPlacement="top"/>
+                    <FormControlLabel value="4" control={<Radio />} label="4"  labelPlacement="top"/>
+                    <FormControlLabel value="5" control={<Radio />} label="5"  labelPlacement="top"/>
                 </RadioGroup>
             </FormControl>
         </Grid>

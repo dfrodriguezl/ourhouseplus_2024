@@ -44,7 +44,7 @@ const CombinationDetail = (props: Props) => {
 
     useEffect(() => {
         getURLImage()
-    }, [])
+    }, [item])
 
     return (
         <Card>
