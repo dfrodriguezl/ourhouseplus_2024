@@ -19,32 +19,33 @@ const FurnitureCombinations = (props: Props) => {
     const [itemType1, setItemType1] = useState<ItemCatalogue>();
     const [itemType2, setItemType2] = useState<ItemCatalogue>();
 
-    const getItemsType1 = () => {
-        get("/items-catalogue/" + type1)
-            .then((res) => {
-                const items: ItemCatalogue[] = res.data;
-                const randomElement: ItemCatalogue = items[Math.floor(Math.random() * items.length)];
-                setItemType1(randomElement)
-                setItem1(randomElement)
-            })
-    }
-
-    const getItemsType2 = () => {
-        get("/items-catalogue/" + type2)
-            .then((res) => {
-                const items: ItemCatalogue[] = res.data;
-                const randomElement: ItemCatalogue = items[Math.floor(Math.random() * items.length)];
-                setItemType2(randomElement)
-                setItem2(randomElement)
-            })
-    }
+    
 
     useEffect(() => {
+        const getItemsType1 = () => {
+            get("/items-catalogue/" + type1)
+                .then((res) => {
+                    const items: ItemCatalogue[] = res.data;
+                    const randomElement: ItemCatalogue = items[Math.floor(Math.random() * items.length)];
+                    setItemType1(randomElement)
+                    setItem1(randomElement)
+                })
+        }
+    
+        const getItemsType2 = () => {
+            get("/items-catalogue/" + type2)
+                .then((res) => {
+                    const items: ItemCatalogue[] = res.data;
+                    const randomElement: ItemCatalogue = items[Math.floor(Math.random() * items.length)];
+                    setItemType2(randomElement)
+                    setItem2(randomElement)
+                })
+        }
         if (type1 && type2) {
             getItemsType1();
             getItemsType2();
         }
-    }, [update])
+    }, [update, type1, type2, setItem1, setItem2])
 
     return (
         <Grid container>
