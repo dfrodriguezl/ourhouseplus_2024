@@ -58,7 +58,8 @@ const Combinations = () => {
         const dataRequest = {
             id_type_1: item1?.idItem,
             id_type_2: item2?.idItem,
-            qualification: qualificationSelected
+            qualification: qualificationSelected,
+            user: user?.email
         }
 
         post("/combinations", { data: dataRequest }).then((response) => {
