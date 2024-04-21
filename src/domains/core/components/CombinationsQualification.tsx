@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     textStyle: {
         textAlign: 'center'
     }
-    
 })
 )
 
@@ -46,17 +45,17 @@ const CombinationsQualification = (props: Props) => {
             <FormControl>
                 <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="female"
+                    defaultValue=""
                     name="radio-buttons-group"
                     row
                     onChange={handleValue}
                     value={qualification}
                 >
-                    <FormControlLabel value="1" control={<Radio />} label="1" labelPlacement="top" />
-                    <FormControlLabel value="2" control={<Radio />} label="2" labelPlacement="top" />
-                    <FormControlLabel value="3" control={<Radio />} label="3" labelPlacement="top"/>
-                    <FormControlLabel value="4" control={<Radio />} label="4"  labelPlacement="top"/>
-                    <FormControlLabel value="5" control={<Radio />} label="5"  labelPlacement="top"/>
+                    <FormControlLabel value="1" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="1" labelPlacement="top" color="gray"/>
+                    <FormControlLabel value="2" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="2" labelPlacement="top" />
+                    <FormControlLabel value="3" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="3" labelPlacement="top" />
+                    <FormControlLabel value="4" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="4" labelPlacement="top" />
+                    <FormControlLabel value="5" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="5" labelPlacement="top" />
                 </RadioGroup>
             </FormControl>
         </Grid>
