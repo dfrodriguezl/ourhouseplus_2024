@@ -7,6 +7,7 @@ import { makeStyles } from '@mui/styles';
 import FurnitureCombinations from '../components/FurnitureCombinations';
 import CombinationsQualification from '../components/CombinationsQualification';
 import { post } from 'app/api';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const useStyles = makeStyles((theme: Theme) => ({
     selectStyle: {
@@ -37,13 +38,14 @@ const Combinations = () => {
     const [item2, setItem2] = useState<ItemCatalogue>();
     const [qualificationSelected, setQualificationSelected] = useState<string>();
     const [update, setUpdate] = useState<number>();
+    const { user, isAuthenticated } = useAuth0();
 
     const handleClick = () => {
         if (type1 && type2) {
-            if(!openCombinations){
+            if (!openCombinations) {
                 setOpenCombinations(!openCombinations)
             }
-            
+
             setUpdate(Math.random())
         }
     }
@@ -62,32 +64,32 @@ const Combinations = () => {
         post("/combinations", { data: dataRequest }).then((response) => {
             setQualificationSelected("")
             nextCombination()
-          })
+        })
     }
-
-
 
     return (
         <PageContainer background="create-project">
-            <Grid container direction="column">
-                <Grid container direction="row" justifyContent="space-around">
-                    <TypeSelect name="Type 1" helper="Select furniture type" options={types} setType={setType1} />
-                    <TypeSelect name="Type 2" helper="Select furniture type" options={types} setType={setType2} />
-                </Grid>
-                <Grid container justifyContent="center" className={classes.containerButtonStyle}>
-                    <Button className={classes.buttonStyle} onClick={handleClick}>Show options</Button>
-                </Grid>
-                {openCombinations ?
-                    <Fragment>
-                        <FurnitureCombinations type1={type1} type2={type2} setItem1={setItem1} setItem2={setItem2} update={update} />
-                        <CombinationsQualification setQualification={setQualificationSelected} qualification={qualificationSelected}/>
-                        <Grid container justifyContent="center" className={classes.containerButtonStyle}>
-                            <Button className={classes.buttonStyle} onClick={() => saveCombination()}>Next</Button>
-                        </Grid>
-                    </Fragment>
-                    : null
-                }
-            </Grid>
+            {isAuthenticated ?
+                <Grid container direction="column">
+                    <Grid container direction="row" justifyContent="space-around">
+                        <TypeSelect name="Type 1" helper="Select furniture type" options={types} setType={setType1} />
+                        <TypeSelect name="Type 2" helper="Select furniture type" options={types} setType={setType2} />
+                    </Grid>
+                    <Grid container justifyContent="center" className={classes.containerButtonStyle}>
+                        <Button className={classes.buttonStyle} onClick={handleClick}>Show options</Button>
+                    </Grid>
+                    {openCombinations ?
+                        <Fragment>
+                            <FurnitureCombinations type1={type1} type2={type2} setItem1={setItem1} setItem2={setItem2} update={update} />
+                            <CombinationsQualification setQualification={setQualificationSelected} qualification={qualificationSelected} />
+                            <Grid container justifyContent="center" className={classes.containerButtonStyle}>
+                                <Button className={classes.buttonStyle} onClick={() => saveCombination()}>Next</Button>
+                            </Grid>
+                        </Fragment>
+                        : null
+                    }
+                </Grid> : null}
+
         </PageContainer>
     )
 }

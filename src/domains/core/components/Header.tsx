@@ -163,6 +163,14 @@ const Header = () => {
     }
   }
 
+  const handleSignUp = async () => {
+    await loginWithRedirect({
+      appState: {
+        returnTo: window.location.pathname,
+      }
+    });
+  };
+
 
   return (<AppBar position="static" elevation={0} className={classes.headerDesktop}>
       <Grid container justifyContent='space-between'>
@@ -193,7 +201,7 @@ const Header = () => {
                     ?
                     <Fragment>
                           <Fragment>
-                            <Button className={classes.whiteButtons} onClick={() => loginWithRedirect()}>
+                            <Button className={classes.whiteButtons} onClick={() => handleSignUp()}>
                               Sign in
                             </Button>
                             {/* <Button className={classes.becomeMember} onClick={() => openRegister()}>
