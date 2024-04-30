@@ -5,6 +5,9 @@ import { Item, Room } from "../models";
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { image_1 } from 'assets';
 import RadioButtonGroupOpts from './RadioButtonGroupOpts';
+import { useNavigate } from 'react-router-dom';
+import { useAppDispatch } from 'app/hooks';
+import { setCurrentItem } from '../coreSlice';
 
 const useStyles = makeStyles((theme: Theme) => ({
   containerStyle: {
@@ -38,10 +41,17 @@ function ItemsListDetailed(props: Props) {
   const { room } = props;
   const classes = useStyles();
   const [items, setItems] = useState<Item[]>([]);
+  const history = useNavigate();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setItems(room.furnitures!)
   }, [room])
+
+  const goToSearch = (item: Item) => {
+    dispatch(setCurrentItem(item))
+    history("/search")
+  }
 
   return (
     <Grid container className={classes.containerStyle} justifyContent="space-between">
@@ -106,7 +116,7 @@ function ItemsListDetailed(props: Props) {
                   </TableCell>
                   <TableCell>
                     <Grid container direction="column" justifyContent="space-between">
-                      <Button className={classes.buttonTextStyle}>Search</Button>
+                      <Button className={classes.buttonTextStyle} onClick={() => goToSearch(item)}>Search</Button>
                       <Button className={classes.buttonTextStyle} style={{ marginTop: 5 }}>Upload</Button>
                     </Grid>
                   </TableCell>

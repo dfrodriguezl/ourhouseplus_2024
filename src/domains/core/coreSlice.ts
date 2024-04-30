@@ -1,17 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Project, Room } from './models';
+import { Item, Project, Room } from './models';
 import { RootState } from 'app/store';
 
 interface CoreState {
   currentProject: Project | undefined;
   projects: Project[];
   currentRoom: Room | undefined;
+  currentItem: Item | undefined;
 }
 
 const initialState: CoreState = {
   currentProject: undefined,
   projects: [],
-  currentRoom: undefined
+  currentRoom: undefined,
+  currentItem: undefined
 };
 
 export const coreSlice = createSlice({
@@ -27,13 +29,17 @@ export const coreSlice = createSlice({
     setCurrentRoom: (state, action: PayloadAction<Room>) => {
       state.currentRoom = action.payload;
     },
+    setCurrentItem: (state, action: PayloadAction<Item>) => {
+      state.currentItem = action.payload;
+    },
   },
 });
 
 export const {
   setCurrentProject,
   setProjects,
-  setCurrentRoom
+  setCurrentRoom,
+  setCurrentItem
 } = coreSlice.actions;
 
 export const currentProject = (state: RootState) => state.currentProject;
