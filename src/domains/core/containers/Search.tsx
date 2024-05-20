@@ -4,7 +4,6 @@ import { useAppSelector } from "app/hooks";
 import { PageContainer } from ".";
 import { Container, Grid } from "@mui/material";
 import { Slogan } from "domains/common/components";
-import HomeSubRoomsEdit from "./HomeSubRoomsEdit";
 import ItemListSearch from "../components/ItemListSearch";
 
 const Search = () => {

@@ -10,6 +10,11 @@ import {
   ClickAwayListener,
   Typography,
   Grid,
+  useTheme,
+  useMediaQuery,
+  Toolbar,
+  Drawer,
+  IconButton,
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
@@ -18,6 +23,9 @@ import PersonIcon from '@mui/icons-material/Person';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Fragment, useState, useRef } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import CloseIcon from '@mui/icons-material/Close';
+import MenuIcon from '@mui/icons-material/Menu';
+import clsx from 'clsx';
 
 const drawerWidth = 300;
 
@@ -78,7 +86,8 @@ const useStyles = makeStyles((theme: Theme) =>
       color: "#000000"
     },
     icon: {
-      fontSize: "35px !important"
+      fontSize: "35px !important",
+      color: "white !important"
     },
     menu: {
       borderRadius: 15,
@@ -133,6 +142,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     whiteText: {
       color: 'white'
+    },
+    headerMobile: {
+      padding: '20px 0',
+      background: 'transparent !important',
+      alignItems: 'left'
+    },
+    menuItemStyle: {
+      color: 'black'
     }
   })
 );
@@ -142,6 +159,9 @@ const Header = () => {
   const classes = useStyles();
   const [openMenu, setOpenMenu] = useState(false);
   const anchorRef = useRef<any>(null);
+  const theme = useTheme();
+  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const [open, setOpen] = useState(false);
 
 
   const handleClick = () => {
@@ -171,82 +191,147 @@ const Header = () => {
     });
   };
 
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
 
-  return (<AppBar position="static" elevation={0} className={classes.headerDesktop}>
-      <Grid container justifyContent='space-between'>
-        <Grid item>
-          <Link to="#">
-            <Typography variant="h6" className={classes.whiteText}>CS DECORATION</Typography>
-          </Link>
-        </Grid>
-        <Grid item>
-        <Link to="#">
-          <Typography variant="subtitle2" className={classes.whiteText}>PROJECT GALLERY</Typography>
-          </Link>
-        </Grid>
-        <Grid item>
-        <Link to="#">
-          <Typography variant="subtitle2" className={classes.whiteText}>FURNITURE SEARCH</Typography>
-          </Link>
-        </Grid>
-        <Grid item>
-        <Link to="#">
-          <Typography variant="subtitle2" className={classes.whiteText}>FURNITURE NEWS</Typography>
-          </Link>
-        </Grid>
-        <Grid item>
-              <div className={classes.menuButton}>
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+
+  return (
+    smallScreen ?
+      <Fragment>
+        <AppBar position='static' elevation={0} className={classes.headerMobile}>
+          <Toolbar variant='regular'>
+            <Typography variant="h6" className={classes.whiteText}>HOUSE COLLECTION</Typography>
+            <div className={classes.menuButton}>
+              <IconButton
+                edge="end"
+                color="secondary"
+                aria-label="menu"
+                onClick={handleDrawerOpen}
+                className={clsx(classes.menuButton2 && classes.root, open && classes.hide)}
+              >
+                <MenuIcon className={classes.icon} />
+              </IconButton>
+            </div>
+            <Drawer
+              className={classes.drawer}
+              anchor="right"
+              open={open}
+              onClose={handleDrawerClose}
+              classes={{
+                paper: classes.drawerPaper,
+              }}>
+              <div>
                 {
                   !isAuthenticated
                     ?
+                    <div>
+                      <CloseIcon className={classes.iconClose} onClick={() => handleDrawerClose()} />
+                      <div className={classes.menuContainer}>
+                        <Button onClick={() => handleSignUp()}>
+                          <MenuItem className={classes.menuItemStyle}>Sign in</MenuItem>
+                        </Button>
+                        <p className={classes.bottomText}>Copyright &copy; 2024 HouseCollection</p>
+                      </div>
+                    </div>
+                    :
+                    <div>
+                      <CloseIcon className={classes.iconClose} onClick={() => handleDrawerClose()} />
+                      <div className={classes.menuContainer}>
+                        <Button onClick={() => logout()}>
+                          <MenuItem className={classes.menuItemStyle}>Sign out</MenuItem>
+                        </Button>
+                        <Button>
+                          <MenuItem className={classes.menuItemStyle}>{user?.name}</MenuItem>
+                        </Button>
+                        <p className={classes.bottomText}>Copyright &copy; 2024 HouseCollection</p>
+                      </div>
+                    </div>
+                }
+              </div>
+            </Drawer>
+          </Toolbar>
+        </AppBar>
+      </Fragment>
+      : <AppBar position="static" elevation={0} className={classes.headerDesktop}>
+        <Grid container justifyContent='space-between'>
+          <Grid item>
+            <Link to="#">
+              <Typography variant="h6" className={classes.whiteText}>CS DECORATION</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="#">
+              <Typography variant="subtitle2" className={classes.whiteText}>PROJECT GALLERY</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="#">
+              <Typography variant="subtitle2" className={classes.whiteText}>FURNITURE SEARCH</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <Link to="#">
+              <Typography variant="subtitle2" className={classes.whiteText}>FURNITURE NEWS</Typography>
+            </Link>
+          </Grid>
+          <Grid item>
+            <div className={classes.menuButton}>
+              {
+                !isAuthenticated
+                  ?
+                  <Fragment>
                     <Fragment>
-                          <Fragment>
-                            <Button className={classes.whiteButtons} onClick={() => handleSignUp()}>
-                              Sign in
-                            </Button>
-                            {/* <Button className={classes.becomeMember} onClick={() => openRegister()}>
+                      <Button className={classes.whiteButtons} onClick={() => handleSignUp()}>
+                        Sign in
+                      </Button>
+                      {/* <Button className={classes.becomeMember} onClick={() => openRegister()}>
                               Become a member
                             </Button> */}
-                          </Fragment>
                     </Fragment>
-                    :
-                    <Fragment>
-                      <Button
-                        className={classes.becomeMember}
-                        startIcon={<PersonIcon />}
-                        endIcon={<ExpandMoreIcon />}
-                        ref={anchorRef}
-                        aria-controls={openMenu ? 'menu-list-grow' : undefined}
-                        aria-haspopup="true"
-                        onClick={handleClick}>
-                          {user!.name}
-                      </Button>
-                      <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                        {({ TransitionProps, placement }) => (
-                          <Grow
-                            {...TransitionProps}
-                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                          >
-                            <Paper className={classes.menu}>
-                              <ClickAwayListener onClickAway={handleClose}>
-                                <MenuList autoFocusItem={true} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                  {/* <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
+                  </Fragment>
+                  :
+                  <Fragment>
+                    <Button
+                      className={classes.becomeMember}
+                      startIcon={<PersonIcon />}
+                      endIcon={<ExpandMoreIcon />}
+                      ref={anchorRef}
+                      aria-controls={openMenu ? 'menu-list-grow' : undefined}
+                      aria-haspopup="true"
+                      onClick={handleClick}>
+                      {user!.name}
+                    </Button>
+                    <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                      {({ TransitionProps, placement }) => (
+                        <Grow
+                          {...TransitionProps}
+                          style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                        >
+                          <Paper className={classes.menu}>
+                            <ClickAwayListener onClickAway={handleClose}>
+                              <MenuList autoFocusItem={true} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                {/* <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
                                   <MenuItem onClick={handleClose}>Profile</MenuItem> */}
-                                  <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
-                                </MenuList>
-                              </ClickAwayListener>
-                            </Paper>
-                          </Grow>
-                        )}
-                      </Popper>
-                    </Fragment>
+                                <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
+                              </MenuList>
+                            </ClickAwayListener>
+                          </Paper>
+                        </Grow>
+                      )}
+                    </Popper>
+                  </Fragment>
 
-                }
+              }
 
-              </div>
-        </Grid>
-      </Grid >
-    </AppBar >)
+            </div>
+          </Grid>
+        </Grid >
+      </AppBar >)
 }
 
 export default Header;

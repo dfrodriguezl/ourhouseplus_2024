@@ -27,6 +27,7 @@
     "@types/react-router-dom": "^5.3.3",
     "aws-sdk": "^2.1563.0",
     "axios": "^1.6.7",
+    "clsx": "^2.1.1",
     "fontsource-roboto": "^4.0.0",
     "html2canvas": "^1.4.0",
     "i18next": "^21.8.14",

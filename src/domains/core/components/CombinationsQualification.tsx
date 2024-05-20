@@ -1,6 +1,8 @@
-import React, { ChangeEvent } from 'react'
-import { FormControl, FormControlLabel, Grid, Radio, RadioGroup, Theme, Typography } from '@mui/material';
+import React, { ChangeEvent, Fragment } from 'react'
+import { FormControl, FormControlLabel, Grid, IconButton, Radio, RadioGroup, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import CancelIcon from '@mui/icons-material/Cancel';
+import TagFacesIcon from '@mui/icons-material/TagFaces';
 
 const useStyles = makeStyles((theme: Theme) => ({
     selectStyle: {
@@ -28,36 +30,82 @@ const useStyles = makeStyles((theme: Theme) => ({
 interface OwnProps {
     setQualification?: any;
     qualification?: string;
+    saveCombination?: any;
 }
 
 type Props = OwnProps;
 const CombinationsQualification = (props: Props) => {
     const classes = useStyles();
-    const { qualification, setQualification } = props;
+    const { qualification, setQualification, saveCombination } = props;
+    const theme = useTheme();
+    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
+
 
     const handleValue = (event: ChangeEvent<HTMLInputElement>) => {
         setQualification((event.target as HTMLInputElement).value)
     }
 
+
+    const handleValueSmall = (tipo: string) => {
+        setQualification(tipo)
+        saveCombination(tipo)
+    }
+
     return (
         <Grid container justifyContent="center" direction="column" alignContent="center" className={classes.containerStyle}>
-            <Typography variant="h6" className={classes.textStyle}>Combination Qualification</Typography>
-            <FormControl>
-                <RadioGroup
-                    aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue=""
-                    name="radio-buttons-group"
-                    row
-                    onChange={handleValue}
-                    value={qualification}
-                >
-                    <FormControlLabel value="1" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="1" labelPlacement="top" color="gray"/>
-                    <FormControlLabel value="2" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="2" labelPlacement="top" />
-                    <FormControlLabel value="3" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="3" labelPlacement="top" />
-                    <FormControlLabel value="4" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="4" labelPlacement="top" />
-                    <FormControlLabel value="5" control={<Radio sx={{color: 'gray', '&.Mui-checked': {color: 'gray'}}} /> } label="5" labelPlacement="top" />
-                </RadioGroup>
-            </FormControl>
+            {smallScreen ?
+                <Fragment>
+                    <Grid container direction="row" justifyContent="center">
+                        <IconButton size="large" onClick={() => handleValueSmall("0")}><CancelIcon fontSize="large" /></IconButton>
+                        <IconButton size="large" onClick={() => handleValueSmall("5")}><TagFacesIcon fontSize="large" /></IconButton>
+                    </Grid>
+
+                    {/* <FormControl>
+                        <RadioGroup
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue=""
+                            name="radio-buttons-group"
+                            row
+                            onChange={handleValue}
+                            value={qualification}
+                        >
+                            <FormControlLabel 
+                            sx={{fontSize: 50}}
+                            value="0" 
+                            control={<IconButton size="large"><CancelIcon fontSize="large"/></IconButton>} 
+                            label=""
+                            color="gray" />
+                            <FormControlLabel 
+                            value="5" 
+                            control={<IconButton size="large"><TagFacesIcon fontSize="large"/></IconButton>} 
+                            label="" 
+                            labelPlacement="top" />
+                        </RadioGroup>
+                    </FormControl> */}
+                </Fragment>
+                :
+                <Fragment>
+                    <Typography variant="h6" className={classes.textStyle}>Combination Qualification</Typography>
+                    <FormControl>
+                        <RadioGroup
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            defaultValue=""
+                            name="radio-buttons-group"
+                            row
+                            onChange={handleValue}
+                            value={qualification}
+                        >
+                            <FormControlLabel value="1" control={<Radio sx={{ color: 'gray', '&.Mui-checked': { color: 'gray' } }} />} label="1" labelPlacement="top" color="gray" />
+                            <FormControlLabel value="2" control={<Radio sx={{ color: 'gray', '&.Mui-checked': { color: 'gray' } }} />} label="2" labelPlacement="top" />
+                            <FormControlLabel value="3" control={<Radio sx={{ color: 'gray', '&.Mui-checked': { color: 'gray' } }} />} label="3" labelPlacement="top" />
+                            <FormControlLabel value="4" control={<Radio sx={{ color: 'gray', '&.Mui-checked': { color: 'gray' } }} />} label="4" labelPlacement="top" />
+                            <FormControlLabel value="5" control={<Radio sx={{ color: 'gray', '&.Mui-checked': { color: 'gray' } }} />} label="5" labelPlacement="top" />
+                        </RadioGroup>
+                    </FormControl>
+                </Fragment>
+            }
+
         </Grid>
     )
 }

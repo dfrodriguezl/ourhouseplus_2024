@@ -1,13 +1,14 @@
 import React, { Fragment, useState } from 'react';
 import { PageContainer } from '.';
 import TypeSelect from '../components/TypeSelect';
-import { Button, Grid, Theme } from '@mui/material';
+import { Button, Grid, IconButton, Theme, useMediaQuery, useTheme } from '@mui/material';
 import { ItemCatalogue, types } from '../models';
 import { makeStyles } from '@mui/styles';
 import FurnitureCombinations from '../components/FurnitureCombinations';
 import CombinationsQualification from '../components/CombinationsQualification';
 import { post } from 'app/api';
 import { useAuth0 } from '@auth0/auth0-react';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 
 const useStyles = makeStyles((theme: Theme) => ({
     selectStyle: {
@@ -25,6 +26,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     containerButtonStyle: {
         marginBottom: '20px'
+    },
+    playIconStyle: {
+        color: "white !important"
     }
 })
 )
@@ -39,6 +43,8 @@ const Combinations = () => {
     const [qualificationSelected, setQualificationSelected] = useState<string>();
     const [update, setUpdate] = useState<number>();
     const { user, isAuthenticated } = useAuth0();
+    const theme = useTheme();
+    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     const handleClick = () => {
         if (type1 && type2) {
@@ -68,29 +74,59 @@ const Combinations = () => {
         })
     }
 
+    const saveCombinationSmall = (qualification: string) => {
+        const dataRequest = {
+            id_type_1: item1?.idItem,
+            id_type_2: item2?.idItem,
+            qualification: qualification,
+            user: user?.email
+        }
+
+        post("/combinations", { data: dataRequest }).then((response) => {
+            setQualificationSelected("")
+            nextCombination()
+        })
+    }
+
     return (
         <PageContainer background="create-project">
             {isAuthenticated ?
-                <Grid container direction="column">
-                    <Grid container direction="row" justifyContent="space-around">
-                        <TypeSelect name="Type 1" helper="Select furniture type" options={types} setType={setType1} />
-                        <TypeSelect name="Type 2" helper="Select furniture type" options={types} setType={setType2} />
-                    </Grid>
-                    <Grid container justifyContent="center" className={classes.containerButtonStyle}>
-                        <Button className={classes.buttonStyle} onClick={handleClick}>Show options</Button>
-                    </Grid>
-                    {openCombinations ?
-                        <Fragment>
-                            <FurnitureCombinations type1={type1} type2={type2} setItem1={setItem1} setItem2={setItem2} update={update} />
-                            <CombinationsQualification setQualification={setQualificationSelected} qualification={qualificationSelected} />
-                            <Grid container justifyContent="center" className={classes.containerButtonStyle}>
-                                <Button className={classes.buttonStyle} onClick={() => saveCombination()}>Next</Button>
-                            </Grid>
-                        </Fragment>
-                        : null
-                    }
-                </Grid> : null}
-
+                smallScreen ?
+                    <Grid container direction="column">
+                        <Grid container direction="row" justifyContent="space-around">
+                            <TypeSelect name="Type 1" helper="Select furniture type" options={types} setType={setType1} />
+                            <TypeSelect name="Type 2" helper="Select furniture type" options={types} setType={setType2} />
+                            <IconButton aria-label="Show options" onClick={handleClick} size="large">
+                                <PlayCircleIcon className={classes.playIconStyle} />
+                            </IconButton>
+                        </Grid>
+                        {openCombinations ?
+                            <Fragment>
+                                <FurnitureCombinations type1={type1} type2={type2} setItem1={setItem1} setItem2={setItem2} update={update} />
+                                <CombinationsQualification setQualification={setQualificationSelected} qualification={qualificationSelected} saveCombination={saveCombinationSmall}/>
+                            </Fragment>
+                            : null
+                        }
+                    </Grid> :
+                    <Grid container direction="column">
+                        <Grid container direction="row" justifyContent="space-around">
+                            <TypeSelect name="Type 1" helper="Select furniture type" options={types} setType={setType1} />
+                            <TypeSelect name="Type 2" helper="Select furniture type" options={types} setType={setType2} />
+                        </Grid>
+                        <Grid container justifyContent="center" className={classes.containerButtonStyle}>
+                            <Button className={classes.buttonStyle} onClick={handleClick}>Show options</Button>
+                        </Grid>
+                        {openCombinations ?
+                            <Fragment>
+                                <FurnitureCombinations type1={type1} type2={type2} setItem1={setItem1} setItem2={setItem2} update={update} />
+                                <CombinationsQualification setQualification={setQualificationSelected} qualification={qualificationSelected} />
+                                <Grid container justifyContent="center" className={classes.containerButtonStyle}>
+                                    <Button className={classes.buttonStyle} onClick={() => saveCombination()}>Next</Button>
+                                </Grid>
+                            </Fragment>
+                            : null
+                        }
+                    </Grid> : null}
         </PageContainer>
     )
 }
