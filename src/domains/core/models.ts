@@ -376,7 +376,14 @@ export const types = [
   'Bedside',
   'Wall light',
   'Console',
-  'Lamp'
+  'Lamp',
+  'Floor lamp',
+  'Daybed',
+  'Bed',
+  'Reading lamp',
+  'Table lamp',
+  'Suspended Lights',
+  'Chandelier'
 ]
 
 
