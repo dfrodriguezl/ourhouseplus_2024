@@ -72,10 +72,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     drawer: {
       width: drawerWidth,
-      flexShrink: 0,
+      flexShrink: 0
     },
     drawerPaper: {
       width: drawerWidth,
+      backgroundColor: '#2A2A2A !important'
     },
     menuButton2: {
     },
@@ -99,13 +100,14 @@ const useStyles = makeStyles((theme: Theme) =>
       color: '#707070'
     },
     menuContainer: {
-      textAlign: 'right'
+      textAlign: 'left'
     },
     itemText: {
       textTransform: 'capitalize'
     },
     iconClose: {
-      margin: 10
+      margin: 10,
+      color: 'white'
     },
     button: {
       cursor: 'pointer',
@@ -128,7 +130,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       fontSize: 12,
       width: '100%',
-      color: '#7E7E7E'
+      color: 'white'
     },
     buttonMenu: {
       marginBottom: -20
@@ -146,10 +148,22 @@ const useStyles = makeStyles((theme: Theme) =>
     headerMobile: {
       padding: '20px 0',
       background: 'transparent !important',
-      alignItems: 'left'
+      alignItems: 'left',
+      backgroundColor: '#2A2A2A !important',
+      marginBottom: 20
     },
     menuItemStyle: {
-      color: 'black'
+      color: 'white',
+      display: 'block !important',
+      textTransform: 'none'
+    },
+    menuTitleStyle: {
+      color: 'white'
+    },
+    menuTitleContainerStyle: {
+      marginLeft: 25,
+      color: 'white',
+      textTransform: 'none'
     }
   })
 );
@@ -205,7 +219,7 @@ const Header = () => {
       <Fragment>
         <AppBar position='static' elevation={0} className={classes.headerMobile}>
           <Toolbar variant='regular'>
-            <Typography variant="h6" className={classes.whiteText}>HOUSE COLLECTION</Typography>
+            <Typography variant="h6" className={classes.menuTitleStyle}>HOUSE COLLECTION</Typography>
             <div className={classes.menuButton}>
               <IconButton
                 edge="end"
@@ -241,10 +255,23 @@ const Header = () => {
                     :
                     <div>
                       <CloseIcon className={classes.iconClose} onClick={() => handleDrawerClose()} />
+                      <Typography className={classes.menuTitleContainerStyle}>MENU</Typography>
+                      <br />
+                      <br />
+                      <br />
                       <div className={classes.menuContainer}>
-                        <Button onClick={() => logout()}>
-                          <MenuItem className={classes.menuItemStyle}>Sign out</MenuItem>
+                        <Button>
+                          <MenuItem className={classes.menuItemStyle}>Train your AI</MenuItem>
                         </Button>
+                        <br />
+                        <Button>
+                          <MenuItem className={classes.menuItemStyle}>Favorites</MenuItem>
+                        </Button>
+                        <br />
+                        <Button onClick={() => logout()}>
+                          <MenuItem className={classes.menuItemStyle}>Log out</MenuItem>
+                        </Button>
+                        <br />
                         <Button>
                           <MenuItem className={classes.menuItemStyle}>{user?.name}</MenuItem>
                         </Button>
@@ -317,7 +344,7 @@ const Header = () => {
                               <MenuList autoFocusItem={true} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                                 {/* <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
                                   <MenuItem onClick={handleClose}>Profile</MenuItem> */}
-                                <MenuItem onClick={() => logout()}>Sign Out</MenuItem>
+                                <MenuItem onClick={() => logout()}>Log Out</MenuItem>
                               </MenuList>
                             </ClickAwayListener>
                           </Paper>

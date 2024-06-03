@@ -7,6 +7,12 @@ const useStyles = makeStyles((theme: Theme) => ({
         color: 'white',
         borderColor: 'white'
     },
+    selectStyleMobile: {
+        color: 'white',
+        borderColor: 'white',
+        borderRadius: 50,
+        backgroundColor: '#FFFFFF66'
+    }
 })
 )
 
@@ -41,7 +47,7 @@ const TypeSelect = (props: Props) => {
                         value={typeLocal}
                         label={name}
                         onChange={handleChange}
-                        className={classes.selectStyle}
+                        className={classes.selectStyleMobile}
                         placeholder={name}
                     >
                         {options?.map((option: string, index: number) => {
