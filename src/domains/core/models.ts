@@ -50,6 +50,12 @@ export interface ItemCatalogue {
   Image_path: string;
 }
 
+export interface Favorite {
+  idFavorite: string;
+  user: string;
+  idItem: string;
+}
+
 export interface SearchParams {
   location: LocationSimple | undefined;
   area: number;
