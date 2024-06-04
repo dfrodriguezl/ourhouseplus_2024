@@ -64,6 +64,7 @@ const CombinationDetail = (props: Props) => {
         getURLImage()
         getFavorite()
 
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [item])
 
     const setFavorite = (type: boolean) => {
