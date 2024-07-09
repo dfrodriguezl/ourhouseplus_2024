@@ -48,6 +48,7 @@ export interface ItemCatalogue {
   production: string;
   material: string;
   Image_path: string;
+  price?: string;
 }
 
 export interface Favorite {

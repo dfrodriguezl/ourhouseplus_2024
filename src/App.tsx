@@ -11,6 +11,7 @@ import CreateRoom from 'domains/core/containers/CreateRoom';
 import RoomsEdit from 'domains/core/containers/RoomsEdit';
 import Combinations from 'domains/core/containers/Combinations';
 import Search from 'domains/core/containers/Search';
+import Favorites from 'domains/core/containers/Favorites';
 
 
 
@@ -33,6 +34,7 @@ function App() {
             <Route path="/editRoom" element={<RoomsEdit />} />
             <Route path="/combinations" element={<Combinations />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/favorites" element={<Favorites />} />
           </Routes>
           <Footer />
         </ThemeProvider>

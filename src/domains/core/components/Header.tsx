@@ -18,7 +18,7 @@ import {
 } from '@mui/material';
 import createStyles from '@mui/styles/createStyles';
 import makeStyles from '@mui/styles/makeStyles';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Fragment, useState, useRef } from 'react';
@@ -176,6 +176,7 @@ const Header = () => {
   const theme = useTheme();
   const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = useState(false);
+  const history = useNavigate();
 
 
   const handleClick = () => {
@@ -212,6 +213,10 @@ const Header = () => {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+
+  const goToFavorites = () => {
+    history("/favorites")
+  }
 
 
   return (
@@ -264,7 +269,7 @@ const Header = () => {
                           <MenuItem className={classes.menuItemStyle}>Train your AI</MenuItem>
                         </Button>
                         <br />
-                        <Button>
+                        <Button onClick={() => goToFavorites()}>
                           <MenuItem className={classes.menuItemStyle}>Favorites</MenuItem>
                         </Button>
                         <br />

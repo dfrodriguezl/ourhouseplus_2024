@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     },
     textStyle: {
         textAlign: 'center'
+    },
+    iconStyle: {
+        color: 'black'
     }
 })
 )
@@ -57,32 +60,9 @@ const CombinationsQualification = (props: Props) => {
             {smallScreen ?
                 <Fragment>
                     <Grid container direction="row" justifyContent="center">
-                        <IconButton size="large" onClick={() => handleValueSmall("0")}><CancelIcon fontSize="large" /></IconButton>
-                        <IconButton size="large" onClick={() => handleValueSmall("5")}><TagFacesIcon fontSize="large" /></IconButton>
+                        <IconButton size="large" onClick={() => handleValueSmall("0")}><CancelIcon fontSize="large" className={classes.iconStyle}/></IconButton>
+                        <IconButton size="large" onClick={() => handleValueSmall("5")}><TagFacesIcon fontSize="large" className={classes.iconStyle}/></IconButton>
                     </Grid>
-
-                    {/* <FormControl>
-                        <RadioGroup
-                            aria-labelledby="demo-radio-buttons-group-label"
-                            defaultValue=""
-                            name="radio-buttons-group"
-                            row
-                            onChange={handleValue}
-                            value={qualification}
-                        >
-                            <FormControlLabel 
-                            sx={{fontSize: 50}}
-                            value="0" 
-                            control={<IconButton size="large"><CancelIcon fontSize="large"/></IconButton>} 
-                            label=""
-                            color="gray" />
-                            <FormControlLabel 
-                            value="5" 
-                            control={<IconButton size="large"><TagFacesIcon fontSize="large"/></IconButton>} 
-                            label="" 
-                            labelPlacement="top" />
-                        </RadioGroup>
-                    </FormControl> */}
                 </Fragment>
                 :
                 <Fragment>
