@@ -78,7 +78,7 @@ const CardFavorite = (props: Props) => {
                         </Grid>
                         <Grid container direction="row" justifyContent="space-between">
                             <Typography>{item?.brand}</Typography>
-                            <Typography>{item?.price ? "$" + item?.price : ""}</Typography>
+                            <Typography>{item?.price ? "$ " + Number(item?.price).toLocaleString("de-DE") : ""} </Typography>
                         </Grid>
                         <Grid container className={classes.containerProject}>
                             <Button
