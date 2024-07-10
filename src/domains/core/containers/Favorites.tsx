@@ -47,7 +47,6 @@ const Favorites = () => {
         // Iterate over the array
         jsonArray.forEach((item: any) => {
             if (item !== undefined) {
-                console.log("ITEM", item);
                 if (!grouped[item.furniture_type]) {
                     grouped[item.furniture_type] = [];
                 }
@@ -91,9 +90,9 @@ const Favorites = () => {
                                             </AccordionSummary>
                                             <AccordionDetails>
                                                 {listGroup[element].length > 1 ?
-                                                    listGroup[element].map((item: ItemCatalogue) => {
+                                                    listGroup[element].map((item: ItemCatalogue, index: number) => {
                                                         return (
-                                                            <CardFavorite item={item} />
+                                                            <CardFavorite item={item} key={index}/>
                                                         )
                                                     })
                                                     : null}

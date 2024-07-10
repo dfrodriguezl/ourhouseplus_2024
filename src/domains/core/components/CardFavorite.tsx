@@ -1,9 +1,21 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { ItemCatalogue } from "../models";
-import { Card, CardContent, CardMedia, Grid, Typography, useMediaQuery } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, Grid, Theme, Typography, useMediaQuery } from "@mui/material";
 import theme from "app/theme";
 import AWS from 'aws-sdk';
 import { GetObjectRequest } from "aws-sdk/clients/s3";
+import { makeStyles } from "@mui/styles";
+import FolderIcon from '@mui/icons-material/Folder';
+
+const useStyles = makeStyles((theme: Theme) => ({
+    containerProject: {
+        background: '#707070',
+        height: '35px'
+    },
+    buttonProject: {
+        width: "100%"
+    }
+}));
 
 interface OwnProps {
     item?: ItemCatalogue;
@@ -14,6 +26,7 @@ const CardFavorite = (props: Props) => {
     const { item } = props;
     const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const [imageSrc, setImageSrc] = useState<string>();
+    const classes = useStyles();
 
     useEffect(() => {
         const getURLImage = () => {
@@ -46,7 +59,7 @@ const CardFavorite = (props: Props) => {
         }
 
         getURLImage()
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+
     }, [item])
 
     return (
@@ -65,7 +78,16 @@ const CardFavorite = (props: Props) => {
                         </Grid>
                         <Grid container direction="row" justifyContent="space-between">
                             <Typography>{item?.brand}</Typography>
-                            <Typography>{item?.price}</Typography>
+                            <Typography>{item?.price ? "$" + item?.price : ""}</Typography>
+                        </Grid>
+                        <Grid container className={classes.containerProject}>
+                            <Button
+                                className={classes.buttonProject}
+                                variant="outlined"
+                                startIcon={<FolderIcon />}
+                            >
+                                Save to project...
+                            </Button>
                         </Grid>
                     </CardContent>
                 </Fragment> :
