@@ -218,6 +218,10 @@ const Header = () => {
     history("/favorites")
   }
 
+  const goToProjects = () => {
+    history("/projects")
+  }
+
 
   return (
     smallScreen ?
@@ -271,6 +275,10 @@ const Header = () => {
                         <br />
                         <Button onClick={() => goToFavorites()}>
                           <MenuItem className={classes.menuItemStyle}>Favorites</MenuItem>
+                        </Button>
+                        <br />
+                        <Button onClick={() => goToProjects()}>
+                          <MenuItem className={classes.menuItemStyle}>Projects</MenuItem>
                         </Button>
                         <br />
                         <Button onClick={() => logout()}>
