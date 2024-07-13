@@ -17,6 +17,7 @@ export interface Project {
   projectStyle?: string;
   user?: string;
   rooms?: Room[];
+  furnitures?: string[];
 }
 
 export interface Room {

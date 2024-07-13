@@ -6,6 +6,7 @@ import AWS from 'aws-sdk';
 import { GetObjectRequest } from "aws-sdk/clients/s3";
 import { makeStyles } from "@mui/styles";
 import FolderIcon from '@mui/icons-material/Folder';
+import ModalProjects from "./ModalProjects";
 
 const useStyles = makeStyles((theme: Theme) => ({
     containerProject: {
@@ -27,6 +28,9 @@ const CardFavorite = (props: Props) => {
     const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const [imageSrc, setImageSrc] = useState<string>();
     const classes = useStyles();
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
         const getURLImage = () => {
@@ -64,6 +68,7 @@ const CardFavorite = (props: Props) => {
 
     return (
         <Card style={smallScreen ? { marginTop: 10 } : {}}>
+            <ModalProjects open={open} onClose={handleClose} furnitureID={item?.idItem!} />
             {smallScreen ?
                 <Fragment>
                     <CardMedia
@@ -85,6 +90,7 @@ const CardFavorite = (props: Props) => {
                                 className={classes.buttonProject}
                                 variant="outlined"
                                 startIcon={<FolderIcon />}
+                                onClick={handleOpen}
                             >
                                 Save to project...
                             </Button>
