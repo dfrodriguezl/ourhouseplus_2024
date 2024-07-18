@@ -13,6 +13,7 @@ import Combinations from 'domains/core/containers/Combinations';
 import Search from 'domains/core/containers/Search';
 import Favorites from 'domains/core/containers/Favorites';
 import ProjectsMobile from 'domains/core/containers/ProjectsMobile';
+import CreateProjectMobile from 'domains/core/containers/CreateProjectMobile';
 
 
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/search" element={<Search />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/projects" element={<ProjectsMobile />} />
+            <Route path="/newProject" element={<CreateProjectMobile />} />
           </Routes>
           <Footer />
         </ThemeProvider>

@@ -5,7 +5,7 @@ export interface Project {
   idProject?: string;
   name: string;
   location: string;
-  deliveryDueDate: string;
+  deliveryDueDate?: string;
   picture?: any;
   livingRoom?: boolean;
   livingRoomNumber?: number;

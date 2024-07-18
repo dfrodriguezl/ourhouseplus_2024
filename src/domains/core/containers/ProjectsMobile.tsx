@@ -8,6 +8,7 @@ import FolderOpenIcon from '@mui/icons-material/FolderOpen';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { makeStyles } from '@mui/styles';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) => ({
     buttonNewProject: {
@@ -24,6 +25,7 @@ const ProjectsMobile = () => {
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const classes = useStyles();
+    const history = useNavigate();
 
     useEffect(() => {
 
@@ -35,6 +37,10 @@ const ProjectsMobile = () => {
 
         getProjects()
     }, [user])
+
+    const goToNewProject = () => {
+        history("/newProject")
+    }
 
     return (
         <PageContainer background="create-project">
@@ -50,6 +56,7 @@ const ProjectsMobile = () => {
                                 variant="contained"
                                 endIcon={<AddCircleIcon />}
                                 className={classes.buttonNewProject}
+                                onClick={() => goToNewProject()}
                             >New Project</Button>
                         </Box>
                         <Box width="100%">
