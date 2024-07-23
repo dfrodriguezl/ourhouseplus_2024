@@ -32,7 +32,14 @@ const Favorites = () => {
     const makeJoinByIdItem = (favorites: any, items: any) => {
         if (favorites.length > 0 && items.length > 0) {
             const matchList = favorites.map((favorite: any) => {
-                return items.filter((ic: any) => ic.idItem === favorite.idItem)[0];
+                let item = items.filter((ic: any) => ic.idItem === favorite.idItem)[0];
+
+                if(item){
+                    item["idFavorite"] = favorite.idFavorite;
+                }
+                    
+                
+                return item;
             }, []);
 
             const listGroupByFurnitureType = regroupByCategory(matchList);
@@ -92,7 +99,7 @@ const Favorites = () => {
                                                 {listGroup[element].length > 1 ?
                                                     listGroup[element].map((item: ItemCatalogue, index: number) => {
                                                         return (
-                                                            <CardFavorite item={item} key={index}/>
+                                                            <CardFavorite item={item} key={index} setListGroup={getAllFavoritesByUser}/>
                                                         )
                                                     })
                                                     : null}

@@ -1,12 +1,14 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { ItemCatalogue } from "../models";
-import { Button, Card, CardContent, CardMedia, Grid, Theme, Typography, useMediaQuery } from "@mui/material";
+import { Button, Card, CardContent, CardHeader, CardMedia, Grid, IconButton, Snackbar, Theme, Typography, useMediaQuery } from "@mui/material";
 import theme from "app/theme";
 import AWS from 'aws-sdk';
 import { GetObjectRequest } from "aws-sdk/clients/s3";
 import { makeStyles } from "@mui/styles";
 import FolderIcon from '@mui/icons-material/Folder';
 import ModalProjects from "./ModalProjects";
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import { deletes } from "app/api";
 
 const useStyles = makeStyles((theme: Theme) => ({
     containerProject: {
@@ -20,17 +22,19 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 interface OwnProps {
     item?: ItemCatalogue;
+    setListGroup?: any;
 }
 
 type Props = OwnProps;
 const CardFavorite = (props: Props) => {
-    const { item } = props;
+    const { item, setListGroup } = props;
     const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const [imageSrc, setImageSrc] = useState<string>();
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
 
     useEffect(() => {
         const getURLImage = () => {
@@ -66,40 +70,61 @@ const CardFavorite = (props: Props) => {
 
     }, [item])
 
-    return (
-        <Card style={smallScreen ? { marginTop: 10 } : {}}>
-            <ModalProjects open={open} onClose={handleClose} furnitureID={item?.idItem!} />
-            {smallScreen ?
-                <Fragment>
-                    <CardMedia
-                        component="img"
-                        height="194"
-                        image={imageSrc}
-                        alt={item?.name} />
-                    <CardContent>
-                        <Grid container direction="row" justifyContent="space-between">
-                            <Typography>{item?.name}</Typography>
-                            <Typography>{item?.dimension_h} {item?.dimension_l} {item?.dimension_w}</Typography>
-                        </Grid>
-                        <Grid container direction="row" justifyContent="space-between">
-                            <Typography>{item?.brand}</Typography>
-                            <Typography>{item?.price ? "$ " + Number(item?.price).toLocaleString("de-DE") : ""} </Typography>
-                        </Grid>
-                        <Grid container className={classes.containerProject}>
-                            <Button
-                                className={classes.buttonProject}
-                                variant="outlined"
-                                startIcon={<FolderIcon />}
-                                onClick={handleOpen}
-                            >
-                                Save to project...
-                            </Button>
-                        </Grid>
-                    </CardContent>
-                </Fragment> :
-                null}
+    const deleteFavorite = () => {
+        deletes(`/favorites/${item?.idFavorite}`).then((response) => {
+            setOpenSnackbar(true)
+            setListGroup()
+        })
+    }
 
-        </Card>
+    return (
+        <Fragment>
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                message="Favorite item deleted"
+            />
+            <Card style={smallScreen ? { marginTop: 10 } : {}}>
+                <ModalProjects open={open} onClose={handleClose} furnitureID={item?.idItem!} />
+                {smallScreen ?
+                    <Fragment>
+                        <CardHeader
+                            action={
+                                <IconButton aria-label="delete-item">
+                                    <RemoveCircleIcon onClick={() => deleteFavorite()} />
+                                </IconButton>
+                            }
+                        />
+                        <CardMedia
+                            component="img"
+                            height="194"
+                            image={imageSrc}
+                            alt={item?.name} />
+                        <CardContent>
+                            <Grid container direction="row" justifyContent="space-between">
+                                <Typography>{item?.name}</Typography>
+                                <Typography>{item?.dimension_h} {item?.dimension_l} {item?.dimension_w}</Typography>
+                            </Grid>
+                            <Grid container direction="row" justifyContent="space-between">
+                                <Typography>{item?.brand}</Typography>
+                                <Typography>{item?.price ? "$ " + Number(item?.price).toLocaleString("de-DE") : ""} </Typography>
+                            </Grid>
+                            <Grid container className={classes.containerProject}>
+                                <Button
+                                    className={classes.buttonProject}
+                                    variant="outlined"
+                                    startIcon={<FolderIcon />}
+                                    onClick={handleOpen}
+                                >
+                                    Save to project...
+                                </Button>
+                            </Grid>
+                        </CardContent>
+                    </Fragment> :
+                    null}
+            </Card>
+        </Fragment>
+
     )
 }
 

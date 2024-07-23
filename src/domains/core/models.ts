@@ -50,6 +50,7 @@ export interface ItemCatalogue {
   material: string;
   Image_path: string;
   price?: string;
+  idFavorite?: string;
 }
 
 export interface Favorite {
