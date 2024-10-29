@@ -34,11 +34,12 @@ interface OwnProps {
 type Props = OwnProps;
 const ModalDeleteProject = (props: Props) => {
     const { open, onClose, project, getProjects } = props;
+    // eslint-disable-next-line
     const [projects, setProjects] = useState<Project[]>([]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     const { user } = useAuth0();
+    // eslint-disable-next-line
     const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
 
 
     useEffect(() => {
