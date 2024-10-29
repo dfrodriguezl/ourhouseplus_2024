@@ -44,6 +44,10 @@ const ModalProjects = (props: Props) => {
             furnitures = project.furnitures;
         }
 
+        if (!project.rooms) {
+            project.rooms = [];
+        }
+
         furnitures.push(furnitureID);
 
         project.furnitures = furnitures;
@@ -68,7 +72,7 @@ const ModalProjects = (props: Props) => {
             <Snackbar
                 open={openSnackbar}
                 autoHideDuration={6000}
-                message="Proyecto creado"
+                message="Project modified"
             />
             <Modal
                 open={open}

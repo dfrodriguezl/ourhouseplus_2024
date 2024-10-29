@@ -135,7 +135,7 @@ export default function CreateProjectMobile(props: Props) {
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
-        message="Proyecto creado"
+        message="Project created"
       />
       {isAuthenticated ?
         smallScreen ?

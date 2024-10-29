@@ -208,7 +208,7 @@ export default function Step3Project(props: Props) {
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
-        message="Proyecto creado"
+        message="Project created"
       />
       <Typography variant="subtitle1">PROJECT IMAGE</Typography>
       <Grid container justifyContent="space-between" className={classes.containerFormStyle} direction="column" alignContent='center' alignItems='center'>

@@ -222,6 +222,10 @@ const Header = () => {
     history("/projects")
   }
 
+  const goToCombinations = () => {
+    history("/combinations")
+  }
+
 
   return (
     smallScreen ?
@@ -269,7 +273,7 @@ const Header = () => {
                       <br />
                       <br />
                       <div className={classes.menuContainer}>
-                        <Button>
+                        <Button onClick={() => goToCombinations()}>
                           <MenuItem className={classes.menuItemStyle}>Train your AI</MenuItem>
                         </Button>
                         <br />

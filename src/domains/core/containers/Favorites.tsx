@@ -32,28 +32,28 @@ const Favorites = () => {
     const makeJoinByIdItem = (favorites: any, items: any) => {
         if (favorites.length > 0 && items.length > 0) {
             const matchList = favorites.map((favorite: any) => {
-                let item = items.filter((ic: any) => ic.idItem === favorite.idItem)[0];
+                let item = items.filter((ic: any) => String(ic.idItem) === String(favorite.idItem))[0];
 
-                if(item){
+                if (item) {
                     item["idFavorite"] = favorite.idFavorite;
                 }
-                    
-                
+
+
                 return item;
             }, []);
 
-            const listGroupByFurnitureType = regroupByCategory(matchList);
+            const listGroupByFurnitureType = regroupByCategory(matchList, "Erased");
             SetListGroup(listGroupByFurnitureType);
 
         }
     }
 
-    const regroupByCategory = (jsonArray: any) => {
+    const regroupByCategory = (jsonArray: any, exceptCategory: string) => {
         const grouped: any = {};
 
         // Iterate over the array
         jsonArray.forEach((item: any) => {
-            if (item !== undefined) {
+            if (item !== undefined && item.furniture_type !== exceptCategory) {
                 if (!grouped[item.furniture_type]) {
                     grouped[item.furniture_type] = [];
                 }
@@ -96,10 +96,10 @@ const Favorites = () => {
                                                 </Grid>
                                             </AccordionSummary>
                                             <AccordionDetails>
-                                                {listGroup[element].length > 1 ?
+                                                {listGroup[element].length > 0 ?
                                                     listGroup[element].map((item: ItemCatalogue, index: number) => {
                                                         return (
-                                                            <CardFavorite item={item} key={index} setListGroup={getAllFavoritesByUser}/>
+                                                            <CardFavorite item={item} key={index} setListGroup={getAllFavoritesByUser} />
                                                         )
                                                     })
                                                     : null}

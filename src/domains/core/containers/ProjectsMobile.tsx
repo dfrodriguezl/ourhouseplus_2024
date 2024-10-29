@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '.';
-import { Accordion, AccordionSummary, Box, Button, Grid, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
-import { Project } from '../models';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Grid, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { ItemCatalogue, Project } from '../models';
 import { get } from 'app/api';
 import { useAuth0 } from '@auth0/auth0-react';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
@@ -9,6 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import { makeStyles } from '@mui/styles';
 import { useNavigate } from 'react-router-dom';
+import CardFavorite from '../components/CardFavorite';
 
 const useStyles = makeStyles((theme: Theme) => ({
     buttonNewProject: {
@@ -16,6 +17,13 @@ const useStyles = makeStyles((theme: Theme) => ({
         textTransform: "none",
         borderRadius: 20,
         margin: "20px 0"
+    },
+    blackAccordion: {
+        background: "#2A2A2A",
+        color: "white"
+    },
+    whiteIcon: {
+        color: "white"
     }
 }));
 
@@ -30,8 +38,34 @@ const ProjectsMobile = () => {
     useEffect(() => {
 
         const getProjects = () => {
+            
+
             get("/projects/user/" + user?.email).then((data: any) => {
-                setProjects(data.data.Items);
+                
+                get("/items-catalogue").then((item: any) => {
+                    
+                    const projectsWithFurnitures = data.data.Items.map((element: any) => {
+                        let furnituresFiltered: any = [];
+                        if (element.furnitures) {
+                            element.furnitures.map((furniture: any) => {
+                                const itemFiltered = item.data.Items.filter((o: any) => String(o.idItem) === String(furniture));
+                                furnituresFiltered.push(itemFiltered[0]);
+                            }, [])
+                        }
+
+                        element.furnituresFiltered = furnituresFiltered;
+
+                        return element;
+
+                    }, [])
+
+                    console.log("FURNITURES FILTERED", projectsWithFurnitures);
+                    setProjects(projectsWithFurnitures);
+                })
+
+
+
+                
             })
         }
 
@@ -73,6 +107,21 @@ const ProjectsMobile = () => {
                                                     <Typography>{project.location}</Typography>
                                                 </Grid>
                                             </AccordionSummary>
+                                            <AccordionDetails>
+                                                <Accordion className={classes.blackAccordion}>
+                                                    <AccordionSummary
+                                                        expandIcon={<ExpandMoreIcon className={classes.whiteIcon} />}>
+                                                        <Typography>Favorite Items</Typography>
+                                                    </AccordionSummary>
+                                                    <AccordionDetails>
+                                                        {project.furnituresFiltered?.map((item: ItemCatalogue, index: number) => {
+                                                            return (
+                                                                <CardFavorite key={index} item={item}/>
+                                                            )
+                                                        })}
+                                                    </AccordionDetails>
+                                                </Accordion>
+                                            </AccordionDetails>
                                         </Accordion>
                                     )
                                 })
