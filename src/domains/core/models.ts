@@ -1,4 +1,4 @@
-import { image_1, image_2 } from 'assets';
+import { image_1, image_2, Step1_Carousel, Step2_Carousel, Step3_Carousel } from 'assets';
 
 
 export interface Project {
@@ -394,6 +394,24 @@ export const types = [
   'Table lamp',
   'Suspended Lights',
   'Chandelier'
+]
+
+export const homeElements = [
+  {
+    img: Step1_Carousel,
+    textBold: "Train your ai by curating your style",
+    textBottom: "swipe through curated items, and watch your ai assistant learn and refine your style."
+  },
+  {
+    img: Step2_Carousel,
+    textBold: "Stay on budget effortlessly thank to AI ,",
+    textBottom: "with real-time tracking and organized product lists"
+  },
+  {
+    img: Step3_Carousel,
+    textBold: "Create your personal design playlist! save your favorite items,",
+    textBottom: "and let your ai assistant prioritize them for your next project."
+  }
 ]
 
 

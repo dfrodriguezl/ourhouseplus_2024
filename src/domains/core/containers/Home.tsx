@@ -4,6 +4,7 @@ import { HomeSub, PageContainer, } from 'domains/core/containers';
 import { Slogan } from 'domains/common/components';
 import { useAuth0 } from '@auth0/auth0-react';
 import BannerHeaderMobile from '../components/BannerHeaderMobile';
+import BannerHeaderMobile2 from '../components/BannerHeaderMobile2';
 
 
 interface OwnProps {
@@ -21,6 +22,7 @@ const Home = (props: Props) => {
     smallScreen ?
       <PageContainer background="home-black">
         <BannerHeaderMobile />
+        <BannerHeaderMobile2 />
       </PageContainer>
       : <Fragment>
         <PageContainer background="home">

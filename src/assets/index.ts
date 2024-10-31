@@ -1,3 +1,6 @@
 export {default as background_2024} from './background_2024.png'
 export {default as image_1} from './image_1.png'
 export {default as image_2} from './image_2.png'
+export {default as Step1_Carousel} from './Step1_Carousel_Home_Mobile.png'
+export {default as Step2_Carousel} from './Step2_Carousel_Home_Mobile.png'
+export {default as Step3_Carousel} from './Step3_Carousel_Home_Mobile.png'
