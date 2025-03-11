@@ -138,7 +138,6 @@ export default function CreateProjectMobile(props: Props) {
         message="Project created"
       />
       {isAuthenticated ?
-        smallScreen ?
           <Grid item container direction="column" alignContent="center" textAlign="center">
             <Typography>PROJECT</Typography>
             <Box>
@@ -203,7 +202,7 @@ export default function CreateProjectMobile(props: Props) {
             </Grid>
             <Grid container className={classes.whiteBox} />
           </Grid>
-          : null : null}
+          : null }
     </PageContainer>
   );
 }

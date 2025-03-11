@@ -14,7 +14,8 @@ import Search from 'domains/core/containers/Search';
 import Favorites from 'domains/core/containers/Favorites';
 import ProjectsMobile from 'domains/core/containers/ProjectsMobile';
 import CreateProjectMobile from 'domains/core/containers/CreateProjectMobile';
-
+import UploadStory from 'domains/core/containers/Upload';
+import StoryBlog from 'domains/core/containers/StoryBlog';
 
 
 declare module '@mui/styles/defaultTheme' {
@@ -39,6 +40,8 @@ function App() {
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/projects" element={<ProjectsMobile />} />
             <Route path="/newProject" element={<CreateProjectMobile />} />
+            <Route path="/upload" element={<UploadStory />} />
+            <Route path="/storyblog" element={<StoryBlog />} />
           </Routes>
           <Footer />
         </ThemeProvider>

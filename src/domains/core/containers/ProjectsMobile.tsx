@@ -1,6 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '.';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Grid, IconButton, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { 
+    Accordion, 
+    AccordionDetails, 
+    AccordionSummary, 
+    Box, 
+    Button, 
+    Grid, 
+    IconButton, 
+    Theme, 
+    Typography, 
+    useMediaQuery, 
+    useTheme } from '@mui/material';
 import { ItemCatalogue, Project } from '../models';
 import { get } from 'app/api';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -89,9 +100,6 @@ const ProjectsMobile = () => {
 
     return (
         <PageContainer background="create-project">
-            {isAuthenticated ?
-                smallScreen ?
-                
                     <Grid item container direction="column" alignContent="center" textAlign="center">
                         <ModalDeleteProject open={openModalDelete} onClose={handleCloseModal} project={projectToDelete} getProjects={getProjects}/>
                         <Typography>PROJECT</Typography>
@@ -144,7 +152,6 @@ const ProjectsMobile = () => {
                                 : null}
                         </Box>
                     </Grid>
-                    : null : null}
         </PageContainer>
     )
 }

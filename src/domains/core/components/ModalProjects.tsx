@@ -8,10 +8,10 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const style = {
     position: 'absolute',
-    top: '50%',
-    left: '50%',
+    //top: '50%',
+    //left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "70%",
+    //width: "70%",
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,

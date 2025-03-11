@@ -37,47 +37,26 @@ const TypeSelect = (props: Props) => {
     };
 
     return (
-        smallScreen ?
-            <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                    <InputLabel id="select-type-1-label">{name}</InputLabel>
-                    <Select
-                        labelId="select-type-1-label"
-                        id="select-type-1"
-                        value={typeLocal}
-                        label={name}
-                        onChange={handleChange}
-                        className={classes.selectStyleMobile}
-                        placeholder={name}
-                    >
-                        {options?.map((option: string, index: number) => {
-                            return (
-                                <MenuItem value={option} key={index}>{option}</MenuItem>
-                            )
-                        })}
-                    </Select>
-                </FormControl>
-            </Box>
-            : <Box sx={{ minWidth: 120 }}>
-                <FormControl fullWidth>
-                    <InputLabel id="select-type-1-label">{name}</InputLabel>
-                    <Select
-                        labelId="select-type-1-label"
-                        id="select-type-1"
-                        value={typeLocal}
-                        label={name}
-                        onChange={handleChange}
-                        className={classes.selectStyle}
-                    >
-                        {options?.map((option: string, index: number) => {
-                            return (
-                                <MenuItem value={option} key={index}>{option}</MenuItem>
-                            )
-                        })}
-                    </Select>
-                    <FormHelperText>{helper}</FormHelperText>
-                </FormControl>
-            </Box>
+        <Box sx={{ minWidth: 120 }}>
+            <FormControl fullWidth>
+                <InputLabel id="select-type-1-label">{name}</InputLabel>
+                <Select
+                    labelId="select-type-1-label"
+                    id="select-type-1"
+                    value={typeLocal}
+                    label={name}
+                    onChange={handleChange}
+                    className={classes.selectStyle}
+                >
+                    {options?.map((option: string, index: number) => {
+                        return (
+                            <MenuItem value={option} key={index}>{option}</MenuItem>
+                        )
+                    })}
+                </Select>
+                <FormHelperText>{helper}</FormHelperText>
+            </FormControl>
+        </Box>
     )
 }
 

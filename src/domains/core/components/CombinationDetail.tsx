@@ -104,28 +104,6 @@ const CombinationDetail = (props: Props) => {
 
     return (
         <Card style={smallScreen ? { marginTop: 10 } : {}}>
-            {smallScreen ?
-                <Fragment>
-                    <CardHeader
-                        title={item.name}
-                        subheader={item.brand}
-                        subheaderTypographyProps={{ color: 'gray' }}
-                        action={
-                            favoriteElement === true ?
-                                <IconButton aria-label="favorites" onClick={() => deleteFavorite()}>
-                                    <StarIcon className={classes.iconBorderStyle} />
-                                </IconButton>
-                                :
-                                <IconButton aria-label="favorites" onClick={() => createFavorite()}>
-                                    <StarBorderIcon className={classes.iconBorderStyle} />
-                                </IconButton>
-                        } />
-                    <CardMedia
-                        component="img"
-                        height="194"
-                        image={imageSrc}
-                        alt={item.name} />
-                </Fragment> :
                 <Fragment>
                     <CardHeader
                         title={item.name}
@@ -141,7 +119,7 @@ const CombinationDetail = (props: Props) => {
                         <Typography>Style: {item.style}</Typography>
                         <Typography>Brand: {item.brand}</Typography>
                     </CardContent>
-                </Fragment>}
+                </Fragment>
 
         </Card>
     )

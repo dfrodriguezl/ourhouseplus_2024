@@ -52,7 +52,7 @@ const FurnitureCombinations = (props: Props) => {
     return (
         <Grid container>
             {itemType1 && itemType2 ?
-                smallScreen ?
+
                     <Grid item container direction="column" justifyContent="space-around" alignItems="space-between">
                         <CombinationDetail item={itemType1!} />
                         <CombinationDetail item={itemType2!} />
@@ -60,7 +60,7 @@ const FurnitureCombinations = (props: Props) => {
                     : <Grid item container direction="row" justifyContent="space-around">
                         <CombinationDetail item={itemType1!} />
                         <CombinationDetail item={itemType2!} />
-                    </Grid> : null
+                    </Grid>
             }
         </Grid>
     )

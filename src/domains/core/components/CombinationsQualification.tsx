@@ -57,14 +57,6 @@ const CombinationsQualification = (props: Props) => {
 
     return (
         <Grid container justifyContent="center" direction="column" alignContent="center" className={classes.containerStyle}>
-            {smallScreen ?
-                <Fragment>
-                    <Grid container direction="row" justifyContent="center">
-                        <IconButton size="large" onClick={() => handleValueSmall("0")}><CancelIcon fontSize="large" className={classes.iconStyle}/></IconButton>
-                        <IconButton size="large" onClick={() => handleValueSmall("5")}><TagFacesIcon fontSize="large" className={classes.iconStyle}/></IconButton>
-                    </Grid>
-                </Fragment>
-                :
                 <Fragment>
                     <Typography variant="h6" className={classes.textStyle}>Combination Qualification</Typography>
                     <FormControl>
@@ -84,7 +76,7 @@ const CombinationsQualification = (props: Props) => {
                         </RadioGroup>
                     </FormControl>
                 </Fragment>
-            }
+
 
         </Grid>
     )

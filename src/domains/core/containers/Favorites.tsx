@@ -75,7 +75,6 @@ const Favorites = () => {
     return (
         <PageContainer background="create-project">
             {isAuthenticated ?
-                smallScreen ?
                     <Grid item container direction="column" alignContent="center" textAlign="center">
                         <Typography>FAVORITES</Typography>
                         <Box>
@@ -110,7 +109,7 @@ const Favorites = () => {
                                 : null}
                         </Box>
                     </Grid>
-                    : null : null}
+                    : null }
         </PageContainer>
     )
 }

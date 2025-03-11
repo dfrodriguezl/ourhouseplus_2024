@@ -8,8 +8,7 @@ import { RootState } from 'app/store';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     pageContainer: {
-      minHeight: '100vh',
-      // height: '100vh',
+      minHeight: '60vh',
       width: '100%',
       margin: 0
     },

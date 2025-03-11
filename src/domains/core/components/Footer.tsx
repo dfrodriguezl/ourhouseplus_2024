@@ -53,10 +53,7 @@ const Footer = () => {
   const classes = useStyles()
 
   return (
-    // <Grid container item className={classes.root} xs={12} justifyContent="flex-end">
-    //   <Typography className={classes.fontStyle}>HOUSE COLLECTION By HOUSE+</Typography>
-    // </Grid>
-    <Box component="footer" sx={{ py: 10, borderTop: "1px solid rgba(0, 0, 0, 0.1)", mt: 10 }}>
+    <Box component="footer" sx={{ py: 10, borderTop: "1px solid rgba(0, 0, 0, 0.1)"}}>
       <Container>
         <Grid container spacing={8}>
           {/* Sección 1: Story Submissions */}

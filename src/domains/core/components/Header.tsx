@@ -1,6 +1,8 @@
 import {
   AppBar,
   Button,
+  Box,
+  Container,
   Theme,
   MenuItem,
   MenuList,
@@ -26,6 +28,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import clsx from 'clsx';
+import { BorderBottom } from '@mui/icons-material';
 
 const drawerWidth = 300;
 
@@ -33,16 +36,19 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
       padding: '20px 0',
-      background: '#FFFFFF',
+      background: '#FFFFFF'
     },
     headerDesktop: {
-      padding: '50px 0',
-      background: 'transparent !important',
-      alignItems: 'center'
+      padding: '20px 0',
+      borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
+      background: 'white !important',
+      alignItems: 'center',
+      paddingLeft: '0px !important',
+      paddingRight: '0px !important'
     },
     menuButton: {
       marginLeft: 'auto',
-      border: '1px white'
+      border: '1px black'
     },
     member: {
       fontSize: 14,
@@ -60,12 +66,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     whiteButtons: {
       borderRadius: 15,
-      color: 'white',
+      color: 'black',
       textTransform: 'none',
     },
     becomeMember: {
       borderRadius: 15,
-      color: 'white !important',
+      color: 'black !important',
       textTransform: 'none',
       border: '2px solid white',
       padding: '2px 10px'
@@ -88,7 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     icon: {
       fontSize: "35px !important",
-      color: "white !important"
+      color: "black !important"
     },
     menu: {
       borderRadius: 15,
@@ -113,7 +119,7 @@ const useStyles = makeStyles((theme: Theme) =>
       cursor: 'pointer',
       borderRadius: 20,
       backgroundColor: '#1C3B09',
-      color: 'white',
+      color: 'black',
       textTransform: 'none',
       margin: '30px 10px',
       '&:hover': {
@@ -130,7 +136,7 @@ const useStyles = makeStyles((theme: Theme) =>
       textAlign: 'center',
       fontSize: 12,
       width: '100%',
-      color: 'white'
+      color: 'black'
     },
     buttonMenu: {
       marginBottom: -20
@@ -139,11 +145,17 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 50
     },
     logoText: {
-      color: 'white',
+      color: 'black',
       textAlign: 'center'
     },
-    whiteText: {
-      color: 'white'
+    blackText: {
+      color: 'black',
+      fontSize: 16,
+    },
+    titleText: {
+      color: 'black',
+      fontSize: 24,
+      letterSpacing: '4px'
     },
     headerMobile: {
       padding: '20px 0',
@@ -153,16 +165,16 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: 20
     },
     menuItemStyle: {
-      color: 'white',
+      color: 'black',
       display: 'block !important',
       textTransform: 'none'
     },
     menuTitleStyle: {
-      color: 'white'
+      color: 'black'
     },
     menuTitleContainerStyle: {
       marginLeft: 25,
-      color: 'white',
+      color: 'black',
       textTransform: 'none'
     }
   })
@@ -301,80 +313,110 @@ const Header = () => {
           </Toolbar>
         </AppBar>
       </Fragment>
-      : <AppBar position="static" elevation={0} className={classes.headerDesktop}>
-        <Grid container justifyContent='space-between'>
-          <Grid item>
-            <Link to="#">
-              <Typography variant="h6" className={classes.whiteText}>CS DECORATION</Typography>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link to="#">
-              <Typography variant="subtitle2" className={classes.whiteText}>PROJECT GALLERY</Typography>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link to="#">
-              <Typography variant="subtitle2" className={classes.whiteText}>FURNITURE SEARCH</Typography>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link to="#">
-              <Typography variant="subtitle2" className={classes.whiteText}>FURNITURE NEWS</Typography>
-            </Link>
-          </Grid>
-          <Grid item>
-            <div className={classes.menuButton}>
-              {
-                !isAuthenticated
-                  ?
-                  <Fragment>
+
+      : <AppBar elevation={0} className={classes.headerDesktop}>
+        <Container>
+          <Grid container alignItems="center" justifyContent="space-between">
+            <Grid item xs={4} container spacing={4} justifyContent="start">
+              <Grid item>
+                <Link to="#">
+                  <Typography variant="subtitle2" className={classes.blackText}>Stories</Typography>
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link to="#">
+                  <Typography variant="subtitle2" className={classes.blackText}>New Collections</Typography>
+                </Link>
+              </Grid>
+              <Grid item>
+                <Link to="#">
+                  <Typography variant="subtitle2" className={classes.blackText}>Search</Typography>
+                </Link>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Grid item container justifyContent="center">
+                <Link to="#">
+                  <Typography variant="h6" className={classes.titleText}>HOUSE COLLECTION</Typography>
+                </Link>
+              </Grid>
+            </Grid>
+            <Grid item xs={4} container justifyContent="flex-end">
+              <div className={classes.menuButton}>
+                {
+                  !isAuthenticated
+                    ?
                     <Fragment>
-                      <Button className={classes.whiteButtons} onClick={() => handleSignUp()}>
-                        Sign in
-                      </Button>
-                      {/* <Button className={classes.becomeMember} onClick={() => openRegister()}>
-                              Become a member
-                            </Button> */}
+                      <Fragment>
+                        <Button className={classes.blackText} onClick={() => handleSignUp()}>
+                          Sign in
+                        </Button>
+                        {/* <Button className={classes.becomeMember} onClick={() => openRegister()}>
+                                Become a member
+                              </Button> */}
+                      </Fragment>
                     </Fragment>
-                  </Fragment>
-                  :
-                  <Fragment>
-                    <Button
-                      className={classes.becomeMember}
-                      startIcon={<PersonIcon />}
-                      endIcon={<ExpandMoreIcon />}
-                      ref={anchorRef}
-                      aria-controls={openMenu ? 'menu-list-grow' : undefined}
-                      aria-haspopup="true"
-                      onClick={handleClick}>
-                      {user!.name}
-                    </Button>
-                    <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                      {({ TransitionProps, placement }) => (
-                        <Grow
-                          {...TransitionProps}
-                          style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                        >
-                          <Paper className={classes.menu}>
-                            <ClickAwayListener onClickAway={handleClose}>
-                              <MenuList autoFocusItem={true} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                {/* <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
-                                  <MenuItem onClick={handleClose}>Profile</MenuItem> */}
-                                <MenuItem onClick={() => logout()}>Log Out</MenuItem>
-                              </MenuList>
-                            </ClickAwayListener>
-                          </Paper>
-                        </Grow>
-                      )}
-                    </Popper>
-                  </Fragment>
+                    :
+                    <Fragment>
+                      <Button
+                        className={classes.becomeMember}
+                        startIcon={<PersonIcon />}
+                        endIcon={<ExpandMoreIcon />}
+                        ref={anchorRef}
+                        aria-controls={openMenu ? 'menu-list-grow' : undefined}
+                        aria-haspopup="true"
+                        onClick={handleClick}>
+                        {user!.name}
+                      </Button>
+                      <Popper open={openMenu} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+                        {({ TransitionProps, placement }) => (
+                          <Grow
+                            {...TransitionProps}
+                            style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
+                          >
+                            <Paper className={classes.menu}>
+                              <ClickAwayListener onClickAway={handleClose}>
+                                <MenuList autoFocusItem={true} id="menu-list-grow" onKeyDown={handleListKeyDown}>
+                                  {/* <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
+                                    <MenuItem onClick={handleClose}>Profile</MenuItem> */}
+                                  <div className={classes.menuContainer}>
+                                    <Button onClick={() => goToCombinations()}>
+                                      <MenuItem className={classes.menuItemStyle}>Train your AI</MenuItem>
+                                    </Button>
+                                    <br />
+                                    <Button onClick={() => goToFavorites()}>
+                                      <MenuItem className={classes.menuItemStyle}>Favorites</MenuItem>
+                                    </Button>
+                                    <br />
+                                    <Button onClick={() => goToProjects()}>
+                                      <MenuItem className={classes.menuItemStyle}>Projects</MenuItem>
+                                    </Button>
+                                    <br />
+                                    <Button onClick={() => logout()}>
+                                      <MenuItem className={classes.menuItemStyle}>Log out</MenuItem>
+                                    </Button>
+                                    <br />
+                                    <Button>
+                                      <MenuItem className={classes.menuItemStyle}>{user?.name}</MenuItem>
+                                    </Button>
+                                    <p className={classes.bottomText}>Copyright &copy; 2024 HouseCollection</p>
+                                  </div>
+                                </MenuList>
+                              </ClickAwayListener>
+                            </Paper>
+                          </Grow>
+                        )}
+                      </Popper>
+                    </Fragment>
 
-              }
+                }
 
-            </div>
-          </Grid>
-        </Grid >
+              </div>
+            </Grid>
+          </Grid >
+
+        </Container>
+
       </AppBar >)
 }
 

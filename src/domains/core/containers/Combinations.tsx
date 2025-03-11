@@ -91,7 +91,6 @@ const Combinations = () => {
     return (
         <PageContainer background="create-project">
             {isAuthenticated ?
-                smallScreen ?
                     <Grid container direction="column">
                         <Grid container direction="row" justifyContent="space-around">
                             <TypeSelect name="Type 1" helper="Select furniture type" options={types} setType={setType1} />
@@ -126,7 +125,7 @@ const Combinations = () => {
                             </Fragment>
                             : null
                         }
-                    </Grid> : null}
+                    </Grid>}
         </PageContainer>
     )
 }
