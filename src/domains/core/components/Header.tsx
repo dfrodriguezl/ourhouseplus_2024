@@ -240,6 +240,10 @@ const Header = () => {
     history("/combinations")
   }
 
+  const goToNewStory = () => {
+    history("/upload")
+  }
+
 
   return (
     smallScreen ?
@@ -287,6 +291,9 @@ const Header = () => {
                       <br />
                       <br />
                       <div className={classes.menuContainer}>
+                        <Button>
+                          <MenuItem className={classes.menuItemStyle}>{user?.name}</MenuItem>
+                        </Button>
                         <Button onClick={() => goToCombinations()}>
                           <MenuItem className={classes.menuItemStyle}>Train your AI</MenuItem>
                         </Button>
@@ -299,14 +306,14 @@ const Header = () => {
                           <MenuItem className={classes.menuItemStyle}>Projects</MenuItem>
                         </Button>
                         <br />
+                        <Button onClick={() => goToNewStory()}>
+                          <MenuItem className={classes.menuItemStyle}>New Story</MenuItem>
+                        </Button>
+                        <br />
                         <Button onClick={() => logout()}>
                           <MenuItem className={classes.menuItemStyle}>Log out</MenuItem>
                         </Button>
                         <br />
-                        <Button>
-                          <MenuItem className={classes.menuItemStyle}>{user?.name}</MenuItem>
-                        </Button>
-                        <p className={classes.bottomText}>Copyright &copy; 2024 HouseCollection</p>
                       </div>
                     </div>
                 }
@@ -379,6 +386,10 @@ const Header = () => {
                                   {/* <MenuItem onClick={() => openProjects()}>Your projects</MenuItem>
                                     <MenuItem onClick={handleClose}>Profile</MenuItem> */}
                                   <div className={classes.menuContainer}>
+                                    <Button>
+                                      <MenuItem className={classes.menuItemStyle}>{user?.name}</MenuItem>
+                                    </Button>
+                                    <br />
                                     <Button onClick={() => goToCombinations()}>
                                       <MenuItem className={classes.menuItemStyle}>Train your AI</MenuItem>
                                     </Button>
@@ -391,14 +402,13 @@ const Header = () => {
                                       <MenuItem className={classes.menuItemStyle}>Projects</MenuItem>
                                     </Button>
                                     <br />
+                                    <Button onClick={() => goToNewStory()}>
+                                      <MenuItem className={classes.menuItemStyle}>New Story</MenuItem>
+                                    </Button>
+                                    <br />
                                     <Button onClick={() => logout()}>
                                       <MenuItem className={classes.menuItemStyle}>Log out</MenuItem>
                                     </Button>
-                                    <br />
-                                    <Button>
-                                      <MenuItem className={classes.menuItemStyle}>{user?.name}</MenuItem>
-                                    </Button>
-                                    <p className={classes.bottomText}>Copyright &copy; 2024 HouseCollection</p>
                                   </div>
                                 </MenuList>
                               </ClickAwayListener>

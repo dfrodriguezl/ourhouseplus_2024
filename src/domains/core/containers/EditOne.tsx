@@ -113,9 +113,6 @@ const EditItem = () => {
                       <MenuItem value="Mid-Century-Modern">Mid-Century Modern</MenuItem>
                       <MenuItem value="Industrial">Industrial</MenuItem>
                       <MenuItem value="Minimalist">Minimalist</MenuItem>
-
-                      }
-                      }}}}}
                       <MenuItem value="Contemporary">Contemporary</MenuItem>
                       <MenuItem value="Traditional">Traditional</MenuItem>
                     </Select>
