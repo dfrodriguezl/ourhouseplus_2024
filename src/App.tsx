@@ -16,7 +16,11 @@ import ProjectsMobile from 'domains/core/containers/ProjectsMobile';
 import CreateProjectMobile from 'domains/core/containers/CreateProjectMobile';
 import UploadStory from 'domains/core/containers/Upload';
 import StoryBlog from 'domains/core/containers/StoryBlog';
-
+import ProjectLanding from 'domains/core/containers/ProjectLanding';
+import RoomDetail from 'domains/core/containers/RoomDetail';
+import AdminBlog from 'domains/core/containers/AdminBlog';
+import AdminItems from 'domains/core/containers/AdminItems';
+import EditOne from 'domains/core/containers/EditOne';
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -42,6 +46,11 @@ function App() {
             <Route path="/newProject" element={<CreateProjectMobile />} />
             <Route path="/upload" element={<UploadStory />} />
             <Route path="/storyblog" element={<StoryBlog />} />
+            <Route path="/projectLanding" element={<ProjectLanding />} />
+            <Route path="/room" element={<RoomDetail />} />
+            <Route path="/adminblog" element={<AdminBlog />} />
+            <Route path="/adminitems" element={<AdminItems />} />
+            <Route path="/editItem" element={<EditOne />} />
           </Routes>
           <Footer />
         </ThemeProvider>

@@ -37,7 +37,7 @@ const Upload = (props: OwnProps) => {
         <Fragment>
             <PageContainer background="upload">
                 <Container maxWidth="md">
-                    <Typography variant="h4" sx={{ letterSpacing: 4, marginTop: '14vh', marginBottom: '4vh', textAlign: 'left' }}>
+                    <Typography variant="h4" sx={{ letterSpacing: 4, marginTop: '12vh', marginBottom: '4vh', textAlign: 'left' }}>
                         UPLOAD STORY
                     </Typography>
 
@@ -160,7 +160,7 @@ const Upload = (props: OwnProps) => {
                             </Grid>
 
                             {/* Buttons */}
-                            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
+                            <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', gap: 2, marginBottom: 5 }}>
                                 <Button variant="contained" sx={{ backgroundColor: '#000', color: '#fff', borderRadius: 0 }} type="submit">Publish Story</Button>
                                 <Button variant="outlined" color="secondary" sx={{ borderRadius: 0 }}>Save as Draft</Button>
                             </Grid>

@@ -151,6 +151,7 @@ const useStyles = makeStyles((theme: Theme) =>
     blackText: {
       color: 'black',
       fontSize: 16,
+      paddingRight: '0 !important'
     },
     titleText: {
       color: 'black',
@@ -167,7 +168,8 @@ const useStyles = makeStyles((theme: Theme) =>
     menuItemStyle: {
       color: 'black',
       display: 'block !important',
-      textTransform: 'none'
+      textTransform: 'none',
+      paddingRight: '0 !important'
     },
     menuTitleStyle: {
       color: 'black'
@@ -271,7 +273,7 @@ const Header = () => {
                     <div>
                       <CloseIcon className={classes.iconClose} onClick={() => handleDrawerClose()} />
                       <div className={classes.menuContainer}>
-                        <Button onClick={() => handleSignUp()}>
+                        <Button className={classes.menuItemStyle} onClick={() => handleSignUp()}>
                           <MenuItem className={classes.menuItemStyle}>Sign in</MenuItem>
                         </Button>
                         <p className={classes.bottomText}>Copyright &copy; 2024 HouseCollection</p>
@@ -351,9 +353,6 @@ const Header = () => {
                         <Button className={classes.blackText} onClick={() => handleSignUp()}>
                           Sign in
                         </Button>
-                        {/* <Button className={classes.becomeMember} onClick={() => openRegister()}>
-                                Become a member
-                              </Button> */}
                       </Fragment>
                     </Fragment>
                     :

@@ -12,3 +12,6 @@ export {default as barSeatingArea} from './bar-seating-area.jpg';
 export {default as barEntranceHallway} from './bar-entrance-hallway.jpg';
 export {default as barDetail} from './bar-detail.jpg';
 export {default as fullBarView} from './full-bar-view.jpg';
+export {default as sofa} from './sofa.jpeg';
+export {default as chair} from './chair.jpeg';
+export {default as table} from './table.jpg';
