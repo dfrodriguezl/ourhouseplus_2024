@@ -8,7 +8,6 @@ import {
     MenuItem,
     Box,
     Container,
-    useTheme,
     Snackbar,
 } from '@mui/material';
 import { PageContainer } from 'domains/core/containers';
@@ -21,7 +20,7 @@ import { PutObjectRequest } from 'aws-sdk/clients/s3';
 
 
 const Upload = () => {
-    const { isAuthenticated, user } = useAuth0();
+    const { user } = useAuth0();
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [selectedMainImage, setSelectedMainImage] = useState<File>();
     const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);

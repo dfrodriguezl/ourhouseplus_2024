@@ -364,6 +364,13 @@ export interface Article {
   user: string;
 }
 
+export const ArticlesCategory: Record<string, string> =  {
+  "home": "Home",
+  "wanderlust": "Wanderlust",
+  "design": "Design",
+  "architecture": "Architecture"
+}
+
 export const projectsBudget = [
   {
     id: 1,
