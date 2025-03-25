@@ -1,7 +1,5 @@
 import React, { useState, Fragment } from "react";
 import {
-  AppBar,
-  Toolbar,
   Typography,
   Container,
   Button,
@@ -11,7 +9,6 @@ import {
   CardMedia,
   CardContent,
   TextField,
-  MenuItem,
   Pagination,
 } from "@mui/material";
 import { PageContainer } from 'domains/core/containers';
@@ -30,7 +27,6 @@ const items = [
 
 const AdminItems = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [search, setSearch] = useState("");
   const [filter, setFilter] = useState("All Items");
 
   const handleSearch = () => {

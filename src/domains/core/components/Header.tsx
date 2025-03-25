@@ -1,7 +1,6 @@
 import {
   AppBar,
   Button,
-  Box,
   Container,
   Theme,
   MenuItem,
@@ -28,7 +27,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
 import clsx from 'clsx';
-import { BorderBottom } from '@mui/icons-material';
 
 const drawerWidth = 300;
 

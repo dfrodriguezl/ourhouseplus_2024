@@ -1,19 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Favorite, ItemCatalogue } from '../models';
-import { Card, CardContent, CardHeader, CardMedia, IconButton, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { ItemCatalogue } from '../models';
+import { Card, CardContent, CardHeader, CardMedia, Typography, useMediaQuery, useTheme } from '@mui/material';
 import AWS from 'aws-sdk';
 import { GetObjectRequest } from 'aws-sdk/clients/s3';
-import makeStyles from '@mui/styles/makeStyles';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import StarIcon from '@mui/icons-material/Star';
 import { useAuth0 } from '@auth0/auth0-react';
-import { deletes, get, post } from 'app/api';
+import { get } from 'app/api';
 
-const useStyles = makeStyles((theme: Theme) => ({
-    iconBorderStyle: {
-        color: 'black'
-    }
-}));
+// const useStyles = makeStyles((theme: Theme) => ({
+//     iconBorderStyle: {
+//         color: 'black'
+//     }
+// }));
 
 interface OwnProps {
     item: ItemCatalogue;
@@ -25,9 +22,9 @@ const CombinationDetail = (props: Props) => {
     const [imageSrc, setImageSrc] = useState<string>();
     const theme = useTheme();
     const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-    const classes = useStyles();
-    const [favoriteElement, setFavoriteElement] = useState<boolean>(false);
-    const [favoriteItem, setFavoriteItem] = useState<Favorite>();
+    // const classes = useStyles();
+    // const [favoriteElement, setFavoriteElement] = useState<boolean>(false);
+    // const [favoriteItem, setFavoriteItem] = useState<Favorite>();
     const { user } = useAuth0();
 
 
@@ -68,26 +65,26 @@ const CombinationDetail = (props: Props) => {
     }, [item])
 
     const setFavorite = (type: boolean) => {
-        setFavoriteElement(type)
+        // setFavoriteElement(type)
     }
 
-    const createFavorite = () => {
-        const dataRequest = {
-            idItem: item?.idItem,
-            user: user?.email
-        }
+    // const createFavorite = () => {
+    //     const dataRequest = {
+    //         idItem: item?.idItem,
+    //         user: user?.email
+    //     }
 
-        post("/favorites", { data: dataRequest }).then((response) => {
-            setFavorite(true)
-        })
-    }
+    //     post("/favorites", { data: dataRequest }).then((response) => {
+    //         setFavorite(true)
+    //     })
+    // }
 
     const getFavorite = () => {
         get(`/favorites/item/${user?.email}/${item.idItem}`).then((response) => {
             const items = response.data["Items"];
             if (items.length > 0) {
                 setFavorite(true)
-                setFavoriteItem(items[0])
+                // setFavoriteItem(items[0])
             } else {
                 setFavorite(false)
             }
@@ -96,11 +93,11 @@ const CombinationDetail = (props: Props) => {
     }
 
 
-    const deleteFavorite = () => {
-        deletes(`/favorites/${favoriteItem?.idFavorite}`).then((response) => {
-            setFavorite(false)
-        })
-    }
+    // const deleteFavorite = () => {
+    //     deletes(`/favorites/${favoriteItem?.idFavorite}`).then((response) => {
+    //         setFavorite(false)
+    //     })
+    // }
 
     return (
         <Card style={smallScreen ? { marginTop: 10 } : {}}>

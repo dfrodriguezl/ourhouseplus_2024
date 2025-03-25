@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '.';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Grid, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Grid, Typography } from '@mui/material';
 import { ItemCatalogue } from '../models';
 import { get } from 'app/api';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -10,8 +10,6 @@ import CardFavorite from '../components/CardFavorite';
 
 const Favorites = () => {
     const { user, isAuthenticated } = useAuth0();
-    const theme = useTheme();
-    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
     const [listGroup, SetListGroup] = useState<any[]>([]);
 
     const getAllFavoritesByUser = () => {

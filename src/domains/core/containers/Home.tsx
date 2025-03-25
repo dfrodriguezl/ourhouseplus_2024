@@ -5,21 +5,18 @@ import {
   Card,
   CardMedia,
   CardContent,
-  useMediaQuery,
-  useTheme,
   Container
 } from '@mui/material';
 import { HomeSub, PageContainer, } from 'domains/core/containers';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Article, ArticlesCategory } from '../models';
 import { get } from 'app/api';
+import { Link } from 'react-router-dom';
 
 
 const Home = () => {
   const { isAuthenticated, user } = useAuth0();
   const isAdmin = isAuthenticated ? user!['http://ourhouseplus.com/roles'].includes('admin') : false;
-  const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const [articles, setArticles] = useState<Article[]>([]);
 
 
@@ -36,7 +33,7 @@ const Home = () => {
           <Grid container spacing={4} justifyContent="center">
             {articles.map((article) => (
               <Grid item xs={12} sm={6} md={4} key={article.articleId}>
-                <Card component="a" href="#" sx={{ textDecoration: 'none', color: 'inherit', boxShadow: 3 }}>
+                <Card component={Link} to={`/storyblog?id=${article.articleId}`} sx={{ textDecoration: 'none', color: 'inherit', boxShadow: 3 }}>
                   <CardMedia
                     component="img"
                     image={article.mainImage}

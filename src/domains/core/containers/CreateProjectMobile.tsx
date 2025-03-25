@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControlLabel, FormGroup, Grid, Snackbar, Switch, TextField, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Button, FormControlLabel, FormGroup, Grid, Snackbar, Switch, TextField, Theme, Typography } from '@mui/material';
 import { PageContainer } from '.';
 import { useAuth0 } from '@auth0/auth0-react';
 import FolderOpenIcon from '@mui/icons-material/FolderOpen';
@@ -73,8 +73,6 @@ interface OwnProps {
 type Props = OwnProps;
 export default function CreateProjectMobile(props: Props) {
   const { isAuthenticated, user } = useAuth0();
-  const theme = useTheme();
-  const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const classes = useStyles();
   const [nameProject, setNameProject] = useState("");
   const [locationProject, setLocationProject] = useState("");

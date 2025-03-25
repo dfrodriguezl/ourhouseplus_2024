@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, Fragment, useEffect } from "react";
 import { 
   Container, 
   Grid, 
@@ -10,16 +10,28 @@ import {
   CardContent 
 } from "@mui/material";
 import { PageContainer, } from 'domains/core/containers';
-import { barInteriorView, barSeatingArea, barEntranceHallway, barDetail, fullBarView } from 'assets';
+import { barInteriorView, barEntranceHallway, barDetail } from 'assets';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import { useSearchParams } from "react-router-dom";
+import { get } from "app/api";
+import { Article } from "../models";
 
 const Story = () => {
   const [saved, setSaved] = useState(false);
+  const [searchParams] = useSearchParams();
+  const articleId = searchParams.get("id");
+  const [article, setArticle] = useState<Article>();
 
   const toggleSave = () => {
     setSaved(!saved);
   };
+
+  useEffect(() => {
+    get(`/articles/${articleId}`).then((response) => {
+      setArticle(response.data)
+    })
+  },[articleId])
 
   return (
     <Fragment>
@@ -34,12 +46,12 @@ const Story = () => {
 
           {/* Título */}
           <Typography variant="h4" align="center" sx={{ marginBottom: 2, marginTop: 2, fontWeight: "bold" }}>
-            Inside 2246 Bar, a Moody, Mysterious <br/> Whiskey & Cocktail Bar by Horizontal Studio
+            {article?.title}
           </Typography>
 
           {/* Imagen Principal */}
           <Box sx={{ position: "relative" }}>
-            <img src={barInteriorView} alt="Bar interior view" width="100%" />
+            <img src={article?.mainImage} alt="Bar interior view" width="100%" />
             <Button
               onClick={toggleSave}
               sx={{
@@ -68,13 +80,11 @@ const Story = () => {
             {/* Sección Principal */}
             <Grid item xs={12} md={8}>
               <Typography variant="body1" paragraph>
-              Designed by Horizontal Studio, the intimate space is an homage to craft, subtlety and tradition. Tucked away in an emerging neighborhood, 2246 Bar presents a mysterious facade that belies the warm interior within.<br/>
-
-              After Toronto's Horizontal Studio designed their new home, the clients were so pleased they asked the studio to work on their bar too in the city's west end. "We're both attracted to Japanese minimalist principles – the philosophy of less is more," says HCSA owners Aja Sax and Chef Ben Robson. "They manifested a bar experience that's all about quality over quantity."
+              {article?.excerpt}
               </Typography>
 
               <Box sx={{ position: "relative", marginBottom: 3 }}>
-                <img src={barSeatingArea} alt="Bar seating area" width="100%" />
+                <img src={article?.images![0]} alt="Bar seating area" width="100%" />
                 <Button
                   onClick={toggleSave}
                   sx={{
@@ -99,13 +109,12 @@ const Story = () => {
               </Box>
 
               <Typography variant="body1" paragraph>
-                The team at Horizontal Studio sought to create a space that is a prevailing void. The focus for the design team then became "spatial elegance and refined mystery," says Chen. "We incorporated elements in materiality and color that characterizes their venues while maintaining a restrained approach through a modern lens."
+                {article?.content}
               </Typography>
 
               <Grid container spacing={2}>
-                {[barEntranceHallway, barDetail].map((img, index) => (
+                {article?.images!.map((img, index) => (
                   <Grid item xs={6} key={index} sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-                    {/* Contenedor con posición relativa para que el botón pueda posicionarse correctamente */}
                     <Box sx={{ position: "relative", width: "100%" }}>
                       <img
                         src={img}
@@ -135,7 +144,6 @@ const Story = () => {
                         {saved ? <BookmarkBorderIcon /> : <BookmarkIcon />}
                       </Button>
                     </Box>
-                    {/* Texto debajo de la imagen */}
                     <Typography variant="caption" sx={{ color: "rgba(0, 0, 0, 0.6)", marginTop: 1 }}>
                       Photo by James Hamilton
                     </Typography>
@@ -143,14 +151,14 @@ const Story = () => {
                 ))}
               </Grid>
 
-              <Typography variant="body1" paragraph>
+              {/* <Typography variant="body1" paragraph>
               "There are lot opening flavors like the space, then aromas immediately spicy and woodsmoke. The mouthfeel is in immediate food pairing while the finish is long and complex. Deep, layered intensity, both on the wall and below a central rose-pruned damascus and golden hard wattle."</Typography>
 
               <Typography variant="body1" paragraph>
               Materials were clearly key to the scheme: the curved wall and marble countertops were designed to echo the warmth and softness of well-aged whiskey and brandies, in turn reinforcing the concept of slow drinking. The use of metal mesh window screens allows light and shadow to interact dynamically, creating a balance between privacy and visibility.
-              </Typography>
+              </Typography> */}
 
-              <Box sx={{ position: "relative", marginTop: 4 }}>
+              {/* <Box sx={{ position: "relative", marginTop: 4 }}>
                 <img src={fullBarView} alt="Full bar view" width="100%" />
                 <Button
                   onClick={toggleSave}
@@ -173,7 +181,7 @@ const Story = () => {
                 <Typography variant="caption" sx={{ color: 'rgba(0, 0, 0, 0.6)' }}>
                   The architectural lighting design emphasizes the textural qualities of the materials. Photo by James Hamilton
                 </Typography>
-              </Box>
+              </Box> */}
             </Grid>
 
             {/* Sidebar */}
@@ -186,13 +194,15 @@ const Story = () => {
                   <strong>LOCATION</strong> <br/>Toronto, Canada
                 </Typography>
                 <Typography variant="body2" sx={{ fontWeight: "normal", marginBottom: 1, }}>
-                  <strong>DESIGNER</strong> <br/><a href="#">Horizontal Studio</a>
+                  <strong>DESIGNER</strong> <br/> Horizontal Studio
+                  {/* <a href="#">Horizontal Studio</a> */}
                 </Typography>
                 <Typography variant="body2" sx={{ fontWeight: "normal", marginBottom: 1, }}>
                   <strong>PROJECT YEAR</strong> <br/>2024
                 </Typography>
                 <Typography variant="body2">
-                  <strong>PHOTOS BY</strong> <br/><a href="#">James Hamilton</a>
+                  <strong>PHOTOS BY</strong> <br/> James Hamilton
+                  {/* <a href="#">James Hamilton</a> */}
                 </Typography>
 
                 <Button

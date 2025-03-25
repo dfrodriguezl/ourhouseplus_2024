@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, useMediaQuery, useTheme } from "@mui/material";
+import { Grid } from "@mui/material";
 import { get } from "app/api";
 import { ItemCatalogue } from "../models";
 import CombinationDetail from "./CombinationDetail";
@@ -18,8 +18,6 @@ const FurnitureCombinations = (props: Props) => {
     const { type1, type2, setItem1, setItem2, update } = props;
     const [itemType1, setItemType1] = useState<ItemCatalogue>();
     const [itemType2, setItemType2] = useState<ItemCatalogue>();
-    const theme = useTheme();
-    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
 
 

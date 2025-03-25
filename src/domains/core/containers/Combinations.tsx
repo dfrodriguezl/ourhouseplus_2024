@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { PageContainer } from '.';
 import TypeSelect from '../components/TypeSelect';
-import { Button, Grid, IconButton, Theme, useMediaQuery, useTheme } from '@mui/material';
+import { Button, Grid, IconButton, Theme } from '@mui/material';
 import { ItemCatalogue, types } from '../models';
 import { makeStyles } from '@mui/styles';
 import FurnitureCombinations from '../components/FurnitureCombinations';
@@ -43,8 +43,6 @@ const Combinations = () => {
     const [qualificationSelected, setQualificationSelected] = useState<string>();
     const [update, setUpdate] = useState<number>();
     const { user, isAuthenticated } = useAuth0();
-    const theme = useTheme();
-    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
     const handleClick = () => {
         if (type1 && type2) {

@@ -107,23 +107,23 @@ const Upload = () => {
 
         const uploadPromises = images.map((image) => {
             return new Promise<string>((resolve, reject) => {
-    
+
                 const params: PutObjectRequest = {
                     Bucket: S3_BUCKET!,
                     Key: `${Date.now()}-${image.name}`,
                     Body: image
                 };
-    
+
                 s3.upload(params, (err, data) => {
                     if (err) {
                         console.error("Error uploading file:", err);
                         reject(err);
                     }
-    
+
                     resolve(data.Location);
-    
+
                 })
-    
+
             })
         });
 
