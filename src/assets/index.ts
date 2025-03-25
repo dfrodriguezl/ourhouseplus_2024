@@ -4,3 +4,14 @@ export {default as image_2} from './image_2.png'
 export {default as Step1_Carousel} from './Step1_Carousel_Home_Mobile.png'
 export {default as Step2_Carousel} from './Step2_Carousel_Home_Mobile.png'
 export {default as Step3_Carousel} from './Step3_Carousel_Home_Mobile.png'
+export {default as kyotoHouse} from './kyoto-house.jpg'
+export {default as heritageHouse} from './heritage-house.jpeg';
+export {default as singaporeHouse} from './singapore-house.jpg';
+export {default as barInteriorView} from './bar-interior-view.jpg';
+export {default as barSeatingArea} from './bar-seating-area.jpg';
+export {default as barEntranceHallway} from './bar-entrance-hallway.jpg';
+export {default as barDetail} from './bar-detail.jpg';
+export {default as fullBarView} from './full-bar-view.jpg';
+export {default as sofa} from './sofa.jpeg';
+export {default as chair} from './chair.jpeg';
+export {default as table} from './table.jpg';

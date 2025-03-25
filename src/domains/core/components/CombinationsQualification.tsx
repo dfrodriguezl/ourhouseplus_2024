@@ -1,8 +1,6 @@
 import React, { ChangeEvent, Fragment } from 'react'
-import { FormControl, FormControlLabel, Grid, IconButton, Radio, RadioGroup, Theme, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { FormControl, FormControlLabel, Grid, Radio, RadioGroup, Theme, Typography } from '@mui/material';
 import { makeStyles } from '@mui/styles';
-import CancelIcon from '@mui/icons-material/Cancel';
-import TagFacesIcon from '@mui/icons-material/TagFaces';
 
 const useStyles = makeStyles((theme: Theme) => ({
     selectStyle: {
@@ -39,32 +37,15 @@ interface OwnProps {
 type Props = OwnProps;
 const CombinationsQualification = (props: Props) => {
     const classes = useStyles();
-    const { qualification, setQualification, saveCombination } = props;
-    const theme = useTheme();
-    const smallScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
+    const { qualification, setQualification } = props;
 
 
     const handleValue = (event: ChangeEvent<HTMLInputElement>) => {
         setQualification((event.target as HTMLInputElement).value)
     }
 
-
-    const handleValueSmall = (tipo: string) => {
-        setQualification(tipo)
-        saveCombination(tipo)
-    }
-
     return (
         <Grid container justifyContent="center" direction="column" alignContent="center" className={classes.containerStyle}>
-            {smallScreen ?
-                <Fragment>
-                    <Grid container direction="row" justifyContent="center">
-                        <IconButton size="large" onClick={() => handleValueSmall("0")}><CancelIcon fontSize="large" className={classes.iconStyle}/></IconButton>
-                        <IconButton size="large" onClick={() => handleValueSmall("5")}><TagFacesIcon fontSize="large" className={classes.iconStyle}/></IconButton>
-                    </Grid>
-                </Fragment>
-                :
                 <Fragment>
                     <Typography variant="h6" className={classes.textStyle}>Combination Qualification</Typography>
                     <FormControl>
@@ -84,7 +65,7 @@ const CombinationsQualification = (props: Props) => {
                         </RadioGroup>
                     </FormControl>
                 </Fragment>
-            }
+
 
         </Grid>
     )

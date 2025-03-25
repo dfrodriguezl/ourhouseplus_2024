@@ -86,7 +86,6 @@ const CardFavorite = (props: Props) => {
             />
             <Card style={smallScreen ? { marginTop: 10 } : {}}>
                 <ModalProjects open={open} onClose={handleClose} furnitureID={item?.idItem!} />
-                {smallScreen ?
                     <Fragment>
                         <CardHeader
                             action={
@@ -120,8 +119,7 @@ const CardFavorite = (props: Props) => {
                                 </Button>
                             </Grid>
                         </CardContent>
-                    </Fragment> :
-                    null}
+                    </Fragment>
             </Card>
         </Fragment>
 

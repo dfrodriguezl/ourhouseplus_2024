@@ -352,6 +352,25 @@ export interface Spend {
   type?: number;
 }
 
+export interface Article {
+  articleId?: string;
+  title: string;
+  category: string;
+  excerpt: string;
+  content: string;
+  mainImage?: string;
+  images? : string[];
+  isDraft: boolean;
+  user: string;
+}
+
+export const ArticlesCategory: Record<string, string> =  {
+  "home": "Home",
+  "wanderlust": "Wanderlust",
+  "design": "Design",
+  "architecture": "Architecture"
+}
+
 export const projectsBudget = [
   {
     id: 1,
